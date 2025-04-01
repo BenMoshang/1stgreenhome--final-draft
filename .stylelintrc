@@ -1,35 +1,151 @@
 {
-	"extends": "stylelint-config-standard",
+	"plugins": [
+		"stylelint-order",
+		"stylelint-plugin-logical-css",
+		"stylelint-plugin-defensive-css",
+		"@stylistic/stylelint-plugin"
+	],
+	"defaultSeverity": "warning",
+	"ignoreFiles": ["node_modules/**/*", "dist/**/*", "build/**/*", "coverage/**/*"],
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-standard-scss",
+		"stylelint-config-sass-guidelines",
+		"stylelint-config-idiomatic-order",
+		"stylelint-config-html"
+	],
+	"overrides": [
+		{
+			"files": ["**/*.svelte"],
+			"customSyntax": "postcss-html"
+		}
+	],
 	"rules": {
-		"indentation": 2,
-		"string-quotes": "single",
+		"declaration-block-no-duplicate-properties": true,
+		"declaration-block-no-shorthand-property-overrides": true,
 		"no-duplicate-selectors": true,
-		"color-hex-case": "lower",
-		"color-hex-length": "short",
-		"selector-no-qualifying-type": true,
-		"selector-combinator-space-after": "always",
-		"selector-attribute-quotes": "always",
-		"selector-attribute-operator-space-before": "never",
-		"selector-attribute-operator-space-after": "never",
-		"selector-attribute-brackets-space-inside": "never",
-		"declaration-block-trailing-semicolon": "always",
-		"declaration-colon-space-before": "never",
-		"declaration-colon-space-after": "always",
-		"property-no-vendor-prefix": true,
+		"no-empty-source": true,
+		"selector-max-id": 0,
+		"color-no-invalid-hex": true,
+		"function-calc-no-unspaced-operator": true,
+		"property-no-unknown": null,
+		"scss/property-no-unknown": true,
+
+		"selector-max-specificity": "0,3,3",
+		"selector-max-universal": 1,
+		"selector-max-attribute": 2,
+		"max-nesting-depth": [
+			3,
+			{
+				"ignoreAtRules": ["media", "supports", "include", "extend"]
+			}
+		],
+
+		"at-rule-no-unknown": null,
+		"scss/at-rule-no-unknown": true,
+		"scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9]+$",
+		"scss/selector-no-redundant-nesting-selector": true,
+		"scss/no-duplicate-dollar-variables": true,
+		"scss/at-extend-no-missing-placeholder": true,
+		"scss/at-function-pattern": "^[a-z][a-zA-Z0-9-]*$",
+		"scss/at-mixin-pattern": "^[a-z][a-zA-Z0-9-]*$",
+		"scss/percent-placeholder-pattern": "^[a-z][a-zA-Z0-9-]*$",
+		"scss/at-if-no-null": true,
+		"scss/comment-no-empty": true,
+		"scss/dollar-variable-empty-line-before": "always",
+		"scss/double-slash-comment-empty-line-before": "always",
+		"scss/function-quote-no-quoted-strings-inside": true,
+		"scss/no-duplicate-mixins": true,
+		"scss/no-global-function-names": true,
+		"scss/declaration-nested-properties": [
+			"always",
+			{
+				"except": ["only-of-namespace"]
+			}
+		],
+		"scss/at-use-no-unnamespaced": true,
+		"scss/map-keys-quotes": "always",
+
+		"selector-class-pattern": [
+			"^(?:(?:o|c|u|t|s|is|has|_|js|qa)-)?[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:--[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:\\[.+\\])?$",
+			{
+				"message": "Class names should follow BEM methodology (block__element--modifier)"
+			}
+		],
+
 		"value-no-vendor-prefix": true,
-		"number-leading-zero": "always",
-		"function-url-quotes": "always",
-		"font-weight-notation": "numeric",
-		"font-family-name-quotes": "always-where-required",
-		"comment-whitespace-inside": "always",
-		"comment-empty-line-before": "always",
+		"property-no-vendor-prefix": true,
 		"at-rule-no-vendor-prefix": true,
-		"selector-pseudo-element-colon-notation": "double",
-		"selector-no-vendor-prefix": true,
-		"media-feature-range-operator-space-before": "always",
-		"media-feature-range-operator-space-after": "always",
-		"media-feature-parentheses-space-inside": "never",
-		"media-feature-colon-space-before": "never",
-		"media-feature-colon-space-after": "always"
+		"media-feature-name-no-vendor-prefix": true,
+		"color-function-notation": "modern",
+		"color-named": "never",
+		"color-format": "hsl",
+		"hue-degree-notation": "angle",
+
+		"length-zero-no-unit": true,
+		"shorthand-property-no-redundant-values": true,
+		"declaration-block-no-redundant-longhand-properties": true,
+
+		"plugin/use-logical-properties-and-values": [
+			true,
+			{
+				"severity": "warning",
+				"ignoredProperties": ["z-index", "line-height", "opacity", "order"]
+			}
+		],
+
+		"declaration-property-value-allowed-list": {
+			"display": [
+				"grid",
+				"flex",
+				"inline-flex",
+				"inline-grid",
+				"block",
+				"inline-block",
+				"contents",
+				"none",
+				"flow-root",
+				"subgrid"
+			]
+		},
+
+		"custom-property-pattern": "^--([a-z][a-z0-9]*)(-[a-zA-Z0-9]+)*(-{1,2}[a-zA-Z0-9]+)*$",
+		"custom-property-empty-line-before": "never",
+
+		"media-feature-name-no-unknown": true,
+		"media-feature-name-value-allowed-list": {
+			"width": ["/^(min|max)-width$/"],
+			"height": ["/^(min|max)-height$/"],
+			"resolution": ["/^(min|max)-resolution$/"],
+			"prefers-color-scheme": ["dark", "light"],
+			"prefers-reduced-motion": ["reduce", "no-preference"],
+			"prefers-contrast": ["more", "less", "custom"],
+			"dynamic-range": ["standard", "high"],
+			"overflow-block": ["none", "scroll", "optional-paged", "paged"],
+			"overflow-inline": ["none", "scroll"],
+			"update": ["none", "slow", "fast"],
+			"/^(min|max)-width$/": ["/^\\d+(\\.\\d+)?(px|em|rem|vw|vh|dvw|dvh|cqi)$/"]
+		},
+
+		"media-feature-name-unit-allowed-list": {
+			"width": ["px", "em", "rem", "vw", "vh", "dvw", "dvh", "cqi"],
+			"height": ["px", "em", "rem", "vw", "vh", "dvw", "dvh", "cqi"]
+		},
+
+		"plugin/use-defensive-css": [
+			true,
+			{
+				"accidental-hover": true,
+				"background-repeat": true,
+				"custom-property-fallbacks": true,
+				"flex-wrapping": true,
+				"overflow-scroll-chaining": true,
+				"scrollbar-gutter": true,
+				"vertical-horizontal-spacing": true,
+				"width-height-animations": true,
+				"zero-z-index": true,
+				"severity": "warning"
+			}
+		]
 	}
 }
