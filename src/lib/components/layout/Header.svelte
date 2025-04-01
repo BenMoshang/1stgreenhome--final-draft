@@ -115,8 +115,8 @@
 	<div class="header-logo-wrapper">
 		<img
 			class="header__logo"
-			src="../../../assets/header/logo4.png"
-			alt="Company Logo"
+			src="static/assets/header/1stgreenhome-logo.svg"
+			alt="1st Green Home Logo"
 			width={40}
 			height={40}
 		/>
@@ -164,7 +164,62 @@
 	</ul>
 </nav>
 
-<style>
+<style lang="scss">
+	// SCSS Variables and Maps
+	$colors: (
+		primary: var(--color-primary),
+		text: var(--color-p),
+		light: var(--color-light),
+		bg-transparent: hsla(150, 100%, 99%, 0.83)
+	);
+
+	$spacing: (
+		xs: 0.3125rem,
+		// 5px
+		sm: 0.5rem,
+		// 8px
+		md: 1rem,
+		// 16px
+		lg: 1.25rem,
+		// 20px
+		xl: 1.5rem,
+		// 24px
+		xxl: 2.5rem // 40px
+	);
+
+	$sizes: (
+		header-height: 3.75rem,
+		header-width: 80svw,
+		logo-size: 3rem,
+		burger-width: 1.125rem,
+		burger-height: 1.5625rem,
+		burger-line: 0.1563rem,
+		nav-max-width: 300px
+	);
+
+	$borders: (
+		radius-pill: 9999px,
+		radius-lg: 0.75rem,
+		radius-sm: 0.0625rem,
+		radius-md: 5rem
+	);
+
+	$animations: (
+		standard: 0.3s ease-in-out,
+		fast: 0.25s ease-in-out
+	);
+
+	$shadows: (
+		medium: var(--shadow-medium--secondary)
+	);
+
+	$z-indices: (
+		base: 3,
+		nav: 999,
+		header: 1000,
+		burger: 1001
+	);
+
 	/* Global Styles */
 	*,
 	*::before,
@@ -174,10 +229,10 @@
 		box-sizing: border-box;
 		font-family: var(--font-family-bold);
 		font-weight: 500;
-		color: var(--color-p);
-		z-index: 3;
+		color: map-get($colors, text);
+		z-index: map-get($z-indices, base);
 		/* outline: .0625rem dashed red; */
-		transition: all 0.3s ease-in-out;
+		transition: all map-get($animations, standard);
 	}
 
 	/* --------------------------------------------------
@@ -186,25 +241,25 @@ Header Container
 
 	.header-container {
 		position: fixed;
-		top: 1rem;
+		top: map-get($spacing, md);
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		width: 80svw;
-		height: 3.75rem;
-		padding: 1.25rem;
+		width: map-get($sizes, header-width);
+		height: map-get($sizes, header-height);
+		padding: map-get($spacing, lg);
 		transition:
-			transform 0.3s ease-in-out,
-			opacity 0.3s ease-in-out;
-		z-index: 1000;
-		background-color: rgba(251, 255, 253, 0.8);
+			transform map-get($animations, standard),
+			opacity map-get($animations, standard);
+		z-index: map-get($z-indices, header);
+		background-color: map-get($colors, bg-transparent);
 		backdrop-filter: blur(15px) saturate(200%);
 		-webkit-backdrop-filter: blur(15px) saturate(200%);
 		border: 1px solid rgba(255, 255, 255, 0.125);
-		border-radius: 9999px;
-		box-shadow: var(--shadow-medium--secondary);
+		border-radius: map-get($borders, radius-pill);
+		box-shadow: map-get($shadows, medium);
 	}
 
 	.header-container.hidden {
@@ -219,13 +274,13 @@ LOGO
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 0.3125rem;
-		width: 3rem;
-		height: 3rem;
+		padding: map-get($spacing, xs);
+		width: map-get($sizes, logo-size);
+		height: map-get($sizes, logo-size);
 		background: var(--convex-light);
 		border-radius: 50%;
-		border: 0.0625rem solid var(--color-primary);
-		box-shadow: var(--shadow-medium--secondary);
+		border: 0.0625rem solid map-get($colors, primary);
+		box-shadow: map-get($shadows, medium);
 		overflow: hidden;
 	}
 
@@ -242,7 +297,7 @@ INSIDE HEADER LINKS
 -------------------------------------------------- */
 	.header__links {
 		display: flex;
-		gap: 1.5rem;
+		gap: map-get($spacing, xl);
 		list-style-type: none;
 	}
 
@@ -251,23 +306,23 @@ OUTSIDE HEADER DROPDOWN NAVIGATION
 -------------------------------------------------- */
 	.header__nav {
 		position: fixed;
-		top: 3.75rem;
+		top: map-get($sizes, header-height);
 		left: 0;
 		width: 100%;
-		max-width: 300px; /* For desktop sidebar */
-		height: calc(100% - 3.75rem);
+		max-width: map-get($sizes, nav-max-width);
+		height: calc(100% - map-get($sizes, header-height));
 		backdrop-filter: blur(15px) saturate(200%);
 		-webkit-backdrop-filter: blur(15px) saturate(200%);
-		background-color: rgba(251, 255, 253, 0.8);
-		border-radius: 0.75rem;
+		background-color: map-get($colors, bg-transparent);
+		border-radius: map-get($borders, radius-lg);
 		border: 1px solid rgba(255, 255, 255, 0.125);
 		isolation: isolate;
 		transform: translateX(-100%);
 		opacity: 0;
 		transition:
-			transform 0.3s ease-in-out,
-			opacity 0.3s ease-in-out;
-		z-index: 999; /* Ensure it's above other elements */
+			transform map-get($animations, standard),
+			opacity map-get($animations, standard);
+		z-index: map-get($z-indices, nav);
 	}
 
 	/* Navigation Open State */
@@ -282,9 +337,9 @@ COMBINED LINK SELECTORS
 	.header__nav ul {
 		display: flex;
 		flex-direction: column;
-		gap: 2.5rem;
+		gap: map-get($spacing, xxl);
 		list-style-type: none;
-		padding: 1rem;
+		padding: map-get($spacing, md);
 	}
 
 	.header__links li,
@@ -295,22 +350,22 @@ COMBINED LINK SELECTORS
 	.header__links li a,
 	.header__nav ul li a {
 		text-decoration: none;
-		padding: 0.5rem 1rem;
-		border-radius: 5rem;
-		transition: background 0.25s ease-in-out;
+		padding: map-get($spacing, sm) map-get($spacing, md);
+		border-radius: map-get($borders, radius-md);
+		transition: background map-get($animations, fast);
 		display: block;
 		font-family: var(--font-family-regular);
 		font-weight: 400;
-		color: var(--color-p);
+		color: map-get($colors, text);
 	}
 
 	.header__links li a:hover,
 	.header__links li a:focus,
 	.header__nav ul li a:hover,
 	.header__nav ul li a:focus {
-		transition: background 0.25s ease-in-out;
+		transition: background map-get($animations, fast);
 		background: var(--convex-secondary);
-		color: var(--color-light);
+		color: map-get($colors, light);
 		outline: none;
 	}
 
@@ -326,7 +381,7 @@ COMBINED LINK SELECTORS
 	}
 
 	a[href='/home#cta'] {
-		color: var(--color-primary) !important;
+		color: map-get($colors, primary) !important;
 		font-family: var(--font-family-bold) !important;
 		font-weight: 600 !important;
 	}
@@ -338,13 +393,13 @@ BURGER
 		display: none; /* Hidden by default, shown on mobile */
 		flex-direction: column;
 		justify-content: space-around;
-		width: 1.125rem;
-		height: 1.5625rem;
+		width: map-get($sizes, burger-width);
+		height: map-get($sizes, burger-height);
 		background: transparent;
 		border: none;
 		cursor: pointer;
 		padding: 0;
-		z-index: 1001; /* Above the navigation */
+		z-index: map-get($z-indices, burger);
 	}
 
 	.header__burger.open span:first-child {
@@ -363,12 +418,12 @@ BURGER
 
 	.header__burger span {
 		width: 1.25rem;
-		height: 0.1563rem;
-		background-color: var(--color-p);
-		border-radius: 0.0625rem;
+		height: map-get($sizes, burger-line);
+		background-color: map-get($colors, text);
+		border-radius: map-get($borders, radius-sm);
 		transition:
-			transform 0.3s ease-in-out,
-			opacity 0.3s ease-in-out;
+			transform map-get($animations, standard),
+			opacity map-get($animations, standard);
 	}
 
 	/* Animation Classes */
