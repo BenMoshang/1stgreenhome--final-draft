@@ -10,6 +10,12 @@ const config = {
 		// Enable PostCSS processing
 		postcss: true
 	}),
+
+	// Add compiler options to enable runes
+	compilerOptions: {
+		runes: true
+	},
+
 	kit: {
 		adapter: adapter(),
 		// Add recommended security headers

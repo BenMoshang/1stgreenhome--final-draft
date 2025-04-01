@@ -1,16 +1,18 @@
 <script lang="ts">
+	import Header from '$lib/components/layout/Header.svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
 	let { children } = $props();
 </script>
 
 <svelte:head>
 	<title>1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable Solutions</title>
 </svelte:head>
-
+<Header />
 <div class="app">
 	<main class="page-container">
 		{@render children()}
 	</main>
-
+	<Footer />
 	<!-- SVG filter for noise effect -->
 	<svg
 		style="position: absolute;
