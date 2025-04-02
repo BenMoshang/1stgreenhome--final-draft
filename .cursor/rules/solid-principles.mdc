@@ -1,0 +1,60 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Adhere strictly to SOLID principles
+globs: 
+alwaysApply: true
+---
+
+"When migrating existing code, avoid class inheritance; instead, prioritize object composition by extracting behaviors into reusable, modular components. Adhere strictly to SOLID principles, particularly emphasizing Single Responsibility (each component handles only one responsibility) and Open/Closed (components should be open for extension via composition, not modification via inheritance)."
+
+Practical Guidance:
+
+Single Responsibility (S):
+Refactor large classes into smaller, focused components that handle specific functionalities.
+
+Open/Closed Principle (O):
+Use interfaces and dependency injection to add new features without altering existing code.
+
+Liskov Substitution (L):
+Ensure composed components remain interchangeable by adhering to clear interface contracts.
+
+Interface Segregation (I):
+Keep interfaces small and specific; prefer multiple targeted interfaces over a single general-purpose interface.
+
+Dependency Inversion (D):
+Depend on abstractions (interfaces) rather than concrete implementations, enabling flexible composition.
+
+Example (pseudo-code):
+
+typescript
+Copy
+Edit
+// ❌ Inheritance (to avoid)
+class User extends AuthenticatedEntity {}
+
+// ✅ Composition (preferred approach)
+class User {
+  auth: AuthenticationHandler;
+  
+  constructor(authHandler: AuthenticationHandler) {
+    this.auth = authHandler;
+  }
+
+  authenticate() {
+    return this.auth.authenticateUser(this);
+  }
+}

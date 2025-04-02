@@ -1,0 +1,62 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# SCSS Best Practices Cursor Rule
+
+## Key Principles
+- idiomatic orders for properties
+- BEM Naming convention & Nesting
+- each component must have scss maps at the top of the style block to make it easy to go back and edit.
+- Use modern SCSS features and avoid deprecated syntax
+- Follow the DRY (Don't Repeat Yourself) principle
+- Maintain a consistent, scalable architecture
+- Optimize for performance and maintainability
+- Use meaningful naming conventions
+- Structure files modularly
+- Follow accessibility guidelines
+
+
+## Performance Optimization
+- Avoid deep nesting which generates complex selectors
+- Use direct descendant selectors (`>`) where appropriate
+- Minimize the use of `@extend` to prevent CSS bloat
+- Use PostCSS plugins for optimization (autoprefixer, cssnano, purgecss)
+- Leverage CSS Grid and Flexbox over complex float layouts
+- Prefer logical properties for better internationalization support
+- Use `will-change` property sparingly and only when needed
+
+## Responsiveness and Accessibility
+- Implement a mobile-first approach with min-width media queries
+- Use relative units (rem, em) for better accessibility and responsiveness
+- Define standardized breakpoints as variables
+- Ensure color contrast ratios meet WCAG guidelines (AA or AAA)
+- Use focus states for interactive elements
+- Support reduced motion preferences:
+  ```scss
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+
+## Linting and Formatting
+- Use Stylelint with the SCSS plugin for consistent code quality
+- Configure Prettier for automated formatting
+- Enforce property order with stylelint-order
+- Implement pre-commit hooks for validation

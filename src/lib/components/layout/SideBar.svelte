@@ -1,52 +1,28 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 
 	// State using Svelte 5 runes
-	let isOpen = $state(false);
+	let { isOpen } = $props();
 	let emailLink = $state('');
 
-	// Toggle function
-	function toggleSidebar() {
-		isOpen = !isOpen;
-	}
+	const dispatch = createEventDispatcher();
 
 	// Lifecycle
 	onMount(() => {
 		emailLink = 'info@1stgreenhome.com';
-
-		// Add event listener for the Escape key
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === 'Escape' && isOpen) {
-				toggleSidebar();
-			}
-		};
-
-		window.addEventListener('keydown', handleKeyDown);
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
 	});
 
-	// Helper functions
-	function isMobile(): boolean {
-		return /Mobi|Android/i.test(navigator.userAgent);
+	function handleClose() {
+		dispatch('close');
 	}
 </script>
-
-<!-- Toggle button for the sidebar -->
-<button class="sidebar-toggle" on:click={toggleSidebar} aria-label="Toggle sidebar menu">
-	<span></span>
-	<span></span>
-	<span></span>
-</button>
 
 <!-- Sidebar container -->
 {#if isOpen}
 	<section class="container">
-		<div class="overlay" on:click={toggleSidebar}></div>
+		<div class="overlay" on:click={handleClose}></div>
 		<nav class="nav-content">
-			<button class="close-button" on:click={toggleSidebar} aria-label="Close sidebar">
+			<button class="close-button" on:click={handleClose} aria-label="Close sidebar">
 				<span></span>
 				<span></span>
 			</button>
@@ -180,40 +156,6 @@
 		--button-active-scale: 0.95;
 		--small-box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
 		--hover-box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.15);
-	}
-
-	/* Sidebar toggle button */
-	.sidebar-toggle {
-		position: fixed;
-		top: 6rem;
-		left: 1.5rem;
-		z-index: 1001;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-		width: 3rem;
-		height: 3rem;
-		background: var(--convex-light);
-		border: 0.0625rem solid var(--color-primary);
-		border-radius: 50%;
-		box-shadow: var(--shadow-medium--secondary);
-		cursor: pointer;
-		padding: 0.75rem;
-	}
-
-	.sidebar-toggle span {
-		width: 100%;
-		height: 0.125rem;
-		background-color: var(--color-primary);
-		border-radius: 0.0625rem;
-		transition: all 0.3s ease-in-out;
-	}
-
-	/* Images and SVGs */
-	img,
-	svg {
-		width: 1.25rem;
-		height: 1.25rem;
 	}
 
 	/* Sidebar container */
@@ -378,10 +320,6 @@
 
 	/* Media queries for responsiveness */
 	@media (min-width: 50.625rem) {
-		.sidebar-toggle {
-			display: block; /* Show the toggle button on all screen sizes */
-		}
-
 		.nav-content {
 			border-radius: 0 1rem 1rem 0;
 		}

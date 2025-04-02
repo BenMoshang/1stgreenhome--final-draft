@@ -1,0 +1,108 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+name: project-design-system-rules.mdc
+description: Core design system foundations for the project, detailing spacing, grid, color, typography (via classes), components, and accessibility based on defined SCSS tokens and fluid typography (assumes 1rem=16px base for REM interpretation).
+globs: **/*.{css,scss,less,svelte,js,ts,figma}
+
+### Core Principles & Base Units
+
+-   **Spacing Foundation:** Spacing is based on a core scale, accessible via the `$spacing` map and `primitive-spacing()` function (e.g., `xxs: 0.25rem`, `xs: 0.5rem`, `sm: 0.75rem`, `md: 1rem`, `lg: 1.5rem`, `xl: 2rem`).
+-   **Semantic Spacing:** Use the `$semantic-relation-spacing` map (via `spacing()` function) for applying context-aware spacing (e.g., `most-related`, `close-related`, `semi-related`, `less-related`, `not-related`).
+-   **Consistency:** Apply defined tokens and scales consistently across layout, components, and spacing.
+-   **Base REM Assumption:** Interpret base REM values (like those in the `$spacing` map) assuming `1 rem = 16px`.
+
+### Layout & Section Spacing
+
+-   **Max Content Width:** The maximum width for the main content area is defined by `$PAGE_MAX_WIDTH` (**70.5 rem**).
+-   **Outer Section Gap:** Use `primitive-spacing(xl)` (**2rem**) for vertical spacing *between* major page sections.
+-   **Inner Section Gap:** Use `primitive-spacing(lg)` (**1.5rem**) for spacing *within* sections, between distinct groups of content (mapped to `spacing(not-related)`).
+-   **Content Text Widths:** Limit specific text containers using `$layout(max-width-title)` (**20ch**) and `$layout(max-width-description)` (**50ch**) for readability.
+
+### Container & Grid System
+
+-   **Column Structure:** Utilize a 12-container (column) conceptual grid for layout flexibility (Implementation details not specified in SCSS context).
+-   *(Note: Container widths and gutter spacing values for the grid implementation should ideally align with the `$spacing` scale).*
+
+### Component & Element Spacing (Semantic)
+
+-   **Use Semantic Map:** Apply spacing between elements based on their relationship using the `spacing()` function:
+    -   `spacing(most-related)` (**0.25rem**): For tightly coupled items (icon + text label, internal padding).
+    -   `spacing(close-related)` (**0.5rem**): For closely related distinct items (list items, stacked links).
+    -   `spacing(semi-related)` (**0.75rem**): For related items needing slightly more separation.
+    -   `spacing(less-related)` (**1rem**): For standard related components (heading + paragraph).
+    -   `spacing(not-related)` (**1.5rem**): For separating unrelated components within the same visual section.
+
+### Color System
+
+-   **Color Tokens:** Utilize the defined HSL color tokens from the `$colors` map (e.g., `$colors(light)`, `$colors(neutral)`, `$colors(dark)`, `$colors(primary)`, `$colors(secondary)`, `$colors(accent)`, `$colors(p)`, `$colors(secondary-900)`).
+-   **Semantic Usage:** Apply color tokens based on their intended role (backgrounds, text, interactive elements, branding). `$colors(p)` is specified for paragraph text.
+-   **State Colors:** Define and apply colors consistently for UI states (hover, focus, active, disabled) - specific state colors not defined in provided SCSS, should be derived/specified.
+-   **Accessibility:** Ensure text/background combinations using defined `$colors` meet WCAG AA contrast ratios. Test combinations like `$colors(p)` on `$colors(light)`.
+
+### Gradients
+
+-   **Defined Gradients:** Use predefined gradients from the `$gradients` map.
+    -   `$gradients(bg)`: Background image URL.
+    -   `$gradients(convex-*)`: Apply convex gradients (`light`, `neutral`, `dark`, `primary`, `secondary`, `accent`, `secondary-reverse`) for depth/neumorphic effects where appropriate.
+    -   `$gradients(text)`: Apply text gradient for specific decorative text styling.
+
+### Typography (Using CSS Classes)
+
+-   **Apply Styles via Classes:** Use designated CSS utility classes (e.g., `.text-h1`, `.text-p`) to apply the project's defined typographic styles. These classes incorporate fluid sizing (`clamp()`), specific line heights, and font families defined in the SCSS maps (`$typography`, `$fonts`).
+-   **Heading Styles (using Poppins font):**
+    -   Use `.text-h1` for main page titles (Applies H1 styles).
+    -   Use `.text-h2` for major section headings (Applies H2 styles).
+    -   Use `.text-h3` for sub-section headings (Applies H3 styles).
+    -   Use `.text-h4` for tertiary headings (Applies H4 styles).
+    -   Use `.text-h5` for minor headings (Applies H5 styles).
+    -   Use `.text-h6` for very minor headings or emphasized text (Applies H6 styles).
+-   **Body & Label Styles (using Manrope font):**
+    -   Use `.text-p` or apply to base `p` tag for standard paragraph text (Applies 'p' styles including fluid size and `$typography(line-height-p)`).
+    -   Use `.text-label` for form labels and similar UI text elements (Applies 'label-p' styles including fluid size and `$typography(label-line-height)`).
+-   **Font Assignment:** Heading classes generally use 'Poppins, system-ui'. Body/label classes generally use 'Manrope, system-ui'.
+-   **Button Line Height:** Button components apply a specific line height defined by `$typography(button-line-height)` (**1.6em**).
+
+### Buttons
+
+-   **Style Variants:** Define clear visual styles for primary, secondary, tertiary buttons using `$colors`, `$gradients`, and `$borders` tokens.
+-   **Consistent Padding:** Use values from the `$spacing()` map for internal button padding (e.g., `spacing(semi-related)` horizontally, `spacing(close-related)` vertically).
+-   **Sizing:** Define standard button sizes using consistent height/padding rules.
+-   **Interaction:** Apply transformations for button interactions: scale up on hover using `$layout(button-hover-scale)` (**1.05**), scale down on active using `$layout(button-active-scale)` (**0.95**). Use `$transitions(standard)`.
+-   **Line Height:** Reference `$typography(button-line-height)` (**1.6em**) - usually applied within button base styles.
+-   **Accessibility:** Ensure buttons have discernible text and proper focus indicators (see Accessibility section).
+
+### Forms & Inputs
+
+-   **Element Styling:** Standardize appearance using `$colors`, `$borders`, and `$spacing` tokens.
+-   **Consistent Spacing:** Use `$spacing()` map values for margins between labels, inputs, helper text, error messages.
+-   **Input States:** Define clear visual styles for `focus`, `disabled`, invalid states using `$colors` and potentially `$borders`.
+-   **Labels:** Style labels using the `.text-label` class (or equivalent). Ensure correct association (`for` attribute).
+-   **Feedback:** Standardize presentation of helper/error text (placement, color using `$colors` tokens).
+
+### Accessibility Foundations
+
+-   **Keyboard Navigation:** All interactive elements must be keyboard navigable in a logical order.
+-   **Focus Indicators:** Visible focus indicators must be present. Use `$colors` to ensure focused state is distinct and has sufficient contrast.
+-   **Semantic HTML:** Use HTML elements according to their semantic meaning.
+-   **ARIA Usage:** Use ARIA attributes only when necessary to enhance semantics.
+-   **Text Alternatives:** Provide text alternatives for meaningful non-text content.
+-   **Color Contrast:** Regularly test color combinations from `$colors` map for WCAG AA compliance.
+
+### Border Radius
+
+-   **Defined Scale:** Use the specific border-radius tokens from the `$borders` map: `$borders(radius-sm)` (**0.625rem**), `$borders(radius-md)` (**1.25rem**), `$borders(radius-lg)` (**2rem**), `$borders(radius-pill)` (**62.4375rem**).
+-   *(Note: These specific values (0.625rem, 1.25rem) deviate from the 0.25rem multiple system established in spacing).*
+-   **Consistent Application:** Apply these defined values consistently to relevant elements (buttons, inputs, cards, etc.).
+-   **Usage Guidelines:** Define which radius value applies to which component type.
+
+### Transitions & Motion
+
+-   **Standard Duration:** Use `$transitions(standard)` (**0.3s**) for typical interactive feedback (hover effects, etc.).
+-   **Fade-In Duration:** Use `$transitions(fade-in)` (**0.5s**) for element fade-in animations.
+-   **Easing:** Define consistent easing functions (not specified in SCSS context, recommend adding e.g., `ease-in-out`).
+
+---

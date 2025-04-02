@@ -4,6 +4,11 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [sveltekit()],
 	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: `@use '$lib/scss/app.scss' as *;`
+			}
+		},
 		// Use absolute path for better reliability
 		postcss: new URL('./postcss.config.js', import.meta.url).pathname
 	},
@@ -23,6 +28,7 @@ export default defineConfig({
 	},
 	// Enable caching for better performance
 	server: {
+		host: '192.168.0.85',
 		fs: {
 			strict: true
 		}

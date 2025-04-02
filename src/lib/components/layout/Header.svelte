@@ -1,12 +1,23 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	// Define interface for link objects
+	interface NavLink {
+		link: string;
+		fragment: string;
+		text: string;
+		class?: string; // Make class optional
+	}
 
-	// Links data
-	const links = [
+	// Remove unused imports
+	// import { onMount, onDestroy } from 'svelte';
+
+	// Links data using the NavLink interface
+	const linksLeft: NavLink[] = [
 		{ link: '/home', fragment: 'services', text: 'Services' },
-		{ link: '/home', fragment: 'projects', text: 'Projects' },
+		{ link: '/home', fragment: 'projects', text: 'Projects' }
+	];
+	const linksRight: NavLink[] = [
 		{ link: '/home', fragment: 'faqs', text: 'FAQs' },
-		{ link: '/home', fragment: 'cta', text: 'Contact' }
+		{ link: '/home', fragment: 'cta', text: 'Contact', class: 'nav-link--cta' } // Class is defined here
 	];
 
 	// State variables using Svelte 5 $state
@@ -17,7 +28,9 @@
 
 	// References
 	let burgerButton: HTMLButtonElement | undefined;
-	let navLinks: HTMLAnchorElement[] = [];
+	// Remove the navLinks array, no longer needed
+	// let navLinks: HTMLAnchorElement[] = [];
+	let mobileNavContainer: HTMLElement | undefined;
 
 	// Toggle menu function
 	function toggleMenu() {
@@ -29,16 +42,16 @@
 		isMenuOpen = !isMenuOpen;
 	}
 
-	// Handle animation end
+	// Handle animation end - simplified focus management
 	function onAnimationEnd() {
 		if (!isMenuOpen) {
 			// Reset animation class after slide-out animation completes
 			animationClass = '';
 			// Return focus to the burger button
-			if (burgerButton) burgerButton.focus();
+			burgerButton?.focus();
 		} else {
-			// Set focus to the first navigation link
-			if (navLinks.length > 0) navLinks[0].focus();
+			// Set focus to the first focusable element (link) inside the mobile nav container
+			mobileNavContainer?.querySelector('a')?.focus();
 		}
 	}
 
@@ -66,19 +79,6 @@
 		if (event.key === 'Escape' && isMenuOpen) {
 			toggleMenu();
 		}
-	}
-
-	// Svelte action to collect nav link references
-	function collectNavLink(node: HTMLAnchorElement) {
-		// Add this node to our navLinks array
-		navLinks = [...navLinks, node];
-
-		return {
-			destroy() {
-				// Remove this node when element is destroyed
-				navLinks = navLinks.filter((link) => link !== node);
-			}
-		};
 	}
 
 	// Lifecycle
@@ -111,364 +111,488 @@
 	}
 </script>
 
-<header class="header-container" class:hidden={isHeaderHidden}>
-	<div class="header-logo-wrapper">
-		<img
-			class="header__logo"
-			src="static/assets/header/1stgreenhome-logo.svg"
-			alt="1st Green Home Logo"
-			width={40}
-			height={40}
-		/>
-	</div>
-	<ul class="header__links">
-		{#each links as link}
-			<li>
-				<a use:collectNavLink href={link.link + '#' + link.fragment} tabindex={isMenuOpen ? 0 : -1}
-					>{@html link.text}</a
-				>
-			</li>
-		{/each}
-	</ul>
+<header class="header" class:header--hidden={isHeaderHidden}>
+	<!-- Logo Wrapper (moved here, first child) -->
+	<!-- REMOVED: <div class="header__logo-wrapper"> ... </div> -->
+
+	<!-- Wrap desktop nav in a <nav> element for better semantics -->
+	<nav class="header__nav-desktop" aria-label="Primary desktop navigation">
+		<!-- Left Links -->
+		<ul class="header__nav-desktop-list header__nav-desktop-list--left">
+			{#each linksLeft as link}
+				<li>
+					<a
+						href={link.link + '#' + link.fragment}
+						tabindex="0"
+						class="header__nav-desktop-link {link.class || ''}"
+					>
+						{@html link.text}
+					</a>
+				</li>
+			{/each}
+		</ul>
+
+		<!-- Logo wrapper moved here -->
+		<div class="header__logo-wrapper">
+			<img
+				class="header__logo"
+				src="/assets/header/1stgreenhome.svg"
+				alt="1st Green Home Logo"
+				width={40}
+				height={40}
+			/>
+		</div>
+
+		<!-- Right Links -->
+		<ul class="header__nav-desktop-list header__nav-desktop-list--right">
+			{#each linksRight as link}
+				<li>
+					<a
+						href={link.link + '#' + link.fragment}
+						tabindex="0"
+						class="header__nav-desktop-link {link.class || ''}"
+					>
+						{@html link.text}
+					</a>
+				</li>
+			{/each}
+		</ul>
+	</nav>
 	<button
 		bind:this={burgerButton}
 		class="header__burger"
 		on:click={toggleMenu}
-		class:open={isMenuOpen}
+		class:header__burger--open={isMenuOpen}
 		aria-expanded={isMenuOpen ? 'true' : 'false'}
 		aria-controls="navigation"
 		aria-label="Toggle navigation menu"
 	>
-		<span></span>
-		<span></span>
-		<span></span>
+		<span class="header__burger-line"></span>
+		<span class="header__burger-line"></span>
+		<span class="header__burger-line"></span>
 	</button>
 </header>
 
 <nav
+	bind:this={mobileNavContainer}
 	id="navigation"
-	class="header__nav {animationClass}"
-	class:open={isMenuOpen}
+	class="header__nav-mobile {animationClass}"
+	class:header__nav-mobile--open={isMenuOpen}
 	on:animationend={onAnimationEnd}
-	role="navigation"
 	aria-label="Primary Navigation"
 >
-	<ul>
-		{#each links as link}
+	<ul class="header__nav-mobile-list">
+		{#each [...linksLeft, ...linksRight] as link}
 			<li>
-				<a use:collectNavLink href={link.link + '#' + link.fragment} tabindex={isMenuOpen ? 0 : -1}
-					>{@html link.text}</a
+				<a
+					href={link.link + '#' + link.fragment}
+					tabindex={isMenuOpen ? 0 : -1}
+					class="header__nav-mobile-link {link.class || ''}"
 				>
+					{@html link.text}
+				</a>
 			</li>
 		{/each}
 	</ul>
 </nav>
 
 <style lang="scss">
-	// SCSS Variables and Maps
-	$colors: (
-		primary: var(--color-primary),
-		text: var(--color-p),
-		light: var(--color-light),
-		bg-transparent: hsla(150, 100%, 99%, 0.83)
+	/* Define custom easing */
+	:global(:root) {
+		--easing-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+	}
+
+	%flex-center {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	/* ==================================================
+	   Component SCSS Maps
+	   ================================================== */
+	$dimensions: (
+		header-height: 3rem,
+		header-width-desktop: 92%,
+		header-width-mobile: 92%,
+		logo-size: 2rem,
+		logo-padding: primitive-spacing(xxs),
+		// Kept for reference if needed elsewhere
+		burger-width: primitive-spacing(lg),
+		burger-height: primitive-spacing(lg),
+		burger-line-height: 0.1563rem,
+		burger-line-width: calc(#{primitive-spacing(md)} + #{primitive-spacing(xxs)}),
+		nav-max-width: 92%,
+		nav-list-gap: spacing(less-related),
+		link-padding-block: spacing(close-related),
+		link-padding-inline: primitive-spacing(sm),
+		burger-translate-x: 0.4688rem,
+		burger-translate-y: spacing(most-related)
 	);
 
-	$spacing: (
-		xs: 0.3125rem,
-		// 5px
-		sm: 0.5rem,
-		// 8px
-		md: 1rem,
-		// 16px
-		lg: 1.25rem,
-		// 20px
-		xl: 1.5rem,
-		// 24px
-		xxl: 2.5rem // 40px
+	$layout: (
+		mobile-breakpoint: 64rem,
+		nav-top-offset: spacing(close-related),
+		logo-margin-top: -0.25rem
 	);
 
-	$sizes: (
-		header-height: 3.75rem,
-		header-width: 80svw,
-		logo-size: 3rem,
-		burger-width: 1.125rem,
-		burger-height: 1.5625rem,
-		burger-line: 0.1563rem,
-		nav-max-width: 300px
+	$transforms: (
+		header-hidden-translate-y: -120%
+	);
+
+	$filters: (
+		logo-saturate: 200%,
+		logo-contrast: 100%
 	);
 
 	$borders: (
-		radius-pill: 9999px,
-		radius-lg: 0.75rem,
-		radius-sm: 0.0625rem,
-		radius-md: 5rem
-	);
-
-	$animations: (
-		standard: 0.3s ease-in-out,
-		fast: 0.25s ease-in-out
-	);
-
-	$shadows: (
-		medium: var(--shadow-medium--secondary)
+		burger-line-radius: 0.0625rem // 1px
 	);
 
 	$z-indices: (
-		base: 3,
 		nav: 999,
 		header: 1000,
 		burger: 1001
 	);
-
-	/* Global Styles */
-	*,
-	*::before,
-	*::after {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		font-family: var(--font-family-bold);
-		font-weight: 500;
-		color: map-get($colors, text);
-		z-index: map-get($z-indices, base);
-		/* outline: .0625rem dashed red; */
-		transition: all map-get($animations, standard);
-	}
-
-	/* --------------------------------------------------
-Header Container 
--------------------------------------------------- */
-
-	.header-container {
+	$desktop-nav-gap: spacing(not-related);
+	/* ==================================================
+	   Header Block (.header)
+	   ================================================== */
+	.header {
+		// Positioning
 		position: fixed;
-		top: map-get($spacing, md);
+		top: spacing(less-related);
 		left: 50%;
-		transform: translateX(-50%);
+		z-index: map-get($z-indices, header);
+
+		// Layout
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		width: map-get($sizes, header-width);
-		height: map-get($sizes, header-height);
-		padding: map-get($spacing, lg);
-		transition:
-			transform map-get($animations, standard),
-			opacity map-get($animations, standard);
-		z-index: map-get($z-indices, header);
-		background-color: map-get($colors, bg-transparent);
+
+		// Box Model
+		max-inline-size: $PAGE_MAX_WIDTH;
+		width: calc(100% - var(--page-inline-padding));
+		min-height: map-get($dimensions, header-height);
+		margin: 0 auto;
+		padding-inline: primitive-spacing(md);
+		padding-block: primitive-spacing(xs);
+
+		// Visuals
+		background-color: hsla(var(--color-light-hsl), 0.83);
 		backdrop-filter: blur(15px) saturate(200%);
-		-webkit-backdrop-filter: blur(15px) saturate(200%);
-		border: 1px solid rgba(255, 255, 255, 0.125);
-		border-radius: map-get($borders, radius-pill);
-		box-shadow: map-get($shadows, medium);
-	}
+		border-radius: var(--rounded-border-radius);
+		box-shadow: var(--shadow-low--light);
 
-	.header-container.hidden {
-		transform: translateY(-100%) translateX(-50%);
-		opacity: 0;
-	}
-
-	/* --------------------------------------------------
-LOGO
--------------------------------------------------- */
-	.header-logo-wrapper {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: map-get($spacing, xs);
-		width: map-get($sizes, logo-size);
-		height: map-get($sizes, logo-size);
-		background: var(--convex-light);
-		border-radius: 50%;
-		border: 0.0625rem solid map-get($colors, primary);
-		box-shadow: map-get($shadows, medium);
-		overflow: hidden;
-	}
-
-	.header-logo-wrapper .header__logo {
-		margin-top: -5px;
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		filter: saturate(200%) contrast(100%);
-	}
-
-	/* --------------------------------------------------
-INSIDE HEADER LINKS
--------------------------------------------------- */
-	.header__links {
-		display: flex;
-		gap: map-get($spacing, xl);
-		list-style-type: none;
-	}
-
-	/* --------------------------------------------------
-OUTSIDE HEADER DROPDOWN NAVIGATION
--------------------------------------------------- */
-	.header__nav {
-		position: fixed;
-		top: map-get($sizes, header-height);
-		left: 0;
-		width: 100%;
-		max-width: map-get($sizes, nav-max-width);
-		height: calc(100% - map-get($sizes, header-height));
-		backdrop-filter: blur(15px) saturate(200%);
-		-webkit-backdrop-filter: blur(15px) saturate(200%);
-		background-color: map-get($colors, bg-transparent);
-		border-radius: map-get($borders, radius-lg);
-		border: 1px solid rgba(255, 255, 255, 0.125);
-		isolation: isolate;
-		transform: translateX(-100%);
-		opacity: 0;
+		// Animation & Interaction
+		transform: translateX(-50%);
 		transition:
-			transform map-get($animations, standard),
-			opacity map-get($animations, standard);
-		z-index: map-get($z-indices, nav);
-	}
+			transform var(--transition-duration) ease-in-out,
+			opacity var(--transition-duration) ease-in-out;
+		will-change: transform, opacity; // Performance hint
 
-	/* Navigation Open State */
-	.header__nav.open {
-		transform: translateX(0);
-		opacity: 1;
-	}
-
-	/* --------------------------------------------------
-COMBINED LINK SELECTORS
--------------------------------------------------- */
-	.header__nav ul {
-		display: flex;
-		flex-direction: column;
-		gap: map-get($spacing, xxl);
-		list-style-type: none;
-		padding: map-get($spacing, md);
-	}
-
-	.header__links li,
-	.header__nav ul li {
-		margin: 0;
-	}
-
-	.header__links li a,
-	.header__nav ul li a {
-		text-decoration: none;
-		padding: map-get($spacing, sm) map-get($spacing, md);
-		border-radius: map-get($borders, radius-md);
-		transition: background map-get($animations, fast);
-		display: block;
-		font-family: var(--font-family-regular);
-		font-weight: 400;
-		color: map-get($colors, text);
-	}
-
-	.header__links li a:hover,
-	.header__links li a:focus,
-	.header__nav ul li a:hover,
-	.header__nav ul li a:focus {
-		transition: background map-get($animations, fast);
-		background: var(--convex-secondary);
-		color: map-get($colors, light);
-		outline: none;
-	}
-
-	@keyframes animate-background-center-outward {
-		0% {
-			background-size: 0% 0%;
+		/* Modifier: Hidden state */
+		&--hidden {
 			opacity: 0;
+			transform: translateY(map-get($transforms, header-hidden-translate-y)) translateX(-50%);
 		}
-		100% {
-			background-size: 100% 100%;
-			opacity: 1;
-		}
-	}
 
-	a[href='/home#cta'] {
-		color: map-get($colors, primary) !important;
-		font-family: var(--font-family-bold) !important;
-		font-weight: 600 !important;
-	}
+		/* Element: Logo Wrapper */
+		&__logo-wrapper {
+			@extend %flex-center;
+			// Box Model
+			flex-shrink: 0; // Prevent shrinking
+			width: 3rem;
+			height: 3rem;
+			overflow: hidden;
+			padding: 0.375rem;
+			// Visuals
+			background: var(--convex-light);
+			border-radius: 50%;
+			border: 0.0625rem solid var(--color-secondary);
+			box-shadow: var(--shadow-low--light);
+
+			// Positioning (relative to siblings if needed)
+			z-index: 1;
+		}
+
+		/* Element: Logo Image */
+		&__logo {
+			// Box Model
+			width: 100%;
+			height: 100%;
+			margin-top: map-get($layout, logo-margin-top);
+			object-fit: contain;
+
+			// Visuals
+			mix-blend-mode: multiply;
+			filter: saturate(map-get($filters, logo-saturate)) contrast(map-get($filters, logo-contrast));
+		}
+
+		/* Element: Desktop Nav Container */
+		&__nav-desktop {
+			display: none; // Hidden by default
+			gap: $desktop-nav-gap;
+		}
+
+		/* Element: Mobile Navigation Container */
+		&__nav-mobile {
+			// Positioning
+			position: fixed;
+			top: 6rem; // Consider using spacing tokens if applicable
+			left: 50%;
+			z-index: map-get($z-indices, nav);
+			isolation: isolate; // Create new stacking context
+
+			// Layout
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+			align-items: flex-start;
+
+			// Box Model
+			width: map-get($dimensions, header-width-mobile);
+			max-width: map-get($dimensions, nav-max-width);
+
+			// Visuals
+			background-color: hsla(var(--color-light-hsl), 0.83);
+			backdrop-filter: blur(1rem) saturate(200%);
+			-webkit-backdrop-filter: blur(1rem) saturate(200%); // Keep for broader compatibility
+			border: 1px solid hsla(0, 0%, 100%, 0.125);
+			border-radius: var(--border-radius);
+			box-shadow: var(--shadow-low--light);
+			opacity: 0; // Hidden by default
+			visibility: hidden;
+
+			// Animation & Interaction
+			transform: translateX(-50%);
+			transition:
+				opacity var(--transition-duration) ease-in-out,
+				visibility var(--transition-duration) ease-in-out;
+			will-change: transform, opacity; // Performance hint
+
+			/* Modifier: Open state */
+			&--open {
+				opacity: 1;
+				visibility: visible;
+			}
+
+			/* Element: Nav Mobile List */
+			&-list {
+				// Layout
+				display: flex;
+				flex-direction: column;
+				gap: map-get($dimensions, nav-list-gap);
+
+				// Box Model
+				padding: var(--page-inline-padding); // Assumes this variable holds appropriate spacing
+
+				// Visuals
+				list-style-type: none;
+			}
+		}
+
+		/* Shared Link Styles */
+		&__nav-desktop-link,
+		&__nav-mobile-link {
+			// Positioning
+			position: relative; // For pseudo-element
+
+			// Layout
+			display: block;
+
+			// Box Model
+			max-inline-size: fit-content; // Shrink-wrap width
+
+			// Typography & Visuals
+			@include p; // Apply base paragraph styles
+			font-weight: 500;
+			text-decoration: none;
+			border-radius: var(--rounded-border-radius);
+			font-size: 1rem;
+			// Animation & Interaction
+			transition: color var(--transition-duration) ease-in-out; // Removed transform transition here as it's not explicitly used
+
+			/* Underline Pseudo-element */
+			&::after {
+				content: '';
+				position: absolute;
+				bottom: -2px;
+				left: 0;
+				width: 100%; // Start full width
+				height: 0.0938rem;
+				background-color: var(--color-primary);
+				transform: scaleX(0); // Initially hidden by scaling
+				transform-origin: left; // Scale from the left
+				transition: transform var(--transition-duration) ease-in-out; // Animate transform
+				will-change: transform; // Performance hint
+			}
+
+			&:hover,
+			&:focus {
+				&::after {
+					transform: scaleX(1); // Reveal underline by scaling
+				}
+			}
+
+			&:active {
+				&::after {
+					transform: scaleX(1); // Keep underline visible
+				}
+			}
+
+			/* Modifier: CTA Link Style */
+			&.nav-link--cta {
+				color: var(--color-primary);
+				// Animation & Interaction
+				transition:
+					transform var(--transition-duration) ease-in-out,
+					opacity var(--transition-duration) ease-in-out;
+				will-change: transform, opacity; // Performance hint
+			}
+		}
+
+		/* Element: Burger Menu Button */
+		&__burger {
+			// Positioning
+			z-index: map-get($z-indices, burger);
+
+			// Layout
+			display: flex; // Use flexbox for lines
+			flex-direction: column;
+			justify-content: space-around; // Space out lines
+
+			// Box Model
+			width: map-get($dimensions, burger-width);
+			height: map-get($dimensions, burger-height);
+			padding: 0;
+
+			// Visuals
+			background: transparent;
+			border: none;
+
+			// Interaction
+			cursor: pointer;
+
+			/* Element: Burger Line */
+			&-line {
+				// Layout
+				display: block;
+
+				// Box Model
+				width: map-get($dimensions, burger-line-width);
+				height: map-get($dimensions, burger-line-height);
+
+				// Visuals
+				background-color: var(--color-p); // Use paragraph color token
+				border-radius: map-get($borders, burger-line-radius);
+
+				// Animation & Interaction
+				transition:
+					transform var(--transition-duration) ease-in-out,
+					opacity var(--transition-duration) ease-in-out;
+			}
+
+			/* Modifier: Open state animation */
+			&--open {
+				.header__burger-line {
+					// Target lines within open burger
+					&:first-child {
+						transform-origin: center;
+						transform: rotate(45deg)
+							translate(
+								map-get($dimensions, burger-translate-x),
+								map-get($dimensions, burger-translate-y)
+							);
+					}
+
+					&:nth-child(2) {
+						opacity: 0;
+					}
+
+					&:last-child {
+						transform-origin: center;
+						transform: rotate(-45deg)
+							translate(
+								map-get($dimensions, burger-translate-x),
+								-#{map-get($dimensions, burger-translate-y)}
+							);
+					}
+				}
+			}
+		}
+
+		/* --------------------------------------------------
+		MEDIA QUERY (Desktop Styles - min-width)
+		-------------------------------------------------- */
+		@media (min-width: map-get($layout, mobile-breakpoint)) {
+			// Box Model
+			width: map-get($dimensions, header-width-desktop);
+
+			// Layout
+			justify-content: center; // Ensure elements space out correctly -> CHANGED from space-between
+
+			&__nav-desktop {
+				display: flex; // Show desktop nav
+				align-items: center; // Vertically align nav items
+				gap: $desktop-nav-gap;
+			}
+
+			&__nav-desktop-list {
+				// Layout
+				display: flex;
+				align-items: center;
+				gap: $desktop-nav-gap;
+
+				// Box Model
+				margin: 0;
+				padding: 0;
+
+				// Visuals
+				list-style-type: none;
+			}
+
+			&__burger {
+				display: none; // Hide burger
+			}
+
+			&__nav-mobile {
+				display: none; // Hide mobile nav
+			}
+		}
+	} /* End .header block */
 
 	/* --------------------------------------------------
-BURGER
--------------------------------------------------- */
-	.header__burger {
-		display: none; /* Hidden by default, shown on mobile */
-		flex-direction: column;
-		justify-content: space-around;
-		width: map-get($sizes, burger-width);
-		height: map-get($sizes, burger-height);
-		background: transparent;
-		border: none;
-		cursor: pointer;
-		padding: 0;
-		z-index: map-get($z-indices, burger);
-	}
-
-	.header__burger.open span:first-child {
-		transform-origin: center;
-		transform: rotate(45deg) translate(0.5rem, 0.25rem);
-	}
-
-	.header__burger.open span:nth-child(2) {
-		opacity: 0;
-	}
-
-	.header__burger.open span:last-child {
-		transform-origin: center;
-		transform: rotate(-45deg) translate(0.5rem, -0.25rem);
-	}
-
-	.header__burger span {
-		width: 1.25rem;
-		height: map-get($sizes, burger-line);
-		background-color: map-get($colors, text);
-		border-radius: map-get($borders, radius-sm);
-		transition:
-			transform map-get($animations, standard),
-			opacity map-get($animations, standard);
-	}
-
-	/* Animation Classes */
+	Mobile Nav Animation Classes (Remain top-level)
+	-------------------------------------------------- */
 	.slide-in-blurred-top {
-		animation: slide-in-blurred-top 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+		animation: slide-in-blurred-top var(--transition-fade-in, 0.5s) var(--easing-smooth) both;
 	}
 
 	.slide-out-blurred-top {
-		animation: slide-out-blurred-top 0.45s cubic-bezier(0.755, 0.05, 0.855, 0.06) both;
+		animation: slide-out-blurred-top var(--transition-standard, 0.3s) var(--easing-smooth) both;
 	}
 
-	/* --------------------------------------------------
-ANIMATIONS
--------------------------------------------------- */
+	/* Keyframes for Slide-In (Blur Removed) */
 	@keyframes slide-in-blurred-top {
 		0% {
-			transform: translateY(-100%) scaleY(1.2);
-			filter: blur(5px);
+			transform: translateY(-#{spacing(less-related)}) translateX(-50%);
 			opacity: 0;
 		}
 		100% {
-			transform: translateY(0) scaleY(1);
-			filter: blur(0);
+			transform: translateY(0) translateX(-50%);
 			opacity: 1;
 		}
 	}
 
-	/* Keyframes for Slide-Out */
+	/* Keyframes for Slide-Out (Blur Removed) */
 	@keyframes slide-out-blurred-top {
 		0% {
-			transform: translateY(0) scaleY(1);
-			filter: blur(0);
+			transform: translateY(0) translateX(-50%);
 			opacity: 1;
 		}
 		100% {
-			transform: translateY(-100%) scaleY(1.2);
-			filter: blur(5px);
+			transform: translateY(-#{spacing(less-related)}) translateX(-50%);
 			opacity: 0;
 		}
-	}
-
-	/* --------------------------------------------------
-MEDIA Q
--------------------------------------------------- */
-	@media (max-width: 50.625rem) {
-		/* Add styles for mobile view here */
 	}
 </style>

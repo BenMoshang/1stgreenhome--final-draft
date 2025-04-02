@@ -1,0 +1,97 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: 
+globs: .svelte,.svelte.ts,.ts,.js,.svelte.js
+alwaysApply: false
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: project
+globs: 
+alwaysApply: true
+---
+Before diving into the best practices, please note that you may need to adapt the globs depending on your project's specific structure and file types. 
+---
+
+CRUCIAL:
+- RUNES MODE IS ENABLED!
+- on: is deprecated always reviews docs.
+
+---
+name: svelte-best-practices.mdc
+description: Best practices for Svelte 5 applications
+globs: **/*.{svelte,ts,js}
+
+- Use reactive declarations for dynamic values
+- Leverage Svelte's store for state management
+- Implement proper component lifecycle methods
+- Use slots for flexible component composition
+- Optimize performance with key blocks for lists
+
+---
+name: supabase-best-practices.mdc
+description: Best practices for using Supabase as a backend with Svelte
+globs: **/*.{svelte,ts,js}
+
+- Use Supabase's real-time subscriptions for live updates
+- Implement proper error handling for Supabase operations
+- Use Supabase's auth helpers for seamless authentication
+- Optimize queries with Supabase's filtering and sorting capabilities
+- Secure your application with row-level security policies
+
+---
+name: typescript-best-practices.mdc
+description: TypeScript coding standards and type safety guidelines
+globs: **/*.{ts,js}
+
+- Use strict null checks to prevent null pointer exceptions
+- Prefer interfaces over types for object shapes
+- Utilize type guards and assertions for runtime type checking
+- Implement proper type inference to reduce explicit type annotations
+- Use enums or union types for fixed sets of values
+
+---
+name: vite-best-practices.mdc
+description: Best practices for using Vite with Svelte
+globs: **/*.{svelte,ts,js}
+
+- Use Vite's hot module replacement for faster development
+- Optimize build performance with proper configuration
+- Leverage Vite's plugin ecosystem for extended functionality
+- Use environment variables for configuration management
+- Implement proper code splitting for better load times
+
+---
+name: eslint-best-practices.mdc
+description: Best practices for using ESLint in a Svelte project
+globs: **/*.{svelte,ts,js}
+
+- Configure ESLint to work with Svelte files
+- Use ESLint plugins specific to Svelte and TypeScript
+- Set up custom rules for project-specific coding standards
+- Integrate ESLint into your development workflow
+- Regularly update ESLint configuration to align with best practices
+
+---
+name: prettier-best-practices.mdc
+description: Best practices for using Prettier in a Svelte project
+globs: **/*.{svelte,ts,js}
+
+- Configure Prettier to work with Svelte files
+- Use Prettier's Svelte plugin for consistent formatting
+- Set up Prettier to run automatically on save or commit
+- Maintain a consistent Prettier configuration across the team
+- Use Prettier's ignore files to exclude specific files or directories
