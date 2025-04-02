@@ -202,11 +202,6 @@
 		--easing-smooth: cubic-bezier(0.32, 0.72, 0, 1);
 	}
 
-	%flex-center {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
 	/* ==================================================
 	   Component SCSS Maps
 	   ================================================== */

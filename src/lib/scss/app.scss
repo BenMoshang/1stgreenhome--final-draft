@@ -25,7 +25,11 @@ $semantic-relation-spacing: (
 @function spacing($spacing-name) {
 	@return map-get($semantic-relation-spacing, $spacing-name);
 }
-
+%flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 $borders: (
 	radius-sm: 0.625rem,
 	radius-md: 1.25rem,

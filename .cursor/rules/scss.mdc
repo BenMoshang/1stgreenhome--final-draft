@@ -13,6 +13,11 @@ description:
 globs: 
 alwaysApply: true
 ---
+---
+description: 
+globs: 
+alwaysApply: true
+---
 # SCSS Best Practices Cursor Rule
 
 ## Key Principles

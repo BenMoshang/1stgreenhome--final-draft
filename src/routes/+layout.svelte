@@ -8,69 +8,19 @@
 <svelte:head>
 	<title>1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable Solutions</title>
 </svelte:head>
-
-<Header />
-<main class="page-container">
+<div class="layout-wrapper">
+	<Header />
 	{@render children()}
-</main>
-<Footer />
+
+	<Footer />
+</div>
+
 <!-- SVG filter for noise effect -->
-<svg
-	style="position: absolute;
- width: 0; height: 0;"
->
-	<filter id="noiseFilter2">
-		<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-		<feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" />
-	</filter>
-</svg>
 
 <style lang="scss" global>
 	/* ==================================================
 	   LAYOUT-SPECIFIC STYLES (.page-container & Noise Filter)
 	   ================================================== */
-
-	.page-container {
-		/* Positioning */
-		z-index: 1;
-
-		/* Display & Box Model */
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		inline-size: 100%;
-		block-size: 100%;
-		margin: 0 auto;
-		overflow-x: clip;
-
-		/* Misc */
-		scroll-behavior: smooth;
-
-		&::after {
-			/* Content */
-			content: '';
-
-			/* Positioning */
-			position: fixed;
-			inset: 0;
-			z-index: -2;
-			margin: auto;
-
-			/* Display & Box Model */
-			inline-size: 100%;
-			block-size: 100%;
-			/* Visual */
-			filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
-			opacity: 0.08;
-			transform: translateZ(0);
-
-			/* Performance */
-			will-change: filter;
-
-			/* Misc */
-			pointer-events: none;
-		}
-	}
 
 	/* ==================================================
 	   GLOBAL STYLES & RESETS
@@ -96,13 +46,19 @@
 		scrollbar-color: var(--color-primary) hsl(0 0% 90%);
 		scrollbar-width: thin;
 	}
-
-	:global(body) {
-		/* Display & Box Model */
+	.layout-wrapper {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		overflow-x: clip;
+
+		inline-size: 100%;
+		block-size: 100%;
+	}
+	:global(body) {
+		/* Display & Box Model */
+
 		inline-size: 100%;
 		block-size: 100%;
 		overflow-x: clip;
@@ -121,7 +77,7 @@
 	/* --- Global Selection Style --- */
 	:global(::selection) {
 		color: white;
-		background: var(--color-secondary-900);
+		background: var(--color-secondary);
 		text-shadow: none;
 	}
 

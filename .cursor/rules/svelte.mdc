@@ -5,6 +5,11 @@ alwaysApply: true
 ---
 ---
 description: 
+globs: 
+alwaysApply: true
+---
+---
+description: 
 globs: .svelte,.svelte.ts,.ts,.js,.svelte.js
 alwaysApply: false
 ---
