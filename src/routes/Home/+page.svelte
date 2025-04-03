@@ -66,7 +66,7 @@
 		/* Dislay & Box Model */
 		@extend %flex-col-center;
 		gap: clamp(2.5rem, 2.157rem + 1.15vw, 3rem);
-		padding-inline: 1rem;
+		padding-inline: clamp(1rem, 0.811rem + 0.94vw, 1.5rem);
 		inline-size: 100%;
 		block-size: 100%;
 		margin: 0 auto;
@@ -75,7 +75,7 @@
 		/* Misc */
 		scroll-behavior: smooth;
 
-		&::after {
+		&::before {
 			/* Content */
 			content: '';
 

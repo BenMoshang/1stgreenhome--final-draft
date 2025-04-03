@@ -31,7 +31,7 @@
 			title0: ``,
 			title: ` Empower Your Business For`,
 			title2: `A Greener Tomorrow`,
-			subtitle: `Save money, cut energy use, and protect the planet.`,
+			subtitle: `Save money, cut energy use, and protect the planet. `,
 			subtitle2: `Start with our free energy audit to start your sustainable journey!`,
 			benefit1: `kWh Savings`, // Unused
 			benefit2: `Overall Client Savings`, // Unused
@@ -171,11 +171,12 @@
 	   -------------------------------------------------- */
 		&__label {
 			@extend %text-label--primary;
-			margin-bottom: spacing(close-related);
+			margin-bottom: spacing(semi-related);
 		}
 
 		&__title {
 			@extend %h1;
+
 			margin-bottom: spacing(semi-related);
 		}
 
@@ -195,7 +196,7 @@
 
 		&__subtitle {
 			@extend %p;
-			margin-bottom: spacing(less-related);
+			margin-bottom: spacing(not-related);
 		}
 
 		&__button {
@@ -219,6 +220,7 @@
 			text-wrap: nowrap;
 			box-shadow: var(--shadow-medium--light);
 			gap: 0.5rem;
+			transition: all 0.2s ease-in-out;
 
 			/* A11Y: Add a distinct outline for keyboard focus */
 			outline: 0.125rem solid transparent; /* Make space for the outline */
@@ -299,10 +301,6 @@
 			object-fit: cover;
 			transition: transform 0.3s ease-in-out;
 			filter: saturate(1.2) drop-shadow(0.3125rem 0.3125rem 0.5rem hsla(151deg, 25%, 61%, 0.46));
-
-			&:hover {
-				transform: scale(1.05); // Use direct value for $layout(button-hover-scale)
-			}
 		}
 
 		/* --------------------------------------------------

@@ -280,13 +280,17 @@ $layout: (
 
 %text-label--primary {
 	text-wrap: nowrap;
-	color: var(--color-secondary-900);
+	color: var(--color-secondary);
 	font-family: var(--font-family-bold);
 	font-weight: 300;
 	width: fit-content;
 	font-size: var(--label-p);
+	background-color: hsl(206, 18%, 92%);
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
+	padding-inline: 0.5rem;
+	padding-block: 0.25rem;
+	border-radius: 2.75rem;
 	line-height: 1.5;
 }
 
