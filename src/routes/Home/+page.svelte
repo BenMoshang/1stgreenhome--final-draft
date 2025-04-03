@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Hero from '$lib/components/Hero.svelte';
+	import Services from '$lib/components/Services.svelte';
 	// These would be imports for other sections once migrated
 	// import Stepper from '$lib/components/sections/Stepper.svelte';
 	// import Testimonials from '$lib/components/sections/Testimonials.svelte';
@@ -47,19 +48,18 @@
 
 <main class="page-container">
 	<Hero />
+	<Services />
 </main>
 <svg
 	style="position: absolute;
  width: 0; height: 0;"
 >
-	<filter id="noiseFilter2">
-		<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-		<feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" />
-	</filter>
 </svg>
 
 <style lang="scss">
 	.page-container {
+		max-inline-size: $PAGE_MAX_WIDTH;
+
 		/* Positioning */
 		z-index: 1;
 
@@ -72,36 +72,5 @@
 		margin: 0 auto;
 		overflow-x: clip;
 		position: relative;
-		/* Misc */
-		scroll-behavior: smooth;
-
-		&::before {
-			/* Content */
-			content: '';
-
-			/* Positioning */
-			position: fixed;
-			inset: 0;
-			z-index: -2;
-			margin: auto;
-
-			/* Display & Box Model */
-			inline-size: 100%;
-			block-size: 100%;
-			/* Visual */
-			filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
-			opacity: 0.05;
-			transform: translateZ(0);
-
-			/* Performance */
-			will-change: filter;
-
-			/* Misc */
-			pointer-events: none;
-		}
-
-		& > * {
-			outline: 1px solid red;
-		}
 	}
 </style>

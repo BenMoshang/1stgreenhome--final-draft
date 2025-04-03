@@ -3,6 +3,7 @@
 	interface NavLink {
 		link: string;
 		fragment: string;
+		iconSvg?: string; // New optional property for SVG icon markup
 		text: string;
 		class?: string; // Make class optional
 	}
@@ -12,12 +13,37 @@
 
 	// Links data using the NavLink interface
 	const linksLeft: NavLink[] = [
-		{ link: '/home', fragment: 'services', text: 'Services' },
-		{ link: '/home', fragment: 'projects', text: 'Projects' }
+		{
+			link: '/home',
+			fragment: 'services',
+			iconSvg:
+				'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .75a8.25 8.25 0 0 0-4.135 15.39c.686.398 1.115 1.008 1.134 1.623a.75.75 0 0 0 .577.706c.352.083.71.148 1.074.195.323.041.6-.218.6-.544v-4.661a6.714 6.714 0 0 1-.937-.171.75.75 0 1 1 .374-1.453 5.261 5.261 0 0 0 2.626 0 .75.75 0 1 1 .374 1.452 6.712 6.712 0 0 1-.937.172v4.66c0 .327.277.586.6.545.364-.047.722-.112 1.074-.195a.75.75 0 0 0 .577-.706c.02-.615.448-1.225 1.134-1.623A8.25 8.25 0 0 0 12 .75Z" /><path fill-rule="evenodd" d="M9.013 19.9a.75.75 0 0 1 .877-.597 11.319 11.319 0 0 0 4.22 0 .75.75 0 1 1 .28 1.473 12.819 12.819 0 0 1-4.78 0 .75.75 0 0 1-.597-.876ZM9.754 22.344a.75.75 0 0 1 .824-.668 13.682 13.682 0 0 0 2.844 0 .75.75 0 1 1 .156 1.492 15.156 15.156 0 0 1-3.156 0 .75.75 0 0 1-.668-.824Z" clip-rule="evenodd" /></svg>',
+			text: 'Services'
+		},
+		{
+			link: '/home',
+			fragment: 'projects',
+			iconSvg:
+				'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M4.5 2.25a.75.75 0 0 0 0 1.5v16.5h-.75a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5h-.75V3.75a.75.75 0 0 0 0-1.5h-15ZM9 6a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H9Zm-.75 3.75A.75.75 0 0 1 9 9h1.5a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM9 12a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H9Zm3.75-5.25A.75.75 0 0 1 13.5 6H15a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM13.5 9a.75.75 0 0 0 0 1.5H15A.75.75 0 0 0 15 9h-1.5Zm-.75 3.75a.75.75 0 0 1 .75-.75H15a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM9 19.5v-2.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-.75.75h-4.5A.75.75 0 0 1 9 19.5Z" clip-rule="evenodd" /></svg>',
+			text: 'Projects'
+		}
 	];
 	const linksRight: NavLink[] = [
-		{ link: '/home', fragment: 'faqs', text: 'FAQs' },
-		{ link: '/home', fragment: 'cta', text: 'Contact', class: 'nav-link--cta' } // Class is defined here
+		{
+			link: '/home',
+			fragment: 'faqs',
+			iconSvg:
+				'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" /></svg>',
+			text: 'FAQs'
+		},
+		{
+			link: '/home',
+			fragment: 'cta',
+			iconSvg:
+				'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" /><path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" /></svg>',
+			text: 'Contact',
+			class: 'nav-link--cta'
+		} // Class is defined here
 	];
 
 	// State variables using Svelte 5 $state
@@ -112,9 +138,6 @@
 </script>
 
 <header class="header" class:header--hidden={isHeaderHidden}>
-	<!-- Logo Wrapper (moved here, first child) -->
-	<!-- REMOVED: <div class="header__logo-wrapper"> ... </div> -->
-
 	<!-- Wrap desktop nav in a <nav> element for better semantics -->
 	<nav class="header__nav-desktop" aria-label="Primary desktop navigation">
 		<!-- Left Links -->
@@ -126,13 +149,16 @@
 						tabindex="0"
 						class="header__nav-desktop-link {link.class || ''}"
 					>
-						{@html link.text}
+						{#if link.iconSvg}
+							{@html link.iconSvg}
+						{/if}
+						<span>{@html link.text}</span>
 					</a>
 				</li>
 			{/each}
 		</ul>
 
-		<!-- Logo wrapper moved here -->
+		<!-- Logo wrapper moved back inside nav -->
 		<div class="header__logo-wrapper">
 			<img
 				class="header__logo"
@@ -152,7 +178,10 @@
 						tabindex="0"
 						class="header__nav-desktop-link {link.class || ''}"
 					>
-						{@html link.text}
+						{#if link.iconSvg}
+							{@html link.iconSvg}
+						{/if}
+						<span>{@html link.text}</span>
 					</a>
 				</li>
 			{/each}
@@ -189,7 +218,10 @@
 					tabindex={isMenuOpen ? 0 : -1}
 					class="header__nav-mobile-link {link.class || ''}"
 				>
-					{@html link.text}
+					{#if link.iconSvg}
+						{@html link.iconSvg}
+					{/if}
+					<span>{@html link.text}</span>
 				</a>
 			</li>
 		{/each}
@@ -253,6 +285,8 @@
 	   Header Block (.header)
 	   ================================================== */
 	.header {
+		max-inline-size: $PAGE_MAX_WIDTH;
+
 		// Positioning
 		position: fixed;
 		top: spacing(less-related);
@@ -265,7 +299,6 @@
 		align-items: center;
 
 		// Box Model
-		max-inline-size: $PAGE_MAX_WIDTH;
 		width: calc(100% - var(--page-inline-padding));
 		min-height: map-get($dimensions, header-height);
 		margin: 0 auto;
@@ -273,7 +306,7 @@
 		padding-block: primitive-spacing(xxs);
 
 		// Visuals
-		background-color: hsla(var(--color-light-hsl), 0.83);
+		background-color: hsl(206, 18%, 92%, 0.83); // Use HSL for better readability
 		backdrop-filter: blur(15px) saturate(200%);
 		border-radius: var(--rounded-border-radius);
 		box-shadow: var(--shadow-low--light);
@@ -296,8 +329,8 @@
 			@extend %flex-center;
 			// Box Model
 			flex-shrink: 0; // Prevent shrinking
-			width: 3rem;
-			height: 3rem;
+			width: 2.25rem;
+			height: 2.25rem;
 			overflow: hidden;
 			padding: 0.375rem;
 			// Visuals
@@ -325,8 +358,20 @@
 
 		/* Element: Desktop Nav Container */
 		&__nav-desktop {
-			display: none; // Hidden by default
-			gap: $desktop-nav-gap;
+			/* MODIFIED: Use display: contents by default (mobile) */
+			/* This allows logo and lists inside to be positioned by the parent .header flexbox */
+			display: contents;
+			/* Removed align-items and gap here, apply only on desktop */
+		}
+
+		/* ADDED: Hide nav lists by default (mobile) */
+		&__nav-desktop-list {
+			display: none; // Hide lists on mobile
+			// Box Model
+			margin: 0;
+			padding: 0;
+			// Visuals
+			list-style-type: none;
 		}
 
 		/* Element: Mobile Navigation Container */
@@ -393,7 +438,9 @@
 			position: relative; // For pseudo-element
 
 			// Layout
-			display: block;
+			display: inline-flex; // Arrange icon and text horizontally
+			align-items: center; // Vertically align icon and text
+			gap: spacing(most-related); // Add space between icon and text
 
 			// Box Model
 			max-inline-size: fit-content; // Shrink-wrap width
@@ -406,6 +453,14 @@
 			font-size: 1rem;
 			// Animation & Interaction
 			transition: color var(--transition-duration) ease-in-out; // Removed transform transition here as it's not explicitly used
+
+			/* Style the SVG icon within the link */
+			svg {
+				width: 1.25em; // Size relative to font size
+				height: 1.25em;
+				flex-shrink: 0; // Prevent icon from shrinking
+				fill: currentColor; // Optional: Make icon color inherit text color
+			}
 
 			/* Underline Pseudo-element */
 			&::after {
@@ -438,6 +493,7 @@
 			/* Modifier: CTA Link Style */
 			&.nav-link--cta {
 				color: var(--color-primary);
+				font-weight: 600;
 				// Animation & Interaction
 				transition:
 					transform var(--transition-duration) ease-in-out,
@@ -525,15 +581,20 @@
 
 			// Layout
 			justify-content: center; // Ensure elements space out correctly -> CHANGED from space-between
-
+			&__logo-wrapper {
+				width: 3rem;
+				height: 3rem;
+			}
 			&__nav-desktop {
-				display: flex; // Show desktop nav
+				/* MODIFIED: Set back to flex for desktop */
+				display: flex;
 				align-items: center; // Vertically align nav items
 				gap: $desktop-nav-gap;
 			}
 
 			&__nav-desktop-list {
 				// Layout
+				/* MODIFIED: Show lists on desktop */
 				display: flex;
 				align-items: center;
 				gap: $desktop-nav-gap;

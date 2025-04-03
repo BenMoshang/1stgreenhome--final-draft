@@ -116,7 +116,15 @@
 
 <style lang="scss">
 	// No global imports needed here; rely on gloally available CSS custom properties from app.scss
-
+	/* Apply box-sizing globally if not already done */
+	*,
+	*::before,
+	*::after,
+	*::backdrop {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
 	/* --------------------------------------------------
      Main Container -> Renamed to Hero Section
    -------------------------------------------------- */
@@ -127,22 +135,7 @@
 		@extend %flex-center;
 
 		width: 100%;
-		position: relative;
-
-		&::after {
-			content: '';
-			position: absolute;
-			inset: 0;
-			margin: auto;
-			width: 100%;
-			height: 100%;
-			background-image: url('/assets/landing-page/leaves.svg');
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			opacity: 0.08;
-			z-index: -10;
-		}
+		height: 100%;
 	}
 
 	/* --------------------------------------------------
@@ -164,6 +157,7 @@
 			@extend %flex-col-center;
 			width: 100%;
 			text-align: center;
+			max-width: 30rem;
 		}
 
 		/* --------------------------------------------------
@@ -250,7 +244,7 @@
 			@extend %flex-center;
 			position: relative;
 			width: 100%;
-			max-width: 43.75rem; // Keep max-width on smaller screens
+			max-width: 30rem; // Keep max-width on smaller screens
 			padding: 1rem; // primitive-spacing(md)
 
 			// Variables for pseudo-element positioning/sizing

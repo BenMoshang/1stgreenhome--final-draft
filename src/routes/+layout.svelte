@@ -12,6 +12,10 @@
 {@render children()}
 
 <Footer />
+<filter id="noiseFilter2">
+	<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+	<feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" />
+</filter>
 
 <!-- SVG filter for noise effect -->
 
@@ -54,16 +58,55 @@
 		inline-size: 100%;
 		block-size: 100%;
 		overflow-x: clip;
-		max-inline-size: $PAGE_MAX_WIDTH;
 		/* Typography */
 		font-family: var(--font-family-regular, system-ui);
 		font-smooth: always;
 		-webkit-font-smoothing: subpixel-antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-rendering: geometricprecision;
-
+		position: relative;
 		/* Misc */
 		scroll-behavior: smooth;
+		&::before {
+			/* Content */
+			content: '';
+
+			/* Positioning */
+			position: absolute;
+			inset: 0;
+			z-index: -2;
+			margin: auto;
+
+			/* Display & Box Model */
+			inline-size: 100%;
+			block-size: 100%;
+			/* Visual */
+			filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
+			opacity: 0.05;
+			transform: translateZ(0);
+
+			/* Performance */
+			will-change: filter;
+
+			/* Misc */
+			pointer-events: none;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			margin: auto;
+			width: 100%;
+			height: 100%;
+			background-image: url('/assets/landing-page/leaves.svg');
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			opacity: 0.05;
+			z-index: -10;
+		}
 	}
 
 	/* --- Global Selection Style --- */
