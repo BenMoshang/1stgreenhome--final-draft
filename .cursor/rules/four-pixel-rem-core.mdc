@@ -8,6 +8,11 @@ description:
 globs: 
 alwaysApply: true
 ---
+---
+description: 
+globs: 
+alwaysApply: true
+---
 
 name: project-design-system-rules.mdc
 description: Core design system foundations for the project, detailing spacing, grid, color, typography (via classes), components, and accessibility based on defined SCSS tokens and fluid typography (assumes 1rem=16px base for REM interpretation).

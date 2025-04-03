@@ -270,6 +270,13 @@ $layout: (
 	--button-hover-scale: #{map-get($layout, button-hover-scale)};
 	--button-active-scale: #{map-get($layout, button-active-scale)};
 }
+$light-bg: hsl(0, 0%, 92%);
+
+$container-width-2: $PAGE_MAX_WIDTH / 2;
+$container-width-3: $PAGE_MAX_WIDTH / 3;
+
+$light-1: hsl(0, 0%, 100%);
+$light-2: hsl(0, 0%, 90%);
 
 %text-label--primary {
 	text-wrap: nowrap;
@@ -278,7 +285,7 @@ $layout: (
 	font-weight: 300;
 	width: fit-content;
 	font-size: var(--label-p);
-	background-color: hsl(206, 18%, 92%);
+	background-color: $light-bg;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	padding-inline: 0.5rem;
@@ -286,7 +293,21 @@ $layout: (
 	border-radius: 2.75rem;
 	line-height: 1.5;
 }
-
+%text-label--secondary {
+	text-wrap: nowrap;
+	color: var(--color-light);
+	font-family: var(--font-family-bold);
+	font-weight: 300;
+	width: fit-content;
+	font-size: var(--label-p);
+	background-color: hsl(156, 25%, 45%);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	padding-inline: 0.5rem;
+	padding-block: 0.25rem;
+	border-radius: 2.75rem;
+	line-height: 1.5;
+}
 %p {
 	font-weight: 400;
 	line-height: 1.5;
@@ -296,7 +317,5 @@ $layout: (
 	color: var(--color-p);
 	text-wrap: pretty;
 	text-overflow: ellipsis;
-	max-inline-size: 45ch;
+	max-inline-size: 60ch;
 }
-
-$light-bg: hsl(206, 18%, 92%);

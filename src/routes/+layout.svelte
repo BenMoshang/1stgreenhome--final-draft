@@ -53,7 +53,7 @@
 	:global(body) {
 		/* Display & Box Model */
 		@extend %flex-col-center;
-		padding-top: 5rem; // Custom top padding
+		padding-top: 6rem; // Custom top padding
 
 		inline-size: 100%;
 		block-size: 100%;
