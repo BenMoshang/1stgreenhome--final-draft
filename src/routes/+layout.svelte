@@ -8,12 +8,10 @@
 <svelte:head>
 	<title>1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable Solutions</title>
 </svelte:head>
-<div class="layout-wrapper">
-	<Header />
-	{@render children()}
+<Header />
+{@render children()}
 
-	<Footer />
-</div>
+<Footer />
 
 <!-- SVG filter for noise effect -->
 
@@ -40,24 +38,18 @@
 		/* Display & Box Model */
 		inline-size: 100%;
 		min-block-size: 100svh;
+		@extend %flex-col-center;
 
 		/* Visual */
 		background: var(--color-light);
 		scrollbar-color: var(--color-primary) hsl(0 0% 90%);
 		scrollbar-width: thin;
 	}
-	.layout-wrapper {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		overflow-x: clip;
 
-		inline-size: 100%;
-		block-size: 100%;
-	}
 	:global(body) {
 		/* Display & Box Model */
+		@extend %flex-col-center;
+		padding-top: 5rem; // Custom top padding
 
 		inline-size: 100%;
 		block-size: 100%;

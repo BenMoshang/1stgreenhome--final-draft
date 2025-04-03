@@ -67,7 +67,7 @@
 </script>
 
 {#if hero}
-	<section id="hero" class="main">
+	<section id="hero" class="hero-section">
 		<section class="hero">
 			<div class="hero__image-container" in:fadeInUpTransition={{ delay: 1000, duration: 500 }}>
 				<img
@@ -82,14 +82,14 @@
 			</div>
 
 			<header class="hero__text">
-				<p class="hero__label text-label" in:fadeInUpTransition={{ delay: 0, duration: 500 }}>
+				<p class="hero__label" in:fadeInUpTransition={{ delay: 0, duration: 500 }}>
 					{hero.label}
 				</p>
-				<h1 class="hero__title text-h1" in:fadeInUpTransition={{ delay: 200, duration: 500 }}>
+				<h1 class="hero__title" in:fadeInUpTransition={{ delay: 200, duration: 500 }}>
 					{hero.title0 + hero.title}
 					<span class="hero__title-gradient">{hero.title2}</span>
 				</h1>
-				<p class="hero__subtitle text-p" in:fadeInUpTransition={{ delay: 400, duration: 500 }}>
+				<p class="hero__subtitle" in:fadeInUpTransition={{ delay: 400, duration: 500 }}>
 					{hero.subtitle + hero.subtitle2}
 				</p>
 
@@ -102,11 +102,11 @@
 					{hero.button}
 					<img
 						src="/assets/landing-page/envelope-regular.svg"
-						width="16 // Apply animation with delay"
+						width="16"
 						height="16"
 						alt=""
 						aria-hidden="true"
-						class="icon"
+						class="hero__button-icon"
 					/>
 				</button>
 			</header>
@@ -118,89 +118,32 @@
 	// No global imports needed here; rely on gloally available CSS custom properties from app.scss
 
 	/* --------------------------------------------------
-     Main Container
+     Main Container -> Renamed to Hero Section
    -------------------------------------------------- */
-	.main {
-		--main-padding: clamp(1rem, 0.824rem + 0.75vw, 1.5rem);
+	.hero-section {
 		--grid-gap-size: 2rem;
-		--icon-dimension: 2rem;
-		--button-hover-scale: 1.05;
-		--button-active-scale: 0.95;
-		--rounded-border-radius: 62.4375rem;
-		--full-border-radius: 624.9375rem;
-		--small-box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
-		--hover-box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.15);
-		--overlay-background-gradient: radial-gradient(
-			circle,
-			rgba(0, 0, 0, 0) 0%,
-			rgba(0, 0, 0, 0.2) 50%,
-			rgba(0, 0, 0, 0.527) 100%
-		);
-		--benefit-border-style: var(--color-primary) 0.0625rem dotted;
-		--text-margin-top-size: 0.9375rem;
-		--text-margin-bottom-size: -0.625rem;
+
 		--text-shadow-effect: drop-shadow(0.0625rem 0.0625rem 0.0625rem rgba(255, 255, 255, 0.969));
 		@extend %flex-center;
 
 		width: 100%;
-	}
-	.main-text-container__button {
-		cursor: pointer;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		// A11Y Contrast Check: Ensure var(--convex-secondary) background and var(--color-light) text meet WCAG AA.
-		background: var(--convex-secondary);
-		border: 0.0625rem solid var(--color-accent);
-		border-radius: var(--rounded-border-radius);
-		box-shadow:
-			var(--small-box-shadow),
-			inset 0 0.0625rem 0 rgba(255, 255, 255, 0.5);
-		color: var(--color-light);
-		font-size: var(--label-p);
-		line-height: var(--button-line-height);
-		padding: 0.5rem 1.5rem;
-		text-wrap: nowrap;
-		text-decoration: none;
-		transition:
-			transform 0.2s ease-in-out,
-			box-shadow 0.2s ease-in-out,
-			filter 0.2s ease-in-out;
-		gap: 0.75rem;
-		cursor: pointer;
+		position: relative;
 
-		/* A11Y: Add a distinct outline for keyboard focus */
-		outline: 0.125rem solid transparent; /* Make space for the outline */
-		outline-offset: 0.125rem; /* Offset to avoid overlapping the element */
-		transition:
-			transform 0.2s ease-in-out,
-			box-shadow 0.2s ease-in-out,
-			filter 0.2s ease-in-out,
-			outline-color 0.1s ease-in-out; /* Added transition for outline */
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			margin: auto;
+			width: 100%;
+			height: 100%;
+			background-image: url('/assets/landing-page/leaves.svg');
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0.08;
+			z-index: -10;
+		}
 	}
-
-	.main-text-container__button:hover {
-		filter: brightness(1.1);
-		transform: scale(var(--button-hover-scale));
-		box-shadow: var(--hover-box-shadow);
-	}
-
-	/* A11Y: Use :focus-visible for keyboard-only focus styles */
-	.main-text-container__button:focus-visible {
-		// A11Y Contrast Check: Ensure this outline color has sufficient contrast against the surrounding background.
-		// Consider using a variable like --color-focus-ring or a high-contrast color.
-		outline-color: var(--color-accent, blue); /* Use accent or a fallback */
-		filter: brightness(1.1); /* Optional: Keep hover brightness */
-		box-shadow: var(--hover-box-shadow); /* Optional: Keep hover shadow */
-	}
-
-	.main-text-container__button:active {
-		transform: scale(var(--button-active-scale));
-	}
-
-	/* --------------------------------------------------
-     Button Styles
-   -------------------------------------------------- */
 
 	/* --------------------------------------------------
      Hero Container
@@ -209,9 +152,8 @@
 		display: grid;
 		grid-template-areas: 'main-text' 'visuals'; // Mobile first
 		grid-template-columns: 1fr;
-		gap: 2rem; // primitive-spacing(xl)
+		gap: spacing(not-related); // primitive-spacing(xl)
 		width: 100%;
-		// border-radius: var(--border-radius); // Apply if needed (radius-md)
 
 		/* --------------------------------------------------
 		 Hero Text Container (Element)
@@ -219,13 +161,8 @@
 		&__text {
 			grid-area: main-text;
 			place-self: center;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
+			@extend %flex-col-center;
 			width: 100%;
-			padding: 1rem; // primitive-spacing(md)
-			gap: 1rem; // spacing(less-related)
 			text-align: center;
 		}
 
@@ -233,26 +170,18 @@
 		 Hero Elements within Text Container
 	   -------------------------------------------------- */
 		&__label {
-			// Inherits typography from .text-label class (assumed global)
-			text-wrap: nowrap;
-			// A11Y Contrast Check: Ensure var(--color-light) text has sufficient contrast against var(--convex-secondary) background.
-			color: var(--color-light);
-			background: var(--convex-secondary); // Use gradient CSS var
-			font-weight: 500; // Keep specific weight
-			padding-inline: 1rem;
-			padding-block: 0.25rem;
-			opacity: 0.9;
-			border-radius: var(--rounded-border-radius); // Use CSS var for pill radius
-			margin-bottom: 1rem; // spacing(less-related)
-			// Use shadow CSS var if appropriate, otherwise define using color vars
-			box-shadow: 0.1875rem 0.1875rem 0.5rem hsla(var(--shadow-color, 151deg 25% 61%) / 0.2);
+			@extend %text-label--primary;
+			margin-bottom: spacing(close-related);
 		}
 
 		&__title {
-			max-width: 20ch; // $layout(max-width-title)
+			@extend %h1;
+			margin-bottom: spacing(semi-related);
 		}
 
 		&__title-gradient {
+			@extend %h1;
+
 			// Inherits font styles from parent H1
 			color: transparent;
 			// A11Y Contrast Check: Gradient text can be tricky. Ensure sufficient contrast exists *throughout* the gradient's transition against the background. Test thoroughly.
@@ -262,71 +191,51 @@
 			background-clip: text;
 			-webkit-text-fill-color: transparent;
 			animation: gradient-loop 5s ease-in-out infinite;
-			filter: drop-shadow(0rem 0.0625rem 0.125rem hsla(var(--shadow-color, 151deg 25% 61%) / 0.5));
 		}
 
 		&__subtitle {
-			max-width: 50ch; // $layout(max-width-description)
-			text-wrap: pretty;
-			// A11Y Contrast Check: Ensure var(--color-p) text has sufficient contrast against the background.
-			color: var(--color-p); // Use CSS var for paragraph color
+			@extend %p;
+			margin-bottom: spacing(less-related);
 		}
 
 		&__button {
 			cursor: pointer;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			@extend %flex-center;
 			// A11Y Contrast Check: Ensure var(--convex-secondary) background and var(--color-light) text meet WCAG AA.
 			background: var(--convex-secondary);
+			border-radius: var(--border-radius);
+
 			border: 0.0625rem solid var(--color-accent);
-			border-radius: var(--rounded-border-radius);
 			box-shadow:
 				var(--small-box-shadow),
 				inset 0 0.0625rem 0 rgba(255, 255, 255, 0.5);
 			color: var(--color-light);
-			font-size: var(--label-p);
-			line-height: var(--button-line-height);
-			padding: 0.5rem 1.5rem;
+			font-family: var(--font-family-bold);
+			font-size: var(--p);
+			font-weight: 600;
+			letter-spacing: -0.02em;
+			line-height: 1.5;
+			padding: 0.5rem 1rem;
 			text-wrap: nowrap;
-			text-decoration: none;
-			transition:
-				transform 0.2s ease-in-out,
-				box-shadow 0.2s ease-in-out,
-				filter 0.2s ease-in-out;
-			gap: 0.75rem;
+			box-shadow: var(--shadow-medium--light);
+			gap: 0.5rem;
 
 			/* A11Y: Add a distinct outline for keyboard focus */
 			outline: 0.125rem solid transparent; /* Make space for the outline */
 			outline-offset: 0.125rem; /* Offset to avoid overlapping the element */
-			transition:
-				transform 0.2s ease-in-out,
-				box-shadow 0.2s ease-in-out,
-				filter 0.2s ease-in-out,
-				outline-color 0.1s ease-in-out; /* Added transition for outline */
 
+			& svg {
+				width: 1em;
+				height: 1em;
+			}
 			&:hover {
 				filter: brightness(1.1);
-				transform: scale(var(--button-hover-scale));
+				transform: scale(1.05);
 				box-shadow: var(--hover-box-shadow);
 			}
 
-			/* A11Y: Use :focus-visible for keyboard-only focus styles */
-			&:focus-visible {
-				// A11Y Contrast Check: Ensure this outline color has sufficient contrast against the surrounding background.
-				// Consider using a variable like --color-focus-ring or a high-contrast color.
-				outline-color: var(--color-accent, blue); /* Use accent or a fallback */
-				filter: brightness(1.1); /* Optional: Keep hover brightness */
-				box-shadow: var(--hover-box-shadow); /* Optional: Keep hover shadow */
-			}
-
 			&:active {
-				transform: scale(var(--button-active-scale));
-			}
-
-			.icon {
-				// Styles specific to the icon inside the button, if any
-				// e.g., vertical-align: middle;
+				transform: scale(0.95);
 			}
 		}
 
@@ -336,9 +245,7 @@
 		&__image-container {
 			grid-area: visuals;
 			place-self: center;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			@extend %flex-center;
 			position: relative;
 			width: 100%;
 			max-width: 43.75rem; // Keep max-width on smaller screens
@@ -362,23 +269,23 @@
 			}
 
 			&::before {
-				// Assumes abstract.webp is findable at this path relative to public dir
 				background-image: url(/assets/landing-page/abstract.webp);
 				background-size: cover;
 				mix-blend-mode: screen;
-				filter: brightness(1.5);
+				filter: brightness(1.1);
 				background-position: 0% 100%;
-				z-index: -1;
+				z-index: 0;
 			}
 
 			&::after {
-				background: var(--convex-secondary); // Use gradient CSS var
-				box-shadow: var(--shadow-high--light, none); // Use shadow var with fallback
+				mix-blend-mode: soft-light;
+				background: var(--convex-primary); // Use gradient CSS var
+				box-shadow: var(--shadow-medium--light); // Use shadow var with fallback
 				background-size: contain;
 				background-repeat: no-repeat;
-				filter: brightness(0.7) saturate(0.6);
+				filter: brightness(0.5) saturate(1.1);
 				background-position: center;
-				z-index: -2;
+				z-index: -1;
 			}
 		}
 
@@ -391,8 +298,7 @@
 			height: auto;
 			object-fit: cover;
 			transition: transform 0.3s ease-in-out;
-			filter: saturate(0.9)
-				drop-shadow(0.3125rem 0.3125rem 0.5rem hsla(var(--shadow-color, 151deg 25% 61%) / 0.46));
+			filter: saturate(1.2) drop-shadow(0.3125rem 0.3125rem 0.5rem hsla(151deg, 25%, 61%, 0.46));
 
 			&:hover {
 				transform: scale(1.05); // Use direct value for $layout(button-hover-scale)
@@ -403,7 +309,7 @@
 		 Media Queries (Laptop View Adjustments)
 	   -------------------------------------------------- */
 		// 75rem = 1200px. Use em for accessibility (1200/16 = 75em)
-		@media (min-width: 75em) {
+		@media (min-width: 73em) {
 			// Adjustments for the .hero block itself
 			grid-template-areas: 'main-text visuals';
 			grid-template-columns: 1fr 1fr;
@@ -418,7 +324,6 @@
 			}
 
 			&__label {
-				// No specific alignment needed now due to flex-start on parent
 			}
 
 			&__image-container {
@@ -450,55 +355,9 @@
 	}
 
 	/* --------------------------------------------------
-	 Animations Keyframes (fadeInUp) - REMOVE
-   -------------------------------------------------- */
-	/* @keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	} */
-
-	// Base animation class (keep global for utility) - REMOVE
-	/* .animate-fade-in-up {
-		opacity: 0; // Start invisible
-		will-change: opacity, transform;
-		// Use direct value for fade-in transition duration (0.5s)
-		animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0, 1) forwards;
-	} */
-
-	// Delay utility classes (keep global for utility) - REMOVE
-	/* .animate-delay-0 {
-		animation-delay: 0ms;
-	}
-	.animate-delay-200 {
-		animation-delay: 200ms;
-	}
-	.animate-delay-400 {
-		animation-delay: 400ms;
-	}
-	.animate-delay-600 {
-		animation-delay: 600ms;
-	}
-	.animate-delay-1000 {
-		animation-delay: 1000ms;
-	} */
-
-	/* --------------------------------------------------
 	 Reduced Motion Preferences
    -------------------------------------------------- */
 	@media (prefers-reduced-motion: reduce) {
-		/* .animate-fade-in-up {
-			animation: none;
-			opacity: 1;
-			transform: none;
-		} */
-
-		// Optionally keep the global transition disable from best practices
 		*, /* Apply to all elements for broad coverage */
 		*::before,
 		*::after {

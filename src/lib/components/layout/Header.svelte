@@ -270,7 +270,7 @@
 		min-height: map-get($dimensions, header-height);
 		margin: 0 auto;
 		padding-inline: primitive-spacing(md);
-		padding-block: primitive-spacing(xs);
+		padding-block: primitive-spacing(xxs);
 
 		// Visuals
 		background-color: hsla(var(--color-light-hsl), 0.83);
@@ -399,7 +399,7 @@
 			max-inline-size: fit-content; // Shrink-wrap width
 
 			// Typography & Visuals
-			@include p; // Apply base paragraph styles
+			@extend %p; // Apply base paragraph styles
 			font-weight: 500;
 			text-decoration: none;
 			border-radius: var(--rounded-border-radius);

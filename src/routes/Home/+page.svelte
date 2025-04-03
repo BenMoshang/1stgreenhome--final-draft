@@ -62,16 +62,11 @@
 	.page-container {
 		/* Positioning */
 		z-index: 1;
-		padding-top: 3rem; // Custom top padding
 
-		/* Display & Box Model */
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: clamp(5rem, 4.34rem + 2.82vw, 6.875rem);
-
+		/* Dislay & Box Model */
+		@extend %flex-col-center;
+		gap: clamp(2.5rem, 2.157rem + 1.15vw, 3rem);
+		padding-inline: 1rem;
 		inline-size: 100%;
 		block-size: 100%;
 		margin: 0 auto;
@@ -103,6 +98,10 @@
 
 			/* Misc */
 			pointer-events: none;
+		}
+
+		& > * {
+			outline: 1px solid red;
 		}
 	}
 </style>
