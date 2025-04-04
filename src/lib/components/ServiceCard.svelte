@@ -46,7 +46,7 @@
 		width: 100%;
 		border-radius: $card-border-radius;
 		overflow: hidden;
-		box-shadow: var(--shadow-medium--secondary);
+		box-shadow: var(--shadow-medium--light);
 		white-space: nowrap;
 		display: flex;
 		flex-direction: column;
@@ -105,7 +105,6 @@
 	// --- Content Styles ---
 	.service-card__content {
 		flex: 1;
-
 		position: absolute;
 		bottom: 0;
 		left: 0;

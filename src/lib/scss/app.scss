@@ -102,7 +102,7 @@ $typography: (
 }
 
 $colors: (
-	light: hsl(165, 100%, 99%),
+	light: hsl(152, 41%, 93%),
 	neutral: hsl(165, 100%, 88%),
 	dark: hsl(0, 0%, 10%),
 	transitional: hsl(0, 0%, 53%),
@@ -111,7 +111,7 @@ $colors: (
 	// Base primary color (Material Tone ~50)
 	secondary: hsl(156, 25%, 45%),
 	// Material Secondary: Often lower chroma, similar hue/tone to primary
-	accent: #98d1b9,
+	accent: hsl(155, 39%, 59%),
 	// Material Tertiary (replaces accent): Contrasting hue for accents
 	secondary-900: hsl(157, 67%, 20%) // Dark tone of Secondary (Material Tone ~10/20)
 );
@@ -277,36 +277,42 @@ $container-width-3: $PAGE_MAX_WIDTH / 3;
 
 $light-1: hsl(0, 0%, 100%);
 $light-2: hsl(0, 0%, 90%);
+$light-3: hsl(0, 0%, 80%);
 
 %text-label--primary {
 	text-wrap: nowrap;
-	color: var(--color-secondary);
 	font-family: var(--font-family-bold);
 	font-weight: 300;
 	width: fit-content;
-	font-size: var(--label-p);
 	background-color: $light-bg;
+	color: var(--color-secondary);
+
+	font-size: var(--label-p);
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	padding-inline: 0.5rem;
 	padding-block: 0.25rem;
 	border-radius: 2.75rem;
 	line-height: 1.5;
+	box-shadow: var(--shadow-low--light);
 }
+
 %text-label--secondary {
 	text-wrap: nowrap;
-	color: var(--color-light);
 	font-family: var(--font-family-bold);
 	font-weight: 300;
 	width: fit-content;
+	background-color: #c0e3d4;
+	color: var(--color-p);
+
 	font-size: var(--label-p);
-	background-color: hsl(156, 25%, 45%);
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	padding-inline: 0.5rem;
 	padding-block: 0.25rem;
 	border-radius: 2.75rem;
 	line-height: 1.5;
+	box-shadow: var(--shadow-low--secondary);
 }
 %p {
 	font-weight: 400;

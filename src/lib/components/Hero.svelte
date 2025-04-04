@@ -129,6 +129,8 @@
      Main Container -> Renamed to Hero Section
    -------------------------------------------------- */
 	.hero-section {
+		padding-block: 5rem;
+
 		--grid-gap-size: 2rem;
 
 		--text-shadow-effect: drop-shadow(0.0625rem 0.0625rem 0.0625rem rgba(255, 255, 255, 0.969));
@@ -145,7 +147,7 @@
 		display: grid;
 		grid-template-areas: 'main-text' 'visuals'; // Mobile first
 		grid-template-columns: 1fr;
-		gap: spacing(not-related); // primitive-spacing(xl)
+		gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
 		width: 100%;
 
 		/* --------------------------------------------------
@@ -245,7 +247,6 @@
 			position: relative;
 			width: 100%;
 			max-width: 30rem; // Keep max-width on smaller screens
-			padding: 1rem; // primitive-spacing(md)
 
 			// Variables for pseudo-element positioning/sizing
 			--background-dimensions: 70%;
@@ -261,7 +262,6 @@
 				height: var(--background-dimensions);
 				border-radius: 0% 100% 0% 100% / 17% 77% 23% 83%; // Keep unique shape
 				transform: translateX(0.5rem) scaleX(-1); // primitive-spacing(xs)
-				padding: 1rem; // primitive-spacing(md)
 			}
 
 			&::before {
@@ -312,7 +312,6 @@
 			&__text {
 				text-align: left;
 				align-items: flex-start;
-				padding: 2rem; // primitive-spacing(xl)
 			}
 
 			&__label {

@@ -50,27 +50,18 @@
 	<Hero />
 	<Services />
 </main>
-<svg
-	style="position: absolute;
- width: 0; height: 0;"
->
-</svg>
 
 <style lang="scss">
 	.page-container {
-		max-inline-size: $PAGE_MAX_WIDTH;
-
 		/* Positioning */
 		z-index: 1;
 
 		/* Dislay & Box Model */
 		@extend %flex-col-center;
-		gap: clamp(2.5rem, 2.157rem + 1.15vw, 3rem);
-		padding-inline: clamp(1rem, 0.811rem + 0.94vw, 1.5rem);
+		gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
+		padding-inline: 1rem;
 		inline-size: 100%;
 		block-size: 100%;
 		margin: 0 auto;
-		overflow-x: clip;
-		position: relative;
 	}
 </style>
