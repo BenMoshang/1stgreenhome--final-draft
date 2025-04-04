@@ -274,7 +274,6 @@
 			}
 
 			&::after {
-				mix-blend-mode: soft-light;
 				background: var(--convex-primary); // Use gradient CSS var
 				box-shadow: var(--shadow-medium--light); // Use shadow var with fallback
 				background-size: contain;
@@ -322,10 +321,6 @@
 				width: 100%; // Allow grid to size
 				height: 100%;
 				justify-self: center; // Center visually within its column
-
-				// Optionally adjust pseudo-element variables for larger view
-				// --background-dimensions: 65%;
-				// --background-abs-pos: 16%;
 			}
 		}
 	}
