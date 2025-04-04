@@ -1,8 +1,8 @@
 <script lang="ts">
 	// Import Svelte utilities and custom transitions
-	import { fadeInUpTransition } from '../utils/animations.js';
+	import { fadeInUpTransition } from '../../utils/animations.js';
 	// Import the ServiceCard component
-	import ServiceCard from './ServiceCard.svelte';
+	import ServiceCard from '../ServiceCard.svelte';
 
 	// --- Type Definitions ---
 	// Consolidate step data into a single interface for better cohesion
@@ -228,11 +228,11 @@
 			content: '';
 			position: absolute;
 			top: 0;
-			bottom: 0;
+			bottom: -100vh; // Extend well beyond this section's boundaries
 			left: 50%; // Center horizontally relative to the section
 			transform: translateX(-50%); // Shift back by half its own width to center in viewport
 			inline-size: 100vw;
-			block-size: 100%;
+			block-size: 200vh; // Make height much larger to cover both sections
 
 			background: url('/assets/landing-page/gradient-background.svg');
 			background-size: cover;

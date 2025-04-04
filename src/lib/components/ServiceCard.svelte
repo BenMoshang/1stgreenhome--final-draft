@@ -50,6 +50,7 @@
 		white-space: nowrap;
 		display: flex;
 		flex-direction: column;
+		max-width: 40ch;
 		// Card elevation on hover
 		transition:
 			transform $transition-speed,
@@ -115,7 +116,7 @@
 	}
 
 	.service-card__glass-overlay {
-		padding: 1.125rem;
+		padding: 1.25rem;
 		background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, $glass-opacity) 100%);
 	}
 

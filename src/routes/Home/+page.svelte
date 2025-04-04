@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Hero from '$lib/components/Hero.svelte';
-	import Services from '$lib/components/Services.svelte';
+	import Services from '$lib/components/sections/Services.svelte';
 	// These would be imports for other sections once migrated
 	// import Stepper from '$lib/components/sections/Stepper.svelte';
-	// import Testimonials from '$lib/components/sections/Testimonials.svelte';
+	import Testimonials from '$lib/components/sections/Testimonials.svelte';
 	// import Projects from '$lib/components/sections/Projects.svelte';
 	// import Partners from '$lib/components/sections/Partners.svelte';
 	// import Faqs from '$lib/components/sections/Faqs.svelte';
@@ -49,6 +49,7 @@
 <main class="page-container">
 	<Hero />
 	<Services />
+	<Testimonials />
 </main>
 
 <style lang="scss">
