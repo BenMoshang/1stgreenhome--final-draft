@@ -78,367 +78,183 @@
 	};
 </script>
 
-<section id="services" class="stepper-section" aria-labelledby="services-title">
-	<header
-		class="stepper__header"
-		in:fadeInUpTransition={{
-			delay: animationConfig.headerDelay,
-			duration: animationConfig.duration
-		}}
-	>
-		<p class="stepper__label">{header.label}</p>
-		<h2 id="services-title" class="stepper__title">{header.title}</h2>
-		<p class="stepper__description">{header.description}</p>
+<section class="stepper-section">
+	<header class="stepper-section__header">
+		<small class="stepper-section__header--label">{header.label}</small>
+		<h2 class="stepper-section__header--title">{header.title}</h2>
+		<p class="stepper-section__header--description">{header.description}</p>
 	</header>
+	<div class="stepper-section__line"></div>
 
-	<div class="stepper">
-		<div class="stepper__line" aria-hidden="true"></div>
+	<img
+		id="stepper__icon-1"
+		class="stepper__icon"
+		src={steps[0].icon}
+		alt=""
+		width="20"
+		height="20"
+		loading="lazy"
+	/>
 
-		<!-- Arrow circle - positioned separately for clarity -->
-		<div
-			class="arrow stepper__circle stepper__circle--arrow"
-			aria-hidden="true"
-			in:fadeInUpTransition={{
-				delay: animationConfig.circleBaseDelay,
-				duration: animationConfig.duration
-			}}
-		>
-			↓
-		</div>
+	<ServiceCard {...steps[0]} />
 
-		<!-- Service 1 Circle -->
-		<div
-			class="stepper__circle stepper__circle--1"
-			role="img"
-			aria-label={`Step ${steps[0].id}: ${steps[0].iconAlt || steps[0].title}`}
-			in:fadeInUpTransition={{
-				delay: animationConfig.circleBaseDelay + animationConfig.circleIncrement,
-				duration: animationConfig.duration
-			}}
-		>
-			<img
-				class="stepper__circle-icon"
-				src={steps[0].icon}
-				alt=""
-				width="20"
-				height="20"
-				loading="lazy"
-			/>
-		</div>
+	<img
+		id="stepper__icon-2"
+		class="stepper__icon"
+		src={steps[1].icon}
+		alt=""
+		width="20"
+		height="20"
+		loading="lazy"
+	/>
 
-		<!-- Service 1 Card -->
-		<div
-			class="stepper__card stepper__card--1"
-			in:fadeInUpTransition={{
-				delay: animationConfig.cardBaseDelay,
-				duration: animationConfig.duration
-			}}
-		>
-			<ServiceCard {...steps[0]} />
-		</div>
+	<ServiceCard {...steps[1]} />
 
-		<!-- Service 2 Circle -->
-		<div
-			class="stepper__circle stepper__circle--2"
-			role="img"
-			aria-label={`Step ${steps[1].id}: ${steps[1].iconAlt || steps[1].title}`}
-			in:fadeInUpTransition={{
-				delay: animationConfig.circleBaseDelay + animationConfig.circleIncrement * 2,
-				duration: animationConfig.duration
-			}}
-		>
-			<img
-				class="stepper__circle-icon"
-				src={steps[1].icon}
-				alt=""
-				width="20"
-				height="20"
-				loading="lazy"
-			/>
-		</div>
+	<img
+		id="stepper__icon-3"
+		class="stepper__icon"
+		src={steps[2].icon}
+		alt=""
+		width="20"
+		height="20"
+		loading="lazy"
+	/>
 
-		<!-- Service 2 Card -->
-		<div
-			class="stepper__card stepper__card--2"
-			in:fadeInUpTransition={{
-				delay: animationConfig.cardBaseDelay + animationConfig.circleIncrement,
-				duration: animationConfig.duration
-			}}
-		>
-			<ServiceCard {...steps[1]} />
-		</div>
-
-		<!-- Service 3 Circle -->
-		<div
-			class="stepper__circle stepper__circle--3"
-			role="img"
-			aria-label={`Step ${steps[2].id}: ${steps[2].iconAlt || steps[2].title}`}
-			in:fadeInUpTransition={{
-				delay: animationConfig.circleBaseDelay + animationConfig.circleIncrement * 3,
-				duration: animationConfig.duration
-			}}
-		>
-			<img
-				class="stepper__circle-icon"
-				src={steps[2].icon}
-				alt=""
-				width="20"
-				height="20"
-				loading="lazy"
-			/>
-		</div>
-
-		<!-- Service 3 Card -->
-		<div
-			class="stepper__card stepper__card--3"
-			in:fadeInUpTransition={{
-				delay: animationConfig.cardBaseDelay + animationConfig.circleIncrement * 2,
-				duration: animationConfig.duration
-			}}
-		>
-			<ServiceCard {...steps[2]} />
-		</div>
-	</div>
+	<ServiceCard {...steps[2]} />
 </section>
 
 <style lang="scss">
-	*,
-	*::before,
-	*::after,
-	*::backdrop {
-		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
-	}
-
-	/* --- Component SCSS Variables --- */
-	// Define variables specific to this component, potentially derived from global tokens if needed
-	$stepper-circle-size: 2.5rem; // 48px - Keep size for now
-	$stepper-line-width: 0.25rem; // 4px - Slightly thicker line for visibility
-	$icon-size: 1.25rem; // 20px
-
-	/* --- Stepper Section --- */
+	/* Section container */
 	.stepper-section {
-		padding-block: 5rem;
+		/* Variables */
+		--icon-size: 2rem;
+
 		inline-size: 100%;
-		height: 100%;
-		// Removed fixed height, let content determine height
-		position: relative;
-		&::after {
-			content: '';
-			position: absolute;
-			top: 0;
-			bottom: -100vh; // Extend well beyond this section's boundaries
-			left: 50%; // Center horizontally relative to the section
-			transform: translateX(-50%); // Shift back by half its own width to center in viewport
-			inline-size: 100vw;
-			block-size: 200vh; // Make height much larger to cover both sections
-
-			background: url('/assets/landing-page/gradient-background.svg');
-			background-size: cover;
-			background-repeat: no-repeat;
-			z-index: -11;
-		}
-	}
-
-	/* --- Main Stepper Layout --- */
-	.stepper {
-		width: 100%;
-		margin-inline: auto;
-		position: relative;
-		z-index: 1;
-
-		// MOBILE GRID LAYOUT - Simplified vertical flow
+		padding-block: 2rem;
 		display: grid;
-		grid-template-areas:
-			'header  header'
-			'arrow   .'
-			'circle1 card1'
-			'circle2 card2'
-			'circle3 card3';
-		grid-template-columns: auto 1fr; // Circle takes auto width, card takes rest
-		grid-column-gap: spacing(not-related);
-		grid-row-gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
+		place-content: center;
 
-		// Position the connecting line (Timeline Axis)
+		/* Mobile layout (default) */
+		grid-template-areas:
+			'header header'
+			'icon1 card1'
+			'icon2 card2'
+			'icon3 card3';
+		grid-column-gap: 2rem;
+		grid-row-gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
+		justify-items: start;
+		align-items: start;
+		grid-template-columns: 2rem 1fr;
+		grid-template-rows: auto auto auto auto;
+		position: relative;
+
+		/* Assign grid areas to children */
+		& #stepper__icon-1 {
+			grid-area: icon1;
+		}
+		& #stepper__icon-2 {
+			grid-area: icon2;
+		}
+		& #stepper__icon-3 {
+			grid-area: icon3;
+		}
+		/* Make cards take full width */
+		:global(#stepper__card-1) {
+			grid-area: card1;
+			justify-self: center;
+		}
+		:global(#stepper__card-2) {
+			grid-area: card2;
+			justify-self: center;
+		}
+		:global(#stepper__card-3) {
+			grid-area: card3;
+			justify-self: center;
+		}
+
+		&__header {
+			grid-area: header;
+		}
+
 		&__line {
 			grid-column: 1 / 1;
-			grid-row: 2 / 5;
-			inline-size: 100%;
-			block-size: calc(100% + 3rem);
-			place-self: center;
+			grid-row: 2 / 4;
+			--icon-size: 2rem;
 			position: absolute;
-			// Start slightly below first circle, end slightly above last circle bottom edge on mobile
-			top: 1rem;
-			left: 1.125rem;
-			margin: auto;
-			// Adjust left positioning to center the line based on its own width and circle size
-			width: $stepper-line-width; // Use variable for width
-			background-color: #98d1b9; // Use a specific color or token
-			z-index: -1000; // Behind circles
-			border-radius: $stepper-line-width / 2; // Make ends rounded
+			width: 0.25rem;
+			background-color: var(--accent-color);
+			z-index: -2;
+
+			/* Mobile: Vertical line connecting icons */
+			left: calc(var(--icon-size) / 2);
+			top: calc(var(--icon-size) + var(--icon-size) + 2rem); /* Start below icon1 */
+			height: calc(100% - var(--icon-size) * 3 - 4rem); /* Connect down to icon3 */
+			transform: translateX(-50%);
 		}
 
-		// Header styles
+		/* Header elements */
 		&__header {
-			grid-area: header; // Explicitly assign header to its area
 			@extend %flex-col-center;
+			max-width: 65ch;
+			margin-inline: auto;
 			text-align: center;
-			text-wrap: balance;
-			margin-bottom: spacing(not-related); // Use design system spacing
-		}
-
-		&__label {
-			@extend %text-label--secondary;
-			margin-bottom: spacing(semi-related); // Adjusted spacing
-		}
-
-		&__title {
-			@extend %h2;
-			color: $light-1;
-			max-inline-size: map-get($layout, max-width-title); // Use map-get for SCSS map access
-			margin-bottom: spacing(semi-related); // Adjusted spacing
-		}
-
-		&__description {
-			@extend %p;
-			color: $light-2;
-			max-inline-size: 50ch;
-		}
-
-		// Grid area assignments remain the same
-		&__circle--1 {
-			grid-area: circle1;
-			justify-self: start; // Align circle to the start (left) on mobile
-		}
-		&__circle--2 {
-			grid-area: circle2;
-			justify-self: start;
-		}
-		&__circle--3 {
-			grid-area: circle3;
-			justify-self: start;
-		}
-		&__card--1 {
-			grid-area: card1;
-			position: sticky;
-			top: 1rem;
-		}
-		&__card--2 {
-			grid-area: card2;
-			position: sticky;
-			top: 1rem;
-		}
-		&__card--3 {
-			grid-area: card3;
-			position: sticky;
-			top: 1rem;
-		}
-
-		// --- Stepper Circles common styles (Timeline Markers) ---
-		&__circle {
-			position: sticky;
-			top: 1rem;
-			width: $stepper-circle-size;
-			height: $stepper-circle-size;
-			padding: 0.75rem;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border-radius: 50%; // Keep circular
-			// Use a primary color border for better visibility
-			background-color: var(
-				--color-secondary-900
-			); // Light background for contrast with icon and line
-			// Subtle shadow for depth
-			box-shadow: var(--shadow-low--secondary);
-			border: 1px solid var(--color-accent);
-			z-index: 10; // Above the line
-			transition: // Keep transitions
-				transform map-get($transitions, standard) ease-out,
-				box-shadow map-get($transitions, standard) ease-out;
-			cursor: default; // Not interactive
-
-			&:hover {
-				transform: scale(1.08); // Slightly less pronounced hover scale
-				box-shadow:
-					0 5px 10px rgba(var(--color-dark-rgb), 0.15),
-					0 2px 4px rgba(var(--color-dark-rgb), 0.1); // Enhanced shadow on hover
+			margin-bottom: 2rem;
+			&--label {
+				@extend %text-label--secondary;
+				margin-bottom: 1.5rem;
+			}
+			&--title {
+				@extend %h2;
+				max-width: 20ch;
+				color: $light-1;
+				margin-bottom: spacing(semi-related);
 			}
 
-			&-icon {
-				width: 100%;
-				height: 100%;
-				object-fit: contain;
+			&--description {
+				@extend %p;
+				color: $light-2;
+				max-width: 50ch;
 			}
 		}
-	}
 
-	/* --- Responsive Layout (Tablet/Desktop - Modern Timeline) --- */
-	@media (min-width: 768px) {
-		.stepper {
-			// DESKTOP GRID LAYOUT - Alternating timeline
+		/* Desktop layout (48rem and up) */
+		@media (min-width: 48rem) {
 			grid-template-areas:
-				'header header header' // Header spans all columns
-				'.        arrow             .'
-				'.      circle1 card1' // Step 1: Circle center, Card right
-				'card2  circle2 .' // Step 2: Card left, Circle center
-				'.      circle3 card3'; // Step 3: Circle center, Card right
-			// Define columns: Left card area, Center axis (auto width), Right card area
-			grid-template-columns: 1fr auto 1fr;
-			// Remove arrow row and adjust others
+				'header header header'
+				'.      icon1  card1'
+				'card2  icon2  .'
+				'.      icon3  card3';
+
+			grid-template-columns: 1fr 2rem 1fr;
 			grid-template-rows: auto auto auto auto;
-			align-items: center; // Vertically center items in their row for better alignment
-			// Use design system gaps - larger gap between rows, standard between columns
+
 			&__line {
-				grid-column: 2 / 2;
-				grid-row: 2 / 5;
-			}
-			// Center the circles on the timeline axis
-			&__circle {
-				align-self: start;
-			}
-
-			// Ensure cards align correctly to their side
-			&__card--1 {
-				grid-column: 3 / 4; // Ensure card 1 is in the right column
-				justify-self: start;
-				align-self: center; // Vertically center card
-			}
-			&__card--2 {
-				grid-column: 1 / 2; // Ensure card 2 is in the left column
-				justify-self: end;
-				align-self: center; // Vertically center card
-			}
-			&__card--3 {
-				grid-column: 3 / 4; // Ensure card 3 is in the right column
-				justify-self: start;
-				align-self: center; // Vertically center card
+				/* Desktop: Vertical line centered in middle column */
+				left: 50%;
+				top: calc(var(--icon-size) * 1.5 + 4rem); /* Start below first icon */
+				height: calc(100% - var(--icon-size) * 3 - 6rem); /* End at last icon */
 			}
 		}
 	}
 
-	/* --- Accessibility: Reduced Motion --- */
-	@media (prefers-reduced-motion: reduce) {
-		*,
-		*::before,
-		*::after {
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-			transition-duration: 0.01ms !important;
-			transition-delay: 0ms !important;
-			scroll-behavior: auto !important;
-		}
-	}
-	.arrow {
+	/* Icon styling */
+	.stepper__icon {
 		position: sticky;
-		top: 1rem;
-		grid-area: arrow;
-		color: var(--color-light);
-		font-size: 1.125rem;
-		font-weight: 600;
-		position: relative;
-		text-transform: uppercase;
-		text-wrap: nowrap;
+		top: 2rem;
+		width: 2rem;
+		height: 2rem;
+		border: 1px solid var(--color-accent);
+		padding: 0.5rem;
+		object-fit: cover;
+		border-radius: 50%;
+		background: var(--color-secondary-900);
+		z-index: 1; /* Ensure icons appear above the line */
+	}
+
+	/* Accessibility */
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition-duration: 0.01ms !important;
+		}
 	}
 </style>

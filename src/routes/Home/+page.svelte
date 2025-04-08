@@ -4,6 +4,8 @@
 	// These would be imports for other sections once migrated
 	// import Stepper from '$lib/components/sections/Stepper.svelte';
 	import Testimonials from '$lib/components/sections/Testimonials.svelte';
+	import TestimonialCard from '$lib/components/TestimonialCard.svelte';
+	import ServiceCard from '$lib/components/ServiceCard.svelte';
 	// import Projects from '$lib/components/sections/Projects.svelte';
 	// import Partners from '$lib/components/sections/Partners.svelte';
 	// import Faqs from '$lib/components/sections/Faqs.svelte';
@@ -48,21 +50,70 @@
 
 <main class="page-container">
 	<Hero />
-	<Services />
-	<Testimonials />
+	<div class="gradient-background-container">
+		<Services />
+		<Testimonials />
+		<div class="gradient-background"></div>
+	</div>
 </main>
 
 <style lang="scss">
 	.page-container {
 		/* Positioning */
 		z-index: 1;
-
+		position: relative;
 		/* Dislay & Box Model */
-		@extend %flex-col-center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		max-inline-size: $PAGE_MAX_WIDTH;
 		gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
 		padding-inline: 1rem;
 		inline-size: 100%;
 		block-size: 100%;
-		margin: 0 auto;
+		margin-inline: auto;
+		& > * {
+			flex: 1;
+		}
+	}
+
+	.gradient-background-container {
+		position: relative;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
+	}
+
+	.gradient-background {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: -10;
+		width: 100vw; /* Full viewport width */
+		height: 100%; /* Full height of the container */
+		background: url('/assets/landing-page/gradient-background.svg') no-repeat;
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
+		filter: saturate(0.7);
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			margin: auto;
+			width: 100%;
+			height: 100%;
+			background-image: url('/assets/landing-page/leaves.svg');
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+			opacity: 0.2;
+			z-index: -1;
+		}
 	}
 </style>

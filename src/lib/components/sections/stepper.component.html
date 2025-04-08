@@ -1,0 +1,126 @@
+<main class="main">
+  <header class="main__header-container">
+    <p class="header__label" fadeInUp [delay]="'0ms'">{{ header.label }}</p>
+    <h2 class="header__title" fadeInUp [delay]="'200ms'">{{ header.title }}</h2>
+    <p class="header__description" fadeInUp [delay]="'400ms'">
+      {{ header.description }}
+    </p>
+  </header>
+
+  <!-- Stepper Container -->
+  <div class="stepper-container" fadeInUp [delay]="'600ms'">
+    <div class="stepper-line"></div>
+
+    <div
+      tabindex="0"
+      class="stepper__circle step-arrow"
+      fadeInUp
+      [delay]="'0ms'"
+    >
+      <p class="circle__label">{{ circle[0].label }}</p>
+    </div>
+
+    <div
+      tabindex="0"
+      id="step-01"
+      class="stepper__circle"
+      fadeInUp
+      [delay]="'0ms'"
+    >
+      <img
+        width="28"
+        height="28"
+        class="icon-container__icon"
+        loading="lazy"
+        src="../../../../../../assets/landing-page/lightbulb-solid.svg"
+        alt="Energy Icon"
+      />
+    </div>
+
+    <div
+      tabindex="0"
+      id="step-02"
+      class="stepper__circle"
+      fadeInUp
+      [delay]="'0ms'"
+    >
+      <img
+        width="700"
+        height="700"
+        class="icon-container__icon"
+        loading="lazy"
+        src="../../../../../../assets/landing-page/dollar.svg"
+        alt="Dollar Icon"
+      />
+    </div>
+
+    <div
+      tabindex="0"
+      id="step-03"
+      class="stepper__circle"
+      fadeInUp
+      [delay]="'0ms'"
+    >
+      <img
+        class="icon-container__icon"
+        loading="lazy"
+        src="../../../../../../assets/landing-page/list-check-solid.svg"
+        alt="Checklist Icon"
+      />
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <article id="card-01" class="card" fadeInUp [delay]="'700ms'">
+    <figure class="card__image-container">
+      <img
+        class="image-container__image"
+        loading="lazy"
+        src="../../../../../../assets/landing-page/stepper/card-01.jpeg"
+        alt="Card 1 Image"
+        width="400"
+        height="400"
+      />
+    </figure>
+
+    <figcaption>
+      <h4 class="card__title">{{ card[0].title }}</h4>
+      <p class="card__description">{{ card[0].description }}</p>
+    </figcaption>
+  </article>
+
+  <article id="card-02" class="card" fadeInUp [delay]="'0ms'">
+    <figure class="card__image-container">
+      <img
+        class="image-container__image"
+        loading="lazy"
+        src="../../../../../../assets/landing-page/news/lights.png"
+        alt="Card 2 Image"
+        width="400"
+        height="400"
+      />
+    </figure>
+    <figcaption>
+      <h4 class="card__title">{{ card[1].title }}</h4>
+      <p class="card__description">{{ card[1].description }}</p>
+    </figcaption>
+  </article>
+
+  <article id="card-03" class="card" fadeInUp [delay]="'0ms'">
+    <figure class="card__image-container">
+      <img
+        class="image-container__image"
+        loading="lazy"
+        src="../../../../../../assets/landing-page/stepper/card-03.jpeg"
+        alt="Card 3 Image"
+        width="400"
+        height="400"
+      />
+    </figure>
+    <figcaption>
+      <h4 class="card__title">{{ card[2].title }}</h4>
+      <p class="card__description">{{ card[2].description }}</p>
+    </figcaption>
+  </article>
+</main>
+<div class="leaves"></div>

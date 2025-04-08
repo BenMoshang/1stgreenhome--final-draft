@@ -63,7 +63,14 @@
 </script>
 
 <section id="testimonials" class="testimonials-section">
-	<header class="testimonials-section__header">
+	<div
+		class="testimonials-section__marquee"
+		in:fadeInUpTransition={{ delay: animationDelays.marquee }}
+		onmouseenter={pauseMarquee}
+		onmouseleave={resumeMarquee}
+		onfocusin={pauseMarquee}
+		onfocusout={resumeMarquee}
+	>
 		<h2
 			class="testimonials-section__title"
 			in:fadeInUpTransition={{ delay: animationDelays.title }}
@@ -77,16 +84,7 @@
 			</span>
 			{header.title2}
 		</h2>
-	</header>
-	<section
-		aria-label="Customer testimonials"
-		class="testimonials-section__marquee"
-		in:fadeInUpTransition={{ delay: animationDelays.marquee }}
-		onmouseenter={pauseMarquee}
-		onmouseleave={resumeMarquee}
-		onfocusin={pauseMarquee}
-		onfocusout={resumeMarquee}
-	>
+
 		<div
 			class="testimonials-section__track"
 			class:paused={isPaused}
@@ -111,43 +109,36 @@
 				/>
 			{/each}
 		</div>
-	</section>
+	</div>
 </section>
 
 <style lang="scss">
-	/* --------------------------------------------------
-   Testimonials Section Block
--------------------------------------------------- */
 	.testimonials-section {
-		// Block styles
-		padding-block: 5rem;
-		inline-size: 100%;
-		height: 100%; // Be cautious with fixed height: 100% unless the parent has a defined height.
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-		overflow-x: hidden; // Prevents horizontal scrollbars from the marquee animation
-		max-inline-size: $PAGE_MAX_WIDTH; // Assumes variable is defined
+		@extend %flex-col-center;
+		width: 100%;
+		height: 100%;
+		max-inline-size: $PAGE_MAX_WIDTH;
 		margin-inline: auto;
-		position: relative; // Add position relative
-		z-index: 1; // Higher than the background but lower than potential overlays
+		padding-block: 5rem;
+		gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
+		overflow-x: clip;
 
-		// Element: Header
-		&__header {
-			width: 100%; // Often redundant if parent is block/flex and takes full width
+		&__marquee {
+			@extend %flex-col-center;
+			--gap: spacing(not-related);
+			width: 100%;
+			gap: var(--gap);
 		}
 
-		// Element: Title (within Header, but styled directly)
 		&__title {
-			@extend %h4; // Assumes placeholder is defined
+			@extend %h4;
 			color: $light-1;
 			text-align: center;
-			// Element: Title Standout (nested within Title)
+			margin-bottom: 2rem;
+
 			&-standout {
-				// Inherits font styles from parent H1
 				color: transparent;
-				// A11Y Contrast Check: Gradient text can be tricky. Ensure sufficient contrast exists *throughout* the gradient's transition against the background. Test thoroughly.
-				background: var(--gradient-text); // Use text gradient CSS var
+				background: linear-gradient(45deg, #ffd700, #ffc107, #ffeb3b, #ffc107, #ffd700);
 				background-size: 200% 200%;
 				-webkit-background-clip: text;
 				background-clip: text;
@@ -156,55 +147,31 @@
 			}
 		}
 
-		&__marquee {
-			--gap: spacing(not-related); // Local scope for gap if only used here
-			display: flex;
-			gap: var(--gap);
-			align-items: stretch; // Good for ensuring cards have same height if content varies
-			width: 100%;
-			padding-block: 1.25rem; // Adds vertical space around the track
-		}
-
-		// Element: Track (within Marquee)
 		&__track {
-			overflow-x: hidden; // Prevents horizontal scrollbars from the marquee animation
-
 			display: flex;
-			gap: 2rem; // Space between individual testimonial cards
-			border-radius: var(--border-radius); // Assumes CSS variable is defined
+			gap: spacing(not-related);
+			border-radius: var(--border-radius);
 			animation: scroll 20s linear infinite;
-			justify-content: flex-start; // Start items from the left
-			// The track needs to contain *two* sets of testimonials side-by-side
-			// Width is implicitly determined by its content (flex items)
 
-			// Modifier: Paused state (using class)
 			&.paused {
 				animation-play-state: paused;
 			}
 		}
-
-		/* Note: The TestimonialCard component itself would have its own BEM structure,
-	   e.g., .testimonial-card, .testimonial-card__pfp, .testimonial-card__name etc.
-	   Those styles belong in the TestimonialCard.svelte file's style block. */
 	}
 
 	/* --------------------------------------------------
    Media Queries
--------------------------------------------------- */
-
-	/* Accessibility: Reduced Motion */
+   -------------------------------------------------- */
 	@media (prefers-reduced-motion: reduce) {
-		// Target specific animations within the block
 		.testimonials-section {
 			&__title-standout {
-				animation: none; // Stop gradient animation
+				animation: none;
 			}
 			&__track {
-				animation: none; // Stop scrolling animation
+				animation: none;
 			}
 		}
 
-		// Global reduction (keep separate)
 		*,
 		*::before,
 		*::after {
@@ -216,8 +183,8 @@
 	}
 
 	/* --------------------------------------------------
-   Keyframes (Keep outside the component block)
--------------------------------------------------- */
+   Keyframes
+   -------------------------------------------------- */
 	@keyframes gradient-loop {
 		0% {
 			background-position: 0% 50%;

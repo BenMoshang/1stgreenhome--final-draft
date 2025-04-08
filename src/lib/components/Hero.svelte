@@ -130,7 +130,6 @@
    -------------------------------------------------- */
 	.hero-section {
 		padding-block: 5rem;
-
 		--grid-gap-size: 2rem;
 
 		--text-shadow-effect: drop-shadow(0.0625rem 0.0625rem 0.0625rem rgba(255, 255, 255, 0.969));
@@ -147,7 +146,7 @@
 		display: grid;
 		grid-template-areas: 'main-text' 'visuals'; // Mobile first
 		grid-template-columns: 1fr;
-		gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
+		gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
 		width: 100%;
 
 		/* --------------------------------------------------
@@ -167,7 +166,7 @@
 	   -------------------------------------------------- */
 		&__label {
 			@extend %text-label--primary;
-			margin-bottom: spacing(semi-related);
+			margin-bottom: 1.5rem;
 		}
 
 		&__title {

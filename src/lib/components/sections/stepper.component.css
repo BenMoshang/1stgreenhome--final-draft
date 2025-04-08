@@ -1,0 +1,304 @@
+/* --------------------------------------------------
+   General Reset and Box-Sizing
+-------------------------------------------------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  z-index: 3;
+  /* outline: 1px dashed red; */ /* Uncomment for debugging */
+}
+[fadeInUp] {
+  will-change: transform, opacity;
+}
+[data-delay] {
+  will-change: transform, opacity;
+}
+/* --------------------------------------------------
+   Main Section
+-------------------------------------------------- */
+.main {
+  position: relative; /* Added for positioning */
+  width: 100%;
+  height: 100%;
+  margin-inline: auto;
+  max-width: 90rem;
+  display: grid;
+  grid-template-areas:
+    "header-container header-container"
+    "stepper ."
+    "stepper card-01"
+    "stepper card-02"
+    "stepper card-03";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr 1fr 1fr;
+  padding-block: var(--page-block-padding);
+  padding-inline: var(--page-inline-padding);
+  gap: 4rem 1.5rem;
+}
+
+/* Stepper Container */
+.stepper-container {
+  position: sticky;
+  top: 0.5rem;
+  grid-area: stepper;
+  position: relative; /* For absolute positioning of the line */
+  display: grid;
+  grid-template-rows: subgrid;
+  gap: 4.5rem 1.5rem;
+}
+
+/* Stepper Line */
+.stepper-line {
+  position: absolute;
+  left: calc(50% - 0.125rem); /* Center the line under the circles */
+  top: 0;
+  bottom: 0;
+  width: 0.0625rem; /* Line thickness */
+  background: var(--convex-neutral);
+  margin-top: clamp(0.4rem, 0.269rem + 0.44vw, 0.6rem);
+  z-index: 1; /* Ensure it stays behind the circles */
+}
+
+/* Stepper Circles */
+.stepper__circle {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 2; /* Above the line */
+  --stepper-circle-size: 3rem;
+  margin-top: clamp(0.4rem, 0.269rem + 0.44vw, 0.6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: var(--stepper-circle-size);
+  height: var(--stepper-circle-size);
+  background: linear-gradient(145deg, #287b55, #216847);
+  border-radius: 50%;
+  border: 0.0625rem solid var(--color-secondary);
+  box-shadow: var(--shadow-medium--secondary);
+  transition: background 0.3s ease-in-out;
+}
+
+.stepper__circle:hover {
+  filter: brightness(1.1);
+  transition: filter 0.3s ease-in-out;
+}
+
+.icon-container__icon {
+  width: 1rem;
+  height: 1rem;
+  object-fit: contain;
+  filter: invert(1)
+    drop-shadow(0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.5));
+  z-index: 2;
+}
+
+.circle__label {
+  color: var(--color-light);
+  font-size: 1rem;
+  font-weight: 600;
+  z-index: 3;
+  filter: drop-shadow(0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.5));
+}
+
+/* Adjust Card Grid Areas */
+#card-01 {
+  grid-area: card-01;
+}
+
+#card-02 {
+  grid-area: card-02;
+}
+
+#card-03 {
+  grid-area: card-03;
+}
+.leaves {
+  position: absolute;
+  top: 0;
+
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../../../../../assets/landing-page/leaves.svg);
+  background-size: contain;
+  background-position: center;
+  opacity: 0.1;
+  filter: invert() saturate(0.1);
+  z-index: 2;
+}
+/* --------------------------------------------------
+   Header Section
+-------------------------------------------------- */
+.main__header-container {
+  grid-area: header-container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9375rem;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.header__label {
+  margin-bottom: 1rem;
+
+  box-shadow: var(--shadow-medium--secondary);
+  color: var(--color-secondary);
+  background: var(--convex-light);
+  font-family: var(--font-family-bold);
+  font-weight: 500 !important;
+  font-size: var(--label-p);
+  line-height: var(--label-line-height);
+  padding-inline: 1.25rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.4375rem;
+  border-radius: 2rem;
+  max-width: 50ch;
+}
+
+.header__title {
+  color: var(--color-light);
+  max-width: var(--max-width-title);
+}
+
+.header__description {
+  color: var(--color-neutral);
+
+  max-width: var(--max-width-description);
+}
+
+/* --------------------------------------------------
+   Card Section
+-------------------------------------------------- */
+.card {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  border: 0.0625rem solid var(--color-secondary-900);
+  gap: 1rem;
+  border-radius: var(--border-radius);
+  position: sticky;
+  top: 0.5rem; /* Added this line */
+  /* background: linear-gradient(180deg, #2c3e50, #2c3e50, #fbfffd86); */
+  background: var(--color-light);
+  box-shadow: var(--shadow-medium--secondary);
+  backdrop-filter: blur(1.25rem);
+
+  text-align: left;
+  max-width: 60ch;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+
+    z-index: 10;
+  }
+
+  & figcaption {
+    padding-inline: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  & .card__title {
+    line-height: 1.2;
+    /* letter-spacing: -0.05em; */
+    font-weight: 600;
+    isolation: isolate;
+    align-self: end;
+    text-wrap: balance;
+    margin-bottom: 0.75rem;
+  }
+
+  & .card__description {
+    color: var(--color-p);
+    line-height: 1.6;
+  }
+}
+
+.card__image-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  position: relative;
+  z-index: 5;
+  box-shadow: inset 0 2px 2px hsla(0, 0%, 0%, 0.849);
+
+  /* Add inset shadow for depth */
+  max-width: 43.75rem;
+  max-height: 25rem;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: var(--border-radius);
+    opacity: 0.5;
+
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+    z-index: 6;
+    background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.966));
+  }
+}
+
+.image-container__image {
+  width: 110%;
+
+  filter: brightness(110%) contrast(110%) saturate(120%);
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  z-index: 3;
+}
+
+.image-container__image:hover {
+  transform: scale(1.1);
+}
+
+/* --------------------------------------------------
+   Responsive Layouts
+-------------------------------------------------- */
+
+/* switch to laptop view */
+@media (min-width: 50.625rem) {
+  .main {
+    gap: 5rem 4rem;
+    grid-template-areas:
+      "header-container header-container header-container"
+      ". stepper ."
+      "card-01 stepper ."
+      ". stepper card-02"
+      "card-03 stepper .";
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+  .stepper__circle {
+    align-self: start;
+  }
+  .stepper-container {
+    align-items: center; /* Center the stepper in the grid area */
+  }
+
+  .card-container__card {
+    align-items: unset;
+    width: 100%;
+    text-align: left;
+  }
+  #card-02 {
+    position: relative;
+  }
+}

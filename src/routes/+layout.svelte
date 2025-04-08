@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '@chainlift/liftkit-css';
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 
@@ -40,10 +41,11 @@
 	/* --- Base HTML & Body --- */
 	:global(html) {
 		/* Display & Box Model */
-		inline-size: 100%;
+		inline-size: 100vw;
 		min-block-size: 100svh;
-		@extend %flex-col-center;
-
+		-ms-text-size-adjust: 100%;
+		-webkit-text-size-adjust: 100%;
+		margin-inline: auto;
 		/* Visual */
 		background: var(--color-light);
 		scrollbar-color: var(--color-primary) hsl(0 0% 90%);
@@ -52,12 +54,11 @@
 
 	:global(body) {
 		/* Display & Box Model */
-		@extend %flex-col-center;
-		padding-top: 6rem; // Custom top padding
-
 		inline-size: 100%;
 		block-size: 100%;
 		overflow-x: clip;
+		margin-inline: auto;
+		padding-top: 2rem;
 		/* Typography */
 		font-family: var(--font-family-regular, system-ui);
 		font-smooth: always;
@@ -105,7 +106,7 @@
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			opacity: 0.05;
-			z-index: -10;
+			z-index: -1;
 		}
 	}
 
@@ -115,7 +116,11 @@
 		background: var(--color-secondary);
 		text-shadow: none;
 	}
-
+	:root {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-smooth: never;
+	}
 	/* --- Base Typography Resets --- */
 	:global(h1),
 	:global(h2),
@@ -139,13 +144,6 @@
 		/* Box Model */
 		text-overflow: ellipsis;
 
-		/* Typography */
-		color: var(--color-p);
-		font-family: var(--font-family-regular);
-		font-size: var(--p);
-		font-style: normal;
-		// font-weight: 400;
-		line-height: var(--line-height-p);
 		list-style: none;
 		text-wrap: pretty;
 	}
