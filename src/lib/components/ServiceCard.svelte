@@ -41,7 +41,8 @@
 		// max-inline-size: min(100%, $container-width-3);
 		border-radius: $card-border-radius;
 		overflow: hidden;
-		box-shadow: var(--shadow-medium--light);
+		box-shadow: var(--shadow-medium--secondary);
+
 		@extend %flex-col-center;
 		// Card elevation on hover
 		transition: transform $transition-speed;

@@ -248,20 +248,21 @@ $light-3: hsl(0, 0%, 80%);
 }
 
 %text-label--secondary {
-	text-wrap: nowrap;
-	font-family: var(--font-family-bold);
-	font-weight: 300;
-	width: fit-content;
-	background-color: #c0e3d4;
-	color: var(--color-p);
-	font-size: var(--label-p);
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
-	padding-inline: 0.5rem;
-	padding-block: 0.25rem;
-	border-radius: 2.75rem;
-	line-height: 1.5;
-	box-shadow: var(--shadow-low--secondary);
+	@extend %text-label--primary;
+	// text-wrap: nowrap;
+	// font-family: var(--font-family-bold);
+	// font-weight: 300;
+	// width: fit-content;
+	// background-color: #c0e3d4;
+	// color: var(--color-p);
+	// font-size: var(--label-p);
+	// letter-spacing: 0.05em;
+	// text-transform: uppercase;
+	// padding-inline: 0.5rem;
+	// padding-block: 0.25rem;
+	// border-radius: 2.75rem;
+	// line-height: 1.5;
+	// box-shadow: var(--shadow-low--secondary);
 }
 %p {
 	font-weight: 400;

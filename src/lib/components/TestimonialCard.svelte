@@ -38,7 +38,7 @@
 		/* Visual */
 		background: var(--convex-light);
 		border-radius: var(--border-radius);
-		box-shadow: var(--shadow-medium--light);
+		box-shadow: var(--shadow-medium--secondary);
 
 		/* Elements */
 		&__message {

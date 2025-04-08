@@ -6,7 +6,7 @@
 	import Testimonials from '$lib/components/sections/Testimonials.svelte';
 	import TestimonialCard from '$lib/components/TestimonialCard.svelte';
 	import ServiceCard from '$lib/components/ServiceCard.svelte';
-	// import Projects from '$lib/components/sections/Projects.svelte';
+	import Projects from '$lib/components/sections/Projects.svelte';
 	// import Partners from '$lib/components/sections/Partners.svelte';
 	// import Faqs from '$lib/components/sections/Faqs.svelte';
 	// import Cta from '$lib/components/sections/Cta.svelte';
@@ -55,6 +55,7 @@
 		<Testimonials />
 		<div class="gradient-background"></div>
 	</div>
+	<Projects />
 </main>
 
 <style lang="scss">
