@@ -246,7 +246,14 @@ $light-3: hsl(0, 0%, 80%);
 	line-height: 1.5;
 	box-shadow: var(--shadow-low--light);
 }
+@mixin section {
+	inline-size: 100%;
+	block-size: 100%;
 
+	padding-block: 2rem;
+	overflow: hidden;
+	margin-inline: auto;
+}
 %text-label--secondary {
 	@extend %text-label--primary;
 	// text-wrap: nowrap;

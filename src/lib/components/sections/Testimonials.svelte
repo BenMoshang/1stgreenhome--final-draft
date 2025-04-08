@@ -64,6 +64,9 @@
 
 <section id="testimonials" class="testimonials-section">
 	<div
+		id="testimonials-marquee"
+		aria-label="Customer testimonials"
+		aria-roledescription="Customer testimonials"
 		class="testimonials-section__marquee"
 		in:fadeInUpTransition={{ delay: animationDelays.marquee }}
 		onmouseenter={pauseMarquee}

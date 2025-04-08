@@ -49,15 +49,21 @@
 
 <section id="projects" class="projects-section">
 	<header class="projects-section__header">
-		<p class="projects-section__label" in:fadeInUpTransition={{ delay: animationDelays.label }}>
+		<small
+			class="projects-section__header--label"
+			in:fadeInUpTransition={{ delay: animationDelays.label }}
+		>
 			{header.label}
-		</p>
-		<h2 class="projects-section__title" in:fadeInUpTransition={{ delay: animationDelays.title }}>
-			<span class="projects-section__title-gradient">{header.title1}</span>
+		</small>
+		<h2
+			class="projects-section__header--title"
+			in:fadeInUpTransition={{ delay: animationDelays.title }}
+		>
+			<span class="projects-section__header--title-gradient">{header.title1}</span>
 			{header.title2}
 		</h2>
 		<p
-			class="projects-section__description"
+			class="projects-section__header--description"
 			in:fadeInUpTransition={{ delay: animationDelays.description }}
 		>
 			{header.description}
@@ -66,28 +72,16 @@
 
 	{#each sections as section, i}
 		<article
+			id={`project-article-${i}`}
 			class="project-article"
+			style="grid-area: article-{i};"
 			in:fadeInUpTransition={{
 				delay: animationDelays.sections.start + i * animationDelays.sections.increment
 			}}
 		>
-			<figcaption class="project-article__caption">
-				<img
-					class="project-article__icon"
-					src={section.icon}
-					alt="Project icon"
-					in:fadeInUpTransition={{ delay: animationDelays.icons }}
-				/>
-				<h3 class="project-article__title">
-					{section.title}
-				</h3>
-				<p class="project-article__description">
-					{section.description}
-				</p>
-			</figcaption>
 			<figure class="project-article__image-container">
 				<img
-					class="project-article__image"
+					class="project-article__image-container--image"
 					src={section.image}
 					alt="Project image"
 					loading="lazy"
@@ -95,71 +89,72 @@
 					height="700"
 				/>
 			</figure>
+			<figcaption class="project-article__caption">
+				<img
+					class="project-article__caption--icon"
+					src={section.icon}
+					alt="Project icon"
+					in:fadeInUpTransition={{ delay: animationDelays.icons }}
+				/>
+				<h3 class="project-article__caption--title">
+					{section.title}
+				</h3>
+				<p class="project-article__caption--description">
+					{section.description}
+				</p>
+			</figcaption>
 		</article>
 	{/each}
 </section>
 
 <style lang="scss">
-	/* Reset */
-	*,
-	*::before,
-	*::after {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		z-index: 3;
-	}
-
 	/* Projects Section */
 	.projects-section {
-		width: 100%;
-		height: 100%;
-		max-width: 90rem;
-		overflow: hidden;
-		margin-inline: auto;
-		padding-top: 2rem;
+		@include section;
 		display: grid;
-		place-content: center;
-		gap: 2.5rem;
-		background: var(--convex-light);
-		padding: var(--padding-section);
-	}
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto auto;
+		grid-template-areas:
+			'header'
+			'article-0'
+			'article-1'
+			'article-2';
 
-	/* Header Section */
-	.projects-section__header {
-		@extend %flex-col-center;
-		gap: 0.9375rem;
-		text-wrap: balance;
-		text-align: center;
+		gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
 
-		.projects-section__label {
-			@extend %text-label--primary;
-			margin-bottom: 1rem;
-		}
-
-		.projects-section__title {
-			@extend %h2;
-			max-width: 20ch;
-			font-weight: 600;
-		}
-
-		.projects-section__title-gradient {
-			color: transparent;
+		&__header {
+			@extend %flex-col-center;
+			text-wrap: balance;
 			text-align: center;
-			font-family: var(--font-family-bold);
-			overflow-wrap: unset;
-			background: var(--gradient-text);
-			background-size: 200% 200%;
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			animation: gradient-loop 5s ease-in-out infinite;
-			filter: drop-shadow(0rem 0.0625rem 0.125rem rgba(143, 255, 103, 0.5));
-		}
+			margin-bottom: spacing(not-related);
 
-		.projects-section__description {
-			@extend %p;
-			max-width: 50ch;
-			text-wrap: pretty;
+			&--label {
+				@extend %text-label--primary;
+				margin-bottom: spacing(semi-related);
+			}
+
+			&--title {
+				@extend %h2;
+				max-width: 20ch;
+				margin-bottom: spacing(semi-related);
+			}
+			&--title-gradient {
+				color: transparent;
+				text-align: center;
+				font-family: var(--font-family-bold);
+				overflow-wrap: unset;
+				background: var(--gradient-text);
+				background-size: 200% 200%;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				animation: gradient-loop 5s ease-in-out infinite;
+				filter: drop-shadow(0rem 0.0625rem 0.125rem rgba(143, 255, 103, 0.5));
+			}
+			&--description {
+				@extend %p;
+				max-width: 50ch;
+				text-wrap: pretty;
+			}
 		}
 	}
 
@@ -167,8 +162,10 @@
 	.project-article {
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
 		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
 
 		& > * {
 			flex: 1;
@@ -178,42 +175,42 @@
 		&__caption {
 			display: flex;
 			flex-direction: column;
-			gap: 0.75rem;
-		}
 
-		&__icon {
-			margin-bottom: 0.5rem;
-			height: 3rem;
-			width: 3rem;
-			border: 1px solid var(--color-secondary);
-			border-radius: 4rem;
-			background: var(--convex-light);
-			box-shadow: var(--shadow-low--light);
-		}
+			&--icon {
+				width: 2rem;
+				height: 2rem;
+				padding: 0.25rem;
+				border: 1px solid var(--color-accent);
+				border-radius: 50%;
+				object-fit: cover;
+				margin-bottom: spacing(not-related);
 
-		&__title {
-			@extend %h3;
-			max-width: 40ch;
-			font-weight: 500;
-			margin-bottom: 0.25rem;
-			text-wrap: balance;
-		}
+				background: var(--color-light);
+				box-shadow: var(--shadow-low--light);
+			}
 
-		&__description {
-			@extend %p;
-			max-width: 65ch;
-			line-height: 1.6;
-			text-wrap: pretty;
+			&--title {
+				@extend %h3;
+				max-width: 40ch;
+				margin-bottom: spacing(semi-related);
+				text-wrap: balance;
+			}
+
+			&--description {
+				@extend %p;
+			}
 		}
 
 		&__image-container {
 			box-shadow: var(--shadow-medium--secondary);
 			border-radius: var(--border-radius);
-			max-width: 80ch;
-			max-height: 50ch;
+			max-width: $container-width-3;
+			max-height: $container-width-3;
+			height: 100%;
+			width: 100%;
 			overflow: hidden;
 
-			& img {
+			&--image {
 				filter: brightness(120%) contrast(110%) saturate(110%);
 				display: inline-block;
 				height: 100%;
@@ -221,8 +218,6 @@
 				object-fit: cover;
 				border-radius: var(--border-radius);
 				transition: transform 0.3s ease-in-out;
-				z-index: 3;
-
 				&:hover {
 					transform: scale(1.1);
 				}
@@ -231,18 +226,28 @@
 	}
 
 	/* Media Queries */
-	@media (min-width: 50.625rem) {
-		.project-article__caption {
-			text-align: center;
-			align-items: center;
-		}
-	}
+	// @media (min-width: 50.625rem) {
+	// 	.project-article {
+	// 		&__caption {
+	// 			text-align: center;
+	// 			align-items: center;
+	// 		}
+	// 	}
+	// }
 
 	@media (min-width: 75rem) {
+		.projects-section {
+			grid-template-columns: 1fr 1fr;
+			grid-template-areas:
+				'header header'
+				'article-0 article-0'
+				'article-1 article-1'
+				'article-2 article-2';
+		}
+
 		.project-article {
 			display: flex;
 			flex-direction: row;
-			gap: 2.5rem;
 			align-items: unset;
 
 			&:nth-child(odd) {
@@ -250,13 +255,8 @@
 			}
 
 			&__caption {
-				gap: 2.5rem;
 				text-align: left;
 				align-items: unset;
-			}
-
-			&__image-container {
-				aspect-ratio: 3 / 2;
 			}
 		}
 	}
