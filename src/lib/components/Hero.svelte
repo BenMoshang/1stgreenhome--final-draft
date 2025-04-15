@@ -51,7 +51,28 @@
 
 	// Function to handle button click (email)
 	function handleEmailClick() {
-		window.location.href = 'mailto:info@1stgreenhome.com';
+		// Create a temporary anchor element
+		const mailtoLink = document.createElement('a');
+		const emailAddress = 'info@1stgreenhome.com';
+		mailtoLink.href = `mailto:${emailAddress}?subject=Get Started with 1st Green Home`;
+		mailtoLink.target = '_self'; // Force same window/tab behavior
+		mailtoLink.rel = 'noopener noreferrer';
+
+		// Append to body, click it, then remove it
+		document.body.appendChild(mailtoLink);
+		mailtoLink.click();
+		document.body.removeChild(mailtoLink);
+
+		// Add this if you want to provide a fallback for users without email client configured
+		setTimeout(() => {
+			// If no client opened (check could happen here), offer to copy email to clipboard
+			if (confirm('Would you like to copy our email address to your clipboard instead?')) {
+				navigator.clipboard
+					.writeText(emailAddress)
+					.then(() => alert('Email address copied to clipboard!'))
+					.catch((err) => console.error('Failed to copy: ', err));
+			}
+		}, 500);
 	}
 
 	// Svelte custom transition function for fade in up effect
