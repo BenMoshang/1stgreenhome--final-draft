@@ -303,7 +303,7 @@
 		min-height: map-get($dimensions, header-height);
 		margin: 0 auto;
 		padding-inline: primitive-spacing(md);
-		padding-block: primitive-spacing(xxs);
+		padding-block: primitive-spacing(xs);
 
 		// Visuals
 		background-color: hsl(206, 18%, 92%, 0.83); // Use HSL for better readability

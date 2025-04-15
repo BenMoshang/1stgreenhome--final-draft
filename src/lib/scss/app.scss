@@ -51,31 +51,69 @@ $typography: (
 	label-p: clamp(0.75rem, 0.72rem + 0.01vw, 0.8rem)
 );
 
+$color-pallete: (
+	950: hsl(145.39, 87.57%, 9.65%),
+	900: hsl(145.73, 73.08%, 18.99%),
+	700: hsl(150, 100%, 20.98%),
+	500: hsl(151.17, 100%, 29.65%),
+	300: hsl(142.66, 81.25%, 71.39%),
+	100: hsl(140.65, 84.38%, 92.45%),
+	50: hsl(138.46, 76.51%, 96.68%)
+);
+
 $colors: (
-	light: hsl(152, 41%, 93%),
-	neutral: hsl(165, 100%, 88%),
-	dark: hsl(0, 0%, 10%),
-	transitional: hsl(0, 0%, 53%),
-	p: hsl(0, 0%, 33%),
-	primary: hsl(156, 40%, 50%),
-	// Base primary color (Material Tone ~50)
-	secondary: hsl(156, 25%, 45%),
-	// Material Secondary: Often lower chroma, similar hue/tone to primary
-	accent: hsl(155, 39%, 59%),
-	// Material Tertiary (replaces accent): Contrasting hue for accents
-	secondary-900: hsl(157, 67%, 20%) // Dark tone of Secondary (Material Tone ~10/20)
+	light: map-get($color-pallete, 50),
+	neutral: map-get($color-pallete, 300),
+	dark: map-get($color-pallete, 950),
+	transitional: map-get($color-pallete, 700),
+	p: map-get($color-pallete, 900),
+	primary: map-get($color-pallete, 500),
+	secondary: map-get($color-pallete, 700),
+	accent: map-get($color-pallete, 300),
+	secondary-900: map-get($color-pallete, 900)
 );
 
 $gradients: (
 	bg: url(/assets/images/gradient-bg.svg),
-	convex-light: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(150, 6%, 89%)),
-	convex-neutral: linear-gradient(145deg, hsl(162, 21%, 78%), hsl(162, 8%, 65%)),
-	convex-dark: linear-gradient(145deg, hsl(165, 11%, 8%), hsl(165, 11%, 7%)),
-	convex-primary: linear-gradient(145deg, hsl(156, 47%, 54%), hsl(156, 40%, 45%)),
-	convex-secondary: linear-gradient(145deg, hsl(162, 35%, 50%), hsl(162, 28%, 42%)),
-	convex-accent: linear-gradient(145deg, hsl(156, 49%, 55%), hsl(156, 42%, 47%)),
-	convex-secondary-reverse: linear-gradient(290deg, hsl(162, 35%, 50%), hsl(162, 28%, 42%)),
-	text: linear-gradient(145deg, #2d9749 20%, #56c060 40%, #61e65c 60%, #56c060 80%, #2d9749 100%)
+	convex-light: linear-gradient(145deg, hsl(0, 0%, 100%), map-get($color-pallete, 50)),
+	convex-neutral: linear-gradient(
+			145deg,
+			lighten(map-get($color-pallete, 300), 10%),
+			darken(map-get($color-pallete, 300), 5%)
+		),
+	convex-dark: linear-gradient(
+			145deg,
+			map-get($color-pallete, 950),
+			darken(map-get($color-pallete, 950), 2%)
+		),
+	convex-primary: linear-gradient(
+			145deg,
+			lighten(map-get($color-pallete, 500), 5%),
+			darken(map-get($color-pallete, 500), 5%)
+		),
+	convex-secondary: linear-gradient(
+			145deg,
+			lighten(map-get($color-pallete, 700), 5%),
+			darken(map-get($color-pallete, 700), 5%)
+		),
+	convex-accent: linear-gradient(
+			145deg,
+			lighten(map-get($color-pallete, 300), 5%),
+			darken(map-get($color-pallete, 300), 5%)
+		),
+	convex-secondary-reverse: linear-gradient(
+			290deg,
+			lighten(map-get($color-pallete, 700), 5%),
+			darken(map-get($color-pallete, 700), 5%)
+		),
+	text: linear-gradient(
+			145deg,
+			map-get($color-pallete, 700) 20%,
+			map-get($color-pallete, 500) 40%,
+			lighten(map-get($color-pallete, 500), 10%) 60%,
+			map-get($color-pallete, 500) 80%,
+			map-get($color-pallete, 700) 100%
+		)
 );
 
 $fonts: (
@@ -99,6 +137,14 @@ $layout: (
 	   ================================================== */
 :root {
 	color-scheme: light;
+	/* --- Color Palette Variables --- */
+	--color-950: #{map-get($color-pallete, 950)};
+	--color-900: #{map-get($color-pallete, 900)};
+	--color-700: #{map-get($color-pallete, 700)};
+	--color-500: #{map-get($color-pallete, 500)};
+	--color-300: #{map-get($color-pallete, 300)};
+	--color-100: #{map-get($color-pallete, 100)};
+	--color-50: #{map-get($color-pallete, 50)};
 
 	/* --- Spacing --- */
 	--page-inline-padding: clamp(
@@ -156,7 +202,7 @@ $layout: (
 	--gradient-text: #{map-get($gradients, text)};
 
 	/* --- Shadows (Light Theme) --- */
-	--shadow-color: 151deg 25% 61%;
+	--shadow-color: 166deg 75% 35%;
 	/* Shadow heights reduced by 20% from original */
 	--shadow-low--light:
 		0.3px 0.48px 0.8px hsl(var(--shadow-color) / 0.35),
@@ -182,33 +228,33 @@ $layout: (
 
 	/* --- Drop Shadows (Secondary Color) --- */
 	--drop-shadow-high--secondary: drop-shadow(
-			0.0187rem 0.0313rem 0.0375rem hsl(156deg 37% 27% / 0.54)
+			0.0187rem 0.0313rem 0.0375rem hsla(162, 100%, 24%, 0.54)
 		)
-		drop-shadow(0.0688rem 0.1437rem 0.1563rem -0.0375rem hsl(156deg 37% 27% / 0.49))
-		drop-shadow(0.15rem 0.3rem 0.325rem -0.075rem hsl(156deg 37% 27% / 0.45))
-		drop-shadow(0.2938rem 0.5938rem 0.6438rem -0.1062rem hsl(156deg 37% 27% / 0.4))
-		drop-shadow(0.55rem 1.1rem 1.2rem -0.1437rem hsl(156deg 37% 27% / 0.36))
-		drop-shadow(0.9563rem 1.9187rem 2.0875rem -0.1812rem hsl(156deg 37% 27% / 0.32))
-		drop-shadow(1.5625rem 3.125rem 3.4063rem -0.2188rem hsl(156deg 37% 27% / 0.27));
+		drop-shadow(0.0688rem 0.1437rem 0.1563rem -0.0375rem hsla(162, 100%, 24%, 0.49))
+		drop-shadow(0.15rem 0.3rem 0.325rem -0.075rem hsla(162, 100%, 24%, 0.45))
+		drop-shadow(0.2938rem 0.5938rem 0.6438rem -0.1062rem hsla(162, 100%, 24%, 0.4))
+		drop-shadow(0.55rem 1.1rem 1.2rem -0.1437rem hsla(162, 100%, 24%, 0.36))
+		drop-shadow(0.9563rem 1.9187rem 2.0875rem -0.1812rem hsla(162, 100%, 24%, 0.32))
+		drop-shadow(1.5625rem 3.125rem 3.4063rem -0.2188rem hsla(162, 100%, 24%, 0.27));
 
 	/* --- Shadows (Secondary Background) --- */
 	--shadow-low--secondary:
-		0.0187rem 0.025rem 0.0375rem hsl(156deg 37% 27% / 0.48),
-		0.025rem 0.04rem 0.0563rem -0.1062rem hsl(156deg 37% 27% / 0.39),
-		0.0625rem 0.1rem 0.1375rem -0.2188rem hsl(156deg 37% 27% / 0.3);
+		0.0187rem 0.025rem 0.0375rem hsla(162, 100%, 24%, 0.48),
+		0.025rem 0.04rem 0.0563rem -0.1062rem hsla(162, 100%, 24%, 0.39),
+		0.0625rem 0.1rem 0.1375rem -0.2188rem hsla(162, 100%, 24%, 0.3);
 	--shadow-medium--secondary:
-		0.0187rem 0.025rem 0.0375rem hsl(156deg 37% 27% / 0.51),
-		0.0437rem 0.065rem 0.0875rem -0.075rem hsl(156deg 37% 27% / 0.43),
-		0.1187rem 0.19rem 0.2562rem -0.1437rem hsl(156deg 37% 27% / 0.36),
-		0.3125rem 0.5rem 0.6813rem -0.2188rem hsl(156deg 37% 27% / 0.29);
+		0.0187rem 0.025rem 0.0375rem hsla(162, 100%, 24%, 0.51),
+		0.0437rem 0.065rem 0.0875rem -0.075rem hsla(162, 100%, 24%, 0.43),
+		0.1187rem 0.19rem 0.2562rem -0.1437rem hsla(162, 100%, 24%, 0.36),
+		0.3125rem 0.5rem 0.6813rem -0.2188rem hsla(162, 100%, 24%, 0.29);
 	--shadow-high--secondary:
-		0.0187rem 0.025rem 0.0375rem hsl(156deg 37% 27% / 0.54),
-		0.0688rem 0.115rem 0.1563rem -0.0375rem hsl(156deg 37% 27% / 0.49),
-		0.15rem 0.24rem 0.325rem -0.075rem hsl(156deg 37% 27% / 0.45),
-		0.2938rem 0.475rem 0.6438rem -0.1062rem hsl(156deg 37% 27% / 0.4),
-		0.55rem 0.88rem 1.2rem -0.1437rem hsl(156deg 37% 27% / 0.36),
-		0.9563rem 1.535rem 2.0875rem -0.1812rem hsl(156deg 37% 27% / 0.32),
-		1.5625rem 2.5rem 3.4063rem -0.2188rem hsl(156deg 37% 27% / 0.27);
+		0.0187rem 0.025rem 0.0375rem hsla(162, 100%, 24%, 0.54),
+		0.0688rem 0.115rem 0.1563rem -0.0375rem hsla(162, 100%, 24%, 0.49),
+		0.15rem 0.24rem 0.325rem -0.075rem hsla(162, 100%, 24%, 0.45),
+		0.2938rem 0.475rem 0.6438rem -0.1062rem hsla(162, 100%, 24%, 0.4),
+		0.55rem 0.88rem 1.2rem -0.1437rem hsla(162, 100%, 24%, 0.36),
+		0.9563rem 1.535rem 2.0875rem -0.1812rem hsla(162, 100%, 24%, 0.32),
+		1.5625rem 2.5rem 3.4063rem -0.2188rem hsla(162, 100%, 24%, 0.27);
 
 	/* --- Transitions --- */
 	--fade-in-duration: #{map-get($transitions, fade-in)};
@@ -234,9 +280,8 @@ $light-3: hsl(0, 0%, 80%);
 	font-family: var(--font-family-bold);
 	font-weight: 300;
 	width: fit-content;
-	background-color: $light-bg;
-	color: var(--color-secondary);
-
+	background-color: map-get($color-pallete, 50);
+	color: map-get($color-pallete, 900);
 	font-size: var(--label-p);
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
@@ -256,23 +301,12 @@ $light-3: hsl(0, 0%, 80%);
 }
 %text-label--secondary {
 	@extend %text-label--primary;
-	// text-wrap: nowrap;
-	// font-family: var(--font-family-bold);
-	// font-weight: 300;
-	// width: fit-content;
-	// background-color: #c0e3d4;
-	// color: var(--color-p);
-	// font-size: var(--label-p);
-	// letter-spacing: 0.05em;
-	// text-transform: uppercase;
-	// padding-inline: 0.5rem;
-	// padding-block: 0.25rem;
-	// border-radius: 2.75rem;
-	// line-height: 1.5;
-	// box-shadow: var(--shadow-low--secondary);
+	background-color: map-get($color-pallete, 900);
+	color: map-get($color-pallete, 50);
+	box-shadow: var(--shadow-low--secondary);
 }
 %p {
-	font-weight: 400;
+	font-weight: 450;
 	line-height: 1.6;
 	font-size: var(--p);
 	letter-spacing: normal;

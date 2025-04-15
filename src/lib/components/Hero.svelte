@@ -1,7 +1,8 @@
 <script lang="ts">
 	// Import required modules
 	import { onMount } from 'svelte';
-	import { fadeInUpTransition } from '$lib/utils/animations';
+	import { cubicOut } from 'svelte/easing';
+	import FolderButton from '$lib/components/buttons/FolderButton.svelte';
 
 	// Assuming design system types/interfaces might be needed later
 	// import type { /* ... */ } from '$lib/types'; // Example import
@@ -48,13 +49,28 @@
 		hero = heroData[0];
 	});
 
-	// Function to handle button click (smooth scroll)
-	function handleButtonClick() {
-		const targetElement = document.getElementById('cta'); // Assumes 'cta' element exists elsewhere
-		if (targetElement) {
-			targetElement.scrollIntoView({ behavior: 'smooth' });
-		}
+	// Function to handle button click (email)
+	function handleEmailClick() {
+		window.location.href = 'mailto:info@1stgreenhome.com';
 	}
+
+	// Svelte custom transition function for fade in up effect
+	const fadeInUpTransition = (node: Element, { delay = 0, duration = 500, y = 30 } = {}) => {
+		// Get computed style to avoid overriding existing transforms
+		const style = getComputedStyle(node);
+		const transform = style.transform === 'none' ? '' : style.transform;
+
+		return {
+			delay,
+			duration,
+			easing: cubicOut, // Matches the original CSS animation's timing function more closely
+			css: (t: number, u: number) => `
+				opacity: ${t};
+				transform: ${transform} translateY(${y * u}px);
+			`
+			// t ranges from 0 to 1 (start to end), u is 1 - t
+		};
+	};
 
 	// REMOVE Animation classes - dynamically added
 	// const animationClasses = {
@@ -93,29 +109,16 @@
 					{hero.subtitle + hero.subtitle2}
 				</p>
 
-				<button
-					class="hero__button text-label"
-					on:click={handleButtonClick}
-					aria-label="Get started with a free energy audit"
-					in:fadeInUpTransition={{ delay: 600, duration: 500 }}
-				>
-					{hero.button}
-					<img
-						src="/assets/landing-page/envelope-regular.svg"
-						width="16"
-						height="16"
-						alt=""
-						aria-hidden="true"
-						class="hero__button-icon"
-					/>
-				</button>
+				<div in:fadeInUpTransition={{ delay: 600, duration: 500 }}>
+					<FolderButton text={hero.button} onClick={handleEmailClick} />
+				</div>
 			</header>
 		</section>
 	</section>
 {/if}
 
 <style lang="scss">
-	// No global imports needed here; rely on gloally available CSS custom properties from app.scss
+	// No global imports needed here; rely on gloably available CSS custom properties from app.scss
 	/* Apply box-sizing globally if not already done */
 	*,
 	*::before,
@@ -194,48 +197,6 @@
 			margin-bottom: spacing(not-related);
 		}
 
-		&__button {
-			cursor: pointer;
-			@extend %flex-center;
-			// A11Y Contrast Check: Ensure var(--convex-secondary) background and var(--color-light) text meet WCAG AA.
-			background: var(--convex-secondary);
-			border-radius: var(--border-radius);
-
-			border: 0.0625rem solid var(--color-accent);
-			box-shadow:
-				var(--small-box-shadow),
-				inset 0 0.0625rem 0 rgba(255, 255, 255, 0.5);
-			color: var(--color-light);
-			font-family: var(--font-family-bold);
-			font-size: var(--p);
-			font-weight: 600;
-			letter-spacing: -0.02em;
-			line-height: 1.5;
-			padding: 0.5rem 1rem;
-			text-wrap: nowrap;
-			box-shadow: var(--shadow-medium--light);
-			gap: 0.5rem;
-			transition: all 0.2s ease-in-out;
-
-			/* A11Y: Add a distinct outline for keyboard focus */
-			outline: 0.125rem solid transparent; /* Make space for the outline */
-			outline-offset: 0.125rem; /* Offset to avoid overlapping the element */
-
-			& svg {
-				width: 1em;
-				height: 1em;
-			}
-			&:hover {
-				filter: brightness(1.1);
-				transform: scale(1.05);
-				box-shadow: var(--hover-box-shadow);
-			}
-
-			&:active {
-				transform: scale(0.95);
-			}
-		}
-
 		/* --------------------------------------------------
 		 Image Container (Element)
 	   -------------------------------------------------- */
@@ -273,11 +234,10 @@
 			}
 
 			&::after {
-				background: var(--convex-primary); // Use gradient CSS var
+				background: hsl(157, 75%, 10%); // Use gradient CSS var
 				box-shadow: var(--shadow-medium--light); // Use shadow var with fallback
 				background-size: contain;
 				background-repeat: no-repeat;
-				filter: brightness(0.5) saturate(1.1);
 				background-position: center;
 				z-index: -1;
 			}

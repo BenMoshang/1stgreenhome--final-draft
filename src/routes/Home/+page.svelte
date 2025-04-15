@@ -51,11 +51,11 @@
 <main class="page-container">
 	<Hero />
 	<div class="gradient-background-container">
-		<Services />
-		<Testimonials />
+		<!-- <Services /> -->
+		<!-- <Testimonials /> -->
 		<div class="gradient-background"></div>
 	</div>
-	<Projects />
+	<!-- <Projects /> -->
 </main>
 
 <style lang="scss">
@@ -100,7 +100,6 @@
 		background-size: cover;
 		background-position: center;
 		background-attachment: fixed;
-		filter: saturate(0.7);
 		&::after {
 			content: '';
 			position: absolute;
@@ -113,6 +112,7 @@
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-attachment: fixed;
+			filter: contrast(0.7) brightness(0.3);
 			opacity: 0.2;
 			z-index: -1;
 		}

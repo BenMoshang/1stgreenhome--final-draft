@@ -89,7 +89,7 @@
 			inline-size: 100%;
 			z-index: 3;
 			padding: 1.25rem;
-			background: linear-gradient(to bottom, transparent 0%, hsl(157, 67%, 10%) 100%);
+			background: linear-gradient(to bottom, transparent 0%, hsl(157, 67%, 0%) 100%);
 		}
 
 		&__title {

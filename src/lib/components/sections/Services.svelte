@@ -243,11 +243,12 @@
 		top: 2rem;
 		width: 2rem;
 		height: 2rem;
-		border: 1px solid var(--color-accent);
 		padding: 0.5rem;
 		object-fit: cover;
 		border-radius: 50%;
-		background: var(--color-secondary-900);
+
+		box-shadow: var(--shadow-medium--secondary);
+		background: #e7ece9;
 		z-index: 1; /* Ensure icons appear above the line */
 	}
 
