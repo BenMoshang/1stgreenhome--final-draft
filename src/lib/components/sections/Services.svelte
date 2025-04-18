@@ -78,7 +78,7 @@
 	};
 </script>
 
-<section class="stepper-section">
+<section class="section__default stepper-section">
 	<header class="stepper-section__header">
 		<small class="stepper-section__header--label">{header.label}</small>
 		<h2 class="stepper-section__header--title">{header.title}</h2>

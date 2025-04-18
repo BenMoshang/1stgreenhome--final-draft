@@ -56,3 +56,66 @@ To publish your library to [npm](https://www.npmjs.com):
 ```bash
 npm publish
 ```
+
+# Enhanced Scroll Animation
+
+This project uses Lenis for smooth scrolling with enhanced motion design principles.
+
+## Using Scroll-Linked Animations
+
+### Basic Fade-In Animation
+
+Add the `data-scroll="fade-in"` attribute to any element you want to fade in when it enters the viewport:
+
+```html
+<div data-scroll="fade-in">This content will fade in when scrolled into view</div>
+```
+
+### Fade-Up Animation
+
+Add the `data-scroll="fade-up"` attribute to elements you want to fade in and slide up:
+
+```html
+<div data-scroll="fade-up">This content will fade in and slide up when scrolled into view</div>
+```
+
+### Parallax Effect
+
+Add the `data-parallax` attribute with a speed value to create parallax effects:
+
+```html
+<div data-parallax="0.1">This content will move at 0.1x scroll speed</div>
+```
+
+Lower values (like 0.1) create subtle effects, while higher values (0.5+) create more dramatic parallax.
+
+### Progress-Based Animations
+
+Add the `data-sticky-progress` attribute to elements that should respond to overall scroll progress:
+
+```html
+<progress data-sticky-progress value="0" max="100"></progress>
+```
+
+## Accessibility
+
+The system automatically respects user preferences for reduced motion by:
+
+- Disabling smooth scrolling
+- Removing transitions/animations
+- Ensuring content is immediately visible
+
+## Programmatic Scrolling
+
+You can scroll to elements programmatically using the `scrollTo` utility:
+
+```ts
+import { scrollTo } from '$lib/utils/scrollUtils';
+
+// Scroll to element with options
+scrollTo('#target-element', {
+	offset: 50, // Offset in pixels
+	duration: 1.5, // Duration in seconds
+	immediate: false // Whether to skip animation
+});
+```

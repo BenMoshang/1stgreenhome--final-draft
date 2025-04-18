@@ -160,13 +160,15 @@
 
 		<!-- Logo wrapper moved back inside nav -->
 		<div class="header__logo-wrapper">
-			<img
-				class="header__logo"
-				src="/assets/header/1stgreenhome.svg"
-				alt="1st Green Home Logo"
-				width={40}
-				height={40}
-			/>
+			<a href="/" aria-label="Go to homepage">
+				<img
+					class="header__logo"
+					src="/assets/header/1stgreenhome.svg"
+					alt="1st Green Home Logo"
+					width={40}
+					height={40}
+				/>
+			</a>
 		</div>
 
 		<!-- Right Links -->
@@ -354,6 +356,19 @@
 			// Visuals
 			mix-blend-mode: multiply;
 			filter: saturate(map-get($filters, logo-saturate)) contrast(map-get($filters, logo-contrast));
+		}
+
+		/* Logo link styling */
+		&__logo-wrapper a {
+			display: flex;
+			width: 100%;
+			height: 100%;
+			transition: transform var(--transition-duration) ease-in-out;
+
+			&:hover,
+			&:focus {
+				transform: scale(1.05);
+			}
 		}
 
 		/* Element: Desktop Nav Container */

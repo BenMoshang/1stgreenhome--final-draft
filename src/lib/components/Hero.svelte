@@ -104,37 +104,35 @@
 </script>
 
 {#if hero}
-	<section id="hero" class="hero-section">
-		<section class="hero">
-			<div class="hero__image-container" in:fadeInUpTransition={{ delay: 1000, duration: 500 }}>
-				<img
-					src="/assets/landing-page/hero/hero__light.webp"
-					width="500"
-					height="500"
-					alt="Energy efficient light bulb illustration"
-					class="hero__image"
-					loading="eager"
-					decoding="sync"
-				/>
+	<section id="hero" class="section__default hero">
+		<div class="hero__image-container" in:fadeInUpTransition={{ delay: 1000, duration: 500 }}>
+			<img
+				src="/assets/landing-page/hero/hero__light.webp"
+				width="500"
+				height="500"
+				alt="Energy efficient light bulb illustration"
+				class="hero__image"
+				loading="eager"
+				decoding="sync"
+			/>
+		</div>
+
+		<header class="hero__text">
+			<p class="hero__label" in:fadeInUpTransition={{ delay: 0, duration: 500 }}>
+				{hero.label}
+			</p>
+			<h1 class="hero__title" in:fadeInUpTransition={{ delay: 200, duration: 500 }}>
+				{hero.title0 + hero.title}
+				<span class="hero__title-gradient">{hero.title2}</span>
+			</h1>
+			<p class="hero__subtitle" in:fadeInUpTransition={{ delay: 400, duration: 500 }}>
+				{hero.subtitle + hero.subtitle2}
+			</p>
+
+			<div in:fadeInUpTransition={{ delay: 600, duration: 500 }}>
+				<FolderButton text={hero.button} onClick={handleEmailClick} />
 			</div>
-
-			<header class="hero__text">
-				<p class="hero__label" in:fadeInUpTransition={{ delay: 0, duration: 500 }}>
-					{hero.label}
-				</p>
-				<h1 class="hero__title" in:fadeInUpTransition={{ delay: 200, duration: 500 }}>
-					{hero.title0 + hero.title}
-					<span class="hero__title-gradient">{hero.title2}</span>
-				</h1>
-				<p class="hero__subtitle" in:fadeInUpTransition={{ delay: 400, duration: 500 }}>
-					{hero.subtitle + hero.subtitle2}
-				</p>
-
-				<div in:fadeInUpTransition={{ delay: 600, duration: 500 }}>
-					<FolderButton text={hero.button} onClick={handleEmailClick} />
-				</div>
-			</header>
-		</section>
+		</header>
 	</section>
 {/if}
 
@@ -152,16 +150,6 @@
 	/* --------------------------------------------------
      Main Container -> Renamed to Hero Section
    -------------------------------------------------- */
-	.hero-section {
-		padding-block: 5rem;
-		--grid-gap-size: 2rem;
-
-		--text-shadow-effect: drop-shadow(0.0625rem 0.0625rem 0.0625rem rgba(255, 255, 255, 0.969));
-		@extend %flex-center;
-
-		width: 100%;
-		height: 100%;
-	}
 
 	/* --------------------------------------------------
      Hero Container
@@ -172,6 +160,7 @@
 		grid-template-columns: 1fr;
 		gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
 		width: 100%;
+		height: 100%;
 
 		/* --------------------------------------------------
 		 Hero Text Container (Element)

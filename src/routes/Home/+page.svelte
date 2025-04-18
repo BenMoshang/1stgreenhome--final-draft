@@ -51,7 +51,7 @@
 <main class="page-container">
 	<Hero />
 	<div class="gradient-background-container">
-		<!-- <Services /> -->
+		<Services />
 		<!-- <Testimonials /> -->
 		<div class="gradient-background"></div>
 	</div>
@@ -70,7 +70,6 @@
 		justify-content: center;
 		max-inline-size: $PAGE_MAX_WIDTH;
 		gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
-		padding-inline: 1rem;
 		inline-size: 100%;
 		block-size: 100%;
 		margin-inline: auto;
@@ -100,6 +99,7 @@
 		background-size: cover;
 		background-position: center;
 		background-attachment: fixed;
+		filter: brightness(0.75) saturate(1.5);
 		&::after {
 			content: '';
 			position: absolute;
