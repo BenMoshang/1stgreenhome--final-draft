@@ -1,4 +1,5 @@
 # Design System - Quick Glossary & Use Cases
+# [UPDATED April 18, 2025]
 
 Focus: Quick lookup for applying styles.
 
@@ -7,13 +8,11 @@ Focus: Quick lookup for applying styles.
 **Apply Color?** (`appearance/_colors.scss`)
 
 * **Text Color:**
-    * `.text--primary`, `.text--secondary`, `.text--tertiary`, `.text--error`, etc.
-    * `.text--surface` (for text on main background)
+    * `.text--primary`, `.text--secondary`, `.text--tertiary`, `.text--error`, `.text--warning`, `.text--info`, `.text--success`, `.text--surface`
 * **Background Color (with contrasting text):**
-    * `.bg--primary`, `.bg--secondary`, `.bg--tertiary`, `.bg--error`, etc.
-    * `.bg--surface` / `.bg--background` (main page/element background)
-* **Container Background Color (text color *not* included):**
-    * `.bg--primary-container`, `.bg--secondary-container`, etc.
+    * `.bg--primary`, `.bg--secondary`, `.bg--tertiary`, `.bg--error`, `.bg--warning`, `.bg--info`, `.bg--success`, `.bg--surface`, `.bg--background`
+* **Container Background Color:**
+    * `.bg--primary-container`, `.bg--secondary-container`, `.bg--tertiary-container`
 * **Use Raw Color Variable (CSS):**
     * `color: var(--primary);`
     * `background-color: var(--surface);`
@@ -43,7 +42,7 @@ Focus: Quick lookup for applying styles.
         * `grid`: Base class
         * `grid--[xs|sm|md|lg|xl|2xl]`: Sets gap size
         * `col__[1-9]`: Sets number of columns
-        * `row__[1-9]`: Sets number of rows (less common)
+        * `row__[1-9]`: Sets number of rows
 * **Stack Layers:** (`layout/_stacks.scss`)
     * `<div class="stack">`
         * `<div class="stack__layer">Bottom Layer</div>`
@@ -84,11 +83,11 @@ Focus: Quick lookup for applying styles.
     * Icons: `.button--start-icon`, `.button--end-icon` (adjusts padding)
     * Size: `.button--large`
     * Content Wrapper: `<span class="button__content">...</span>`
-    * Icon Wrapper: `<span class="button__icon">...</span>` (needs size mixin if SVG)
+    * Icon Wrapper: `<span class="button__icon">...</span>` (use `@include size(width, sm)` for SVG)
     * **Requires:** `<span class="state"></span>` inside for hover/focus/active effect.
 * **Card:** (`components/_cards.scss`)
     * `<div class="card"> ... <span class="state"></span></div>`
-    * Padding automatically scales based on largest text element inside (using `:has()`).
+    * Padding auto-scales based on largest text element inside (using `:has()`).
     * **OR** set padding explicitly: `.card--heading`, `.card--body`, etc.
     * **Requires:** `<span class="state"></span>` inside for hover/focus/active effect (optional).
 
@@ -110,3 +109,5 @@ Focus: Quick lookup for applying styles.
       <span class="state"></span>
     </a>
     ```
+
+Synced with latest `@styles` changes: Oklch color tokens, new/updated mixins, container/grid/section/card/button/state usage.
