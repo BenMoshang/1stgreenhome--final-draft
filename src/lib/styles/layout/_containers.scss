@@ -1,0 +1,39 @@
+
+@use "sass:math";
+
+@use "../base/globals";
+
+$_WIDTH: 75rem; 
+
+.container {
+margin-inline: auto;
+  &__xs {
+    @extend .container;
+
+    max-width: round(math.div($_WIDTH, globals.$MAJOR-HALF));
+  }
+
+  &__sm {
+    @extend .container;
+
+    max-width: round(math.div($_WIDTH, globals.$MAJOR-QUARTER));
+  }
+
+  &__md {
+    @extend .container;
+
+    max-width: #{$_WIDTH};
+  }
+
+  &__lg {
+    @extend .container;
+
+    max-width: round($_WIDTH * globals.$MAJOR-QUARTER);
+  }
+
+  &__xl {
+    @extend .container;
+
+    max-width: round($_WIDTH * globals.$MAJOR-HALF);
+  }
+}

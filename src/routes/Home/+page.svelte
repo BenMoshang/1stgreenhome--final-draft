@@ -1,20 +1,13 @@
 <script lang="ts">
-	import Hero from '$lib/components/Hero.svelte';
-	import Services from '$lib/components/sections/Services.svelte';
 	// These would be imports for other sections once migrated
 	// import Stepper from '$lib/components/sections/Stepper.svelte';
-	import Testimonials from '$lib/components/sections/Testimonials.svelte';
-	import TestimonialCard from '$lib/components/TestimonialCard.svelte';
-	import ServiceCard from '$lib/components/ServiceCard.svelte';
-	import Projects from '$lib/components/sections/Projects.svelte';
 	// import Partners from '$lib/components/sections/Partners.svelte';
 	// import Faqs from '$lib/components/sections/Faqs.svelte';
 	// import Cta from '$lib/components/sections/Cta.svelte';
 
 	// For handling fragment navigation (similar to Angular's fragment handling)
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
-
+	
 	// Function to handle fragment navigation
 	function jumpToFragment(fragment: string) {
 		const element = document.getElementById(fragment);
@@ -49,9 +42,9 @@
 </script>
 
 <main class="page-container">
-	<Hero />
+	<!-- <Hero /> -->
 	<div class="gradient-background-container">
-		<Services />
+		<!-- <Services /> -->
 		<!-- <Testimonials /> -->
 		<div class="gradient-background"></div>
 	</div>
@@ -68,8 +61,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		max-inline-size: $PAGE_MAX_WIDTH;
-		gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
+		// gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
 		inline-size: 100%;
 		block-size: 100%;
 		margin-inline: auto;
@@ -84,7 +76,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
+		// gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
 	}
 
 	.gradient-background {

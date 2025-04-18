@@ -1,0 +1,44 @@
+
+@use "../base/globals";
+
+.grid {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr;
+
+  &--xs {
+    gap: globals.round-to(globals.size("2xs") * globals.$MAJOR-HALF);
+  }
+
+  &--sm {
+    gap: globals.round-to(globals.size("xs") * globals.$MAJOR-HALF);
+  }
+
+  &--md {
+    gap: globals.round-to(globals.size("sm") * globals.$MAJOR-HALF);
+  }
+
+  &--lg {
+    gap: globals.round-to(globals.size("md"));
+  }
+
+  &--xl {
+    gap: globals.round-to(globals.size("lg"));
+  }
+
+  &--2xl {
+    gap: globals.round-to(globals.size("xl"));
+  }
+}
+
+@for $k from 1 through 9 {
+  .col__#{$k} {
+    grid-template-rows: auto;
+    grid-template-columns: repeat($k, 1fr);
+  }
+
+  .row__#{$k} {
+    grid-template-rows: repeat($k, 1fr);
+    grid-template-columns: auto;
+  }
+}

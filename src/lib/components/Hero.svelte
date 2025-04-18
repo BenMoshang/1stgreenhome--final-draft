@@ -1,8 +1,8 @@
 <script lang="ts">
 	// Import required modules
+	import FolderButton from '$lib/components/buttons/FolderButton.svelte';
 	import { onMount } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
-	import FolderButton from '$lib/components/buttons/FolderButton.svelte';
 
 	// Assuming design system types/interfaces might be needed later
 	// import type { /* ... */ } from '$lib/types'; // Example import

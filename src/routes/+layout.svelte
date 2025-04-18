@@ -3,8 +3,6 @@
 	import Lenis from 'lenis';
 
 	import { browser } from '$app/environment';
-	import Footer from '$lib/components/layout/Footer.svelte';
-	import Header from '$lib/components/layout/Header.svelte';
 	import { initScrollAnimations } from '$lib/utils/scrollUtils';
 	import { onDestroy, onMount } from 'svelte';
 
@@ -104,10 +102,10 @@
 <svelte:head>
 	<title>1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable Solutions</title>
 </svelte:head>
-<Header />
+<!-- <Header /> -->
 {@render children()}
 
-<Footer />
+<!-- <Footer /> -->
 <filter id="noiseFilter2">
 	<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
 	<feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" />
@@ -116,51 +114,8 @@
 <!-- SVG filter for noise effect -->
 
 <style lang="scss" global>
-	/* ==================================================
-	   LAYOUT-SPECIFIC STYLES (.page-container & Noise Filter)
-	   ================================================== */
-
-	/* ==================================================
-	   GLOBAL STYLES & RESETS
-	   ================================================== */
-
-	/* --- Box Sizing Reset --- */
-	:global(*),
-	:global(*::before),
-	:global(*::after) {
-		box-sizing: border-box;
-	}
-
-	/* --- Base HTML & Body --- */
-	:global(html) {
-		/* Display & Box Model */
-		inline-size: 100vw;
-		min-block-size: 100svh;
-		-ms-text-size-adjust: 100%;
-		-webkit-text-size-adjust: 100%;
-		margin-inline: auto;
-		/* Visual */
-		background: var(--color-light);
-		scrollbar-color: var(--color-primary) hsl(0 0% 90%);
-		scrollbar-width: thin;
-	}
-
-	:global(body) {
-		/* Display & Box Model */
-		inline-size: 100%;
-		block-size: 100%;
-		overflow-x: clip;
-		margin-inline: auto;
-		padding-top: 7rem;
-		/* Typography */
-		font-family: var(--font-family-regular, system-ui);
-		font-smooth: always;
-		-webkit-font-smoothing: subpixel-antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		text-rendering: geometricprecision;
-		position: relative;
-		/* Misc */
-		scroll-behavior: smooth;
+	
+html{
 		&::before {
 			/* Content */
 			content: '';
@@ -202,107 +157,6 @@
 			z-index: -1;
 		}
 	}
-
-	/* --- Global Selection Style --- */
-	:global(::selection) {
-		color: white;
-		background: var(--color-secondary-900);
-		text-shadow: none;
-	}
-	:root {
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		font-smooth: never;
-	}
-	/* --- Base Typography Resets --- */
-	:global(h1),
-	:global(h2),
-	:global(h3),
-	:global(h4),
-	:global(h5),
-	:global(h6) {
-		/* Box Model */
-		overflow-wrap: break-word;
-
-		/* Typography */
-	}
-
-	:global(label),
-	:global(input),
-	:global(textarea),
-	:global(select),
-	:global(ol),
-	:global(ul),
-	:global(li) {
-		/* Box Model */
-		text-overflow: ellipsis;
-
-		list-style: none;
-		text-wrap: pretty;
-	}
-
-	/* --- Interactive Elements Reset --- */
-	:global(button),
-	:global([role='button']),
-	:global(select) {
-		cursor: pointer;
-		touch-action: manipulation;
-	}
-
-	/* --- Form Elements Reset --- */
-	:global(input),
-	:global(button),
-	:global(textarea),
-	:global(select) {
-		font: inherit;
-	}
-	:global(a) {
-		color: inherit;
-		text-decoration: none;
-	}
-	:global(textarea, input) {
-		letter-spacing: inherit;
-		word-spacing: inherit;
-	}
-
-	/* --- Media Reset --- */
-	:global(img),
-	:global(picture),
-	:global(video),
-	:global(canvas),
-	:global(svg) {
-		/* Display & Box Model */
-		display: block; /* Common practice for media */
-		max-inline-size: 100%;
-		block-size: auto;
-		vertical-align: middle; /* Reset default inline alignment */
-
-		/* Typography */
-		font-style: italic;
-
-		/* Visual */
-		background-repeat: no-repeat;
-		background-size: cover;
-		shape-margin: 1rem;
-	}
-
-	/* --- Table Reset --- */
-	:global(table) {
-		border-collapse: collapse;
-		border-spacing: 0;
-	}
-
-	/* --- Blockquote Reset --- */
-	:global(blockquote),
-	:global(q) {
-		quotes: none;
-
-		&::before,
-		&::after {
-			content: '';
-		}
-	}
-
 	/* Lenis smooth scrolling styles */
 	html.lenis {
 		height: auto;

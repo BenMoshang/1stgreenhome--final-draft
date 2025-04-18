@@ -1,0 +1,71 @@
+// styles/components/_buttons.scss
+@use "sass:math";
+
+@use "../base/globals"; // Adjusted path relative to new location if needed
+@use "../appearance/colors"; // Adjusted path
+@use "../sizing/scale"; // Adjusted path
+// @use "../components/boxes"; // Removed as boxes mixin is not needed or file is missing
+
+.button {
+  // @include colors.fg__primary;
+   // Use foreground color mixin
+
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  // Base padding using golden ratio increments related to MD size
+  padding: globals.round-to(math.div(globals.size("sm"), globals.$MAJOR-HALF)) globals.round-to(globals.size("md"));
+  text-decoration: none;
+
+  border: 1px solid transparent;
+  border-radius: 9999px; // round
+  background-color: transparent;
+  cursor: pointer; // Ensure pointer cursor
+  touch-action: manipulation; // Improve mobile interaction
+
+  &--fill {
+    // @include colors.bg__primary;
+     // Use background color mixin
+  }
+
+  &--outline {
+    border-color: var(--outline); // Use outline variable directly
+  }
+
+  // Padding adjustments for icons using standard sizes
+  &--start-icon {
+    padding-right: globals.round-to(globals.size("md")); // Keep right padding standard
+    padding-left: globals.round-to(globals.size("sm")); // Reduce left padding for icon
+  }
+
+  &--end-icon {
+    padding-right: globals.round-to(globals.size("sm")); // Reduce right padding for icon
+    padding-left: globals.round-to(globals.size("md")); // Keep left padding standard
+  }
+
+  // Specific size modifier
+  &--large {
+    // Use a slightly larger base font size, padding will scale relatively
+    font-size: globals.round-to(globals.size("md") * globals.$MAJOR-QUARTER); // Slightly larger than MD
+    padding: globals.round-to(math.div(globals.size("md"), globals.$MAJOR-HALF)) globals.round-to(globals.size("lg")); // Adjust padding accordingly
+  }
+}
+
+.button__content {
+  // Use the refactored horizontal box mixin with appropriate gap
+  // @include boxes.h-box(sm); // Use 'sm' gap size from the box scale
+
+  display: inline-flex; // Ensure content wrapper is inline-flex for proper alignment
+  align-items: center;
+  justify-content: center; // Center content within the button
+  vertical-align: middle; // Align inline-flex container properly if needed
+}
+
+.button__icon {
+  // Use the generic size mixin from sizing/scale
+  @include scale.size(width, sm);
+  @include scale.size(height, sm);
+  display: inline-flex; // Ensure icon itself is flex for centering if it's an SVG wrapper
+  align-items: center;
+  justify-content: center;
+}

@@ -6,7 +6,7 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				additionalData: `@use '$lib/scss/app.scss' as *;`
+				additionalData: `@use '$lib/styles/main.scss' as *;`
 			}
 		},
 		// Use absolute path for better reliability

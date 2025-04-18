@@ -1,0 +1,24 @@
+@use "../base/globals" as globals;
+
+// 1. Define your scale lookup once
+$scale-map: (
+  2xs: globals.size("md"),
+  xs:  globals.size("md") * globals.$MAJOR-QUARTER,
+  sm:  globals.size("md") * globals.$MAJOR-HALF,
+  md:  globals.size("lg"),
+  lg:  globals.size("lg") * globals.$MAJOR-HALF,
+  xl:  globals.size("xl"),
+  2xl: globals.size("2xl"),
+  3xl: globals.size("3xl")
+);
+
+
+
+// 2b. One generic mixin
+@mixin size($prop, $key) {
+  $raw: map-get($scale-map, $key);
+  @if $raw == null {
+    @error "Unknown scale key ‘#{$key}’";
+  }
+  #{$prop}: globals.round-to($raw);
+}

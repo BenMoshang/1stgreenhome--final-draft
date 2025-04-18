@@ -1,0 +1,222 @@
+
+@use "sass:list";
+@use "sass:math";
+@use "sass:map";
+
+@use "../base/globals" as globals;
+@use "../spacing/margins";
+
+$TYPE-STYLES: (
+    "regular",
+    "bold"
+);
+$TYPE-SCALES: (
+    "display-1": (
+        "regular": (
+            "size": globals.size("2xl"),
+            "height": globals.$MAJOR-QUARTER,
+            "spacing": -0.022em
+        ),
+        "bold": (
+            "weight": 700
+        )
+    ),
+    "display-2": (
+        "regular": (
+            "size": globals.size("xl") * globals.$MAJOR-HALF,
+            "spacing": -0.022em
+        ),
+        "bold": (
+            "weight": 700
+        )
+    ),
+    "title-a": (
+        "regular": (
+            "size": globals.size("lg") * globals.$MAJOR-HALF,
+            "spacing": -0.022em
+        ),
+        "bold": (
+            "weight": 700
+        )
+    ),
+    "title-b": (
+        "regular": (
+            "size": globals.size("lg"),
+            "spacing": -0.02em
+        )
+    ),
+    "title-c": (
+        "regular": (
+            "size": math.div(globals.size("lg"), globals.$MAJOR-HALF),
+            "spacing": -0.017em
+        )
+    ),
+    "heading": (
+        "regular": (
+            "size": globals.size("md") * globals.$MAJOR-QUARTER,
+            "spacing": -0.014em,
+            "weight": 600
+        ),
+        "bold": (
+            "weight": 700
+        )
+    ),
+    "subheading": (
+        "regular": (
+            "size": math.div(globals.size("md"), globals.$MAJOR-QUARTER),
+            "spacing": -0.007em
+        )
+    ),
+    "body": (
+        "regular": (
+            "size": globals.size("md"),
+            "height": globals.$MAJOR,
+            "spacing": -0.011em
+        )
+    ),
+    "callout": (
+        "regular": (
+            "size": math.div(globals.size("md"), globals.$MAJOR-EIGHT),
+            "spacing": -0.009em
+        )
+    ),
+    "label": (
+        "regular": (
+            "size": math.div(math.div(globals.size("md"), globals.$MAJOR-QUARTER), globals.$MAJOR-EIGHT),
+            "spacing": -0.004em,
+            "weight": 600,
+        ),
+        "bold": (
+            "weight": 700,
+        )
+    ),
+    "caption": (
+        "regular": (
+            "size": math.div(globals.size("md"), globals.$MAJOR-HALF),
+            "spacing": -0.007em
+        )
+    ),
+    "overline": (
+        "regular": (
+            "size": math.div(math.div(globals.size("md"), globals.$MAJOR-QUARTER), globals.$MAJOR-EIGHT),
+            "spacing": 1em * math.div(globals.$MINOR, 10)
+        )
+    )
+);
+
+@function lookup($type-scale, $type-style, $type-property, $optional: false) {
+  @if type-of($type-property) != string {
+    @error "#{$type-property} is not a string";
+  }
+  @if list.index($TYPE-STYLES, $type-style) == null {
+    @error "#{$type-style} is not a valid type style";
+  }
+  $property: map.get($TYPE-SCALES, $type-scale, $type-style, $type-property);
+  @if $property == null {
+    @if not $optional {
+      @error "#{$type-property} is not a valid property of #{$type-style} #{$type-scale}";
+    }
+  }
+  @return $property;
+}
+
+@mixin declare($type-scale) {
+  $line-height: lookup($type-scale, "regular", "height", true);
+  @if $line-height == null {
+    $line-height: globals.$MAJOR-HALF; // default
+  } @else {
+    @include margins.adjust-to($line-height);
+  }
+  font-size: globals.round-to(lookup($type-scale, "regular", "size"));
+  line-height: globals.round-to($line-height);
+  letter-spacing: globals.round-to(lookup($type-scale, "regular", "spacing"));
+
+  $font-weight: lookup($type-scale, "regular", "weight", true);
+  @if $font-weight != null {
+    font-weight: globals.round-to($font-weight);
+  }
+
+  &--bold {
+    $font-weight: lookup($type-scale, "bold", "weight", true);
+    @if $font-weight == null {
+      $font-weight: 600; // default
+    }
+    font-weight: globals.round-to($font-weight);
+  }
+}
+
+:root {
+  @include margins.adjust-to(globals.$MAJOR-HALF);
+
+  font: #{globals.round-to(globals.size("md"))} / #{globals.round-to(globals.$MAJOR-HALF)} "Inter", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+}
+
+.display-1 {
+  @include declare("display-1");
+}
+
+.display-2 {
+  @include declare("display-2");
+}
+
+.title-a {
+  @include declare("title-a");
+}
+
+.title-b {
+  @include declare("title-b");
+}
+
+.title-c {
+  @include declare("title-c");
+}
+
+.heading {
+  @include declare("heading");
+}
+
+.subheading {
+  @include declare("subheading");
+}
+
+.body {
+  @include declare("body");
+}
+
+.callout {
+  @include declare("callout");
+}
+
+.label {
+  @include declare("label");
+}
+
+.caption {
+  @include declare("caption");
+}
+
+.overline {
+  @include declare("overline");
+}
+
+@media screen and (max-width: 47.9375rem) {
+
+  .display-1 {
+    font-size: globals.round-to(globals.size("xl") * globals.$MAJOR-HALF);
+  }
+}
+
+@media screen and (max-width: 29.9375rem) {
+
+  .display-1 {
+    font-size: globals.round-to(globals.size("xl"));
+  }
+
+  .display-2 {
+    font-size: globals.round-to(globals.size("lg") * globals.$MAJOR-HALF);
+  }
+
+  .title-a {
+    font-size: globals.round-to(globals.size("lg") * globals.$MAJOR-QUARTER);
+  }
+}
