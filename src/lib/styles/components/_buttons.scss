@@ -18,7 +18,7 @@
 @use 'sass:math';
 @use '../base/globals';
 @use '../appearance/colors';
-@use '../sizing/scale';
+@use '../base/scale';
 
 // Golden ratio split (√φ) for vertical spacing
 
@@ -56,14 +56,11 @@ $btn-icon-map: (
 @mixin btn-size($key) {
 
   $cfg: map-get($btn-sizes, $key);
-
-  padding: globals.round-to(math.div($pv, globals.$MAJOR-HALF))
-    globals.round-to($ph);
-  font-size: globals.round-to(map-get($cfg, font));
-
   $pv: map-get($cfg, pv);
-
   $ph: map-get($cfg, ph);
+
+  padding: globals.round-to(math.div($pv, globals.$MAJOR-HALF)) globals.round-to($ph);
+  font-size: globals.round-to(map-get($cfg, font));
 }
 
 // Mixin: icon padding helper
@@ -77,7 +74,7 @@ $btn-icon-map: (
 .button {
 
   // Base appearance
-  @include colors.fg__primary;
+  color: var(--primary);
 
   position: relative;
   display: inline-flex;
@@ -96,12 +93,12 @@ $btn-icon-map: (
 
   // Variants
   &--fill {
-    @include colors.bg__primary;
-    @include colors.fg__on-primary;
+    background-color: var(--primary);
+    color: var(--on-primary);
   }
 
   &--outline {
-    @include colors.fg__primary;
+    color: var(--primary);
 
     border-color: var(--outline);
   }

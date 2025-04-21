@@ -1,6 +1,6 @@
 @use 'sass:math';
-@use 'globals';
-@use 'margins';
+@use '../base/globals' as globals;
+@use '../spacing/margins' as margins;
 
 /* =============================================================================
    TYPOGRAPHY 2.1 • Placeholder‑driven, mobile‑first

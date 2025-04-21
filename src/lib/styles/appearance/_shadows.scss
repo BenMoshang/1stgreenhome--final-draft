@@ -69,8 +69,8 @@ $_shadow-definitions: (
 }
 
 @mixin apply-shadow($size) {
-  @if not index(xs sm md lg xl 2xl, $size) {
-    @error "Invalid shadow size '#{$size}'. Expected one of: xs, sm, md, lg, xl, 2xl";
+  @if not map.has-key($_shadow-definitions, $size) {
+    @error "Invalid shadow size '#{$size}'. Expected one of: #{map.keys($_shadow-definitions)}";
   }
 
   @extend %shadow__#{$size};

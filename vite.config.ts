@@ -4,15 +4,10 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [sveltekit()],
 	css: {
-		preprocessorOptions: {
-			scss: {
-				additionalData: `@use '$lib/styles/main.scss' as *;`
-			}
-		},
+		// Remove the problematic preprocessorOptions for now
 		// Use absolute path for better reliability
 		postcss: new URL('./postcss.config.js', import.meta.url).pathname
 	},
-	// Add recommended optimizations
 	build: {
 		target: 'esnext',
 		minify: 'esbuild',

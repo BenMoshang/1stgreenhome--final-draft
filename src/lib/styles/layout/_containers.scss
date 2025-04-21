@@ -1,5 +1,6 @@
 @use 'sass:math';
-@use '../base/globals';
+@use 'sass:map';
+@use '../base/globals' as globals;
 
 $_WIDTH: 75rem;
 

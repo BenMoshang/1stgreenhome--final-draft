@@ -1,0 +1,18 @@
+// Alias module to combine core globals and scale utilities for easier imports
+@use 'sass:map';
+@use 'scale' as s;
+@forward 'global-variables';
+@forward 'scale';
+
+// Expose size variables for shorthand
+$SIZE-4XS: map.get(s.$sizes, '4xs');
+$SIZE-3XS: map.get(s.$sizes, '3xs');
+$SIZE-2XS: map.get(s.$sizes, '2xs');
+$SIZE-XS: map.get(s.$sizes, 'xs');
+$SIZE-SM: map.get(s.$sizes, 'sm');
+$SIZE-MD: map.get(s.$sizes, 'md');
+$SIZE-LG: map.get(s.$sizes, 'lg');
+$SIZE-XL: map.get(s.$sizes, 'xl');
+$SIZE-2XL: map.get(s.$sizes, '2xl');
+$SIZE-3XL: map.get(s.$sizes, '3xl');
+$SIZE-4XL: map.get(s.$sizes, '4xl');

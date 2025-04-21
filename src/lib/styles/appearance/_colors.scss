@@ -22,6 +22,8 @@ $primary-seed: '72.3% 0.219 149.579'; // brand colour – change me
 
 $neutral-seed: '85%  0.02  0'; // light grey (≈ surface) – tweak if desired
 
+$black: oklch(0% 0 0deg);
+
 /* ---------------------------------------------------------------------------
    1)  Helper – shift hue while keeping L & C
    --------------------------------------------------------------------------- */
@@ -95,42 +97,37 @@ $positions: (
   @return unquote('oklch(var(--seed-#{$name}))');
 }
 
-@function tonal-scale($name) {
-
+@function tonal-scale($name, $steps: 11) {
   $scale: ();
-
+  $half: math.floor(($steps - 1) / 2);
   $white: oklch(100% 0 0deg);
-
   $black: oklch(0% 0 0deg);
+  $col: null; // initialize before loop to avoid undefined variable
 
   @for $i from 0 through $steps - 1 {
     @if $i < $half {
-
       $pct: ($i / $half) * 100%;
-
       $col: unquote('color-mix(in oklch, #{oklch-seed($name)} #{$pct}, #{$white})');
     } @else if $i == $half {
-
       $col: oklch-seed($name);
     } @else {
-
       $pct: (($i - $half) / $half) * 100%;
-
       $col: unquote('color-mix(in oklch, #{$black} #{$pct}, #{oklch-seed($name)})');
     }
-
     $scale: append($scale, $col, comma);
   }
-
   @return $scale;
 }
 
 @mixin define-seeds($map) {
   @each $name, $vals in $map {
-
-    $lch: string.split($vals, ' ');
-    --seed-#{$name}: #{nth($lch, 1)} #{nth($lch, 2)} #{nth($lch, 3)};
+    --seed-#{$name}: #{$vals};
   }
+}
+
+$scales: ();
+@each $name in map-keys($semantic-seeds) {
+  $scales: map-merge($scales, ($name: tonal-scale($name)));
 }
 
 /* ===========================================================================
@@ -143,34 +140,14 @@ $positions: (
   @include define-seeds($semantic-seeds);
   @include define-seeds($surface-seeds);
 
-  /* 6‑2  Tonal scales */
-
-  $scales: ();
-
-  @each $name in map-keys($semantic-seeds) {
-
-    $scales: map-merge($scales,
-    (
-      $name: tonal-scale($name),
-    ));
-  }
-
   /* 6‑3  Semantic tokens */
   @each $name in map-keys($semantic-seeds) {
 
     $scale: map-get($scales, $name);
-    --#{$name}: unquote('light-dark(' +
-    '#{nth($scale, map-get($positions, light))}, ' +
-    '#{nth($scale, map-get($positions, dark))})');
-    --#{$name}-container: unquote('light-dark(' +
-    '#{nth($scale, map-get($positions, container-light))}, ' +
-    '#{nth($scale, map-get($positions, container-dark))})');
-    --#{$name}-variant: unquote('light-dark(' +
-    '#{nth($scale, map-get($positions, variant-light))}, ' +
-    '#{nth($scale, map-get($positions, variant-dark))})');
-    --on-#{$name}: unquote('light-dark(' +
-    '#{nth($scale, map-get($positions, on-dark))}, ' +
-    '#{nth($scale, map-get($positions, on-light))})');
+    --#{$name}: light-dark(#{nth($scale, map-get($positions, light))}, #{nth($scale, map-get($positions, dark))});
+    --#{$name}-container: light-dark(#{nth($scale, map-get($positions, container-light))}, #{nth($scale, map-get($positions, container-dark))});
+    --#{$name}-variant: light-dark(#{nth($scale, map-get($positions, variant-light))}, #{nth($scale, map-get($positions, variant-dark))});
+    --on-#{$name}: light-dark(#{nth($scale, map-get($positions, on-dark))}, #{nth($scale, map-get($positions, on-light))});
   }
 
   /* 6‑4  Surface/background */
@@ -178,9 +155,7 @@ $positions: (
   --surface-dark: oklch(var(--seed-surface-dark));
   --surface: light-dark(var(--surface-light), var(--surface-dark));
   --background: var(--surface);
-  --on-surface: unquote('light-dark(' +
-  'color-contrast(var(--surface-light) vs oklch(0% 0 0) to AA, oklch(100% 0 0) to AA), ' +
-  'color-contrast(var(--surface-dark)  vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA))');
+  --on-surface: light-dark(color-contrast(var(--surface-light) vs oklch(0% 0 0) to AA, oklch(100% 0 0) to AA), color-contrast(var(--surface-dark) vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA));
 }
 
 /* ===========================================================================

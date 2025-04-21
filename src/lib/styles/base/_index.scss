@@ -2,9 +2,7 @@
 // styles/base/_index.scss
 // Central index forwarding base utilities.
 // ===========================================================================
-{{ ... }}
 @forward 'global-variables';
 @forward 'reset';
 @forward 'scale';
 @forward 'breakpoints';
-{{ ... }}

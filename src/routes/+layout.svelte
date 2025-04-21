@@ -102,7 +102,6 @@
 <svelte:head>
 	<title>1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable Solutions</title>
 </svelte:head>
-<Header />
 {@render children()}
 
 <!-- <Footer /> -->
@@ -114,116 +113,84 @@
 <!-- SVG filter for noise effect -->
 
 <style lang="scss" global>
-	
-html {
-  &::before {
-    /* Positioning */
-    position: absolute;
-    z-index: -2;
-    margin: auto;
-    block-size: 100%;
-
-    /* Content */
-    content: '';
-
-    /* Visual */
-    filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
-
-    /* Display & Box Model */
-    inline-size: 100%;
-    inset: 0;
-    opacity: 0.05;
-
-    /* Misc */
-    pointer-events: none;
-    transform: translateZ(0);
-
-    /* Performance */
-    will-change: filter;
-  }
-
-  &::after {
-    position: absolute;
-    z-index: -1;
-    margin: auto;
-    background-attachment: fixed;
-    background-image: url('/assets/landing-page/leaves.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    block-size: 100%;
-    content: '';
-    inline-size: 100%;
-    inset: 0;
-    opacity: 0.05;
-  }
-}
-
-/* Lenis smooth scrolling styles */
-html.lenis {
-  block-size: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
-/* Enhanced scroll-linked animation utility classes */
-:global([data-scroll]) {
-  transition:
-    transform 1s cubic-bezier(0.165, 0.84, 0.44, 1),
-    opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  will-change: transform, opacity;
-}
-
-:global([data-scroll='fade-up']) {
-  opacity: 0;
-  transform: translateY(50px);
-}
-
-:global([data-scroll='fade-up'].is-inview) {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-:global([data-scroll='fade-in']) {
-  opacity: 0;
-}
-
-:global([data-scroll='fade-in'].is-inview) {
-  opacity: 1;
-}
-
-/* Motion reduction styles */
-@media (prefers-reduced-motion: reduce) {
-  /*
-   * Accessibility Exception: The following !important rules are required to override animation and transition
-   * styles for users who prefer reduced motion. This ensures compliance with accessibility guidelines.
-   * If the design system introduces semantic utility classes for motion reduction, replace these with those utilities.
-   */
-  :global(*) {
-    animation-duration: 0.01ms !important; // ACCESSIBILITY EXCEPTION
-    animation-iteration-count: 1 !important; // ACCESSIBILITY EXCEPTION
-    scroll-behavior: auto !important; // ACCESSIBILITY EXCEPTION
-    transition-duration: 0.01ms !important; // ACCESSIBILITY EXCEPTION
-  }
-
-  :global([data-scroll]) {
-    opacity: 1 !important; // ACCESSIBILITY EXCEPTION
-    transform: none !important; // ACCESSIBILITY EXCEPTION
-    transition: none !important; // ACCESSIBILITY EXCEPTION
-  }
-}
+	/* Remove the problematic import for now and use direct styling */
+	html {
+		&::before {
+			position: absolute;
+			z-index: -2;
+			margin: auto;
+			block-size: 100%;
+			content: '';
+			filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
+			inline-size: 100%;
+			inset: 0;
+			opacity: 0.05;
+			pointer-events: none;
+			transform: translateZ(0);
+			will-change: filter;
+		}
+		&::after {
+			position: absolute;
+			z-index: -1;
+			margin: auto;
+			background-attachment: fixed;
+			background-image: url('/assets/landing-page/leaves.svg');
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			block-size: 100%;
+			content: '';
+			inline-size: 100%;
+			inset: 0;
+			opacity: 0.05;
+		}
+	}
+	html.lenis {
+		block-size: auto;
+	}
+	.lenis.lenis-smooth {
+		scroll-behavior: auto;
+	}
+	.lenis.lenis-smooth [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+	.lenis.lenis-scrolling iframe {
+		pointer-events: none;
+	}
+	:global([data-scroll]) {
+		transition:
+			transform 1s cubic-bezier(0.165, 0.84, 0.44, 1),
+			opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+		will-change: transform, opacity;
+	}
+	:global([data-scroll='fade-up']) {
+		opacity: 0;
+		transform: translateY(50px);
+	}
+	:global([data-scroll='fade-up'].is-inview) {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	:global([data-scroll='fade-in']) {
+		opacity: 0;
+	}
+	:global([data-scroll='fade-in'].is-inview) {
+		opacity: 1;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		:global(*) {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			scroll-behavior: auto !important;
+			transition-duration: 0.01ms !important;
+		}
+		:global([data-scroll]) {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+	}
 </style>

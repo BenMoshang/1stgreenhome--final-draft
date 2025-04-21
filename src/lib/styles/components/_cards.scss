@@ -59,7 +59,7 @@ $default-scale: map-get($card-scale-sizes, body);
  * Card root styles
  */
 .card {
-  @include colors.bg__surface;
+  background-color: var(--surface);
 
   position: relative;
   overflow: hidden;
