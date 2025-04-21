@@ -19,84 +19,92 @@
 </article>
 
 <style lang="scss">
-	/* Card component styling */
-	.card {
-		/* Layout */
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		flex: 0 0 auto; /* Keep this: essential for marquee */
-		height: 100%; /* Use height: auto or manage height carefully if content varies a lot */
-		padding: 1.25rem;
+  /* Card component styling */
+  .card {
+    /* Layout */
+    display: flex;
+    flex: 0 0 auto; /* Keep this: essential for marquee */
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.25rem;
+    border-radius: var(--border-radius);
 
-		/* --- RESPONSIVE WIDTH --- */
-		/* Mobile First: Define a base width that works on small screens */
-		width: $PAGE_MAX_WIDTH / 4; /* Example: Adjust based on your design */
-		/* Or use viewport units carefully: width: clamp(250px, 80vw, 320px); */
-		/* Avoid % width with flex: 0 0 auto in this marquee context */
+    /* Or use viewport units carefully: width: clamp(250px, 80vw, 320px); */
 
-		/* Visual */
-		background: var(--convex-light);
-		border-radius: var(--border-radius);
-		box-shadow: var(--shadow-medium--secondary);
+    /* Avoid % width with flex: 0 0 auto in this marquee context */
 
-		/* Elements */
-		&__message {
-			@extend %p;
-			margin-bottom: spacing(semi-related);
-			display: -webkit-box;
-			-webkit-line-clamp: 5; /* Good for controlling height */
-			-webkit-box-orient: vertical;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			/* Consider setting a min-height if empty statements are possible */
-			min-height: 6em; /* Example: Adjust based on font size and line height */
-		}
+    /* Visual */
+    background: var(--convex-light);
+    block-size: 100%; /* Use height: auto or manage height carefully if content varies a lot */
+    box-shadow: var(--shadow-medium--secondary);
 
-		&__header {
-			/* Layout */
-			width: 100%;
-			display: grid;
-			grid-template-areas:
-				'pfp name'
-				'pfp company';
-			grid-template-columns: auto 1fr;
-			grid-column-gap: 0.5rem;
-			padding-top: 0.25rem; /* Add padding-top instead of padding: 0.25rem to avoid affecting bottom */
-			margin-top: auto; /* Push header to the bottom */
-		}
+    /* --- RESPONSIVE WIDTH --- */
 
-		&__pfp {
-			grid-area: pfp;
-			height: 2.5rem;
-			width: 2.5rem;
-			border-radius: 50%;
-			box-shadow: inset 0 2px 2px hsla(0, 0%, 0%, 0.849);
-			object-fit: cover;
-		}
+    /* Mobile First: Define a base width that works on small screens */
+    inline-size: $PAGE_MAX_WIDTH / 4; /* Example: Adjust based on your design */
 
-		&__name {
-			grid-area: name;
-			align-self: end;
-			@extend %h6;
-			font-weight: 600;
-			letter-spacing: 0.02em;
-		}
+    /* Elements */
+    &__message {
+      @extend %p;
 
-		&__company {
-			@extend %p;
-			grid-area: company;
-			font-weight: 300;
-			font-size: var(--label-p);
-			letter-spacing: 0.05em;
-			color: var(--color-secondary-900);
-		}
-	}
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: block-axis;
+      -webkit-line-clamp: 5; /* Good for controlling height */
+      margin-block-end: spacing(semi-related);
 
-	/* Accessibility: Reduced Motion */
-	@media (prefers-reduced-motion: reduce) {
-		.card {
-			transition-duration: 0.01ms !important;
-		}
-	}
+      /* Consider setting a min-height if empty statements are possible */
+      min-block-size: 6em; /* Example: Adjust based on font size and line height */
+      text-overflow: ellipsis;
+    }
+
+    &__header {
+      display: grid;
+      grid-column-gap: 0.5rem;
+      grid-template-areas:
+        'pfp name'
+        'pfp company';
+      grid-template-columns: auto 1fr;
+
+      /* Layout */
+      inline-size: 100%;
+      margin-block-start: auto; /* Push header to the bottom */
+      padding-block-start: 0.25rem; /* Add padding-top instead of padding: 0.25rem to avoid affecting bottom */
+    }
+
+    &__pfp {
+      border-radius: 50%;
+      block-size: 2.5rem;
+      box-shadow: inset 0 2px 2px hsl(0deg 0% 0% / 84.9%);
+      grid-area: pfp;
+      inline-size: 2.5rem;
+      object-fit: cover;
+    }
+
+    &__name {
+      align-self: end;
+      font-weight: 600;
+      grid-area: name;
+      letter-spacing: 0.02em;
+
+      @extend %h6;
+    }
+
+    &__company {
+      @extend %p;
+
+      color: var(--color-secondary-900);
+      font-size: var(--label-p);
+      font-weight: 300;
+      grid-area: company;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  /* Accessibility: Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .card {
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>

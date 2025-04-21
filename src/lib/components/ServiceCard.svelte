@@ -29,87 +29,92 @@
 </figure>
 
 <style lang="scss">
-	// --- Component Variables ---
-	$card-border-radius: 1rem;
-	$transition-speed: 0.4s;
+  // --- Component Variables ---
 
-	// --- Service Card ---
-	.service-card {
-		height: 100%;
-		position: relative;
-		width: 100%;
-		// max-inline-size: min(100%, $container-width-3);
-		border-radius: $card-border-radius;
-		overflow: hidden;
-		box-shadow: var(--shadow-medium--secondary);
+  $card-border-radius: 1rem;
 
-		@extend %flex-col-center;
-		// Card elevation on hover
-		transition: transform $transition-speed;
+  $transition-speed: 0.4s;
 
-		&:hover {
-			transform: translateY(calc(-0.5% - 0.25rem));
+  // --- Service Card ---
+  .service-card {
+    position: relative;
+    overflow: hidden;
 
-			.service-card__image {
-				transform: scale(1.05);
-			}
-		}
+    // max-inline-size: min(100%, $container-width-3);
+    border-radius: $card-border-radius;
+    block-size: 100%;
+    box-shadow: var(--shadow-medium--secondary);
+    inline-size: 100%;
 
-		&__image {
-			display: block;
-			position: relative;
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			// aspect-ratio: 4/3;
-			z-index: 1;
-			transition: transform $transition-speed cubic-bezier(0.25, 0.8, 0.25, 1);
+    // Card elevation on hover
+    transition: transform $transition-speed;
 
-			&::before {
-				content: '';
-				position: absolute;
-				isolation: isolate;
-				inset: 0;
-				background: linear-gradient(
-					to top,
-					rgba(0, 0, 0, 0.8) 0%,
-					rgba(0, 0, 0, 0.4) 40%,
-					rgba(0, 0, 0, 0.2) 60%,
-					rgba(0, 0, 0, 0) 100%
-				);
-				z-index: 2;
-			}
-		}
+    @extend %flex-col-center;
 
-		&__content {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			margin-inline: auto;
-			inline-size: 100%;
-			z-index: 3;
-			padding: 1.25rem;
-			background: linear-gradient(to bottom, transparent 0%, hsl(157, 67%, 0%) 100%);
-		}
+    &:hover {
+      transform: translateY(calc(-0.5% - 0.25rem));
 
-		&__title {
-			@extend %h3;
-			color: $light-1;
-			margin-bottom: spacing(close-related);
-			text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-			font-size: clamp(1.25rem, 4vw, 1.75rem);
-		}
+      .service-card__image {
+        transform: scale(1.05);
+      }
+    }
 
-		&__description {
-			@extend %p;
-			color: $light-2;
-			max-width: 42ch;
-			display: -webkit-box;
-			overflow: hidden;
-			-webkit-box-orient: vertical;
-			line-clamp: 3;
-			-webkit-line-clamp: 3;
-			text-overflow: ellipsis;
-		}
-	}
+    &__image {
+      position: relative;
+
+      // aspect-ratio: 4/3;
+      z-index: 1;
+      display: block;
+      block-size: 100%;
+      inline-size: 100%;
+      object-fit: cover;
+      transition: transform $transition-speed cubic-bezier(0.25, 0.8, 0.25, 1);
+
+      &::before {
+        position: absolute;
+        z-index: 2;
+        background: linear-gradient(to top,
+        rgb(0 0 0 / 80%) 0%,
+        rgb(0 0 0 / 40%) 40%,
+        rgb(0 0 0 / 20%) 60%,
+        rgb(0 0 0 / 0%) 100%);
+        content: '';
+        inset: 0;
+        isolation: isolate;
+      }
+    }
+
+    &__content {
+      position: absolute;
+      z-index: 3;
+      padding: 1.25rem;
+      background: linear-gradient(to bottom, transparent 0%, hsl(157deg 67% 0%) 100%);
+      inline-size: 100%;
+      inset-block-end: 0;
+      inset-inline-start: 0;
+      margin-inline: auto;
+    }
+
+    &__title {
+      @extend %h3;
+
+      color: $light-1;
+      font-size: clamp(1.25rem, 4vw, 1.75rem);
+      margin-block-end: spacing(close-related);
+      text-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+    }
+
+    &__description {
+      @extend %p;
+
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: block-axis;
+      color: $light-2;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      max-inline-size: 42ch;
+      text-overflow: ellipsis;
+    }
+  }
 </style>

@@ -137,174 +137,185 @@
 {/if}
 
 <style lang="scss">
-	// No global imports needed here; rely on gloably available CSS custom properties from app.scss
-	/* Apply box-sizing globally if not already done */
-	*,
-	*::before,
-	*::after,
-	*::backdrop {
-		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
-	}
-	/* --------------------------------------------------
+  // No global imports needed here; rely on globally available CSS custom properties from app.scss
+
+  /* Apply box-sizing globally if not already done */
+  *,
+  *::before,
+  *::after,
+  *::backdrop {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* --------------------------------------------------
      Main Container -> Renamed to Hero Section
    -------------------------------------------------- */
 
-	/* --------------------------------------------------
+  /* --------------------------------------------------
      Hero Container
    -------------------------------------------------- */
-	.hero {
-		display: grid;
-		grid-template-areas: 'main-text' 'visuals'; // Mobile first
-		grid-template-columns: 1fr;
-		gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
-		width: 100%;
-		height: 100%;
+  .hero {
+    display: grid;
+    block-size: 100%;
+    gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
+    grid-template-areas: 'main-text' 'visuals'; // Mobile first
+    grid-template-columns: 1fr;
+    inline-size: 100%;
 
-		/* --------------------------------------------------
+    /* --------------------------------------------------
 		 Hero Text Container (Element)
 	   -------------------------------------------------- */
-		&__text {
-			grid-area: main-text;
-			place-self: center;
-			@extend %flex-col-center;
-			width: 100%;
-			text-align: center;
-			max-width: 30rem;
-		}
+    &__text {
+      grid-area: main-text;
+      inline-size: 100%;
+      max-inline-size: 30rem;
+      place-self: center;
+      text-align: center;
 
-		/* --------------------------------------------------
+      @extend %flex-col-center;
+    }
+
+    /* --------------------------------------------------
 		 Hero Elements within Text Container
 	   -------------------------------------------------- */
-		&__label {
-			@extend %text-label--primary;
-			margin-bottom: 1.5rem;
-		}
+    &__label {
+      @extend %text-label--primary;
 
-		&__title {
-			@extend %h1;
+      margin-block-end: 1.5rem;
+      // Intentionally left blank for future label styling or overrides
+    }
 
-			margin-bottom: spacing(semi-related);
-		}
+    &__title {
+      @extend %h1;
 
-		&__title-gradient {
-			@extend %h1;
+      margin-block-end: spacing(semi-related);
+    }
 
-			// Inherits font styles from parent H1
-			color: transparent;
-			// A11Y Contrast Check: Gradient text can be tricky. Ensure sufficient contrast exists *throughout* the gradient's transition against the background. Test thoroughly.
-			background: var(--gradient-text); // Use text gradient CSS var
-			background-size: 200% 200%;
-			-webkit-background-clip: text;
-			background-clip: text;
-			-webkit-text-fill-color: transparent;
-			animation: gradient-loop 5s ease-in-out infinite;
-		}
+    &__title-gradient {
+      @extend %h1;
 
-		&__subtitle {
-			@extend %p;
-			margin-bottom: spacing(not-related);
-		}
+      animation: gradient-loop 5s ease-in-out infinite;
 
-		/* --------------------------------------------------
+      // A11Y Contrast Check: Gradient text can be tricky. Ensure sufficient contrast exists *throughout* the gradient's transition against the background. Test thoroughly.
+      background: var(--gradient-text); // Use text gradient CSS var
+      background-clip: text;
+      background-size: 200% 200%;
+
+      // Inherits font styles from parent H1
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &__subtitle {
+      @extend %p;
+
+      margin-block-end: spacing(not-related);
+    }
+
+    /* --------------------------------------------------
 		 Image Container (Element)
 	   -------------------------------------------------- */
-		&__image-container {
-			grid-area: visuals;
-			place-self: center;
-			@extend %flex-center;
-			position: relative;
-			width: 100%;
-			max-width: 30rem; // Keep max-width on smaller screens
+    &__image-container {
+      position: relative;
+      grid-area: visuals;
+      inline-size: 100%;
+      max-inline-size: 30rem; // Keep max-width on smaller screens
+      place-self: center;
 
-			// Variables for pseudo-element positioning/sizing
-			--background-dimensions: 70%;
-			--background-abs-pos: 14%;
+      @extend %flex-center;
 
-			&::before,
-			&::after {
-				content: '';
-				position: absolute;
-				top: var(--background-abs-pos);
-				left: var(--background-abs-pos);
-				width: var(--background-dimensions);
-				height: var(--background-dimensions);
-				border-radius: 0% 100% 0% 100% / 17% 77% 23% 83%; // Keep unique shape
-				transform: translateX(0.5rem) scaleX(-1); // primitive-spacing(xs)
-			}
+      // Variables for pseudo-element positioning/sizing
+      --background-dimensions: 70%;
+      --background-abs-pos: 14%;
 
-			&::before {
-				background-image: url(/assets/landing-page/abstract.webp);
-				background-size: cover;
-				mix-blend-mode: screen;
-				filter: brightness(1.1);
-				background-position: 0% 100%;
-				z-index: 0;
-			}
+      &::before,
+      &::after {
+        position: absolute;
+        border-radius: 0% 100% 0% 100% / 17% 77% 23% 83%; // Keep unique shape
+        block-size: var(--background-dimensions);
+        content: '';
+        inline-size: var(--background-dimensions);
+        inset-block-start: var(--background-abs-pos);
+        inset-inline-start: var(--background-abs-pos);
+        transform: translateX(0.5rem) scaleX(-1); // primitive-spacing(xs)
+      }
 
-			&::after {
-				background: hsl(157, 75%, 10%); // Use gradient CSS var
-				box-shadow: var(--shadow-medium--light); // Use shadow var with fallback
-				background-size: contain;
-				background-repeat: no-repeat;
-				background-position: center;
-				z-index: -1;
-			}
-		}
+      &::before {
+        z-index: 0;
+        background-image: url("/assets/landing-page/abstract.webp");
+        background-position: 0% 100%;
+        background-size: cover;
+        filter: brightness(1.1);
+        mix-blend-mode: screen;
+      }
 
-		/* --------------------------------------------------
+      &::after {
+        z-index: -1;
+        background: hsl(157deg 75% 10%); // Use gradient CSS var
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        box-shadow: var(--shadow-medium--light); // Use shadow var with fallback
+      }
+    }
+
+    /* --------------------------------------------------
 		 Hero Image (Element)
 	   -------------------------------------------------- */
-		&__image {
-			display: block; // Prevent extra space below image
-			max-width: 100%;
-			height: auto;
-			object-fit: cover;
-			transition: transform 0.3s ease-in-out;
-			filter: saturate(1.2) drop-shadow(0.3125rem 0.3125rem 0.5rem hsla(151deg, 25%, 61%, 0.46));
-		}
+    &__image {
+      display: block; // Prevent extra space below image
+      block-size: auto;
+      filter: saturate(1.2) drop-shadow(0.3125rem 0.3125rem 0.5rem hsl(151deg 25% 61% / 46%));
+      max-inline-size: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease-in-out;
+    }
 
-		/* --------------------------------------------------
+    /* --------------------------------------------------
 		 Media Queries (Laptop View Adjustments)
 	   -------------------------------------------------- */
-		// 75rem = 1200px. Use em for accessibility (1200/16 = 75em)
-		@media (min-width: 73em) {
-			// Adjustments for the .hero block itself
-			grid-template-areas: 'main-text visuals';
-			grid-template-columns: 1fr 1fr;
-			gap: 1.5rem 2rem; // row / column
-			align-items: center;
 
-			// Adjustments for elements within .hero
-			&__text {
-				text-align: left;
-				align-items: flex-start;
-			}
+    // 75rem = 1200px. Use em for accessibility (1200/16 = 75em)
+    @media (width >= 73em) {
+      align-items: center;
+      gap: 1.5rem 2rem; // row / column
 
-			&__label {
-			}
+      // Adjustments for the .hero block itself
+      grid-template-areas: 'main-text visuals';
+      grid-template-columns: 1fr 1fr;
 
-			&__image-container {
-				max-width: none;
-				width: 100%; // Allow grid to size
-				height: 100%;
-				justify-self: center; // Center visually within its column
-			}
-		}
-	}
+      // Adjustments for elements within .hero
+      &__text {
+        align-items: flex-start;
+        text-align: start;
+      }
 
-	/* --------------------------------------------------
+      &__label {
+      }
+
+      &__image-container {
+        block-size: 100%;
+        inline-size: 100%; // Allow grid to size
+        justify-self: center; // Center visually within its column
+        max-inline-size: none;
+      }
+    }
+  }
+
+  /* --------------------------------------------------
 	 Reduced Motion Preferences
    -------------------------------------------------- */
-	@media (prefers-reduced-motion: reduce) {
-		*, /* Apply to all elements for broad coverage */
-		*::before,
-		*::after {
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-			transition-duration: 0.01ms !important;
-			scroll-behavior: auto !important;
-		}
-	}
+  @media (prefers-reduced-motion: reduce) {
+    *, 
+    *::before,
+    *::after {
+      /* Accessibility Exception: These !important rules are required for users who prefer reduced motion. If the design system introduces semantic utility classes for motion reduction, replace with those. */
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>

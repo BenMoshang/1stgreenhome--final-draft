@@ -2,7 +2,7 @@
    1. Imports
    ========================================================================== */
 
-@use "../appearance/colors";
+@use '../appearance/colors';
 
 /* ==========================================================================
    2. Global Resets & Base Styles
@@ -15,30 +15,30 @@
 }
 
 html {
-	min-block-size: 100svh;
-	inline-size: 100%;
+  inline-size: 100%;
+  min-block-size: 100svh;
   scroll-behavior: smooth;
+  scrollbar-color: var(--primary) var(--surface);
   scrollbar-track-color: var(--surface);
   scrollbar-width: thin;
-  scrollbar-color: var(--primary) var(--surface);
-  /* Base setup */
-  
-/* Enable keyword animations for users who don't prefer reduced motion */
-@media (prefers-reduced-motion: no-preference) {
-    interpolate-size: allow-keywords;
-}
-}
 
+  /* Base setup */
+
+  /* Enable keyword animations for users who don't prefer reduced motion */
+  @media (prefers-reduced-motion: no-preference) {
+    interpolate-size: allow-keywords;
+  }
+}
 
 body {
-  background-color: var(--background); /* Use CSS custom property for background */
-  overflow-x: clip; /* Prevent horizontal scrolling */
   margin: 0; /* Remove default body margin */
+  background-color: var(--background); /* Use CSS custom property for background */
 
   /* Font rendering improvements */
   font-smooth: antialiased;
   -webkit-font-smoothing: antialiased; /* For Safari/Chrome */
   -moz-osx-font-smoothing: grayscale; /* For Firefox */
+  overflow-inline: clip; /* Prevent horizontal scrolling */
   text-rendering: geometricprecision; /* Favors geometry over legibility/speed */
 }
 
@@ -48,15 +48,15 @@ body {
 
 /* Reset margins and font inheritance for common elements */
 :where(dt, dd, li, p, h1, h2, h3, h4, h5, h6) {
-  font: inherit;
   margin: 0;
+  font: inherit;
   overflow-wrap: break-word; /* Avoid text overflows */
 }
 
 /* Reset lists */
 :where(ul, ol, dl) {
-  margin: 0;
   padding: 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -79,21 +79,21 @@ address {
 /* Horizontal rule basic styling */
 :where(hr) {
   display: block; /* Ensure it's treated as a block */
-  width: 100%;
-  height: 1px;
-  margin: 0; /* Reset margin */
   border: 0; /* Reset border */
+  margin: 0; /* Reset margin */
   background-color: var(--outline); /* Use CSS variable for color */
+  block-size: 1px;
+  inline-size: 100%;
 }
 
 /* Media element defaults */
 :where(img, picture, video, canvas, svg) {
   display: block; /* Often helpful for layout */
-  max-inline-size: 100%; /* Responsive width */
-  block-size: auto; /* Maintain aspect ratio */
   background-repeat: no-repeat;
   background-size: cover;
+  block-size: auto; /* Maintain aspect ratio */
   font-style: italic; /* Indicate missing images */
+  max-inline-size: 100%; /* Responsive width */
   shape-margin: 1rem;
   vertical-align: middle; /* Align nicely if inline */
 }
@@ -131,12 +131,14 @@ p {
    ========================================================================== */
 
 :where(a) {
+  color: currentcolor; /* Inherit text color */
   text-decoration: none; /* Remove underline */
-  color: currentColor; /* Inherit text color */
 }
 
 :where(a:active, a:hover, a:focus-visible) {
-  // @include colors.fg__primary; 
+
+  // @include colors.fg__primary;
+
   /* Apply primary foreground color on interaction */
 }
 
@@ -154,16 +156,18 @@ p {
 button,
 [role='button'],
 select {
-	cursor: pointer;
-	touch-action: manipulation;
+  cursor: pointer;
+  touch-action: manipulation;
 }
-
 
 ::-webkit-scrollbar-track {
   background: var(--surface);
 }
+
 ::-webkit-scrollbar-thumb {
+  border: 0.125rem solid var(--surface);
+  border-radius: 0.25rem;
   background-color: var(--primary);
-  border-radius: .25rem;
-  border: .125rem solid var(--surface);
+}
+
 }

@@ -1,383 +1,389 @@
 $PAGE_MAX_WIDTH: 75rem;
-/*LEGACY DONT USE ANY OF THIS FILE*/
+
+/* LEGACY DONT USE ANY OF THIS FILE */
+
 /* ==================================================
    SCSS MAPS (Compile-time Variables)
    ================================================== */
+
 $spacing: (
-	xxs: 0.25rem,
-	xs: 0.5rem,
-	sm: 0.75rem,
-	md: 1rem,
-	//inner section gap
+  xxs: 0.25rem,
+  xs: 0.5rem,
+  sm: 0.75rem,
+  md: 1rem,
+  
 	lg: 1.5rem,
-	xl: 2rem //outer section gap
-);
+	xl: 2re   
+)  ;
+
 @function primitive-spacing($spacing-name) {
-	@return map-get($spacing, $spacing-name);
+  @return map-get($spacing, $spacing-name);
 }
+
 $semantic-relation-spacing: (
-	most-related: primitive-spacing(xxs),
-	close-related: primitive-spacing(xs),
-	semi-related: primitive-spacing(md),
-	less-related: primitive-spacing(lg),
-	not-related: primitive-spacing(xl)
+  most-related: primitive-spacing(xxs),
+  close-related: primitive-spacing(xs),
+  semi-related: primitive-spacing(md),
+  less-related: primitive-spacing(lg),
+  not-related: primitive-spacing(xl)
 );
+
 @function spacing($spacing-name) {
-	@return map-get($semantic-relation-spacing, $spacing-name);
+  @return map-get($semantic-relation-spacing, $spacing-name);
 }
 %flex-center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 %flex-col-center {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 $borders: (
-	radius-md: 1rem,
-	radius-pill: 62.4375rem
+  radius-md: 1rem,
+  radius-pill: 62.4375rem
 );
 
 $typography: (
-	h1: clamp(2.02rem, 0.79rem + 2.59vw, 3.815rem),
-	h2: clamp(1.79rem, 0.92rem + 1.82vw, 3.052rem),
-	h3: clamp(1.55rem, 0.94rem + 1.28vw, 2.441rem),
-	h4: clamp(1.26rem, 0.79rem + 0.99vw, 1.953rem),
-	h5: clamp(1.3rem, 1.12rem + 0.04vw, 1.563rem),
-	h6: clamp(1.06rem, 0.93rem + 0.03vw, 1.25rem),
-	p: clamp(0.94rem, 0.91rem + 0.01vw, 1rem),
-	label-p: clamp(0.75rem, 0.72rem + 0.01vw, 0.8rem)
+  h1: clamp(2.02rem, 0.79rem + 2.59vw, 3.815rem),
+  h2: clamp(1.79rem, 0.92rem + 1.82vw, 3.052rem),
+  h3: clamp(1.55rem, 0.94rem + 1.28vw, 2.441rem),
+  h4: clamp(1.26rem, 0.79rem + 0.99vw, 1.953rem),
+  h5: clamp(1.3rem, 1.12rem + 0.04vw, 1.563rem),
+  h6: clamp(1.06rem, 0.93rem + 0.03vw, 1.25rem),
+  p: clamp(0.94rem, 0.91rem + 0.01vw, 1rem),
+  label-p: clamp(0.75rem, 0.72rem + 0.01vw, 0.8rem)
 );
 
 $color-pallete: (
-	950: hsl(145.39, 87.57%, 9.65%),
-	900: hsl(145.73, 73.08%, 18.99%),
-	700: hsl(150, 100%, 20.98%),
-	500: hsl(151.17, 100%, 29.65%),
-	300: hsl(142.66, 81.25%, 71.39%),
-	100: hsl(140.65, 84.38%, 92.45%),
-	50: hsl(138.46, 76.51%, 96.68%)
+  950: hsl(145.39deg 87.57% 9.65%),
+  900: hsl(145.73deg 73.08% 18.99%),
+  700: hsl(150deg 100% 20.98%),
+  500: hsl(151.17deg 100% 29.65%),
+  300: hsl(142.66deg 81.25% 71.39%),
+  100: hsl(140.65deg 84.38% 92.45%),
+  50: hsl(138.46deg 76.51% 96.68%)
 );
 
 $colors: (
-	light: map-get($color-pallete, 50),
-	neutral: map-get($color-pallete, 300),
-	dark: map-get($color-pallete, 950),
-	transitional: map-get($color-pallete, 700),
-	p: map-get($color-pallete, 900),
-	primary: map-get($color-pallete, 500),
-	secondary: map-get($color-pallete, 700),
-	accent: map-get($color-pallete, 300),
-	secondary-900: map-get($color-pallete, 900)
+  light: map-get($color-pallete, 50),
+  neutral: map-get($color-pallete, 300),
+  dark: map-get($color-pallete, 950),
+  transitional: map-get($color-pallete, 700),
+  p: map-get($color-pallete, 900),
+  primary: map-get($color-pallete, 500),
+  secondary: map-get($color-pallete, 700),
+  accent: map-get($color-pallete, 300),
+  secondary-900: map-get($color-pallete, 900)
 );
 
 $gradients: (
-	bg: url(/assets/images/gradient-bg.svg),
-	convex-light: linear-gradient(145deg, hsl(0, 0%, 100%), map-get($color-pallete, 50)),
-	convex-neutral: linear-gradient(
-			145deg,
-			lighten(map-get($color-pallete, 300), 10%),
-			darken(map-get($color-pallete, 300), 5%)
-		),
-	convex-dark: linear-gradient(
-			145deg,
-			map-get($color-pallete, 950),
-			darken(map-get($color-pallete, 950), 2%)
-		),
-	convex-primary: linear-gradient(
-			145deg,
-			lighten(map-get($color-pallete, 500), 5%),
-			darken(map-get($color-pallete, 500), 5%)
-		),
-	convex-secondary: linear-gradient(
-			145deg,
-			lighten(map-get($color-pallete, 700), 5%),
-			darken(map-get($color-pallete, 700), 5%)
-		),
-	convex-accent: linear-gradient(
-			145deg,
-			lighten(map-get($color-pallete, 300), 5%),
-			darken(map-get($color-pallete, 300), 5%)
-		),
-	convex-secondary-reverse: linear-gradient(
-			290deg,
-			lighten(map-get($color-pallete, 700), 5%),
-			darken(map-get($color-pallete, 700), 5%)
-		),
-	text: linear-gradient(
-			145deg,
-			map-get($color-pallete, 700) 20%,
-			map-get($color-pallete, 500) 40%,
-			lighten(map-get($color-pallete, 500), 10%) 60%,
-			map-get($color-pallete, 500) 80%,
-			map-get($color-pallete, 700) 100%
-		)
+  bg: url(/assets/images/gradient-bg.svg),
+  convex-light: linear-gradient(145deg, hsl(0deg 0% 100%), map-get($color-pallete, 50)),
+  convex-neutral: linear-gradient(145deg,
+  lighten(map-get($color-pallete, 300), 10%),
+  darken(map-get($color-pallete, 300), 5%)),
+  convex-dark: linear-gradient(145deg,
+  map-get($color-pallete, 950),
+  darken(map-get($color-pallete, 950), 2%)),
+  convex-primary: linear-gradient(145deg,
+  lighten(map-get($color-pallete, 500), 5%),
+  darken(map-get($color-pallete, 500), 5%)),
+  convex-secondary: linear-gradient(145deg,
+  lighten(map-get($color-pallete, 700), 5%),
+  darken(map-get($color-pallete, 700), 5%)),
+  convex-accent: linear-gradient(145deg,
+  lighten(map-get($color-pallete, 300), 5%),
+  darken(map-get($color-pallete, 300), 5%)),
+  convex-secondary-reverse: linear-gradient(290deg,
+  lighten(map-get($color-pallete, 700), 5%),
+  darken(map-get($color-pallete, 700), 5%)),
+  text: linear-gradient(145deg,
+  map-get($color-pallete, 700) 20%,
+  map-get($color-pallete, 500) 40%,
+  lighten(map-get($color-pallete, 500), 10%) 60%,
+  map-get($color-pallete, 500) 80%,
+  map-get($color-pallete, 700) 100%)
 );
 
 $fonts: (
-	regular: 'Manrope, system-ui',
-	bold: 'Poppins, system-ui'
+  regular: 'Manrope, system-ui',
+  bold: 'Poppins, system-ui'
 );
 
 $transitions: (
-	standard: 0.3s,
-	fade-in: 0.5s
+  standard: 0.3s,
+  fade-in: 0.5s
 );
 
 $layout: (
-	max-width-title: 20ch,
-	max-width-description: 50ch,
-	button-hover-scale: 1.05,
-	button-active-scale: 0.95
+  max-width-title: 20ch,
+  max-width-description: 50ch,
+  button-hover-scale: 1.05,
+  button-active-scale: 0.95
 );
+
 /* ==================================================
 	   CSS CUSTOM PROPERTIES (:root Variables)
 	   ================================================== */
 :root {
-	color-scheme: light;
-	/* --- Color Palette Variables --- */
-	--color-950: #{map-get($color-pallete, 950)};
-	--color-900: #{map-get($color-pallete, 900)};
-	--color-700: #{map-get($color-pallete, 700)};
-	--color-500: #{map-get($color-pallete, 500)};
-	--color-300: #{map-get($color-pallete, 300)};
-	--color-100: #{map-get($color-pallete, 100)};
-	--color-50: #{map-get($color-pallete, 50)};
+  color-scheme: light;
 
-	/* --- Spacing --- */
-	--page-inline-padding: clamp(
-		#{map-get($spacing, md)},
-		0.431rem + 2.76vw,
-		#{map-get($spacing, lg)}
-	);
-	--page-block-padding: clamp(
-		#{map-get($spacing, lg)},
-		1.517rem + 3.31vw,
-		#{map-get($spacing, xl)}
-	);
-	--padding-section: clamp(#{map-get($spacing, lg)}, 1.517rem + 3.31vw, #{map-get($spacing, xl)})
-		clamp(#{map-get($spacing, md)}, 0.431rem + 2.76vw, #{map-get($spacing, lg)});
+  /* --- Color Palette Variables --- */
+  --color-950: #{map-get($color-pallete, 950)};
+  --color-900: #{map-get($color-pallete, 900)};
+  --color-700: #{map-get($color-pallete, 700)};
+  --color-500: #{map-get($color-pallete, 500)};
+  --color-300: #{map-get($color-pallete, 300)};
+  --color-100: #{map-get($color-pallete, 100)};
+  --color-50: #{map-get($color-pallete, 50)};
 
-	/* --- Borders --- */
-	--border-radius: #{map-get($borders, radius-md)};
-	--rounded-border-radius: #{map-get($borders, radius-pill)};
+  /* --- Spacing --- */
+  --page-inline-padding: clamp(#{map-get($spacing, md)},
+  0.431rem + 2.76vw,
+  #{map-get($spacing, lg)});
+  --page-block-padding: clamp(#{map-get($spacing, lg)},
+  1.517rem + 3.31vw,
+  #{map-get($spacing, xl)});
+  --padding-section: clamp(#{map-get($spacing, lg)}, 1.517rem + 3.31vw, #{map-get($spacing, xl)})
+    clamp(#{map-get($spacing, md)}, 0.431rem + 2.76vw, #{map-get($spacing, lg)});
 
-	/* --- Typography --- */
-	--h1: #{map-get($typography, h1)};
-	--h2: #{map-get($typography, h2)};
-	--h3: #{map-get($typography, h3)};
-	--h4: #{map-get($typography, h4)};
-	--h5: #{map-get($typography, h5)};
-	--h6: #{map-get($typography, h6)};
-	--p: #{map-get($typography, p)};
-	--label-p: #{map-get($typography, label-p)};
-	--label-line-height: #{map-get($typography, label-line-height)};
-	--button-line-height: #{map-get($typography, button-line-height)};
-	--line-height-p: #{map-get($typography, line-height-p)};
-	--font-family-regular: #{map-get($fonts, regular)};
-	--font-family-bold: #{map-get($fonts, bold)};
+  /* --- Borders --- */
+  --border-radius: #{map-get($borders, radius-md)};
+  --rounded-border-radius: #{map-get($borders, radius-pill)};
 
-	/* --- Colors --- */
-	--color-light: #{map-get($colors, light)};
-	--color-neutral: #{map-get($colors, neutral)};
-	--color-dark: #{map-get($colors, dark)};
-	--color-transitional: #{map-get($colors, transitional)};
-	--color-p: #{map-get($colors, p)};
-	--color-primary: #{map-get($colors, primary)};
-	--color-secondary: #{map-get($colors, secondary)};
-	--color-accent: #{map-get($colors, accent)};
-	--color-secondary-900: #{map-get($colors, secondary-900)};
+  /* --- Typography --- */
+  --h1: #{map-get($typography, h1)};
+  --h2: #{map-get($typography, h2)};
+  --h3: #{map-get($typography, h3)};
+  --h4: #{map-get($typography, h4)};
+  --h5: #{map-get($typography, h5)};
+  --h6: #{map-get($typography, h6)};
+  --p: #{map-get($typography, p)};
+  --label-p: #{map-get($typography, label-p)};
+  --label-line-height: #{map-get($typography, label-line-height)};
+  --button-line-height: #{map-get($typography, button-line-height)};
+  --line-height-p: #{map-get($typography, line-height-p)};
+  --font-family-regular: #{map-get($fonts, regular)};
+  --font-family-bold: #{map-get($fonts, bold)};
 
-	/* --- Backgrounds & Gradients --- */
-	--gradient-bg: #{map-get($gradients, bg)};
-	--convex-light: #{map-get($gradients, convex-light)};
-	--convex-neutral: #{map-get($gradients, convex-neutral)};
-	--convex-dark: #{map-get($gradients, convex-dark)};
-	--convex-primary: #{map-get($gradients, convex-primary)};
-	--convex-secondary: #{map-get($gradients, convex-secondary)};
-	--convex-accent: #{map-get($gradients, convex-accent)};
-	--convex-secondary--reverse: #{map-get($gradients, convex-secondary-reverse)};
-	--gradient-text: #{map-get($gradients, text)};
+  /* --- Colors --- */
+  --color-light: #{map-get($colors, light)};
+  --color-neutral: #{map-get($colors, neutral)};
+  --color-dark: #{map-get($colors, dark)};
+  --color-transitional: #{map-get($colors, transitional)};
+  --color-p: #{map-get($colors, p)};
+  --color-primary: #{map-get($colors, primary)};
+  --color-secondary: #{map-get($colors, secondary)};
+  --color-accent: #{map-get($colors, accent)};
+  --color-secondary-900: #{map-get($colors, secondary-900)};
 
-	/* --- Shadows (Light Theme) --- */
-	--shadow-color: 166deg 75% 35%;
-	/* Shadow heights reduced by 20% from original */
-	--shadow-low--light:
-		0.3px 0.48px 0.8px hsl(var(--shadow-color) / 0.35),
-		0.5px 0.8px 1.3px -1.2px hsl(var(--shadow-color) / 0.35),
-		1.3px 1.92px 3.1px -2.5px hsl(var(--shadow-color) / 0.35);
-	--shadow-medium--light:
-		0.3px 0.48px 0.8px hsl(var(--shadow-color) / 0.3),
-		0.8px 1.28px 2px -0.6px hsl(var(--shadow-color) / 0.3),
-		1.6px 2.48px 3.9px -1.2px hsl(var(--shadow-color) / 0.3),
-		3.2px 5.04px 7.9px -1.9px hsl(var(--shadow-color) / 0.3),
-		6.3px 9.76px 15.4px -2.5px hsl(var(--shadow-color) / 0.3);
-	--shadow-high--light:
-		0.3px 0.48px 0.8px hsl(var(--shadow-color) / 0.28),
-		1.5px 2.4px 3.8px -0.3px hsl(var(--shadow-color) / 0.28),
-		2.7px 4.24px 6.7px -0.6px hsl(var(--shadow-color) / 0.28),
-		4.1px 6.4px 10.1px -0.8px hsl(var(--shadow-color) / 0.28),
-		6px 9.36px 14.8px -1.1px hsl(var(--shadow-color) / 0.28),
-		8.6px 13.44px 21.2px -1.4px hsl(var(--shadow-color) / 0.28),
-		12.3px 19.12px 30.2px -1.7px hsl(var(--shadow-color) / 0.28),
-		17.2px 26.8px 42.4px -1.9px hsl(var(--shadow-color) / 0.28),
-		23.6px 36.8px 58.2px -2.2px hsl(var(--shadow-color) / 0.28),
-		31.9px 49.6px 78.4px -2.5px hsl(var(--shadow-color) / 0.28);
+  /* --- Backgrounds & Gradients --- */
+  --gradient-bg: #{map-get($gradients, bg)};
+  --convex-light: #{map-get($gradients, convex-light)};
+  --convex-neutral: #{map-get($gradients, convex-neutral)};
+  --convex-dark: #{map-get($gradients, convex-dark)};
+  --convex-primary: #{map-get($gradients, convex-primary)};
+  --convex-secondary: #{map-get($gradients, convex-secondary)};
+  --convex-accent: #{map-get($gradients, convex-accent)};
+  --convex-secondary--reverse: #{map-get($gradients, convex-secondary-reverse)};
+  --gradient-text: #{map-get($gradients, text)};
 
-	/* --- Drop Shadows (Secondary Color) --- */
-	--drop-shadow-high--secondary: drop-shadow(
-			0.0187rem 0.0313rem 0.0375rem hsla(162, 100%, 24%, 0.54)
-		)
-		drop-shadow(0.0688rem 0.1437rem 0.1563rem -0.0375rem hsla(162, 100%, 24%, 0.49))
-		drop-shadow(0.15rem 0.3rem 0.325rem -0.075rem hsla(162, 100%, 24%, 0.45))
-		drop-shadow(0.2938rem 0.5938rem 0.6438rem -0.1062rem hsla(162, 100%, 24%, 0.4))
-		drop-shadow(0.55rem 1.1rem 1.2rem -0.1437rem hsla(162, 100%, 24%, 0.36))
-		drop-shadow(0.9563rem 1.9187rem 2.0875rem -0.1812rem hsla(162, 100%, 24%, 0.32))
-		drop-shadow(1.5625rem 3.125rem 3.4063rem -0.2188rem hsla(162, 100%, 24%, 0.27));
+  /* --- Shadows (Light Theme) --- */
+  --shadow-color: 166deg 75% 35%;
 
-	/* --- Shadows (Secondary Background) --- */
-	--shadow-low--secondary:
-		0.0187rem 0.025rem 0.0375rem hsla(162, 100%, 24%, 0.48),
-		0.025rem 0.04rem 0.0563rem -0.1062rem hsla(162, 100%, 24%, 0.39),
-		0.0625rem 0.1rem 0.1375rem -0.2188rem hsla(162, 100%, 24%, 0.3);
-	--shadow-medium--secondary:
-		0.0187rem 0.025rem 0.0375rem hsla(162, 100%, 24%, 0.51),
-		0.0437rem 0.065rem 0.0875rem -0.075rem hsla(162, 100%, 24%, 0.43),
-		0.1187rem 0.19rem 0.2562rem -0.1437rem hsla(162, 100%, 24%, 0.36),
-		0.3125rem 0.5rem 0.6813rem -0.2188rem hsla(162, 100%, 24%, 0.29);
-	--shadow-high--secondary:
-		0.0187rem 0.025rem 0.0375rem hsla(162, 100%, 24%, 0.54),
-		0.0688rem 0.115rem 0.1563rem -0.0375rem hsla(162, 100%, 24%, 0.49),
-		0.15rem 0.24rem 0.325rem -0.075rem hsla(162, 100%, 24%, 0.45),
-		0.2938rem 0.475rem 0.6438rem -0.1062rem hsla(162, 100%, 24%, 0.4),
-		0.55rem 0.88rem 1.2rem -0.1437rem hsla(162, 100%, 24%, 0.36),
-		0.9563rem 1.535rem 2.0875rem -0.1812rem hsla(162, 100%, 24%, 0.32),
-		1.5625rem 2.5rem 3.4063rem -0.2188rem hsla(162, 100%, 24%, 0.27);
+  /* Shadow heights reduced by 20% from original */
+  --shadow-low--light:
+    0.3px 0.48px 0.8px hsl(var(--shadow-color) / 35%),
+    0.5px 0.8px 1.3px -1.2px hsl(var(--shadow-color) / 35%),
+    1.3px 1.92px 3.1px -2.5px hsl(var(--shadow-color) / 35%);
+  --shadow-medium--light:
+    0.3px 0.48px 0.8px hsl(var(--shadow-color) / 30%),
+    0.8px 1.28px 2px -0.6px hsl(var(--shadow-color) / 30%),
+    1.6px 2.48px 3.9px -1.2px hsl(var(--shadow-color) / 30%),
+    3.2px 5.04px 7.9px -1.9px hsl(var(--shadow-color) / 30%),
+    6.3px 9.76px 15.4px -2.5px hsl(var(--shadow-color) / 30%);
+  --shadow-high--light:
+    0.3px 0.48px 0.8px hsl(var(--shadow-color) / 28%),
+    1.5px 2.4px 3.8px -0.3px hsl(var(--shadow-color) / 28%),
+    2.7px 4.24px 6.7px -0.6px hsl(var(--shadow-color) / 28%),
+    4.1px 6.4px 10.1px -0.8px hsl(var(--shadow-color) / 28%),
+    6px 9.36px 14.8px -1.1px hsl(var(--shadow-color) / 28%),
+    8.6px 13.44px 21.2px -1.4px hsl(var(--shadow-color) / 28%),
+    12.3px 19.12px 30.2px -1.7px hsl(var(--shadow-color) / 28%),
+    17.2px 26.8px 42.4px -1.9px hsl(var(--shadow-color) / 28%),
+    23.6px 36.8px 58.2px -2.2px hsl(var(--shadow-color) / 28%),
+    31.9px 49.6px 78.4px -2.5px hsl(var(--shadow-color) / 28%);
 
-	/* --- Transitions --- */
-	--fade-in-duration: #{map-get($transitions, fade-in)};
-	--transition-duration: #{map-get($transitions, standard)};
+  /* --- Drop Shadows (Secondary Color) --- */
+  --drop-shadow-high--secondary: drop-shadow(0.0187rem 0.0313rem 0.0375rem hsl(162deg 100% 24% / 54%))
+    drop-shadow(0.0688rem 0.1437rem 0.1563rem -0.0375rem hsl(162deg 100% 24% / 49%))
+    drop-shadow(0.15rem 0.3rem 0.325rem -0.075rem hsl(162deg 100% 24% / 45%))
+    drop-shadow(0.2938rem 0.5938rem 0.6438rem -0.1062rem hsl(162deg 100% 24% / 40%))
+    drop-shadow(0.55rem 1.1rem 1.2rem -0.1437rem hsl(162deg 100% 24% / 36%))
+    drop-shadow(0.9563rem 1.9187rem 2.0875rem -0.1812rem hsl(162deg 100% 24% / 32%))
+    drop-shadow(1.5625rem 3.125rem 3.4063rem -0.2188rem hsl(162deg 100% 24% / 27%));
 
-	/* --- Layout --- */
-	--max-width-title: #{map-get($layout, max-width-title)};
-	--max-width-description: #{map-get($layout, max-width-description)};
-	--button-hover-scale: #{map-get($layout, button-hover-scale)};
-	--button-active-scale: #{map-get($layout, button-active-scale)};
+  /* --- Shadows (Secondary Background) --- */
+  --shadow-low--secondary:
+    0.0187rem 0.025rem 0.0375rem hsl(162deg 100% 24% / 48%),
+    0.025rem 0.04rem 0.0563rem -0.1062rem hsl(162deg 100% 24% / 39%),
+    0.0625rem 0.1rem 0.1375rem -0.2188rem hsl(162deg 100% 24% / 30%);
+  --shadow-medium--secondary:
+    0.0187rem 0.025rem 0.0375rem hsl(162deg 100% 24% / 51%),
+    0.0437rem 0.065rem 0.0875rem -0.075rem hsl(162deg 100% 24% / 43%),
+    0.1187rem 0.19rem 0.2562rem -0.1437rem hsl(162deg 100% 24% / 36%),
+    0.3125rem 0.5rem 0.6813rem -0.2188rem hsl(162deg 100% 24% / 29%);
+  --shadow-high--secondary:
+    0.0187rem 0.025rem 0.0375rem hsl(162deg 100% 24% / 54%),
+    0.0688rem 0.115rem 0.1563rem -0.0375rem hsl(162deg 100% 24% / 49%),
+    0.15rem 0.24rem 0.325rem -0.075rem hsl(162deg 100% 24% / 45%),
+    0.2938rem 0.475rem 0.6438rem -0.1062rem hsl(162deg 100% 24% / 40%),
+    0.55rem 0.88rem 1.2rem -0.1437rem hsl(162deg 100% 24% / 36%),
+    0.9563rem 1.535rem 2.0875rem -0.1812rem hsl(162deg 100% 24% / 32%),
+    1.5625rem 2.5rem 3.4063rem -0.2188rem hsl(162deg 100% 24% / 27%);
+
+  /* --- Transitions --- */
+  --fade-in-duration: #{map-get($transitions, fade-in)};
+  --transition-duration: #{map-get($transitions, standard)};
+
+  /* --- Layout --- */
+  --max-width-title: #{map-get($layout, max-width-title)};
+  --max-width-description: #{map-get($layout, max-width-description)};
+  --button-hover-scale: #{map-get($layout, button-hover-scale)};
+  --button-active-scale: #{map-get($layout, button-active-scale)};
 }
-$light-bg: hsl(0, 0%, 92%);
+
+$light-bg: hsl(0deg 0% 92%);
 
 $container-width-2: $PAGE_MAX_WIDTH / 2;
+
 $container-width-3: $PAGE_MAX_WIDTH / 3;
 
-$light-1: hsl(0, 0%, 100%);
-$light-2: hsl(0, 0%, 90%);
-$light-3: hsl(0, 0%, 80%);
+$light-1: hsl(0deg 0% 100%);
+
+$light-2: hsl(0deg 0% 90%);
+
+$light-3: hsl(0deg 0% 80%);
 
 %text-label--primary {
-	text-wrap: nowrap;
-	font-family: var(--font-family-bold);
-	font-weight: 300;
-	width: fit-content;
-	background-color: map-get($color-pallete, 50);
-	color: map-get($color-pallete, 900);
-	font-size: var(--label-p);
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
-	padding-inline: 0.5rem;
-	padding-block: 0.25rem;
-	border-radius: 2.75rem;
-	line-height: 1.5;
-	box-shadow: var(--shadow-low--light);
+  border-radius: 2.75rem;
+  background-color: map-get($color-pallete, 50);
+  box-shadow: var(--shadow-low--light);
+  color: map-get($color-pallete, 900);
+  font-family: var(--font-family-bold);
+  font-size: var(--label-p);
+  font-weight: 300;
+  inline-size: fit-content;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  text-transform: uppercase;
+  text-wrap: nowrap;
 }
-@mixin section {
-	inline-size: 100%;
-	block-size: 100%;
 
-	padding-block: 2rem;
-	overflow: hidden;
-	margin-inline: auto;
+@mixin section {
+  overflow: hidden;
+  block-size: 100%;
+  inline-size: 100%;
+  margin-inline: auto;
+  padding-block: 2rem;
 }
 %text-label--secondary {
-	@extend %text-label--primary;
-	background-color: map-get($color-pallete, 900);
-	color: map-get($color-pallete, 50);
-	box-shadow: var(--shadow-low--secondary);
+  @extend %text-label--primary;
+
+  background-color: map-get($color-pallete, 900);
+  box-shadow: var(--shadow-low--secondary);
+  color: map-get($color-pallete, 50);
 }
 %p {
-	font-weight: 450;
-	line-height: 1.6;
-	font-size: var(--p);
-	letter-spacing: normal;
-	overflow-wrap: break-word;
-	color: var(--color-p);
-	text-wrap: pretty;
-	text-overflow: ellipsis;
-	max-inline-size: 60ch;
+  color: var(--color-p);
+  font-size: var(--p);
+  font-weight: 450;
+  letter-spacing: normal;
+  line-height: 1.6;
+  max-inline-size: 60ch;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  text-wrap: pretty;
 }
 
 %heading {
-	color: var(--color-dark);
-	line-height: 1.1;
-	font-family: var(--font-family-bold);
-	// max-inline-size removed - will be set per heading level
-	letter-spacing: -0.03em;
-	text-overflow: ellipsis;
-	text-wrap: balance;
-	// font-weight removed - will be set per heading level
-	// font-size removed - will be set per heading level
+  color: var(--color-dark);
+  font-family: var(--font-family-bold);
+
+  // max-inline-size removed - will be set per heading level
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  text-wrap: balance;
+
+  // font-weight removed - will be set per heading level
+
+  // font-size removed - will be set per heading level
 }
 
 /* --- Typography Helper Classes --- */
 %h1 {
-	@extend %heading;
-	font-size: var(--h1);
-	font-weight: 700;
-	max-inline-size: 50ch; // Recommended: 40ch - 60ch
+  @extend %heading;
+
+  font-size: var(--h1);
+  font-weight: 700;
+  max-inline-size: 50ch; // Recommended: 40ch - 60ch
 }
 %h2 {
-	@extend %heading;
-	font-weight: 600;
-	font-size: var(--h2);
-	max-inline-size: 45ch; // Recommended: 35ch - 55ch
+  @extend %heading;
+
+  font-size: var(--h2);
+  font-weight: 600;
+  max-inline-size: 45ch; // Recommended: 35ch - 55ch
 }
 %h3 {
-	@extend %heading;
-	font-weight: 600;
-	font-size: var(--h3);
-	max-inline-size: 45ch; // Recommended: 35ch - 55ch
+  @extend %heading;
+
+  font-size: var(--h3);
+  font-weight: 600;
+  max-inline-size: 45ch; // Recommended: 35ch - 55ch
 }
 %h4 {
-	@extend %heading;
-	font-weight: 500;
-	font-size: var(--h4);
-	max-inline-size: 40ch; // Recommended: 30ch - 50ch
+  @extend %heading;
+
+  font-size: var(--h4);
+  font-weight: 500;
+  max-inline-size: 40ch; // Recommended: 30ch - 50ch
 }
 %h5 {
-	@extend %heading;
-	font-weight: 500;
-	font-size: var(--h5);
-	max-inline-size: 40ch; // Recommended: 30ch - 50ch
+  @extend %heading;
+
+  font-size: var(--h5);
+  font-weight: 500;
+  max-inline-size: 40ch; // Recommended: 30ch - 50ch
 }
 %h6 {
-	@extend %heading;
-	font-weight: 500;
-	font-size: var(--h6);
-	max-inline-size: 40ch; // Recommended: 30ch - 50ch
+  @extend %heading;
+
+  font-size: var(--h6);
+  font-weight: 500;
+  max-inline-size: 40ch; // Recommended: 30ch - 50ch
 }
 
 /* --------------------------------------------------
 	 Gradient Animation Keyframes
    -------------------------------------------------- */
 @keyframes gradient-loop {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

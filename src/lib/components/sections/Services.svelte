@@ -124,138 +124,146 @@
 </section>
 
 <style lang="scss">
-	/* Section container */
-	.stepper-section {
-		/* Variables */
-		--icon-size: 2rem;
+  /* Section container */
+  .stepper-section {
+    /* Variables */
+    --icon-size: 2rem;
 
-		inline-size: 100%;
-		padding-block: 2rem;
-		display: grid;
-		place-content: center;
+    position: relative;
+    display: grid;
+    place-items: start start;
+    grid-gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem) 2rem;
 
-		/* Mobile layout (default) */
-		grid-template-areas:
-			'header header'
-			'icon1 card1'
-			'icon2 card2'
-			'icon3 card3';
-		grid-column-gap: 2rem;
-		grid-row-gap: clamp(2rem, 1.818rem + 0.91vw, 2.5rem);
-		justify-items: start;
-		align-items: start;
-		grid-template-columns: 2rem 1fr;
-		grid-template-rows: auto auto auto auto;
-		position: relative;
+    /* Mobile layout (default) */
+    grid-template-areas:
+      'header header'
+      'icon1 card1'
+      'icon2 card2'
+      'icon3 card3';
+    grid-template-columns: 2rem 1fr;
+    grid-template-rows: auto auto auto auto;
+    inline-size: 100%;
+    padding-block: 2rem;
+    place-content: center;
 
-		/* Assign grid areas to children */
-		& #stepper__icon-1 {
-			grid-area: icon1;
-		}
-		& #stepper__icon-2 {
-			grid-area: icon2;
-		}
-		& #stepper__icon-3 {
-			grid-area: icon3;
-		}
-		/* Make cards take full width */
-		:global(#stepper__card-1) {
-			grid-area: card1;
-			justify-self: center;
-		}
-		:global(#stepper__card-2) {
-			grid-area: card2;
-			justify-self: center;
-		}
-		:global(#stepper__card-3) {
-			grid-area: card3;
-			justify-self: center;
-		}
+    /* Assign grid areas to children */
+    & #stepper__icon-1 {
+      grid-area: icon1;
+    }
 
-		&__header {
-			grid-area: header;
-		}
+    & #stepper__icon-2 {
+      grid-area: icon2;
+    }
 
-		&__line {
-			grid-column: 1 / 1;
-			grid-row: 2 / 4;
-			--icon-size: 2rem;
-			position: absolute;
-			width: 0.25rem;
-			background-color: var(--accent-color);
-			z-index: -2;
+    & #stepper__icon-3 {
+      grid-area: icon3;
+    }
 
-			/* Mobile: Vertical line connecting icons */
-			left: calc(var(--icon-size) / 2);
-			top: calc(var(--icon-size) + var(--icon-size) + 2rem); /* Start below icon1 */
-			height: calc(100% - var(--icon-size) * 3 - 4rem); /* Connect down to icon3 */
-			transform: translateX(-50%);
-		}
+    /* Make cards take full width */
+    :global(#stepper__card-1) {
+      grid-area: card1;
+      justify-self: center;
+    }
 
-		/* Header elements */
-		&__header {
-			@extend %flex-col-center;
-			max-width: 65ch;
-			margin-inline: auto;
-			text-align: center;
-			margin-bottom: 2rem;
-			&--label {
-				@extend %text-label--secondary;
-				margin-bottom: 1.5rem;
-			}
-			&--title {
-				@extend %h2;
-				max-width: 20ch;
-				color: $light-1;
-				margin-bottom: spacing(semi-related);
-			}
+    :global(#stepper__card-2) {
+      grid-area: card2;
+      justify-self: center;
+    }
 
-			&--description {
-				@extend %p;
-				color: $light-2;
-				max-width: 50ch;
-			}
-		}
+    :global(#stepper__card-3) {
+      grid-area: card3;
+      justify-self: center;
+    }
 
-		/* Desktop layout (48rem and up) */
-		@media (min-width: 48rem) {
-			grid-template-areas:
-				'header header header'
-				'.      icon1  card1'
-				'card2  icon2  .'
-				'.      icon3  card3';
+    &__header {
+      grid-area: header;
+    }
 
-			grid-template-columns: 1fr 2rem 1fr;
-			grid-template-rows: auto auto auto auto;
+    &__line {
+      position: absolute;
+      z-index: -2;
+      background-color: var(--accent-color);
+      block-size: calc(100% - var(--icon-size) * 3 - 4rem); /* Connect down to icon3 */
+      grid-column: 1 / 1;
+      grid-row: 2 / 4;
+      inline-size: 0.25rem;
+      inset-block-start: calc(var(--icon-size) + var(--icon-size) + 2rem); /* Start below icon1 */
 
-			&__line {
-				/* Desktop: Vertical line centered in middle column */
-				left: 50%;
-				top: calc(var(--icon-size) * 1.5 + 4rem); /* Start below first icon */
-				height: calc(100% - var(--icon-size) * 3 - 6rem); /* End at last icon */
-			}
-		}
-	}
+      /* Mobile: Vertical line connecting icons */
+      inset-inline-start: calc(var(--icon-size) / 2);
+      transform: translateX(-50%);
+      --icon-size: 2rem;
+    }
 
-	/* Icon styling */
-	.stepper__icon {
-		position: sticky;
-		top: 2rem;
-		width: 2rem;
-		height: 2rem;
-		padding: 0.5rem;
-		object-fit: cover;
-		border-radius: 50%;
+    /* Header elements */
+    &__header {
+      @extend %flex-col-center;
 
-		box-shadow: var(--shadow-medium--secondary);
-		background: #e7ece9;
-		z-index: 1; /* Ensure icons appear above the line */
-	}
+      margin-block-end: 2rem;
+      margin-inline: auto;
+      max-inline-size: 65ch;
+      text-align: center;
 
-	/* Accessibility */
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition-duration: 0.01ms !important;
-		}
-	}
+      &--label {
+        @extend %text-label--secondary;
+
+        margin-block-end: 1.5rem;
+      }
+
+      &--title {
+        @extend %h2;
+
+        color: $light-1;
+        margin-block-end: spacing(semi-related);
+        max-inline-size: 20ch;
+      }
+
+      &--description {
+        @extend %p;
+
+        color: $light-2;
+        max-inline-size: 50ch;
+      }
+    }
+
+    /* Desktop layout (48rem and up) */
+    @media (width >= 48rem) {
+      grid-template-areas:
+        'header header header'
+        '.      icon1  card1'
+        'card2  icon2  .'
+        '.      icon3  card3';
+      grid-template-columns: 1fr 2rem 1fr;
+      grid-template-rows: auto auto auto auto;
+
+      &__line {
+        block-size: calc(100% - var(--icon-size) * 3 - 6rem); /* End at last icon */
+        inset-block-start: calc(var(--icon-size) * 1.5 + 4rem); /* Start below first icon */
+
+        /* Desktop: Vertical line centered in middle column */
+        inset-inline-start: 50%;
+      }
+    }
+  }
+
+  /* Icon styling */
+  .stepper__icon {
+    position: sticky;
+    z-index: 1; /* Ensure icons appear above the line */
+    padding: 0.5rem;
+    border-radius: 50%;
+    background: #e7ece9;
+    block-size: 2rem;
+    box-shadow: var(--shadow-medium--secondary);
+    inline-size: 2rem;
+    inset-block-start: 2rem;
+    object-fit: cover;
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>

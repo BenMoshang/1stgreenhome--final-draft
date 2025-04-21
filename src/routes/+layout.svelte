@@ -1,8 +1,8 @@
 <script lang="ts">
-	import '@chainlift/liftkit-css';
 	import Lenis from 'lenis';
 
 	import { browser } from '$app/environment';
+	import Header from '$lib/components/layout/Header.svelte';
 	import { initScrollAnimations } from '$lib/utils/scrollUtils';
 	import { onDestroy, onMount } from 'svelte';
 
@@ -102,7 +102,7 @@
 <svelte:head>
 	<title>1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable Solutions</title>
 </svelte:head>
-<!-- <Header /> -->
+<Header />
 {@render children()}
 
 <!-- <Footer /> -->
@@ -115,108 +115,115 @@
 
 <style lang="scss" global>
 	
-html{
-		&::before {
-			/* Content */
-			content: '';
+html {
+  &::before {
+    /* Positioning */
+    position: absolute;
+    z-index: -2;
+    margin: auto;
+    block-size: 100%;
 
-			/* Positioning */
-			position: absolute;
-			inset: 0;
-			z-index: -2;
-			margin: auto;
+    /* Content */
+    content: '';
 
-			/* Display & Box Model */
-			inline-size: 100%;
-			block-size: 100%;
-			/* Visual */
-			filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
-			opacity: 0.05;
-			transform: translateZ(0);
+    /* Visual */
+    filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
 
-			/* Performance */
-			will-change: filter;
+    /* Display & Box Model */
+    inline-size: 100%;
+    inset: 0;
+    opacity: 0.05;
 
-			/* Misc */
-			pointer-events: none;
-		}
+    /* Misc */
+    pointer-events: none;
+    transform: translateZ(0);
 
-		&::after {
-			content: '';
-			position: absolute;
-			inset: 0;
-			margin: auto;
-			width: 100%;
-			height: 100%;
-			background-image: url('/assets/landing-page/leaves.svg');
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			opacity: 0.05;
-			z-index: -1;
-		}
-	}
-	/* Lenis smooth scrolling styles */
-	html.lenis {
-		height: auto;
-	}
+    /* Performance */
+    will-change: filter;
+  }
 
-	.lenis.lenis-smooth {
-		scroll-behavior: auto;
-	}
+  &::after {
+    position: absolute;
+    z-index: -1;
+    margin: auto;
+    background-attachment: fixed;
+    background-image: url('/assets/landing-page/leaves.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    block-size: 100%;
+    content: '';
+    inline-size: 100%;
+    inset: 0;
+    opacity: 0.05;
+  }
+}
 
-	.lenis.lenis-smooth [data-lenis-prevent] {
-		overscroll-behavior: contain;
-	}
+/* Lenis smooth scrolling styles */
+html.lenis {
+  block-size: auto;
+}
 
-	.lenis.lenis-stopped {
-		overflow: hidden;
-	}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
 
-	.lenis.lenis-scrolling iframe {
-		pointer-events: none;
-	}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
 
-	/* Enhanced scroll-linked animation utility classes */
-	:global([data-scroll]) {
-		transition:
-			transform 1s cubic-bezier(0.165, 0.84, 0.44, 1),
-			opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-		will-change: transform, opacity;
-	}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
 
-	:global([data-scroll='fade-up']) {
-		transform: translateY(50px);
-		opacity: 0;
-	}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
 
-	:global([data-scroll='fade-up'].is-inview) {
-		transform: translateY(0);
-		opacity: 1;
-	}
+/* Enhanced scroll-linked animation utility classes */
+:global([data-scroll]) {
+  transition:
+    transform 1s cubic-bezier(0.165, 0.84, 0.44, 1),
+    opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: transform, opacity;
+}
 
-	:global([data-scroll='fade-in']) {
-		opacity: 0;
-	}
+:global([data-scroll='fade-up']) {
+  opacity: 0;
+  transform: translateY(50px);
+}
 
-	:global([data-scroll='fade-in'].is-inview) {
-		opacity: 1;
-	}
+:global([data-scroll='fade-up'].is-inview) {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-	/* Motion reduction styles */
-	@media (prefers-reduced-motion: reduce) {
-		:global(*) {
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-			transition-duration: 0.01ms !important;
-			scroll-behavior: auto !important;
-		}
+:global([data-scroll='fade-in']) {
+  opacity: 0;
+}
 
-		:global([data-scroll]) {
-			transition: none !important;
-			transform: none !important;
-			opacity: 1 !important;
-		}
-	}
+:global([data-scroll='fade-in'].is-inview) {
+  opacity: 1;
+}
+
+/* Motion reduction styles */
+@media (prefers-reduced-motion: reduce) {
+  /*
+   * Accessibility Exception: The following !important rules are required to override animation and transition
+   * styles for users who prefer reduced motion. This ensures compliance with accessibility guidelines.
+   * If the design system introduces semantic utility classes for motion reduction, replace these with those utilities.
+   */
+  :global(*) {
+    animation-duration: 0.01ms !important; // ACCESSIBILITY EXCEPTION
+    animation-iteration-count: 1 !important; // ACCESSIBILITY EXCEPTION
+    scroll-behavior: auto !important; // ACCESSIBILITY EXCEPTION
+    transition-duration: 0.01ms !important; // ACCESSIBILITY EXCEPTION
+  }
+
+  :global([data-scroll]) {
+    opacity: 1 !important; // ACCESSIBILITY EXCEPTION
+    transform: none !important; // ACCESSIBILITY EXCEPTION
+    transition: none !important; // ACCESSIBILITY EXCEPTION
+  }
+}
 </style>

@@ -139,189 +139,189 @@
 {/if}
 
 <style>
-	/* CSS styles converted from the Angular component */
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		transition: all 0.3s ease;
-	}
+  /* CSS styles converted from the Angular component */
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    transition: all 0.3s ease;
+  }
 
-	/* Variables */
-	:global(:root) {
-		--fade-in-duration: 0.5s;
-		--transition-duration: 0.3s;
-		--rounded-border-radius: 62.4375rem;
-		--button-hover-scale: 1.05;
-		--button-active-scale: 0.95;
-		--small-box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
-		--hover-box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.15);
-	}
+  /* Variables */
+  :global(:root) {
+    --fade-in-duration: 0.5s;
+    --transition-duration: 0.3s;
+    --rounded-border-radius: 62.4375rem;
+    --button-hover-scale: 1.05;
+    --button-active-scale: 0.95;
+    --small-box-shadow: 0 0.25rem 0.625rem rgb(0 0 0 / 10%);
+    --hover-box-shadow: 0 0.375rem 0.75rem rgb(0 0 0 / 15%);
+  }
 
-	/* Sidebar container */
-	.container {
-		position: fixed;
-		top: 0;
-		left: 0;
-		z-index: 999;
-		width: 100%;
-		height: 100%;
-	}
+  /* Sidebar container */
+  .container {
+    position: fixed;
+    z-index: 999;
+    block-size: 100%;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
 
-	/* Overlay for closing the sidebar when clicking outside */
-	.overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		backdrop-filter: blur(0.313rem);
-		-webkit-backdrop-filter: blur(0.313rem);
-	}
+  /* Overlay for closing the sidebar when clicking outside */
+  .overlay {
+    position: absolute;
+    backdrop-filter: blur(0.313rem);
+    backdrop-filter: blur(0.313rem);
+    background-color: rgb(0 0 0 / 50%);
+    block-size: 100%;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
 
-	/* Navigation content */
-	.nav-content {
-		position: absolute;
-		top: 0;
-		left: 0;
-		backdrop-filter: blur(0.625rem) saturate(200%);
-		-webkit-backdrop-filter: blur(0.625rem) saturate(200%);
-		background-color: rgba(255, 255, 255, 0.9);
-		animation: open var(--transition-duration) ease forwards;
-		z-index: 1000;
-		max-width: 16.875rem;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		padding-top: 5rem;
-		padding-right: 0.625rem;
-		padding-left: 0.625rem;
-		gap: 1.5rem;
-		box-shadow: 0.25rem 0 1rem rgba(0, 0, 0, 0.1);
-	}
+  /* Navigation content */
+  .nav-content {
+    position: absolute;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    animation: open var(--transition-duration) ease forwards;
+    backdrop-filter: blur(0.625rem) saturate(200%);
+    backdrop-filter: blur(0.625rem) saturate(200%);
+    background-color: rgb(255 255 255 / 90%);
+    block-size: 100%;
+    box-shadow: 0.25rem 0 1rem rgb(0 0 0 / 10%);
+    gap: 1.5rem;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    max-inline-size: 16.875rem;
+    padding-block-start: 5rem;
+    padding-inline: 0.625rem;
+  }
 
-	/* Close button inside sidebar */
-	.close-button {
-		position: absolute;
-		top: 1.5rem;
-		right: 1.5rem;
-		width: 2rem;
-		height: 2rem;
-		background: transparent;
-		border: none;
-		cursor: pointer;
-		padding: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+  /* Close button inside sidebar */
+  .close-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    block-size: 2rem;
+    cursor: pointer;
+    inline-size: 2rem;
+    inset-block-start: 1.5rem;
+    inset-inline-end: 1.5rem;
+  }
 
-	.close-button span {
-		position: absolute;
-		width: 1.5rem;
-		height: 0.125rem;
-		background-color: var(--color-primary);
-		border-radius: 0.0625rem;
-	}
+  .close-button span {
+    position: absolute;
+    border-radius: 0.0625rem;
+    background-color: var(--color-primary);
+    block-size: 0.125rem;
+    inline-size: 1.5rem;
+  }
 
-	.close-button span:first-child {
-		transform: rotate(45deg);
-	}
+  .close-button span:first-child {
+    transform: rotate(45deg);
+  }
 
-	.close-button span:last-child {
-		transform: rotate(-45deg);
-	}
+  .close-button span:last-child {
+    transform: rotate(-45deg);
+  }
 
-	/* Button Styles */
-	.action-button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background: var(--convex-secondary);
-		border: 0.0625rem solid var(--color-accent);
-		border-radius: var(--rounded-border-radius);
-		box-shadow:
-			var(--small-box-shadow),
-			inset 0 0.0625rem 0 rgba(255, 255, 255, 0.5);
-		color: var(--color-light);
-		font-family: var(--font-family-regular);
-		font-size: 1.25rem;
-		padding: 0.5rem 1.5rem;
-		text-wrap: nowrap;
-		text-decoration: none;
-		transition:
-			transform 0.2s ease-in-out,
-			box-shadow 0.2s ease-in-out,
-			filter 0.2s ease-in-out;
-		gap: 0.75rem;
-		margin-top: 1rem;
-	}
+  /* Button Styles */
+  .action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.5rem;
+    border: 0.0625rem solid var(--color-accent);
+    border-radius: var(--rounded-border-radius);
+    background: var(--convex-secondary);
+    box-shadow:
+      var(--small-box-shadow),
+      inset 0 0.0625rem 0 rgb(255 255 255 / 50%);
+    color: var(--color-light);
+    font-family: var(--font-family-regular);
+    font-size: 1.25rem;
+    gap: 0.75rem;
+    margin-block-start: 1rem;
+    text-decoration: none;
+    text-wrap: nowrap;
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out,
+      filter 0.2s ease-in-out;
+  }
 
-	.action-button:is(:focus, :hover) {
-		filter: brightness(1.1);
-		transform: scale(var(--button-hover-scale));
-		box-shadow: var(--hover-box-shadow);
-	}
+  .action-button:is(:focus, :hover) {
+    box-shadow: var(--hover-box-shadow);
+    filter: brightness(1.1);
+    transform: scale(var(--button-hover-scale));
+  }
 
-	.action-button:active {
-		transform: scale(var(--button-active-scale));
-	}
+  .action-button:active {
+    transform: scale(var(--button-active-scale));
+  }
 
-	.action-button .icon {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
+  .action-button .icon {
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+  }
 
-	/* General button styles */
-	.button {
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-		align-items: center;
-		width: 100%;
-		gap: 1rem;
-		font-family: var(--font-family-regular);
-		background: none;
-		border: none;
-		color: var(--color-dark);
-		font-size: 1.25rem;
-		text-align: left;
-		padding: 0.75rem 1rem;
-		cursor: pointer;
-		border-radius: 1rem;
-		transition:
-			background 0.3s,
-			transform 0.1s ease;
-		white-space: nowrap;
-	}
+  /* General button styles */
+  .button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    background: none;
+    color: var(--color-dark);
+    cursor: pointer;
+    font-family: var(--font-family-regular);
+    font-size: 1.25rem;
+    gap: 1rem;
+    inline-size: 100%;
+    text-align: start;
+    transition:
+      background 0.3s,
+      transform 0.1s ease;
+    white-space: nowrap;
+  }
 
-	/* Hover and active states for nav buttons */
-	.button:hover,
-	.button:active {
-		transform: scale(0.95);
-		background: var(--convex-light);
-		box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
-	}
+  /* Hover and active states for nav buttons */
+  .button:hover,
+  .button:active {
+    background: var(--convex-light);
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 10%);
+    transform: scale(0.95);
+  }
 
-	/* Keyframes for opening animation */
-	@keyframes open {
-		from {
-			width: 0;
-			opacity: 0;
-		}
-		to {
-			width: 16.875rem;
-			opacity: 1;
-		}
-	}
+  /* Keyframes for opening animation */
+  @keyframes open {
+    from {
+      inline-size: 0;
+      opacity: 0;
+    }
 
-	/* Media queries for responsiveness */
-	@media (min-width: 50.625rem) {
-		.nav-content {
-			border-radius: 0 1rem 1rem 0;
-		}
-	}
+    to {
+      inline-size: 16.875rem;
+      opacity: 1;
+    }
+  }
+
+  /* Media queries for responsiveness */
+  @media (width >= 50.625rem) {
+    .nav-content {
+      border-radius: 0 1rem 1rem 0;
+    }
+  }
 </style>

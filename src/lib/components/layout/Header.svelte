@@ -229,441 +229,317 @@
 		{/each}
 	</ul>
 </nav>
-
 <style lang="scss">
-	/* Define custom easing */
-	:global(:root) {
-		--easing-smooth: cubic-bezier(0.32, 0.72, 0, 1);
-	}
+  @use 'sass:map';
 
-	/* ==================================================
-	   Component SCSS Maps
-	   ================================================== */
-	$dimensions: (
-		header-height: 3rem,
-		header-width-desktop: 92%,
-		header-width-mobile: 92%,
-		logo-size: 2rem,
-		logo-padding: primitive-spacing(xxs),
-		// Kept for reference if needed elsewhere
-		burger-width: primitive-spacing(lg),
-		burger-height: primitive-spacing(lg),
-		burger-line-height: 0.1563rem,
-		burger-line-width: calc(#{primitive-spacing(md)} + #{primitive-spacing(xxs)}),
-		nav-max-width: 92%,
-		nav-list-gap: spacing(less-related),
-		link-padding-block: spacing(close-related),
-		link-padding-inline: primitive-spacing(sm),
-		burger-translate-x: 0.4688rem,
-		burger-translate-y: spacing(most-related)
-	);
+  :global(:root) {
+    --easing-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+  }
 
-	$layout: (
-		mobile-breakpoint: 64rem,
-		nav-top-offset: spacing(close-related),
-		logo-margin-top: -0.25rem
-	);
+  $dimensions: (
+    header-height: 3rem,
+    header-width: (desktop: 92%, mobile: 92%),
+    logo: (size: 2rem, padding: primitive-spacing(xxs)),
+    burger: (
+      width: primitive-spacing(lg),
+      height: primitive-spacing(lg),
+      line: (
+        height: 0.1563rem,
+        width: calc(#{primitive-spacing(md)} + #{primitive-spacing(xxs)}),
+        radius: 0.0625rem
+      ),
+      translate: (x: 0.4688rem, y: spacing(most-related))
+    ),
+    nav: (max-width: 92%, list-gap: spacing(less-related)),
+    link: (
+      padding: (
+        block: spacing(close-related),
+        inline: primitive-spacing(sm)
+      )
+    )
+  );
 
-	$transforms: (
-		header-hidden-translate-y: -120%
-	);
+  $layout: (
+    mobile-breakpoint: 64rem,
+    nav-top-offset: spacing(close-related),
+    logo-margin-top: -0.25rem
+  );
 
-	$filters: (
-		logo-saturate: 200%,
-		logo-contrast: 100%
-	);
+  $transforms: (header-hidden-translate-y: -120%);
 
-	$borders: (
-		burger-line-radius: 0.0625rem // 1px
-	);
+  $filters: (logo: (saturate: 200%, contrast: 100%));
 
-	$z-indices: (
-		nav: 999,
-		header: 1000,
-		burger: 1001
-	);
-	$desktop-nav-gap: spacing(not-related);
-	/* ==================================================
-	   Header Block (.header)
-	   ================================================== */
-	.header {
-		max-inline-size: $PAGE_MAX_WIDTH;
+  $z-indices: (nav: 999, header: 1000, burger: 1001);
 
-		// Positioning
-		position: fixed;
-		top: spacing(less-related);
-		left: 50%;
-		z-index: map-get($z-indices, header);
+  $desktop-nav-gap: spacing(not-related);
 
-		// Layout
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+  .header {
+    --header-bg-color: hsl(206deg 18% 92% / 83%);
+    --header-border-color: hsl(0deg 0% 100% / 12.5%);
 
-		// Box Model
-		width: calc(100% - var(--page-inline-padding));
-		min-height: map-get($dimensions, header-height);
-		margin: 0 auto;
-		padding-inline: primitive-spacing(md);
-		padding-block: primitive-spacing(xs);
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: primitive-spacing(xs) primitive-spacing(md);
+    border-radius: var(--rounded-border-radius);
+    margin: 0 auto;
+    backdrop-filter: blur(15px) saturate(200%);
+    background-color: var(--header-bg-color);
+    box-shadow: var(--shadow-low--light);
+    inline-size: calc(100% - var(--page-inline-padding));
+    inset-block-start: spacing(less-related);
+    inset-inline-start: 50%;
+    min-block-size: 3rem;
+    transform: translateX(-50%);
+    transition: transform var(--transition-duration) ease-in-out,
+      opacity var(--transition-duration) ease-in-out;
+    will-change: transform, opacity;
 
-		// Visuals
-		background-color: hsl(206, 18%, 92%, 0.83); // Use HSL for better readability
-		backdrop-filter: blur(15px) saturate(200%);
-		border-radius: var(--rounded-border-radius);
-		box-shadow: var(--shadow-low--light);
+    &--hidden {
+      opacity: 0;
+      transform: translateY(map.get($transforms, header-hidden-translate-y)) translateX(-50%);
+    }
 
-		// Animation & Interaction
-		transform: translateX(-50%);
-		transition:
-			transform var(--transition-duration) ease-in-out,
-			opacity var(--transition-duration) ease-in-out;
-		will-change: transform, opacity; // Performance hint
+    &__logo-wrapper {
+      @extend %flex-center;
 
-		/* Modifier: Hidden state */
-		&--hidden {
-			opacity: 0;
-			transform: translateY(map-get($transforms, header-hidden-translate-y)) translateX(-50%);
-		}
+      z-index: 1;
+      overflow: hidden;
+      flex-shrink: 0;
+      padding: 0.375rem;
+      border: 0.0625rem solid var(--color-secondary);
+      border-radius: 50%;
+      background: var(--convex-light);
+      block-size: 2.25rem;
+      box-shadow: var(--shadow-low--light);
+      inline-size: 2.25rem;
 
-		/* Element: Logo Wrapper */
-		&__logo-wrapper {
-			@extend %flex-center;
-			// Box Model
-			flex-shrink: 0; // Prevent shrinking
-			width: 2.25rem;
-			height: 2.25rem;
-			overflow: hidden;
-			padding: 0.375rem;
-			// Visuals
-			background: var(--convex-light);
-			border-radius: 50%;
-			border: 0.0625rem solid var(--color-secondary);
-			box-shadow: var(--shadow-low--light);
+      a {
+        display: flex;
+        block-size: 100%;
+        inline-size: 100%;
+        transition: transform var(--transition-duration) ease-in-out;
 
-			// Positioning (relative to siblings if needed)
-			z-index: 1;
-		}
+        &:hover,
+ &:focus {
+          transform: scale(1.05);
+        }
+      }
+    }
 
-		/* Element: Logo Image */
-		&__logo {
-			// Box Model
-			width: 100%;
-			height: 100%;
-			margin-top: map-get($layout, logo-margin-top);
-			object-fit: contain;
+    &__logo {
+      block-size: 100%;
+      filter: saturate(map.get($filters, logo, saturate)) contrast(map.get($filters, logo, contrast));
+      inline-size: 100%;
+      margin-block-start: map.get($layout, logo-margin-top);
+      mix-blend-mode: multiply;
+      object-fit: contain;
+    }
 
-			// Visuals
-			mix-blend-mode: multiply;
-			filter: saturate(map-get($filters, logo-saturate)) contrast(map-get($filters, logo-contrast));
-		}
+    &__nav-desktop {
+      display: contents;
+    }
 
-		/* Logo link styling */
-		&__logo-wrapper a {
-			display: flex;
-			width: 100%;
-			height: 100%;
-			transition: transform var(--transition-duration) ease-in-out;
+    &__nav-desktop-list {
+      display: none;
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
 
-			&:hover,
-			&:focus {
-				transform: scale(1.05);
-			}
-		}
+    &__nav-mobile {
+      position: fixed;
+      z-index: map.get($z-indices, nav);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      border: 1px solid var(--header-border-color);
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(1rem) saturate(200%);
+      backdrop-filter: blur(1rem) saturate(200%);
+      background-color: var(--header-bg-color);
+      box-shadow: var(--shadow-low--light);
+      inline-size: map.get($dimensions, header-width, mobile);
+      inset-block-start: 6rem;
+      inset-inline-start: 50%;
+      isolation: isolate;
+      max-inline-size: map.get($dimensions, nav, max-width);
+      opacity: 0;
+      transform: translateX(-50%);
+      transition: opacity var(--transition-duration) ease-in-out,
+        visibility var(--transition-duration) ease-in-out;
+      visibility: hidden;
+      will-change: transform, opacity;
 
-		/* Element: Desktop Nav Container */
-		&__nav-desktop {
-			/* MODIFIED: Use display: contents by default (mobile) */
-			/* This allows logo and lists inside to be positioned by the parent .header flexbox */
-			display: contents;
-			/* Removed align-items and gap here, apply only on desktop */
-		}
+      &--open {
+        opacity: 1;
+        visibility: visible;
+      }
 
-		/* ADDED: Hide nav lists by default (mobile) */
-		&__nav-desktop-list {
-			display: none; // Hide lists on mobile
-			// Box Model
-			margin: 0;
-			padding: 0;
-			// Visuals
-			list-style-type: none;
-		}
+      &-list {
+        display: flex;
+        flex-direction: column;
+        padding: var(--page-inline-padding);
+        gap: map.get($dimensions, nav, list-gap);
+        list-style-type: none;
+      }
+    }
 
-		/* Element: Mobile Navigation Container */
-		&__nav-mobile {
-			// Positioning
-			position: fixed;
-			top: 6rem; // Consider using spacing tokens if applicable
-			left: 50%;
-			z-index: map-get($z-indices, nav);
-			isolation: isolate; // Create new stacking context
+    &__nav-desktop-link,
+    &__nav-mobile-link {
+      @extend %p;
 
-			// Layout
-			display: flex;
-			flex-direction: column;
-			justify-content: space-evenly;
-			align-items: flex-start;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--rounded-border-radius);
+      font-size: 1rem;
+      font-weight: 500;
+      gap: spacing(most-related);
+      max-inline-size: fit-content;
+      text-decoration: none;
+      transition: color var(--transition-duration) ease-in-out;
 
-			// Box Model
-			width: map-get($dimensions, header-width-mobile);
-			max-width: map-get($dimensions, nav-max-width);
+      svg {
+        flex-shrink: 0;
+        block-size: 1.25em;
+        fill: currentcolor;
+        inline-size: 1.25em;
+      }
 
-			// Visuals
-			background-color: hsla(var(--color-light-hsl), 0.83);
-			backdrop-filter: blur(1rem) saturate(200%);
-			-webkit-backdrop-filter: blur(1rem) saturate(200%); // Keep for broader compatibility
-			border: 1px solid hsla(0, 0%, 100%, 0.125);
-			border-radius: var(--border-radius);
-			box-shadow: var(--shadow-low--light);
-			opacity: 0; // Hidden by default
-			visibility: hidden;
+      &::after {
+        position: absolute;
+        background-color: var(--color-primary);
+        block-size: 0.0938rem;
+        content: '';
+        inline-size: 100%;
+        inset-block-end: -2px;
+        inset-inline-start: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--transition-duration) ease-in-out;
+        will-change: transform;
+      }
 
-			// Animation & Interaction
-			transform: translateX(-50%);
-			transition:
-				opacity var(--transition-duration) ease-in-out,
-				visibility var(--transition-duration) ease-in-out;
-			will-change: transform, opacity; // Performance hint
+      &:hover::after,
+      &:focus::after,
+      &:active::after {
+        transform: scaleX(1);
+      }
 
-			/* Modifier: Open state */
-			&--open {
-				opacity: 1;
-				visibility: visible;
-			}
+      &.nav-link--cta {
+        color: var(--color-primary);
+        font-weight: 600;
+        transition: transform var(--transition-duration) ease-in-out,
+          opacity var(--transition-duration) ease-in-out;
+        will-change: transform, opacity;
+      }
+    }
 
-			/* Element: Nav Mobile List */
-			&-list {
-				// Layout
-				display: flex;
-				flex-direction: column;
-				gap: map-get($dimensions, nav-list-gap);
+    &__burger {
+      z-index: map.get($z-indices, burger);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 0;
+      border: none;
+      background: transparent;
+      block-size: map.get($dimensions, burger, height);
+      cursor: pointer;
+      inline-size: map.get($dimensions, burger, width);
 
-				// Box Model
-				padding: var(--page-inline-padding); // Assumes this variable holds appropriate spacing
+      &-line {
+        display: block;
+        border-radius: map.get($dimensions, burger, line, radius);
+        background-color: var(--color-p);
+        block-size: map.get($dimensions, burger, line, height);
+        inline-size: map.get($dimensions, burger, line, width);
+        transition: transform var(--transition-duration) ease-in-out,
+          opacity var(--transition-duration) ease-in-out;
+      }
 
-				// Visuals
-				list-style-type: none;
-			}
-		}
+      &--open {
+        .header__burger-line {
+          &:first-child {
+            transform: rotate(45deg) translate(map.get($dimensions, burger, translate, x),
+            map.get($dimensions, burger, translate, y));
+          }
 
-		/* Shared Link Styles */
-		&__nav-desktop-link,
-		&__nav-mobile-link {
-			// Positioning
-			position: relative; // For pseudo-element
+          &:nth-child(2) {
+            opacity: 0;
+          }
 
-			// Layout
-			display: inline-flex; // Arrange icon and text horizontally
-			align-items: center; // Vertically align icon and text
-			gap: spacing(most-related); // Add space between icon and text
+          &:last-child {
+            transform: rotate(-45deg) translate(map.get($dimensions, burger, translate, x),
+            -#{map.get($dimensions, burger, translate, y)});
+          }
+        }
+      }
+    }
 
-			// Box Model
-			max-inline-size: fit-content; // Shrink-wrap width
+    @media (min-width: map.get($layout, mobile-breakpoint)) {
+      justify-content: center;
+      inline-size: map.get($dimensions, header-width, desktop);
 
-			// Typography & Visuals
-			@extend %p; // Apply base paragraph styles
-			font-weight: 500;
-			text-decoration: none;
-			border-radius: var(--rounded-border-radius);
-			font-size: 1rem;
-			// Animation & Interaction
-			transition: color var(--transition-duration) ease-in-out; // Removed transform transition here as it's not explicitly used
+      &__logo-wrapper {
+        block-size: 3rem;
+        inline-size: 3rem;
+      }
 
-			/* Style the SVG icon within the link */
-			svg {
-				width: 1.25em; // Size relative to font size
-				height: 1.25em;
-				flex-shrink: 0; // Prevent icon from shrinking
-				fill: currentColor; // Optional: Make icon color inherit text color
-			}
+      &__nav-desktop {
+        display: flex;
+        align-items: center;
+        gap: $desktop-nav-gap;
+      }
 
-			/* Underline Pseudo-element */
-			&::after {
-				content: '';
-				position: absolute;
-				bottom: -2px;
-				left: 0;
-				width: 100%; // Start full width
-				height: 0.0938rem;
-				background-color: var(--color-primary);
-				transform: scaleX(0); // Initially hidden by scaling
-				transform-origin: left; // Scale from the left
-				transition: transform var(--transition-duration) ease-in-out; // Animate transform
-				will-change: transform; // Performance hint
-			}
+      &__nav-desktop-list {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        gap: $desktop-nav-gap;
+        list-style-type: none;
+      }
 
-			&:hover,
-			&:focus {
-				&::after {
-					transform: scaleX(1); // Reveal underline by scaling
-				}
-			}
+      &__burger,
+      &__nav-mobile {
+        display: none;
+      }
+    }
+  }
 
-			&:active {
-				&::after {
-					transform: scaleX(1); // Keep underline visible
-				}
-			}
+  .slide-in-blurred-top {
+    animation: slide-in-blurred-top var(--transition-fade-in, 0.5s) var(--easing-smooth) both;
+  }
 
-			/* Modifier: CTA Link Style */
-			&.nav-link--cta {
-				color: var(--color-primary);
-				font-weight: 600;
-				// Animation & Interaction
-				transition:
-					transform var(--transition-duration) ease-in-out,
-					opacity var(--transition-duration) ease-in-out;
-				will-change: transform, opacity; // Performance hint
-			}
-		}
+  .slide-out-blurred-top {
+    animation: slide-out-blurred-top var(--transition-standard, 0.3s) var(--easing-smooth) both;
+  }
 
-		/* Element: Burger Menu Button */
-		&__burger {
-			// Positioning
-			z-index: map-get($z-indices, burger);
+  @keyframes slide-in-blurred-top {
+    0% {
+      opacity: 0;
+      transform: translateY(-#{spacing(less-related)}) translateX(-50%);
+    }
 
-			// Layout
-			display: flex; // Use flexbox for lines
-			flex-direction: column;
-			justify-content: space-around; // Space out lines
+    100% {
+      opacity: 1;
+      transform: translateY(0) translateX(-50%);
+    }
+  }
 
-			// Box Model
-			width: map-get($dimensions, burger-width);
-			height: map-get($dimensions, burger-height);
-			padding: 0;
+  @keyframes slide-out-blurred-top {
+    0% {
+      opacity: 1;
+      transform: translateY(0) translateX(-50%);
+    }
 
-			// Visuals
-			background: transparent;
-			border: none;
-
-			// Interaction
-			cursor: pointer;
-
-			/* Element: Burger Line */
-			&-line {
-				// Layout
-				display: block;
-
-				// Box Model
-				width: map-get($dimensions, burger-line-width);
-				height: map-get($dimensions, burger-line-height);
-
-				// Visuals
-				background-color: var(--color-p); // Use paragraph color token
-				border-radius: map-get($borders, burger-line-radius);
-
-				// Animation & Interaction
-				transition:
-					transform var(--transition-duration) ease-in-out,
-					opacity var(--transition-duration) ease-in-out;
-			}
-
-			/* Modifier: Open state animation */
-			&--open {
-				.header__burger-line {
-					// Target lines within open burger
-					&:first-child {
-						transform-origin: center;
-						transform: rotate(45deg)
-							translate(
-								map-get($dimensions, burger-translate-x),
-								map-get($dimensions, burger-translate-y)
-							);
-					}
-
-					&:nth-child(2) {
-						opacity: 0;
-					}
-
-					&:last-child {
-						transform-origin: center;
-						transform: rotate(-45deg)
-							translate(
-								map-get($dimensions, burger-translate-x),
-								-#{map-get($dimensions, burger-translate-y)}
-							);
-					}
-				}
-			}
-		}
-
-		/* --------------------------------------------------
-		MEDIA QUERY (Desktop Styles - min-width)
-		-------------------------------------------------- */
-		@media (min-width: map-get($layout, mobile-breakpoint)) {
-			// Box Model
-			width: map-get($dimensions, header-width-desktop);
-
-			// Layout
-			justify-content: center; // Ensure elements space out correctly -> CHANGED from space-between
-			&__logo-wrapper {
-				width: 3rem;
-				height: 3rem;
-			}
-			&__nav-desktop {
-				/* MODIFIED: Set back to flex for desktop */
-				display: flex;
-				align-items: center; // Vertically align nav items
-				gap: $desktop-nav-gap;
-			}
-
-			&__nav-desktop-list {
-				// Layout
-				/* MODIFIED: Show lists on desktop */
-				display: flex;
-				align-items: center;
-				gap: $desktop-nav-gap;
-
-				// Box Model
-				margin: 0;
-				padding: 0;
-
-				// Visuals
-				list-style-type: none;
-			}
-
-			&__burger {
-				display: none; // Hide burger
-			}
-
-			&__nav-mobile {
-				display: none; // Hide mobile nav
-			}
-		}
-	} /* End .header block */
-
-	/* --------------------------------------------------
-	Mobile Nav Animation Classes (Remain top-level)
-	-------------------------------------------------- */
-	.slide-in-blurred-top {
-		animation: slide-in-blurred-top var(--transition-fade-in, 0.5s) var(--easing-smooth) both;
-	}
-
-	.slide-out-blurred-top {
-		animation: slide-out-blurred-top var(--transition-standard, 0.3s) var(--easing-smooth) both;
-	}
-
-	/* Keyframes for Slide-In (Blur Removed) */
-	@keyframes slide-in-blurred-top {
-		0% {
-			transform: translateY(-#{spacing(less-related)}) translateX(-50%);
-			opacity: 0;
-		}
-		100% {
-			transform: translateY(0) translateX(-50%);
-			opacity: 1;
-		}
-	}
-
-	/* Keyframes for Slide-Out (Blur Removed) */
-	@keyframes slide-out-blurred-top {
-		0% {
-			transform: translateY(0) translateX(-50%);
-			opacity: 1;
-		}
-		100% {
-			transform: translateY(-#{spacing(less-related)}) translateX(-50%);
-			opacity: 0;
-		}
-	}
+    100% {
+      opacity: 0;
+      transform: translateY(-#{spacing(less-related)}) translateX(-50%);
+    }
+  }
 </style>

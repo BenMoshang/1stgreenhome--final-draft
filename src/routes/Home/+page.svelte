@@ -52,61 +52,67 @@
 </main>
 
 <style lang="scss">
-	.page-container {
-		/* Positioning */
-		z-index: 1;
-		position: relative;
-		/* Dislay & Box Model */
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		// gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
-		inline-size: 100%;
-		block-size: 100%;
-		margin-inline: auto;
-		& > * {
-			flex: 1;
-		}
-	}
+  .page-container {
+    position: relative;
 
-	.gradient-background-container {
-		position: relative;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		// gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
-	}
+    /* Positioning */
+    z-index: 1;
 
-	.gradient-background {
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: -10;
-		width: 100vw; /* Full viewport width */
-		height: 100%; /* Full height of the container */
-		background: url('/assets/landing-page/gradient-background.svg') no-repeat;
-		background-size: cover;
-		background-position: center;
-		background-attachment: fixed;
-		filter: brightness(0.75) saturate(1.5);
-		&::after {
-			content: '';
-			position: absolute;
-			inset: 0;
-			margin: auto;
-			width: 100%;
-			height: 100%;
-			background-image: url('/assets/landing-page/leaves.svg');
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-			background-attachment: fixed;
-			filter: contrast(0.7) brightness(0.3);
-			opacity: 0.2;
-			z-index: -1;
-		}
-	}
+    /* Dislay & Box Model */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    block-size: 100%;
+
+    // gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
+    inline-size: 100%;
+    margin-inline: auto;
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  .gradient-background-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    inline-size: 100%;
+
+    // gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
+  }
+
+  .gradient-background {
+    position: absolute;
+    z-index: -10;
+    background: url('/assets/landing-page/gradient-background.svg') no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    block-size: 100%; /* Full height of the container */
+    filter: brightness(0.75) saturate(1.5);
+    inline-size: 100vw; /* Full viewport width */
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+
+    &::after {
+      position: absolute;
+      z-index: -1;
+      margin: auto;
+      background-attachment: fixed;
+      background-image: url('/assets/landing-page/leaves.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      block-size: 100%;
+      content: '';
+      filter: contrast(0.7) brightness(0.3);
+      inline-size: 100%;
+      inset: 0;
+      opacity: 0.2;
+    }
+  }
 </style>

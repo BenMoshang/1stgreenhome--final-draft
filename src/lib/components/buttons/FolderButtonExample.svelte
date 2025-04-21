@@ -17,15 +17,17 @@
 </div>
 
 <style lang="scss">
-	.example-container {
-		@extend %flex-col-center;
-		padding: spacing(not-related);
-		gap: spacing(less-related);
-	}
+  .example-container {
+    @extend %flex-col-center;
 
-	.button-container {
-		@extend %flex-center;
-		gap: spacing(less-related);
-		flex-wrap: wrap;
-	}
+    padding: spacing(not-related);
+    gap: spacing(less-related);
+  }
+
+  .button-container {
+    @extend %flex-center;
+
+    flex-wrap: wrap;
+    gap: spacing(less-related);
+  }
 </style>

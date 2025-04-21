@@ -116,96 +116,103 @@
 </section>
 
 <style lang="scss">
-	.testimonials-section {
-		@extend %flex-col-center;
-		width: 100%;
-		height: 100%;
-		max-inline-size: $PAGE_MAX_WIDTH;
-		margin-inline: auto;
-		padding-block: 5rem;
-		gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
-		overflow-x: clip;
+  .testimonials-section {
+    @extend %flex-col-center;
 
-		&__marquee {
-			@extend %flex-col-center;
-			--gap: spacing(not-related);
-			width: 100%;
-			gap: var(--gap);
-		}
+    block-size: 100%;
+    gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
+    inline-size: 100%;
+    margin-inline: auto;
+    max-inline-size: $PAGE_MAX_WIDTH;
+    overflow-inline: clip;
+    padding-block: 5rem;
 
-		&__title {
-			@extend %h4;
-			color: $light-1;
-			text-align: center;
-			margin-bottom: 2rem;
+    &__marquee {
+      @extend %flex-col-center;
+      --gap: spacing(not-related);
 
-			&-standout {
-				color: transparent;
-				background: linear-gradient(45deg, #ffd700, #ffc107, #ffeb3b, #ffc107, #ffd700);
-				background-size: 200% 200%;
-				-webkit-background-clip: text;
-				background-clip: text;
-				-webkit-text-fill-color: transparent;
-				animation: gradient-loop 5s ease-in-out infinite;
-			}
-		}
+      gap: var(--gap);
+      inline-size: 100%;
+    }
 
-		&__track {
-			display: flex;
-			gap: spacing(not-related);
-			border-radius: var(--border-radius);
-			animation: scroll 20s linear infinite;
+    &__title {
+      @extend %h4;
 
-			&.paused {
-				animation-play-state: paused;
-			}
-		}
-	}
+      color: $light-1;
+      margin-block-end: 2rem;
+      text-align: center;
 
-	/* --------------------------------------------------
+      &-standout {
+        animation: gradient-loop 5s ease-in-out infinite;
+        background: linear-gradient(45deg, #ffd700, #ffc107, #ffeb3b, #ffc107, #ffd700);
+        background-clip: text;
+        background-clip: text;
+        background-size: 200% 200%;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    &__track {
+      display: flex;
+      border-radius: var(--border-radius);
+      animation: scroll 20s linear infinite;
+      gap: spacing(not-related);
+
+      &.paused {
+        animation-play-state: paused;
+      }
+    }
+  }
+
+  /* --------------------------------------------------
    Media Queries
    -------------------------------------------------- */
-	@media (prefers-reduced-motion: reduce) {
-		.testimonials-section {
-			&__title-standout {
-				animation: none;
-			}
-			&__track {
-				animation: none;
-			}
-		}
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials-section {
+      &__title-standout {
+        animation: none;
+      }
 
-		*,
-		*::before,
-		*::after {
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-			transition-duration: 0.01ms !important;
-			scroll-behavior: auto !important;
-		}
-	}
+      &__track {
+        animation: none;
+      }
+    }
 
-	/* --------------------------------------------------
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* --------------------------------------------------
    Keyframes
    -------------------------------------------------- */
-	@keyframes gradient-loop {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
+  @keyframes gradient-loop {
+    0% {
+      background-position: 0% 50%;
+    }
 
-	@keyframes scroll {
-		0% {
-			transform: translateX(0);
-		}
-		100% {
-			transform: translateX(-50%);
-		}
-	}
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 </style>

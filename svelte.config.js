@@ -1,32 +1,35 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import sveltePreprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Enable preprocessing for TypeScript, PostCSS, etc.
-	preprocess: vitePreprocess({
-		// Add source maps for better debugging
-		sourceMap: true,
-		// Enable PostCSS processing
-		postcss: true
-	}),
+	// Enable preprocessing for TypeScript, PostCSS, and SCSS
+	preprocess: [
+		sveltePreprocess({
+			scss: {
+				prependData: `@use 'src/lib/styles/main.scss' as *;` // auto-import your design system
+			},
+			postcss: true
+		}),
+		vitePreprocess({
+			sourceMap: true,
+			postcss: true
+		})
+	],
 
-	// Add compiler options to enable runes
 	compilerOptions: {
 		runes: true
 	},
 
 	kit: {
 		adapter: adapter(),
-		// Add recommended security headers
 		csrf: {
 			checkOrigin: true
 		},
-		// Enable service worker for PWA support
 		serviceWorker: {
 			register: true
 		},
-		// Add alias for better imports
 		alias: {
 			$lib: 'src/lib',
 			$components: 'src/lib/components'

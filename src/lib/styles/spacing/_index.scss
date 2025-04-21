@@ -1,0 +1,10 @@
+// ===========================================================================
+
+// styles/spacing/_index.scss
+
+// Central index forwarding spacing utilities.
+
+// ===========================================================================
+@forward 'margins';
+@forward 'padding';
+@forward 'gaps';
