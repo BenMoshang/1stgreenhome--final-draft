@@ -8,13 +8,23 @@
 @use 'sass:map';
 
 $breakpoints: (
-  'sm': 40rem,
-  'md': 48rem,
-  'lg': 64rem,
-  'xl': 80rem,
+  'mobile-end': 30rem,
+  'tablet-start': 48rem,
+  'tablet-end': 64rem,
+  'desktop-start': 80rem,
 );
 
 /// Applies styles within a media query for the given breakpoint key.
+/// 
+/// @param {String} $breakpoint - The breakpoint key from $breakpoints map
+/// @example
+///   .element {
+///     color: blue;
+///     
+///     @include respond-to('tablet-start') {
+///       color: red;
+///     }
+///   }
 @mixin respond-to($breakpoint) {
 
   $size: map.get($breakpoints, $breakpoint);

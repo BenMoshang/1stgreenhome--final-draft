@@ -1,25 +1,25 @@
 // styles/main.scss
 
 // ---- BASE ----
-@use 'base' as base;
+@forward 'base';
 
 // ---- LAYOUT ----
-@use 'layout' as layout;
+@forward 'layout';
 
 // ---- SPACING ----
-@use 'spacing' as spacing;
+@forward 'spacing';
 
 // ---- TYPOGRAPHY ----
-@use 'typography' as typography;
+@forward 'typography';
 
 // ---- APPEARANCE ----
-@use 'appearance' as appearance;
+@forward 'appearance';
 
 // ---- SIZING ----
-@use 'sizing' as sizing;
+@forward 'sizing';
 
 // ---- INTERACTIVITY ----
-@use 'state' as state;
+@forward 'state';
 
 // ---- COMPONENTS ----
-@use 'components' as components;
+@forward 'components';

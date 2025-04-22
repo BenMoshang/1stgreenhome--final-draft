@@ -13,33 +13,37 @@
 ::after {
   box-sizing: border-box; /* 1. Change from `content-box` to `border-box` */
 }
-
 html {
+  /* fill the viewport */
   inline-size: 100%;
-  min-block-size: 100svh;
+  block-size: 100svh;         /* full “small” viewport height */
+  margin: 0;                  /* reset any default */
   scroll-behavior: smooth;
   scrollbar-color: var(--primary) var(--surface);
   scrollbar-track-color: var(--surface);
   scrollbar-width: thin;
 
-  /* Base setup */
-
-  /* Enable keyword animations for users who don't prefer reduced motion */
+  /* Enable keyword animations for those who allow motion */
   @media (prefers-reduced-motion: no-preference) {
     interpolate-size: allow-keywords;
   }
 }
 
 body {
-  margin: 0; /* Remove default body margin */
-  background-color: var(--background); /* Use CSS custom property for background */
+  /* make body fill html’s height */
+  inline-size: 100%;
+  block-size: 100%;           /* 100% of html’s 100svh */
+  margin: 0;                  /* remove default margins */
 
-  /* Font rendering improvements */
+
+  /* font / smoothness tweaks */
   font-smooth: antialiased;
-  -webkit-font-smoothing: antialiased; /* For Safari/Chrome */
-  -moz-osx-font-smoothing: grayscale; /* For Firefox */
-  overflow-inline: clip; /* Prevent horizontal scrolling */
-  text-rendering: geometricprecision; /* Favors geometry over legibility/speed */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricprecision;
+
+  /* prevent horizontal overflow */
+  overflow-inline: clip;
 }
 
 /* ==========================================================================

@@ -81,6 +81,7 @@ $positions: (
   $half: math.floor(($n - 1) / 2);
   $white: oklch(100% 0 0deg);
   $black: oklch(0%   0 0deg);
+  $col: null; // Initialize $col variable to ensure it's always defined
 
   @for $i from 0 through $n - 1 {
     @if $i < $half {
