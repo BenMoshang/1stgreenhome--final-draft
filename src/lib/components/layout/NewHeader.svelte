@@ -94,17 +94,22 @@
     };
   });
 </script>
-<!-- TODO: ASSIGN ROUTES ->
-<!-- TODO: DESKTOP NAVIGATION: APPLY UTILITY CLASSES FOR ROUTE COLORS -->
 
-<!-- TODO: MOBILE NAVIGATION:  ANIMATE THE TEXT   -->
-<!-- TODO:  MOBILE NAVIGATION: APPLY BIG UTILITY TEXT CLASS  -->
-<!-- TODO: MOBILE NAVIGATION: MAYBE HAVE A BG BEHIND IT ->
-<!-- TODO: MOBILE NAVIGATION: HAVE CTA BUTTON IN IT->
-
-
-
-<header class="header p-inline__sm" class:header--hidden={isHeaderHidden}>
+<!-- 
+  Navigation TODOs:
+  - Desktop: 
+    - Assign routes to navigation links
+    - Apply utility classes for route colors
+  - Mobile:
+    - Add text animation effects
+    - Apply big utility text classes
+    - Consider adding background behind mobile menu
+    - Include CTA button in mobile navigation
+-->
+<header
+  class="header p-block__sm p-inline__sm"
+  class:header--hidden={isHeaderHidden}
+>
   <a
     class="header__logo-container text--secondary"
     href="/"
@@ -150,7 +155,10 @@
     <ul class="header__nav--mobile-list">
       {#each routes as link}
         <li class="header__nav--mobile-route">
-          <a href="{link.link}#{link.fragment}" class={link.class}>
+          <a
+            href="{link.link}#{link.fragment}"
+            class="heading--bold text--primary focus-ring--primary {link.class}"
+          >
             {link.text}
           </a>
         </li>
@@ -163,7 +171,7 @@
         <li>
           <a
             href="{link.link}#{link.fragment}"
-            class=" header__nav-desktop-route text--secondary {link.class ||
+            class="header__nav-desktop-route body text--secondary hover:text--primary focus-ring--secondary {link.class ||
               ''}"
             tabindex="0"
           >
@@ -255,7 +263,7 @@
           display: unset;
         }
         &-route {
-          @extend %subheading;
+          @extend %u_subheading;
         }
         &-list {
           list-style: none;
@@ -313,7 +321,7 @@
     }
 
     &__burger {
-      --_size: #{size('lg')};
+      --_size: #{size('xl')};
       z-index: var(--_z-index-burger);
       display: flex;
       align-items: center;
@@ -327,12 +335,14 @@
         display: none;
       }
       svg {
+        object-fit: contain;
         width: 100%;
         height: 100%;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .line {
+        color: var(--secondary);
         fill: none;
         stroke: currentColor;
         stroke-linecap: round;

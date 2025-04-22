@@ -78,7 +78,6 @@
 		"svelte"
 	],
 	"dependencies": {
-		"@chainlift/liftkit-css": "^1.1.1",
 		"@motionone/dom": "^10.18.0",
 		"lenis": "^1.2.3"
 	}

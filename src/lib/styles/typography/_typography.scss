@@ -29,38 +29,57 @@
  * - Body: Based on 'md' (1em)
  * - Small: Scaled down using φ reciprocal (MINOR)
  */
-
+ %font-family--primary {
+  font-family: 'Poppins', system-ui, sans-serif;
+}
+ %font-family--secondary {
+  font-family: 'Manrope', system-ui, sans-serif;
+}
 /* Display elements (largest) */
-%display-1 {
+%u_display-1 {
+  @extend %font-family--primary;
   @include type-scale(globals.size('xl'), -0.022em);
 }
-%display-1--bold {
-  @extend %display-1;
+%u_display-1--bold {
+  @extend %font-family--primary;
+
+  @extend %u_display-1;
   font-weight: 700;
 }
 
-%display-2 {
+%u_display-2 {
+  @extend %font-family--primary;
+
   @include type-scale(globals.size('lg') * globals.$MAJOR-HALF, -0.022em);
 }
-%display-2--bold {
-  @extend %display-2;
+%u_display-2--bold {
+  @extend %font-family--primary;
+
+  @extend %u_display-2;
   font-weight: 700;
 }
 
 /* Title hierarchy */
-%title-a {
+%u_title-a {
+  @extend %font-family--primary;
   @include type-scale(globals.size('lg') * globals.$MAJOR-QUARTER, -0.022em);
 }
-%title-a--bold {
-  @extend %title-a;
+%u_title-a--bold {
+  @extend %font-family--primary;
+
+  @extend %u_title-a;
   font-weight: 700;
 }
 
-%title-b {
+%u_title-b {
+  @extend %font-family--primary;
+
   @include type-scale(globals.size('lg'), -0.02em);
 }
 
-%title-c {
+%u_title-c {
+  @extend %font-family--primary;
+
   @include type-scale(
     math.div(globals.size('lg'), globals.$MAJOR-HALF),
     -0.017em
@@ -68,7 +87,9 @@
 }
 
 /* Heading elements */
-%heading {
+%u_heading {
+  @extend %font-family--primary;
+
   @include type-scale(
     globals.size('md') * globals.$MAJOR-QUARTER,
     -0.014em,
@@ -76,12 +97,16 @@
     600
   );
 }
-%heading--bold {
-  @extend %heading;
+%u_heading--bold {
+  @extend %font-family--primary;
+
+  @extend %u_heading;
   font-weight: 700;
 }
 
-%subheading {
+%u_subheading {
+  @extend %font-family--primary;
+
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-QUARTER),
     -0.007em
@@ -89,7 +114,9 @@
 }
 
 /* Body text */
-%body {
+%u_paragraph {
+  @extend %font-family--secondary;
+
   @include type-scale(
     globals.size('md'),
     -0.011em,
@@ -97,7 +124,9 @@
   );
 }
 
-%callout {
+%u_callout {
+  @extend %font-family--secondary;
+
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-EIGHT),
     -0.009em
@@ -105,7 +134,9 @@
 }
 
 /* Small text elements */
-%label {
+%u_label {
+  @extend %font-family--secondary;
+
   @include type-scale(
     math.div(
       math.div(globals.size('md'), globals.$MAJOR-QUARTER),
@@ -116,19 +147,25 @@
     600
   );
 }
-%label--bold {
-  @extend %label;
+%u_label--bold {
+  @extend %font-family--secondary;
+
+  @extend %u_label;
   font-weight: 700;
 }
 
-%caption {
+%u_caption {
+  @extend %font-family--secondary;
+
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-HALF),
     -0.007em
   );
 }
 
-%overline {
+%u_overline {
+  @extend %font-family--secondary;
+
   @include type-scale(
     math.div(
       math.div(globals.size('md'), globals.$MAJOR-QUARTER),
@@ -146,31 +183,29 @@
   /* Base font setup with golden ratio line-height */
   font:
     #{globals.round-to(globals.size('md'))} /
-    #{globals.round-to(globals.$MAJOR-HALF)} 'Inter',
-    'Segoe UI',
-    'Helvetica Neue',
-    'Arial',
-    sans-serif;
+    #{globals.round-to(globals.$MAJOR-HALF)} 
+
 }
 
 /* ----------------- 4. UTILITY CLASSES ----------------- */
-.display-1 { @extend %display-1; }
-.display-1--bold { @extend %display-1--bold; }
-.display-2 { @extend %display-2; }
-.display-2--bold { @extend %display-2--bold; }
-.title-a { @extend %title-a; }
-.title-a--bold { @extend %title-a--bold; }
-.title-b { @extend %title-b; }
-.title-c { @extend %title-c; }
-.heading { @extend %heading; }
-.heading--bold { @extend %heading--bold; }
-.subheading { @extend %subheading; }
-.body { @extend %body; }
-.callout { @extend %callout; }
-.label { @extend %label; }
-.label--bold { @extend %label--bold; }
-.caption { @extend %caption; }
-.overline { @extend %overline; }
+.u_display-1 { @extend %u_display-1;
+ }
+.u_display-1--bold { @extend %u_display-1--bold; }
+.u_display-2 { @extend %u_display-2; }
+.u_display-2--bold { @extend %u_display-2--bold; }
+.u_title-a { @extend %u_title-a; }
+.u_title-a--bold { @extend %u_title-a--bold; }
+.u_title-b { @extend %u_title-b; }
+.u_title-c { @extend %u_title-c; }
+.u_heading { @extend %u_heading; }
+.u_heading--bold { @extend %u_heading--bold; }
+.u_subheading { @extend %u_subheading; }
+.u_paragraph { @extend %u_paragraph; }
+.u_callout { @extend %u_callout; }
+.u_label { @extend %u_label; }
+.u_label--bold { @extend %u_label--bold; }
+.u_caption { @extend %u_caption; }
+.u_overline { @extend %u_overline; }
 
 /* ----------------- 5. RESPONSIVE TYPOGRAPHY ----------------- */
 /**
@@ -180,22 +215,22 @@
 
 /* Small tablets / large phones (≥480px) */
 @media (width >= 30rem) {
-  .display-1 {
+  .u_display-1 {
     font-size: globals.round-to(globals.size('xl') * globals.$MAJOR-HALF);
   }
 
-  .display-2 {
+  .u_display-2 {
     font-size: globals.round-to(globals.size('xl') * globals.$MAJOR-HALF);
   }
 
-  .title-a {
+  .u_title-a {
     font-size: globals.round-to(globals.size('lg') * globals.$MAJOR-HALF);
   }
 }
 
 /* Tablets and larger (≥768px) */
 @media (width >= 48rem) {
-  .display-1 {
+  .u_display-1 {
     @include type-scale(
       globals.size('2xl'),
       -0.022em, 

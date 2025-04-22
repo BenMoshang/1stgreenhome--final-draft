@@ -6,7 +6,7 @@
 
 // 1. Define Gap Sizes Map
 
-$flex-gap-sizes: (
+$gap-sizes: (
   'none': 0,
   '2xs': spacing-vars.spacing('2xs'),
   'xs': spacing-vars.spacing('xs'),
@@ -20,17 +20,17 @@ $flex-gap-sizes: (
 // 2. Simplified public gap mixin
 @mixin gap($size-key: null) {
   @if $size-key != null {
-    @if map.has-key($flex-gap-sizes, $size-key) {
-      $base-gap: map.get($flex-gap-sizes, $size-key);
+    @if map.has-key($gap-sizes, $size-key) {
+      $base-gap: map.get($gap-sizes, $size-key);
       gap: scale.fluid-space($base-gap, $base-gap * scale.$MAJOR);
     } @else {
-      @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($flex-gap-sizes)}";
+      @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($gap-sizes)}";
     }
   }
 }
 
 // 3. Gap utility classes
-@each $name, $size in $flex-gap-sizes {
+@each $name, $size in $gap-sizes {
   .gap__#{$name} {
     gap: $size;
   }

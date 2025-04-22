@@ -1,54 +1,54 @@
 <script lang="ts">
-	// These would be imports for other sections once migrated
-	// import Stepper from '$lib/components/sections/Stepper.svelte';
-	// import Partners from '$lib/components/sections/Partners.svelte';
-	// import Faqs from '$lib/components/sections/Faqs.svelte';
-	// import Cta from '$lib/components/sections/Cta.svelte';
+  // These would be imports for other sections once migrated
+  // import Stepper from '$lib/components/sections/Stepper.svelte';
+  // import Partners from '$lib/components/sections/Partners.svelte';
+  // import Faqs from '$lib/components/sections/Faqs.svelte';
+  // import Cta from '$lib/components/sections/Cta.svelte';
+  import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
+  // For handling fragment navigation (similar to Angular's fragment handling)
+  import { onMount } from 'svelte';
 
-	// For handling fragment navigation (similar to Angular's fragment handling)
-	import { onMount } from 'svelte';
-	
-	// Function to handle fragment navigation
-	function jumpToFragment(fragment: string) {
-		const element = document.getElementById(fragment);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
-		}
-	}
+  // Function to handle fragment navigation
+  function jumpToFragment(fragment: string) {
+    const element = document.getElementById(fragment);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
-	// Check for fragment in URL on mount
-	onMount(() => {
-		// Get fragment from URL
-		const hash = window.location.hash.substring(1);
-		if (hash) {
-			jumpToFragment(hash);
-		}
+  // Check for fragment in URL on mount
+  onMount(() => {
+    // Get fragment from URL
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      jumpToFragment(hash);
+    }
 
-		// Listen for hash changes
-		const handleHashChange = () => {
-			const newHash = window.location.hash.substring(1);
-			if (newHash) {
-				jumpToFragment(newHash);
-			}
-		};
+    // Listen for hash changes
+    const handleHashChange = () => {
+      const newHash = window.location.hash.substring(1);
+      if (newHash) {
+        jumpToFragment(newHash);
+      }
+    };
 
-		window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleHashChange);
 
-		// Cleanup event listener
-		return () => {
-			window.removeEventListener('hashchange', handleHashChange);
-		};
-	});
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  });
 </script>
 
 <main class="page-container">
-	<!-- <Hero /> -->
-	<div class="gradient-background-container">
-		<!-- <Services /> -->
-		<!-- <Testimonials /> -->
-		<div class="gradient-background"></div>
-	</div>
-	<!-- <Projects /> -->
+  <NewHero />
+  <div class="gradient-background-container">
+    <!-- <Services /> -->
+    <!-- <Testimonials /> -->
+    <div class="gradient-background"></div>
+  </div>
+  <!-- <Projects /> -->
 </main>
 
 <style lang="scss">

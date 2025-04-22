@@ -204,3 +204,27 @@ $scales: ();
   background-color: var(--background);
   color:            var(--on-surface);
 }
+
+/* 7-4 Focus visible states */
+@mixin focus-ring($color: var(--secondary), $width: 2px) {
+  outline: $width solid $color;
+  outline-offset: 2px;
+}
+
+.focus-ring {
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.focus-ring--primary:focus-visible {
+  @include focus-ring(var(--primary));
+}
+
+.focus-ring--secondary:focus-visible {
+  @include focus-ring(var(--secondary));
+}
+
+.focus-ring--tertiary:focus-visible {
+  @include focus-ring(var(--tertiary));
+}
