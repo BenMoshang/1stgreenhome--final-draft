@@ -98,7 +98,7 @@ _(Note: `main.scss` references `interactivity/state-layers` and `components/boxe
 
 ### Sizing (`sizing/`)
 
-- **`_scale.scss`:** Provides a generic `@include inline-size($prop, $key)` mixin to apply sizes from the global scale map (defined via `--size-*` variables) to any CSS property (e.g., `width`, `height`). Keys range from `2xs` to `3xl`.
+- **`_scale.scss`:** Provides a generic `@include size($prop, $key)` mixin to apply sizes from the global scale map (defined via `--size-*` variables) to any CSS property (e.g., `width`, `height`). Keys range from `2xs` to `3xl`.
 
 ### State/Interactivity (`state/`)
 

@@ -1,5 +1,6 @@
 @use 'sass:math';
 @use 'sass:map';
+@use '../base/global-variables' as globals;
 
 /* ==========================================================================
  Golden Ratio (Phi) Configuration
@@ -137,6 +138,18 @@ $sizes: (
   '4xl': 1em * math.pow($SCALE, 5),
 );
 
-@function inline-size($key) {
+@function size($key) {
   @return map.get($sizes, $key);
+}
+
+// Fluid clamp utility
+@function fluid-space($min, $max, $min-vw: 20rem, $max-vw: globals.$PAGE_MAX_INLINE) {
+  @return clamp(
+    #{$min},
+    calc(
+      #{$min} + (#{$max} - #{$min})
+        * ((100vw - #{$min-vw}) / (#{$max-vw} - #{$min-vw}))
+    ),
+    #{$max}
+  );
 }

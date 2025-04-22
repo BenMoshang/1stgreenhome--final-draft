@@ -3,14 +3,14 @@
 @use '../base/globals' as globals;
 
 $size-map: (
-  2xs: globals.inline-size('md'),
-  xs: globals.inline-size('md') * globals.$MAJOR-QUARTER,
-  sm: globals.inline-size('md') * globals.$MAJOR-HALF,
-  md: globals.inline-size('lg'),
-  lg: globals.inline-size('lg') * globals.$MAJOR-HALF,
-  xl: globals.inline-size('xl'),
-  2xl: globals.inline-size('2xl'),
-  3xl: globals.inline-size('3xl'),
+  2xs: globals.size('md'),
+  xs: globals.size('md') * globals.$MAJOR-QUARTER,
+  sm: globals.size('md') * globals.$MAJOR-HALF,
+  md: globals.size('lg'),
+  lg: globals.size('lg') * globals.$MAJOR-HALF,
+  xl: globals.size('xl'),
+  2xl: globals.size('2xl'),
+  3xl: globals.size('3xl'),
 );
 
 // generic size mixin

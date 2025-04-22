@@ -1,0 +1,43 @@
+// ===========================================================================
+// styles/spacing/_variables.scss
+// Central variables for spacing system following the project's scale system.
+// ===========================================================================
+
+@use '../base/globals';
+@use 'sass:map';
+
+// Define line height from typography system
+$line-height: globals.$MAJOR-HALF;
+
+:root {
+  // Harmonized spacing scale based on typography metrics
+  --spacing-2xs: #{globals.round-to(1em * $line-height * globals.$MINOR-QUARTER)};
+  --spacing-xs: #{globals.round-to(1em * $line-height * globals.$MINOR-HALF)};
+  --spacing-sm: #{globals.round-to(1em * $line-height * globals.$MINOR)};
+  --spacing-md: #{globals.round-to($line-height * globals.size('md'))};
+  --spacing-lg: #{globals.round-to($line-height * globals.size('lg'))};
+  --spacing-xl: #{globals.round-to($line-height * globals.size('xl'))};
+  --spacing-2xl: #{globals.round-to($line-height * globals.size('2xl'))};
+}
+
+// Helper function to get spacing variable value
+@function spacing($key) {
+  @if $key == '2xs' {
+    @return var(--spacing-2xs);
+  } @else if $key == 'xs' {
+    @return var(--spacing-xs);
+  } @else if $key == 'sm' {
+    @return var(--spacing-sm);
+  } @else if $key == 'md' {
+    @return var(--spacing-md);
+  } @else if $key == 'lg' {
+    @return var(--spacing-lg);
+  } @else if $key == 'xl' {
+    @return var(--spacing-xl);
+  } @else if $key == '2xl' {
+    @return var(--spacing-2xl);
+  } @else {
+    @error "Unknown spacing key: #{$key}";
+    @return 0;
+  }
+}

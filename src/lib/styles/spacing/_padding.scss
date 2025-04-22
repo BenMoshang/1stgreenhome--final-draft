@@ -1,185 +1,59 @@
 // ===========================================================================
-
 // styles/spacing/_padding.scss
-
-// Central padding utilities.
-
+// Padding utilities following the project's scale system.
 // ===========================================================================
-@use '../base/globals' as globals;
 
-@mixin adjust-to($line-height) {
-  @if not unitless($line-height) {
-    @error '#{$line-height} is not dimensionless';
+@use 'sass:map';
+@use '../base/scale' as scale;
+@use 'variables' as spacing-vars;
+
+// Padding utility classes
+// Example usage: .p-md, .p-inline-lg, .p-block-sm
+
+$padding-sizes: (
+  'none': 0,
+  '2xs': spacing-vars.spacing('2xs'),
+  'xs': spacing-vars.spacing('xs'),
+  'sm': spacing-vars.spacing('sm'),
+  'md': spacing-vars.spacing('md'),
+  'lg': spacing-vars.spacing('lg'),
+  'xl': spacing-vars.spacing('xl'),
+  '2xl': spacing-vars.spacing('2xl'),
+);
+
+// Generates padding utility classes
+@each $name, $size in $padding-sizes {
+  .p-#{$name} {
+    padding: $size;
   }
-  --2xs: #{globals.round-to(1em * $line-height * globals.$MINOR-QUARTER)};
-  --xs: #{globals.round-to(1em * $line-height * globals.$MINOR-HALF)};
-  --sm: #{globals.round-to(1em * $line-height * globals.$MINOR)};
-  --md: #{globals.round-to($line-height * globals.inline-size('md'))};
-  --lg: #{globals.round-to($line-height * globals.inline-size('lg'))};
-  --xl: #{globals.round-to($line-height * globals.inline-size('xl'))};
-  --2xl: #{globals.round-to($line-height * globals.inline-size('2xl'))};
+
+  .p-inline__#{$name} {
+    padding-inline: $size;
+  }
+
+  .p-block__#{$name} {
+    padding-block: $size;
+  }
+
+  .p-left__#{$name} {
+    padding-inline-start: $size;
+  }
+
+  .p-right__#{$name} {
+    padding-inline-end: $size;
+  }
+
+  .p-top__#{$name} {
+    padding-block-start: $size;
+  }
+
+  .p-bottom__#{$name} {
+    padding-block-end: $size;
+  }
 }
 
-.p-top__2xs {
-  padding-block-start: var(--2xs);
-}
-
-.p-top__xs {
-  padding-block-start: var(--xs);
-}
-
-.p-top__sm {
-  padding-block-start: var(--sm);
-}
-
-.p-top__md {
-  padding-block-start: var(--md);
-}
-
-.p-top__lg {
-  padding-block-start: var(--lg);
-}
-
-.p-top__xl {
-  padding-block-start: var(--xl);
-}
-
-.p-top__2xl {
-  padding-block-start: var(--2xl);
-}
-
-.p-right__xs {
-  padding-inline-end: var(--xs);
-}
-
-.p-right__sm {
-  padding-inline-end: var(--sm);
-}
-
-.p-right__md {
-  padding-inline-end: var(--md);
-}
-
-.p-right__lg {
-  padding-inline-end: var(--lg);
-}
-
-.p-right__xl {
-  padding-inline-end: var(--xl);
-}
-
-.p-right__2xl {
-  padding-inline-end: var(--2xl);
-}
-
-.p-bottom__2xs {
-  padding-block-end: var(--2xs);
-}
-
-.p-bottom__xs {
-  padding-block-end: var(--xs);
-}
-
-.p-bottom__sm {
-  padding-block-end: var(--sm);
-}
-
-.p-bottom__md {
-  padding-block-end: var(--md);
-}
-
-.p-bottom__lg {
-  padding-block-end: var(--lg);
-}
-
-.p-bottom__xl {
-  padding-block-end: var(--xl);
-}
-
-.p-bottom__2xl {
-  padding-block-end: var(--2xl);
-}
-
-.p-left__2xs {
-  padding-inline-start: var(--2xs);
-}
-
-.p-left__xs {
-  padding-inline-start: var(--xs);
-}
-
-.p-left__sm {
-  padding-inline-start: var(--sm);
-}
-
-.p-left__md {
-  padding-inline-start: var(--md);
-}
-
-.p-left__lg {
-  padding-inline-start: var(--lg);
-}
-
-.p-left__xl {
-  padding-inline-start: var(--xl);
-}
-
-.p-left__2xl {
-  padding-inline-start: var(--2xl);
-}
-
-.p-block__2xs {
-  padding-block: var(--2xs);
-}
-
-.p-block__xs {
-  padding-block: var(--xs);
-}
-
-.p-block__sm {
-  padding-block: var(--sm);
-}
-
-.p-block__md {
-  padding-block: var(--md);
-}
-
-.p-block__lg {
-  padding-block: var(--lg);
-}
-
-.p-block__xl {
-  padding-block: var(--xl);
-}
-
-.p-block__2xl {
-  padding-block: var(--2xl);
-}
-
-.p-inline__2xs {
-  padding-inline: var(--2xs);
-}
-
-.p-inline__xs {
-  padding-inline: var(--xs);
-}
-
-.p-inline__sm {
-  padding-inline: var(--sm);
-}
-
-.p-inline__md {
-  padding-inline: var(--md);
-}
-
-.p-inline__lg {
-  padding-inline: var(--lg);
-}
-
-.p-inline__xl {
-  padding-inline: var(--xl);
-}
-
-.p-inline__2xl {
-  padding-inline: var(--2xl);
+// Helper function to adjust padding based on context
+// This function is hidden from forwarding in _index.scss
+@function adjust-to($base-size, $context) {
+  @return if($context == 'mobile', $base-size * 0.75, $base-size);
 }

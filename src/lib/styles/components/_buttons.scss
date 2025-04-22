@@ -28,14 +28,14 @@ $btn-ratio: globals.round-to(globals.$MAJOR-HALF);
 
 $btn-sizes: (
   md: (
-    font: globals.inline-size('md'),
-    pv: globals.inline-size('sm'),
-    ph: globals.inline-size('md'),
+    font: globals.size('md'),
+    pv: globals.size('sm'),
+    ph: globals.size('md'),
   ),
   lg: (
-    font: globals.round-to(globals.inline-size('md') * globals.$MAJOR-QUARTER),
-    pv: globals.inline-size('md'),
-    ph: globals.inline-size('lg'),
+    font: globals.round-to(globals.size('md') * globals.$MAJOR-QUARTER),
+    pv: globals.size('md'),
+    ph: globals.size('lg'),
   ),
 );
 
@@ -68,7 +68,7 @@ $btn-icon-map: (
 
   $cfg: map-get($btn-icon-map, $pos);
 
-  padding-inline: globals.round-to(globals.inline-size(nth($cfg, 1))) globals.round-to(globals.inline-size(nth($cfg, 2)));
+  padding-inline: globals.round-to(globals.size(nth($cfg, 1))) globals.round-to(globals.size(nth($cfg, 2)));
 }
 
 .button {

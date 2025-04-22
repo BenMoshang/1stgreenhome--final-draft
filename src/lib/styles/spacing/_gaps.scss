@@ -1,25 +1,45 @@
 // Central gap logic and utilities moved from _flex.scss
 @use '../base/globals';
 @use 'sass:map';
+@use '../base/scale' as scale;
+@use 'variables' as spacing-vars;
 
 // 1. Define Gap Sizes Map
 
 $flex-gap-sizes: (
-  'xs': globals.round-to(globals.inline-size('2xs') * globals.$MAJOR-HALF),
-  'sm': globals.round-to(globals.inline-size('xs') * globals.$MAJOR-HALF),
-  'md': globals.round-to(globals.inline-size('sm') * globals.$MAJOR-HALF),
-  'lg': globals.round-to(globals.inline-size('md') * globals.$MAJOR-HALF),
-  'xl': globals.round-to(globals.inline-size('lg') * globals.$MAJOR-HALF),
-  '2xl': globals.round-to(globals.inline-size('xl') * globals.$MAJOR-HALF),
+  'none': 0,
+  '2xs': spacing-vars.spacing('2xs'),
+  'xs': spacing-vars.spacing('xs'),
+  'sm': spacing-vars.spacing('sm'),
+  'md': spacing-vars.spacing('md'),
+  'lg': spacing-vars.spacing('lg'),
+  'xl': spacing-vars.spacing('xl'),
+  '2xl': spacing-vars.spacing('2xl'),
 );
 
 // 2. Simplified public gap mixin
 @mixin gap($size-key: null) {
   @if $size-key != null {
     @if map.has-key($flex-gap-sizes, $size-key) {
-      gap: map.get($flex-gap-sizes, $size-key);
+      $base-gap: map.get($flex-gap-sizes, $size-key);
+      gap: scale.fluid-space($base-gap, $base-gap * scale.$MAJOR);
     } @else {
       @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($flex-gap-sizes)}";
     }
+  }
+}
+
+// 3. Gap utility classes
+@each $name, $size in $flex-gap-sizes {
+  .gap__#{$name} {
+    gap: $size;
+  }
+  
+  .gap-column__#{$name} {
+    column-gap: $size;
+  }
+  
+  .gap-row__#{$name} {
+    row-gap: $size;
   }
 }

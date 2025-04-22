@@ -95,9 +95,9 @@ Focus: Quick lookup for applying styles.
 **Apply Generic Size?** (`sizing/_scale.scss`)
 
 - **Use SCSS Mixin (inside your selectors):**
-  - `@include inline-size(width, lg);`
-  - `@include inline-size(height, sm);`
-  - `@include inline-size(font-size, xl);`
+  - `@include size(width, lg);`
+  - `@include size(height, sm);`
+  - `@include size(font-size, xl);`
   - Properties: Any CSS property accepting a size value.
   - Keys: `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl` (maps to `--size-*` variables)
 

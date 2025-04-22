@@ -1,11 +1,8 @@
 <script lang="ts">
-	import Lenis from 'lenis';
-
 	import { browser } from '$app/environment';
-	import Header from '$lib/components/layout/Header.svelte';
-	import { initScrollAnimations } from '$lib/utils/scrollUtils';
+	import NewHeader from '$lib/components/layout/NewHeader.svelte';
+	import Lenis from 'lenis';
 	import { onDestroy, onMount } from 'svelte';
-
 	let { children } = $props();
 
 	let lenis: any;
@@ -35,32 +32,7 @@
 			lerp: 0.1 // Linear interpolation factor - smooths between frames
 		});
 
-		// Make lenis accessible for other components
-		if (browser) {
-			(window as any).lenis = lenis;
-		}
-
-		// Create the RAF loop for Lenis
-		function raf(time: number) {
-			lenis.raf(time);
-			requestAnimationFrame(raf);
-		}
-
-		// Start the loop
-		requestAnimationFrame(raf);
-
-		// Add scroll-linked events
-		lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }: any) => {
-			// This event provides scroll data that can be used to trigger animations
-			// You can dispatch a custom event to allow components to react to scroll
-			if (browser) {
-				window.dispatchEvent(
-					new CustomEvent('lenisScroll', {
-						detail: { scroll, limit, velocity, direction, progress }
-					})
-				);
-			}
-		});
+		
 
 		// Listen for reduced motion preference changes
 		if (browser) {
@@ -102,6 +74,7 @@
 <svelte:head>
 	<title>1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable Solutions</title>
 </svelte:head>
+<NewHeader />
 {@render children()}
 
 <!-- <Footer /> -->

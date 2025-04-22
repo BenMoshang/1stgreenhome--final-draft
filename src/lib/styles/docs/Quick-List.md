@@ -43,4 +43,4 @@ Core classes and mixins for applying the design system:
 
 **Generic Sizing (Mixin):**
 
-- `@include inline-size($property, [2xs-3xl])`
+- `@include size($property, [2xs-3xl])`

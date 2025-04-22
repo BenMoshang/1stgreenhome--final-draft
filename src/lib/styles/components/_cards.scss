@@ -25,18 +25,18 @@
  */
 
 $card-scale-sizes: (
-  overline: globals.inline-size('3xs'),
-  caption: globals.inline-size('2xs'),
-  label: globals.inline-size('xs'),
-  callout: globals.inline-size('sm'),
-  body: globals.inline-size('md'),
-  subheading: globals.inline-size('md'),
-  heading: globals.inline-size('lg'),
-  'title-c': globals.inline-size('lg'),
-  'title-b': globals.inline-size('xl'),
-  'title-a': globals.inline-size('2xl'),
-  'display-2': globals.inline-size('3xl'),
-  'display-1': globals.inline-size('4xl'),
+  overline: globals.size('3xs'),
+  caption: globals.size('2xs'),
+  label: globals.size('xs'),
+  callout: globals.size('sm'),
+  body: globals.size('md'),
+  subheading: globals.size('md'),
+  heading: globals.size('lg'),
+  'title-c': globals.size('lg'),
+  'title-b': globals.size('xl'),
+  'title-a': globals.size('2xl'),
+  'display-2': globals.size('3xl'),
+  'display-1': globals.size('4xl'),
 );
 
 /**

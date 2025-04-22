@@ -15,96 +15,74 @@
 @use 'sass:string';
 
 /* ---------------------------------------------------------------------------
-   0)  Seed values
+   0) Seed values
    --------------------------------------------------------------------------- */
 
-$primary-seed: '72.3% 0.219 149.579'; // brand colour – change me
-
-$neutral-seed: '85%  0.02  0'; // light grey (≈ surface) – tweak if desired
-
-$black: oklch(0% 0 0deg);
+$primary-seed : '72.3% 0.219 149.579'; // brand colour – change me
+$neutral-seed : '85%   0.02  0';       // light grey (≈ surface)
 
 /* ---------------------------------------------------------------------------
-   1)  Helper – shift hue while keeping L & C
+   1) Helper – shift hue while keeping L & C
    --------------------------------------------------------------------------- */
 @function _shift-hue($lch-string, $delta) {
-
   $parts: string.split($lch-string, ' ');
-
-  $l: nth($parts, 1);
-
-  $c: nth($parts, 2);
-
-  $h: nth($parts, 3);
-
+  $l:     nth($parts, 1);
+  $c:     nth($parts, 2);
+  $h:     nth($parts, 3);
   @return '#{$l} #{$c} calc(#{$h} + #{$delta})';
 }
 
 /* ---------------------------------------------------------------------------
-   2)  Semantic seeds
+   2) Semantic seeds
    --------------------------------------------------------------------------- */
-
 $semantic-seeds: (
-  primary: $primary-seed,
-  secondary: _shift-hue($primary-seed, 30),
-  // analogous +30°
-  tertiary: _shift-hue($primary-seed, -30),
-  // analogous −30°
-  neutral: $neutral-seed,
-  // explicit neutral/grey
-  error: _shift-hue($primary-seed, 180),
-  // complementary
-  warning: _shift-hue($primary-seed, 90),
-  // yellowish
-  info: _shift-hue($primary-seed, -90),
-  // bluish
-  success: _shift-hue($primary-seed, 120), // greenish
+  primary:   $primary-seed,
+  secondary: _shift-hue($primary-seed,  30),  // +30°
+  tertiary:  _shift-hue($primary-seed, -30),  // −30°
+  neutral:   $neutral-seed,
+  error:     _shift-hue($primary-seed, 180),  // complementary
+  warning:   _shift-hue($primary-seed,  90),  // yellowish
+  info:      _shift-hue($primary-seed, -90),  // bluish
+  success:   _shift-hue($primary-seed, 120),  // greenish
 );
 
 /* ---------------------------------------------------------------------------
-   3)  Surface/background anchors
+   3) Surface/background anchors
    --------------------------------------------------------------------------- */
-
 $surface-seeds: (
   surface-light: '99% 0 0',
-  surface-dark: '19.5% 0 0',
+  surface-dark:  '19.5% 0 0',
 );
 
 /* ---------------------------------------------------------------------------
-   4)  Tonal‑scale settings
+   4) Tonal-scale settings
    --------------------------------------------------------------------------- */
-
 $steps: 11; // must be odd
-
-$half: ($steps - 1) / 2; // index of middle tone
-
 $positions: (
-  // scale→role mapping
-  on-light: 1,
-  variant-light: $half - 2,
-  container-light: $half - 1,
-  light: $half + 1,
-  dark: $half + 2,
-  variant-dark: $half + 3,
-  container-dark: $half + 4,
-  on-dark: $steps
+  on-light:         1,
+  variant-light:    ($steps - 1) / 2 - 2,
+  container-light:  ($steps - 1) / 2 - 1,
+  light:            ($steps - 1) / 2 + 1,
+  dark:             ($steps - 1) / 2 + 2,
+  variant-dark:     ($steps - 1) / 2 + 3,
+  container-dark:   ($steps - 1) / 2 + 4,
+  on-dark:          $steps,
 );
 
 /* ---------------------------------------------------------------------------
-   5)  Helpers
+   5) Helpers for building OKLCH scales
    --------------------------------------------------------------------------- */
 @function oklch-seed($name) {
   @return unquote('oklch(var(--seed-#{$name}))');
 }
 
-@function tonal-scale($name, $steps: 11) {
+@function tonal-scale($name, $n: $steps) {
   $scale: ();
-  $half: math.floor(($steps - 1) / 2);
+  $half: math.floor(($n - 1) / 2);
   $white: oklch(100% 0 0deg);
-  $black: oklch(0% 0 0deg);
-  $col: null; // initialize before loop to avoid undefined variable
+  $black: oklch(0%   0 0deg);
 
-  @for $i from 0 through $steps - 1 {
+  @for $i from 0 through $n - 1 {
     @if $i < $half {
       $pct: ($i / $half) * 100%;
       $col: unquote('color-mix(in oklch, #{oklch-seed($name)} #{$pct}, #{$white})');
@@ -116,155 +94,112 @@ $positions: (
     }
     $scale: append($scale, $col, comma);
   }
+
   @return $scale;
 }
 
-@mixin define-seeds($map) {
-  @each $name, $vals in $map {
-    --seed-#{$name}: #{$vals};
-  }
-}
-
+/* Build tonal scales for every semantic seed */
 $scales: ();
 @each $name in map-keys($semantic-seeds) {
   $scales: map-merge($scales, ($name: tonal-scale($name)));
 }
 
-/* ===========================================================================
-   6)  Palette generation
+/* ==========================================================================
+   6) Palette generation in :root
    ========================================================================== */
 :root {
   color-scheme: light dark;
 
-  /* 6‑1  Raw seeds */
-  @include define-seeds($semantic-seeds);
-  @include define-seeds($surface-seeds);
-
-  /* 6‑3  Semantic tokens */
-  @each $name in map-keys($semantic-seeds) {
-
-    $scale: map-get($scales, $name);
-    --#{$name}: light-dark(#{nth($scale, map-get($positions, light))}, #{nth($scale, map-get($positions, dark))});
-    --#{$name}-container: light-dark(#{nth($scale, map-get($positions, container-light))}, #{nth($scale, map-get($positions, container-dark))});
-    --#{$name}-variant: light-dark(#{nth($scale, map-get($positions, variant-light))}, #{nth($scale, map-get($positions, variant-dark))});
-    --on-#{$name}: light-dark(#{nth($scale, map-get($positions, on-dark))}, #{nth($scale, map-get($positions, on-light))});
+  // 6-1: emit seed variables
+  @each $name, $val in $semantic-seeds {
+    --seed-#{$name}: #{$val};
+  }
+  @each $name, $val in $surface-seeds {
+    --seed-#{$name}: #{$val};
   }
 
-  /* 6‑4  Surface/background */
+  // 6-2: semantic tokens via native light-dark()
+  @each $name in map-keys($semantic-seeds) {
+    $scale: map-get($scales, $name);
+
+    --#{$name}: light-dark(
+      nth($scale, map-get($positions, light)),
+      nth($scale, map-get($positions, dark))
+    );
+
+    --#{$name}-container: light-dark(
+      nth($scale, map-get($positions, container-light)),
+      nth($scale, map-get($positions, container-dark))
+    );
+
+    --#{$name}-variant: light-dark(
+      nth($scale, map-get($positions, variant-light)),
+      nth($scale, map-get($positions, variant-dark))
+    );
+
+    --on-#{$name}: light-dark(
+      nth($scale, map-get($positions, on-dark)),
+      nth($scale, map-get($positions, on-light))
+    );
+
+    --on-#{$name}-container: light-dark(
+      nth($scale, map-get($positions, on-dark)),
+      nth($scale, map-get($positions, on-light))
+    );
+  }
+
+  // 6-3: surface + background tokens
   --surface-light: oklch(var(--seed-surface-light));
-  --surface-dark: oklch(var(--seed-surface-dark));
-  --surface: light-dark(var(--surface-light), var(--surface-dark));
-  --background: var(--surface);
-  --on-surface: light-dark(color-contrast(var(--surface-light) vs oklch(0% 0 0) to AA, oklch(100% 0 0) to AA), color-contrast(var(--surface-dark) vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA));
+  --surface-dark:  oklch(var(--seed-surface-dark));
+  --surface:       light-dark(var(--surface-light), var(--surface-dark));
+  --background:    var(--surface);
+  --on-surface:    light-dark(
+                     color-contrast(var(--surface-dark) vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA),
+                     color-contrast(var(--surface-light) vs oklch(0% 0 0) to AA, oklch(100% 0 0) to AA)
+                   );
 }
 
-/* ===========================================================================
-   7)  Utility classes
+/* ==========================================================================
+   7) Utility classes
    ========================================================================== */
-
-/* 7‑1  Text colour helpers */
-.text--primary {
-  color: var(--primary);
+/* 7-1 Text colour helpers */
+@each $name in map-keys($semantic-seeds) {
+  .text--#{$name} {
+    color: var(--#{$name});
+  }
+  .text--on-#{$name} {
+    color: var(--on-#{$name});
+  }
+  .text--on-#{$name}-container {
+    color: var(--on-#{$name}-container);
+  }
 }
 
-.text--secondary {
-  color: var(--secondary);
+/* 7-2 Background + auto-contrast */
+@each $name in map-keys($semantic-seeds) {
+  .bg--#{$name} {
+    background-color: var(--#{$name});
+    color:            var(--on-#{$name});
+  }
+  .bg--#{$name}-container {
+    background-color: var(--#{$name}-container);
+    color:            var(--on-#{$name}-container);
+  }
+  .bg--#{$name}-variant {
+    background-color: var(--#{$name}-variant);
+    color:            var(--on-#{$name}-container);
+  }
 }
 
-.text--tertiary {
-  color: var(--tertiary);
-}
-
-.text--neutral {
-  color: var(--neutral);
-}
-
-.text--error {
-  color: var(--error);
-}
-
-.text--warning {
-  color: var(--warning);
-}
-
-.text--info {
-  color: var(--info);
-}
-
-.text--success {
-  color: var(--success);
-}
-
+/* 7-3 Surface/background utilities */
 .text--surface {
   color: var(--on-surface);
 }
-
-/* 7‑2  Background helpers (auto contrast) */
-.bg--primary {
-  background: var(--primary);
-  color: var(--on-primary);
-}
-
-.bg--secondary {
-  background: var(--secondary);
-  color: var(--on-secondary);
-}
-
-.bg--tertiary {
-  background: var(--tertiary);
-  color: var(--on-tertiary);
-}
-
-.bg--neutral {
-  background: var(--neutral);
-  color: var(--on-neutral);
-}
-
-.bg--error {
-  background: var(--error);
-  color: var(--on-error);
-}
-
-.bg--warning {
-  background: var(--warning);
-  color: var(--on-warning);
-}
-
-.bg--info {
-  background: var(--info);
-  color: var(--on-info);
-}
-
-.bg--success {
-  background: var(--success);
-  color: var(--on-success);
-}
-
 .bg--surface {
-  background: var(--surface);
-  color: var(--on-surface);
+  background-color: var(--surface);
+  color:            var(--on-surface);
 }
-
 .bg--background {
-  background: var(--background);
-  color: var(--on-surface);
+  background-color: var(--background);
+  color:            var(--on-surface);
 }
-
-/* 7‑3  Container backgrounds */
-.bg--primary-container {
-  background: var(--primary-container);
-}
-
-.bg--secondary-container {
-  background: var(--secondary-container);
-}
-
-.bg--tertiary-container {
-  background: var(--tertiary-container);
-}
-
-.bg--neutral-container {
-  background: var(--neutral-container);
-}
-
-/* Extend for error/warning/info/success containers if needed */

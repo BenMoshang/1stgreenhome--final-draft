@@ -1,9 +1,10 @@
 @use 'sass:math';
 @use '../base/globals' as globals;
 @use '../spacing/margins' as margins;
+@use '../spacing/variables' as spacing-vars;
 
 /* =============================================================================
-   TYPOGRAPHY 2.1 • Placeholder‑driven, mobile‑first
+   TYPOGRAPHY 2.1 • Placeholder‑driven, golden ratio scale
    ============================================================================ */
 
 /* ─────────────────────── 1) Helpers ─────────────────────── */
@@ -20,9 +21,18 @@
 
 /* ─────────────────────── 2) Placeholders ─────────────────────── */
 
-/* Display 1 – base = smallest phones */
+/* 
+ * Typography Scale System
+ * ----------------------
+ * Our type system uses the golden ratio (φ ≈ 1.618) for harmonious proportions
+ * - Display elements: Scaled up from 'lg' using φ and its powers
+ * - Body elements: Based on 'md' (1em, the base size)
+ * - Small elements: Scaled down using φ's reciprocal (MINOR) and its powers
+ */
+
+/* Display 1 – base = smallest phones */
 %display-1 {
-  @include type-scale(globals.$SIZE-XL, -0.022em);
+  @include type-scale(globals.size('xl'), -0.022em);
 }
 %display-1--bold {
   @extend %display-1;
@@ -30,9 +40,9 @@
   font-weight: 700;
 }
 
-/* Display 2 */
+/* Display 2 */
 %display-2 {
-  @include type-scale(globals.$SIZE-LG * globals.$MAJOR-HALF, -0.022em);
+  @include type-scale(globals.size('lg') * globals.$MAJOR-HALF, -0.022em);
 }
 %display-2--bold {
   @extend %display-2;
@@ -40,9 +50,9 @@
   font-weight: 700;
 }
 
-/* Title A */
+/* Title A */
 %title-a {
-  @include type-scale(globals.$SIZE-LG * globals.$MAJOR-QUARTER, -0.022em);
+  @include type-scale(globals.size('lg') * globals.$MAJOR-QUARTER, -0.022em);
 }
 %title-a--bold {
   @extend %title-a;
@@ -50,15 +60,15 @@
   font-weight: 700;
 }
 
-/* Title B */
+/* Title B */
 %title-b {
-  @include type-scale(globals.$SIZE-LG, -0.02em);
+  @include type-scale(globals.size('lg'), -0.02em);
 }
 
-/* Title C */
+/* Title C */
 %title-c {
   @include type-scale(
-    math.div(globals.$SIZE-LG, globals.$MAJOR-HALF),
+    math.div(globals.size('lg'), globals.$MAJOR-HALF),
     -0.017em
   );
 }
@@ -66,7 +76,7 @@
 /* Heading */
 %heading {
   @include type-scale(
-    globals.$SIZE-MD * globals.$MAJOR-QUARTER,
+    globals.size('md') * globals.$MAJOR-QUARTER,
     -0.014em,
     null,
     600
@@ -81,29 +91,35 @@
 /* Subheading */
 %subheading {
   @include type-scale(
-    math.div(globals.$SIZE-MD, globals.$MAJOR-QUARTER),
+    math.div(globals.size('md'), globals.$MAJOR-QUARTER),
     -0.007em
   );
 }
 
-/* Body */
+/* Body - Base text size */
 %body {
-  @include type-scale(globals.$SIZE-MD, -0.011em, globals.$MAJOR);
+  @include type-scale(
+    globals.size('md'), // Base text size (1em)
+    -0.011em,
+    globals.$MAJOR // Harmonious line-height using the golden ratio
+  );
 }
 
 /* Callout */
 %callout {
+  /* Slightly larger than body text, uses a minor scale reduction for subtlety */
   @include type-scale(
-    math.div(globals.$SIZE-MD, globals.$MAJOR-EIGHT),
+    math.div(globals.size('md'), globals.$MAJOR-EIGHT),
     -0.009em
   );
 }
 
 /* Label */
 %label {
+  /* Uses a compound reduction for hierarchical differentiation */
   @include type-scale(
     math.div(
-      math.div(globals.$SIZE-MD, globals.$MAJOR-QUARTER),
+      math.div(globals.size('md'), globals.$MAJOR-QUARTER),
       globals.$MAJOR-EIGHT
     ),
     -0.004em,
@@ -119,17 +135,19 @@
 
 /* Caption */
 %caption {
+  /* Reduced size for supplementary text, maintains golden ratio relationship */
   @include type-scale(
-    math.div(globals.$SIZE-MD, globals.$MAJOR-HALF),
+    math.div(globals.size('md'), globals.$MAJOR-HALF),
     -0.007em
   );
 }
 
 /* Overline */
 %overline {
+  /* Smallest text element with specific letter spacing proportions */
   @include type-scale(
     math.div(
-      math.div(globals.$SIZE-MD, globals.$MAJOR-QUARTER),
+      math.div(globals.size('md'), globals.$MAJOR-QUARTER),
       globals.$MAJOR-EIGHT
     ),
     1em * math.div(globals.$MINOR, 10)
@@ -140,10 +158,13 @@
 
 /* ─────────────────────── 3) Root baseline ─────────────────────── */
 :root {
+  /* Apply the golden ratio based line-height to the root */
   @include margins.adjust-to(globals.$MAJOR-HALF);
 
+  /* 
+The base font setup uses the medium size (1em) with the golden ratio derived line-height */
   font:
-    #{globals.round-to(globals.$SIZE-MD)} /
+    #{globals.round-to(globals.size('md'))} /
     #{globals.round-to(globals.$MAJOR-HALF)} 'Inter',
     'Segoe UI',
     'Helvetica Neue',
@@ -222,24 +243,40 @@
 
 /* ─────────────────────── 5) Mobile‑first media queries ─────────────────────── */
 
-/* ≥ 30 rem  (~480 px) — small tablets / large phones */
+/* 
+ * Responsive Typography Scale
+ * -------------------------
+ * As viewport width increases, we apply progressive scaling using golden ratio proportions
+ * to maintain harmonious relationships between type sizes at all breakpoints.
+ */
+
+/* ≥ 30 rem  (~480 px) — small tablets / large phones */
 @media (width >= 30rem) {
+  /* Scale up display typography at medium breakpoint */
   .display-1 {
-    font-size: globals.round-to(globals.$SIZE-XL * globals.$MAJOR-HALF);
+    /* Scales up by golden ratio's square root (MAJOR-HALF) */
+    font-size: globals.round-to(globals.size('xl') * globals.$MAJOR-HALF);
   }
 
   .display-2 {
-    font-size: globals.round-to(globals.$SIZE-XL * globals.$MAJOR-HALF);
+    /* Maintain golden ratio relationship with display-1 */
+    font-size: globals.round-to(globals.size('xl') * globals.$MAJOR-HALF);
   }
 
   .title-a {
-    font-size: globals.round-to(globals.$SIZE-LG * globals.$MAJOR-HALF);
+    /* Scale up by golden ratio's square root */
+    font-size: globals.round-to(globals.size('lg') * globals.$MAJOR-HALF);
   }
 }
 
-/* ≥ 48 rem  (~768 px) — tablets & up */
+/* ≥ 48 rem  (~768 px) — tablets & up */
 @media (width >= 48rem) {
   .display-1 {
-    @include type-scale(globals.$SIZE-2XL, -0.022em, globals.$MAJOR-QUARTER);
+    /* At larger screens, use larger golden ratio steps */
+    @include type-scale(
+      globals.size('2xl'),
+      -0.022em, 
+      globals.$MAJOR-QUARTER /* Adjusted line-height for larger text */
+    );
   }
 }
