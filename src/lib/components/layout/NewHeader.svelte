@@ -51,10 +51,10 @@
   // Toggle mobile menu
   function toggleMenu() {
     if (isAnimating) return; // Prevent interaction during animation
-    
+
     isAnimating = true;
     animationClass = isMenuOpen ? 'blur-fade-out' : 'blur-fade-in';
-    
+
     if (!isMenuOpen) {
       // Opening the menu
       isMenuOpen = true;
@@ -68,10 +68,10 @@
       // Menu is closing
       isMenuOpen = false;
     }
-    
+
     // Reset animation state
     isAnimating = false;
-    
+
     // Set focus based on menu state
     if (!isMenuOpen) {
       burgerButton?.focus();
@@ -94,9 +94,22 @@
     };
   });
 </script>
+<!-- TODO: ASSIGN ROUTES ->
+<!-- TODO: DESKTOP NAVIGATION: APPLY UTILITY CLASSES FOR ROUTE COLORS -->
 
-<header class="header p-inline__xs" class:header--hidden={isHeaderHidden}>
-  <a class="header__logo-container" href="/" aria-label="Homepage">
+<!-- TODO: MOBILE NAVIGATION:  ANIMATE THE TEXT   -->
+<!-- TODO:  MOBILE NAVIGATION: APPLY BIG UTILITY TEXT CLASS  -->
+<!-- TODO: MOBILE NAVIGATION: MAYBE HAVE A BG BEHIND IT ->
+<!-- TODO: MOBILE NAVIGATION: HAVE CTA BUTTON IN IT->
+
+
+
+<header class="header p-inline__sm" class:header--hidden={isHeaderHidden}>
+  <a
+    class="header__logo-container text--secondary"
+    href="/"
+    aria-label="Homepage"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -150,7 +163,8 @@
         <li>
           <a
             href="{link.link}#{link.fragment}"
-            class="header__nav-desktop-route {link.class || ''}"
+            class=" header__nav-desktop-route text--secondary {link.class ||
+              ''}"
             tabindex="0"
           >
             <span>{@html link.text}</span>
@@ -187,7 +201,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    outline: 1px dashed red;
   }
 
   .header {
@@ -240,6 +253,9 @@
         display: none;
         @include respond-to('tablet-end') {
           display: unset;
+        }
+        &-route {
+          @extend %subheading;
         }
         &-list {
           list-style: none;

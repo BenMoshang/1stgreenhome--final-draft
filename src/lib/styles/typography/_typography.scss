@@ -4,10 +4,11 @@
 @use '../spacing/variables' as spacing-vars;
 
 /* =============================================================================
-   TYPOGRAPHY 2.1 • Placeholder‑driven, golden ratio scale
-   ============================================================================ */
+ * TYPOGRAPHY 2.1
+ * Placeholder-driven typography system using golden ratio scale
+ * ============================================================================= */
 
-/* ─────────────────────── 1) Helpers ─────────────────────── */
+/* ----------------- 1. HELPER MIXINS ----------------- */
 @mixin type-scale($size, $spacing, $line-height: null, $weight: 400) {
   @if $line-height != null {
     @include margins.adjust-to($line-height);
@@ -19,53 +20,46 @@
   line-height: globals.round-to(if($line-height, $line-height, globals.$MAJOR-HALF));
 }
 
-/* ─────────────────────── 2) Placeholders ─────────────────────── */
-
-/* 
+/* ----------------- 2. PLACEHOLDERS ----------------- */
+/**
  * Typography Scale System
  * ----------------------
- * Our type system uses the golden ratio (φ ≈ 1.618) for harmonious proportions
- * - Display elements: Scaled up from 'lg' using φ and its powers
- * - Body elements: Based on 'md' (1em, the base size)
- * - Small elements: Scaled down using φ's reciprocal (MINOR) and its powers
+ * Golden ratio (φ ≈ 1.618) based type system:
+ * - Display: Scaled up from 'lg' using φ powers
+ * - Body: Based on 'md' (1em)
+ * - Small: Scaled down using φ reciprocal (MINOR)
  */
 
-/* Display 1 – base = smallest phones */
+/* Display elements (largest) */
 %display-1 {
   @include type-scale(globals.size('xl'), -0.022em);
 }
 %display-1--bold {
   @extend %display-1;
-
   font-weight: 700;
 }
 
-/* Display 2 */
 %display-2 {
   @include type-scale(globals.size('lg') * globals.$MAJOR-HALF, -0.022em);
 }
 %display-2--bold {
   @extend %display-2;
-
   font-weight: 700;
 }
 
-/* Title A */
+/* Title hierarchy */
 %title-a {
   @include type-scale(globals.size('lg') * globals.$MAJOR-QUARTER, -0.022em);
 }
 %title-a--bold {
   @extend %title-a;
-
   font-weight: 700;
 }
 
-/* Title B */
 %title-b {
   @include type-scale(globals.size('lg'), -0.02em);
 }
 
-/* Title C */
 %title-c {
   @include type-scale(
     math.div(globals.size('lg'), globals.$MAJOR-HALF),
@@ -73,7 +67,7 @@
   );
 }
 
-/* Heading */
+/* Heading elements */
 %heading {
   @include type-scale(
     globals.size('md') * globals.$MAJOR-QUARTER,
@@ -84,11 +78,9 @@
 }
 %heading--bold {
   @extend %heading;
-
   font-weight: 700;
 }
 
-/* Subheading */
 %subheading {
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-QUARTER),
@@ -96,27 +88,24 @@
   );
 }
 
-/* Body - Base text size */
+/* Body text */
 %body {
   @include type-scale(
-    globals.size('md'), // Base text size (1em)
+    globals.size('md'),
     -0.011em,
-    globals.$MAJOR // Harmonious line-height using the golden ratio
+    globals.$MAJOR
   );
 }
 
-/* Callout */
 %callout {
-  /* Slightly larger than body text, uses a minor scale reduction for subtlety */
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-EIGHT),
     -0.009em
   );
 }
 
-/* Label */
+/* Small text elements */
 %label {
-  /* Uses a compound reduction for hierarchical differentiation */
   @include type-scale(
     math.div(
       math.div(globals.size('md'), globals.$MAJOR-QUARTER),
@@ -129,22 +118,17 @@
 }
 %label--bold {
   @extend %label;
-
   font-weight: 700;
 }
 
-/* Caption */
 %caption {
-  /* Reduced size for supplementary text, maintains golden ratio relationship */
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-HALF),
     -0.007em
   );
 }
 
-/* Overline */
 %overline {
-  /* Smallest text element with specific letter spacing proportions */
   @include type-scale(
     math.div(
       math.div(globals.size('md'), globals.$MAJOR-QUARTER),
@@ -152,17 +136,14 @@
     ),
     1em * math.div(globals.$MINOR, 10)
   );
-
   text-transform: uppercase;
 }
 
-/* ─────────────────────── 3) Root baseline ─────────────────────── */
+/* ----------------- 3. ROOT BASELINE ----------------- */
 :root {
-  /* Apply the golden ratio based line-height to the root */
   @include margins.adjust-to(globals.$MAJOR-HALF);
-
-  /* 
-The base font setup uses the medium size (1em) with the golden ratio derived line-height */
+  
+  /* Base font setup with golden ratio line-height */
   font:
     #{globals.round-to(globals.size('md'))} /
     #{globals.round-to(globals.$MAJOR-HALF)} 'Inter',
@@ -172,111 +153,53 @@ The base font setup uses the medium size (1em) with the golden ratio derived lin
     sans-serif;
 }
 
-/* ─────────────────────── 4) Utility classes ─────────────────────── */
-.display-1 {
-  @extend %display-1;
-}
+/* ----------------- 4. UTILITY CLASSES ----------------- */
+.display-1 { @extend %display-1; }
+.display-1--bold { @extend %display-1--bold; }
+.display-2 { @extend %display-2; }
+.display-2--bold { @extend %display-2--bold; }
+.title-a { @extend %title-a; }
+.title-a--bold { @extend %title-a--bold; }
+.title-b { @extend %title-b; }
+.title-c { @extend %title-c; }
+.heading { @extend %heading; }
+.heading--bold { @extend %heading--bold; }
+.subheading { @extend %subheading; }
+.body { @extend %body; }
+.callout { @extend %callout; }
+.label { @extend %label; }
+.label--bold { @extend %label--bold; }
+.caption { @extend %caption; }
+.overline { @extend %overline; }
 
-.display-1--bold {
-  @extend %display-1--bold;
-}
-
-.display-2 {
-  @extend %display-2;
-}
-
-.display-2--bold {
-  @extend %display-2--bold;
-}
-
-.title-a {
-  @extend %title-a;
-}
-
-.title-a--bold {
-  @extend %title-a--bold;
-}
-
-.title-b {
-  @extend %title-b;
-}
-
-.title-c {
-  @extend %title-c;
-}
-
-.heading {
-  @extend %heading;
-}
-
-.heading--bold {
-  @extend %heading--bold;
-}
-
-.subheading {
-  @extend %subheading;
-}
-
-.body {
-  @extend %body;
-}
-
-.callout {
-  @extend %callout;
-}
-
-.label {
-  @extend %label;
-}
-
-.label--bold {
-  @extend %label--bold;
-}
-
-.caption {
-  @extend %caption;
-}
-
-.overline {
-  @extend %overline;
-}
-
-/* ─────────────────────── 5) Mobile‑first media queries ─────────────────────── */
-
-/* 
- * Responsive Typography Scale
- * -------------------------
- * As viewport width increases, we apply progressive scaling using golden ratio proportions
- * to maintain harmonious relationships between type sizes at all breakpoints.
+/* ----------------- 5. RESPONSIVE TYPOGRAPHY ----------------- */
+/**
+ * Mobile-first approach scales typography proportionally 
+ * using golden ratio at each breakpoint
  */
 
-/* ≥ 30 rem  (~480 px) — small tablets / large phones */
+/* Small tablets / large phones (≥480px) */
 @media (width >= 30rem) {
-  /* Scale up display typography at medium breakpoint */
   .display-1 {
-    /* Scales up by golden ratio's square root (MAJOR-HALF) */
     font-size: globals.round-to(globals.size('xl') * globals.$MAJOR-HALF);
   }
 
   .display-2 {
-    /* Maintain golden ratio relationship with display-1 */
     font-size: globals.round-to(globals.size('xl') * globals.$MAJOR-HALF);
   }
 
   .title-a {
-    /* Scale up by golden ratio's square root */
     font-size: globals.round-to(globals.size('lg') * globals.$MAJOR-HALF);
   }
 }
 
-/* ≥ 48 rem  (~768 px) — tablets & up */
+/* Tablets and larger (≥768px) */
 @media (width >= 48rem) {
   .display-1 {
-    /* At larger screens, use larger golden ratio steps */
     @include type-scale(
       globals.size('2xl'),
       -0.022em, 
-      globals.$MAJOR-QUARTER /* Adjusted line-height for larger text */
+      globals.$MAJOR-QUARTER
     );
   }
 }
