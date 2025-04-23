@@ -5,7 +5,6 @@
 // Central index forwarding spacing utilities.
 
 // ===========================================================================
-@forward 'variables'; // Forward spacing variables first
 @forward 'margins';
-@forward 'padding' hide adjust-to;
 @forward 'gaps';
+@forward 'paddings';

@@ -2,35 +2,37 @@
 @use 'sass:map';
 @use '../base/globals' as globals;
 
-$_WIDTH: 75rem;
-
-// 1. Consolidated container scales
+$_WIDTH: globals.$PAGE_MAX_INLINE;
 
 $container-scales: (
-  xs: math.div(1, globals.$MAJOR-HALF),
-  sm: math.div(1, globals.$MAJOR-QUARTER),
-  md: 1,
-  lg: globals.$MAJOR-QUARTER,
-  xl: globals.$MAJOR-HALF,
+  'xs': round(math.div($_WIDTH, globals.$MAJOR-HALF)),
+  'sm': round(math.div($_WIDTH, globals.$MAJOR-QUARTER)),
+  'md': 1,
+  'lg': round($_WIDTH * globals.$MAJOR-QUARTER),
+  'xl': round($_WIDTH * globals.$MAJOR-HALF),
 );
 
-// 2. Container base mixin
-@mixin container-base {
+// Generate CSS variables for container sizes
+:root {
+  @each $key, $scale in $container-scales {
+    --container-#{$key}: #{$scale};
+  }
+}
+
+// Shared margin-inline placeholder
+%_margin-inline {
   margin-inline: auto;
 }
 
-// 3. Default container (md)
-.container {
-  @include container-base;
-
-  max-inline-size: round($_WIDTH * map.get($container-scales, md));
+// Container size retrieval function
+@function container($key) {
+  @return map.get($container-scales, $key);
 }
 
-// 4. Responsive container modifiers
+// Generate container utility classes
 @each $key, $scale in $container-scales {
-  .container__#{$key} {
-    @include container-base;
-
-    max-inline-size: round($_WIDTH * $scale);
+  .u_container__#{$key} {
+    @extend %_margin-inline;
+    max-inline-size: var(--container-#{$key});
   }
 }

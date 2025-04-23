@@ -13,86 +13,134 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:string';
+@use 'sass:meta'; // For checking types
 
 /* ---------------------------------------------------------------------------
    0) Seed values
    --------------------------------------------------------------------------- */
-
-$primary-seed : '72.3% 0.219 149.579'; // brand colour – change me
-$neutral-seed : '85%   0.02  0';       // light grey (≈ surface)
+$primary-seed-lch: (72.3%, 0.219, 149.579deg);  // Brand primary color
+$neutral-seed-lch: (85%, 0.02, 0deg);           // Neutral gray tone
 
 /* ---------------------------------------------------------------------------
-   1) Helper – shift hue while keeping L & C
+   1) Helper – shift hue while keeping L & C (Sass calculation)
    --------------------------------------------------------------------------- */
-@function _shift-hue($lch-string, $delta) {
-  $parts: string.split($lch-string, ' ');
-  $l:     nth($parts, 1);
-  $c:     nth($parts, 2);
-  $h:     nth($parts, 3);
-  @return '#{$l} #{$c} calc(#{$h} + #{$delta})';
+@function _calculate-shifted-hue($lch-tuple, $delta) {
+  $l:     nth($lch-tuple, 1);
+  $c:     nth($lch-tuple, 2);
+  $h:     nth($lch-tuple, 3);
+  $new-h: ($h + $delta) % 360deg; // Calculate new hue in Sass
+  @return $l $c $new-h; // Return L C H string
 }
 
 /* ---------------------------------------------------------------------------
-   2) Semantic seeds
+   2) Semantic seeds (Calculated L C H strings)
    --------------------------------------------------------------------------- */
+// Primary Seed Hue Components
+$primary-l: nth($primary-seed-lch, 1);
+$primary-c: nth($primary-seed-lch, 2);
+$primary-h: nth($primary-seed-lch, 3);
+
+// Define target hue concepts
+$delta-error: 180deg;     // Opposite hue relative to primary
+
+// --- Calculate Secondary/Tertiary based on user-provided example relationship ---
+// Example: P(69.6% 0.17 162.48) S(52.7% 0.154 150.069) T(39.3% 0.095 152.535)
+
+// Factors and Shifts derived from example (relative to Primary)
+$l-factor-secondary: 0.757;
+$c-factor-secondary: 0.906;
+$h-delta-secondary: -12.41deg;
+
+$l-factor-tertiary: 0.565;
+$c-factor-tertiary: 0.559;
+$h-delta-tertiary: -9.95deg;
+
+// Calculate new Secondary LCH
+$secondary-l: $primary-l * $l-factor-secondary;
+$secondary-c: $primary-c * $c-factor-secondary;
+$secondary-h: ($primary-h + $h-delta-secondary) % 360deg;
+
+// Calculate new Tertiary LCH
+$tertiary-l: $primary-l * $l-factor-tertiary;
+$tertiary-c: $primary-c * $c-factor-tertiary;
+$tertiary-h: ($primary-h + $h-delta-tertiary) % 360deg;
+
+// Calculate deltas needed to reach target hues for warning, info, success
+$target-hue-warning: 50deg;  // Target Orange/Gold
+$target-hue-info: 230deg;     // Target Blue
+$target-hue-success: 130deg;  // Target Green
+
+$delta-warning: ($target-hue-warning - $primary-h);
+$delta-info: ($target-hue-info - $primary-h);
+$delta-success: ($target-hue-success - $primary-h);
+
 $semantic-seeds: (
-  primary:   $primary-seed,
-  secondary: _shift-hue($primary-seed,  30),  // +30°
-  tertiary:  _shift-hue($primary-seed, -30),  // −30°
-  neutral:   $neutral-seed,
-  error:     _shift-hue($primary-seed, 180),  // complementary
-  warning:   _shift-hue($primary-seed,  90),  // yellowish
-  info:      _shift-hue($primary-seed, -90),  // bluish
-  success:   _shift-hue($primary-seed, 120),  // greenish
+  primary:   "#{$primary-l} #{$primary-c} #{$primary-h}",
+  secondary: "#{$secondary-l} #{$secondary-c} #{$secondary-h}", // Calculated based on example relationship
+  tertiary:  "#{$tertiary-l} #{$tertiary-c} #{$tertiary-h}",  // Calculated based on example relationship
+  neutral:   "#{nth($neutral-seed-lch, 1)} #{nth($neutral-seed-lch, 2)} #{nth($neutral-seed-lch, 3)}",
+  error:     _calculate-shifted-hue($primary-seed-lch, $delta-error),    // Keep relative opposite hue for error
+  warning:   _calculate-shifted-hue($primary-seed-lch, $delta-warning),  // Target Orange/Gold hue
+  info:      _calculate-shifted-hue($primary-seed-lch, $delta-info),     // Target Blue hue
+  success:   _calculate-shifted-hue($primary-seed-lch, $delta-success),  // Target Green hue
 );
 
 /* ---------------------------------------------------------------------------
-   3) Surface/background anchors
+   3) Surface/background anchors (L C H strings)
    --------------------------------------------------------------------------- */
 $surface-seeds: (
-  surface-light: '99% 0 0',
-  surface-dark:  '19.5% 0 0',
+  surface-light: '99% 0 0',    // Almost white surface
+  surface-dark:  '19.5% 0 0',  // Dark surface for dark mode
 );
 
 /* ---------------------------------------------------------------------------
    4) Tonal-scale settings
    --------------------------------------------------------------------------- */
-$steps: 11; // must be odd
+$steps: 13; // Increased from 11 to provide more variants
 $positions: (
-  on-light:         1,
-  variant-light:    ($steps - 1) / 2 - 2,
-  container-light:  ($steps - 1) / 2 - 1,
-  light:            ($steps - 1) / 2 + 1,
-  dark:             ($steps - 1) / 2 + 2,
-  variant-dark:     ($steps - 1) / 2 + 3,
-  container-dark:   ($steps - 1) / 2 + 4,
-  on-dark:          $steps,
+  on-light:               1,
+  variant-light:          ($steps - 1) / 2 - 3,
+  container-light:        ($steps - 1) / 2 - 2,
+  container-lowest-light: ($steps - 1) / 2 - 4,
+  container-low-light:    ($steps - 1) / 2 - 3,
+  container-high-light:   ($steps - 1) / 2 - 1,
+  light:                  ($steps - 1) / 2 + 1,
+  dark:                   ($steps - 1) / 2 + 2,
+  container-dark:         ($steps - 1) / 2 + 3,
+  container-low-dark:     ($steps - 1) / 2 + 4,
+  container-high-dark:    ($steps - 1) / 2 + 5,
+  variant-dark:           ($steps - 1) / 2 + 4,
+  on-dark:                $steps,
 );
 
 /* ---------------------------------------------------------------------------
-   5) Helpers for building OKLCH scales
+   5) Helpers for building OKLCH scales (Revised)
    --------------------------------------------------------------------------- */
-@function oklch-seed($name) {
-  @return unquote('oklch(var(--seed-#{$name}))');
-}
+// No longer need oklch-seed helper
 
 @function tonal-scale($name, $n: $steps) {
   $scale: ();
   $half: math.floor(($n - 1) / 2);
   $white: oklch(100% 0 0deg);
   $black: oklch(0%   0 0deg);
-  $col: null; // Initialize $col variable to ensure it's always defined
+  // Get the CSS variable NAME string (e.g., 'var(--seed-primary)')
+  $seed-var-ref: var(--seed-#{$name});
+  $col: null;
 
   @for $i from 0 through $n - 1 {
     @if $i < $half {
       $pct: ($i / $half) * 100%;
-      $col: unquote('color-mix(in oklch, #{oklch-seed($name)} #{$pct}, #{$white})');
+      // Use the CSS variable reference directly in color-mix
+      $col: color-mix(in oklch, $seed-var-ref $pct, $white);
     } @else if $i == $half {
-      $col: oklch-seed($name);
+      // Use the CSS variable reference directly, as it already contains oklch()
+      $col: $seed-var-ref; // Use the variable reference directly
     } @else {
       $pct: (($i - $half) / $half) * 100%;
-      $col: unquote('color-mix(in oklch, #{$black} #{$pct}, #{oklch-seed($name)})');
+      // Use the CSS variable reference directly in color-mix
+      $col: color-mix(in oklch, $black $pct, $seed-var-ref);
     }
+    // Append the generated CSS function call string
     $scale: append($scale, $col, comma);
   }
 
@@ -111,53 +159,79 @@ $scales: ();
 :root {
   color-scheme: light dark;
 
-  // 6-1: emit seed variables
-  @each $name, $val in $semantic-seeds {
-    --seed-#{$name}: #{$val};
+  // 6-1: emit seed variables (wrapped in oklch())
+  @each $name, $lch-string in $semantic-seeds {
+    --seed-#{$name}: oklch(#{$lch-string});
   }
-  @each $name, $val in $surface-seeds {
-    --seed-#{$name}: #{$val};
+  @each $name, $lch-string in $surface-seeds {
+    --seed-#{$name}: oklch(#{$lch-string});
   }
 
-  // 6-2: semantic tokens via native light-dark()
+  // 6-2: semantic tokens (Light Mode Defaults)
   @each $name in map-keys($semantic-seeds) {
     $scale: map-get($scales, $name);
 
-    --#{$name}: light-dark(
-      nth($scale, map-get($positions, light)),
-      nth($scale, map-get($positions, dark))
-    );
-
-    --#{$name}-container: light-dark(
-      nth($scale, map-get($positions, container-light)),
-      nth($scale, map-get($positions, container-dark))
-    );
-
-    --#{$name}-variant: light-dark(
-      nth($scale, map-get($positions, variant-light)),
-      nth($scale, map-get($positions, variant-dark))
-    );
-
-    --on-#{$name}: light-dark(
-      nth($scale, map-get($positions, on-dark)),
-      nth($scale, map-get($positions, on-light))
-    );
-
-    --on-#{$name}-container: light-dark(
-      nth($scale, map-get($positions, on-dark)),
-      nth($scale, map-get($positions, on-light))
-    );
+    // Define Light Mode values directly
+    --#{$name}: #{nth($scale, map-get($positions, light))};
+    --#{$name}-container: #{nth($scale, map-get($positions, container-light))};
+    --#{$name}-variant: #{nth($scale, map-get($positions, variant-light))};
+    --#{$name}-container-lowest: #{nth($scale, map-get($positions, container-lowest-light))};
+    --#{$name}-container-low: #{nth($scale, map-get($positions, container-low-light))};
+    --#{$name}-container-high: #{nth($scale, map-get($positions, container-high-light))};
+    // 'On' colors are inverted: use dark scale value for light mode
+    --on-#{$name}: #{nth($scale, map-get($positions, on-dark))};
+    --on-#{$name}-container: #{nth($scale, map-get($positions, on-dark))};
   }
 
-  // 6-3: surface + background tokens
-  --surface-light: oklch(var(--seed-surface-light));
-  --surface-dark:  oklch(var(--seed-surface-dark));
-  --surface:       light-dark(var(--surface-light), var(--surface-dark));
+  // 6-3: surface + background tokens (Light Mode Defaults)
+  --surface-light: var(--seed-surface-light);
+  --surface-dark:  var(--seed-surface-dark);
+  --surface:       var(--surface-light); // Light mode default
   --background:    var(--surface);
-  --on-surface:    light-dark(
-                     color-contrast(var(--surface-dark) vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA),
-                     color-contrast(var(--surface-light) vs oklch(0% 0 0) to AA, oklch(100% 0 0) to AA)
-                   );
+  --on-surface:    color-contrast(var(--surface-light) vs oklch(0% 0 0) to AA, oklch(100% 0 0) to AA); // Light mode default
+
+  // Surface variants for light mode
+  --surface-dim: color-mix(in oklch, var(--seed-surface-light) 95%, oklch(0% 0 0deg));
+  --surface-bright: var(--seed-surface-light);
+  --surface-container-lowest: color-mix(in oklch, var(--seed-surface-light) 100%, oklch(100% 0 0deg));
+  --surface-container-low: color-mix(in oklch, var(--seed-surface-light) 96%, oklch(0% 0 0deg));
+  --surface-container: color-mix(in oklch, var(--seed-surface-light) 94%, oklch(0% 0 0deg));
+  --surface-container-high: color-mix(in oklch, var(--seed-surface-light) 92%, oklch(0% 0 0deg));
+  --surface-container-highest: color-mix(in oklch, var(--seed-surface-light) 90%, oklch(0% 0 0deg));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Redefine semantic tokens for Dark Mode
+    @each $name in map-keys($semantic-seeds) {
+      $scale: map-get($scales, $name);
+
+      // Define Dark Mode values
+      --#{$name}: color-mix(in oklch, var(--seed-#{$name}) 20%, oklch(0% 0 0deg));
+      --#{$name}-container: color-mix(in oklch, var(--seed-#{$name}) 60%, oklch(0% 0 0deg));
+      --#{$name}-variant: color-mix(in oklch, var(--seed-#{$name}) 40%, oklch(0% 0 0deg));
+      --#{$name}-container-lowest: color-mix(in oklch, var(--seed-#{$name}) 80%, oklch(0% 0 0deg));
+      --#{$name}-container-low: color-mix(in oklch, var(--seed-#{$name}) 70%, oklch(0% 0 0deg));
+      --#{$name}-container-high: color-mix(in oklch, var(--seed-#{$name}) 50%, oklch(0% 0 0deg));
+      // 'On' colors are inverted: use light scale value for dark mode
+      --on-#{$name}: color-mix(in oklch, oklch(100% 0 0deg) 0%, var(--seed-#{$name}));
+      --on-#{$name}-container: color-mix(in oklch, oklch(100% 0 0deg) 0%, var(--seed-#{$name}));
+    }
+
+    // Redefine surface + background tokens for Dark Mode
+    --surface:    var(--surface-dark);
+    --background: var(--surface);
+    --on-surface: color-contrast(var(--surface-dark) vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA);
+
+    // Surface variants for dark mode
+    --surface-dim: color-mix(in oklch, var(--seed-surface-dark) 85%, oklch(0% 0 0deg));
+    --surface-bright: color-mix(in oklch, var(--seed-surface-dark) 30%, oklch(100% 0 0deg));
+    --surface-container-lowest: color-mix(in oklch, var(--seed-surface-dark) 105%, oklch(0% 0 0deg));
+    --surface-container-low: color-mix(in oklch, var(--seed-surface-dark) 95%, oklch(0% 0 0deg));
+    --surface-container: color-mix(in oklch, var(--seed-surface-dark) 88%, oklch(0% 0 0deg));
+    --surface-container-high: color-mix(in oklch, var(--seed-surface-dark) 80%, oklch(0% 0 0deg));
+    --surface-container-highest: color-mix(in oklch, var(--seed-surface-dark) 70%, oklch(0% 0 0deg));
+  }
 }
 
 /* ==========================================================================
@@ -190,6 +264,18 @@ $scales: ();
     background-color: var(--#{$name}-variant);
     color:            var(--on-#{$name}-container);
   }
+  .bg--#{$name}-container-lowest {
+    background-color: var(--#{$name}-container-lowest);
+    color:            var(--on-#{$name}-container);
+  }
+  .bg--#{$name}-container-low {
+    background-color: var(--#{$name}-container-low);
+    color:            var(--on-#{$name}-container);
+  }
+  .bg--#{$name}-container-high {
+    background-color: var(--#{$name}-container-high);
+    color:            var(--on-#{$name}-container);
+  }
 }
 
 /* 7-3 Surface/background utilities */
@@ -203,6 +289,34 @@ $scales: ();
 .bg--background {
   background-color: var(--background);
   color:            var(--on-surface);
+}
+.bg--surface-dim {
+  background-color: var(--surface-dim);
+  color: var(--on-surface);
+}
+.bg--surface-bright {
+  background-color: var(--surface-bright);
+  color: var(--on-surface);
+}
+.bg--surface-container-lowest {
+  background-color: var(--surface-container-lowest);
+  color: var(--on-surface);
+}
+.bg--surface-container-low {
+  background-color: var(--surface-container-low);
+  color: var(--on-surface);
+}
+.bg--surface-container {
+  background-color: var(--surface-container);
+  color: var(--on-surface);
+}
+.bg--surface-container-high {
+  background-color: var(--surface-container-high);
+  color: var(--on-surface);
+}
+.bg--surface-container-highest {
+  background-color: var(--surface-container-highest);
+  color: var(--on-surface);
 }
 
 /* 7-4 Focus visible states */

@@ -2,7 +2,7 @@
 @use 'sass:map';
 @use '../base/globals' as globals;
 
-$size-map: (
+$inline-size-map:(
   2xs: globals.size('md'),
   xs: globals.size('md') * globals.$MAJOR-QUARTER,
   sm: globals.size('md') * globals.$MAJOR-HALF,
@@ -13,24 +13,13 @@ $size-map: (
   3xl: globals.size('3xl'),
 );
 
-// generic size mixin
-@mixin size($property, $key) {
 
-  $value: map.get($size-map, $key);
-
-  @if $value == null {
-    @error "Unknown size key '#{$key}'";
+// inline-size and block-size utilities
+@each $key in map.keys($inline-size-map) {
+  .u_inline-size__#{$key} {
+    inline-size: globals.round-to(map.get($inline-size-map, $key));
   }
-
-  #{$property}: globals.round-to($value);
-}
-
-// width and height utilities
-@each $key in map.keys($size-map) {
-  .w-#{$key} {
-    @include size(width, $key);
-  }
-  .h-#{$key} {
-    @include size(height, $key);
+  .u_block-size__#{$key} {
+    block-size: globals.round-to(map.get($inline-size-map, $key));
   }
 }

@@ -1,45 +1,44 @@
 // Central gap logic and utilities moved from _flex.scss
 @use '../base/globals';
 @use 'sass:map';
-@use '../base/scale' as scale;
-@use 'variables' as spacing-vars;
 
-// 1. Define Gap Sizes Map
-
+// Legacy and custom gap logic (if needed)
 $gap-sizes: (
-  'none': 0,
-  '2xs': spacing-vars.spacing('2xs'),
-  'xs': spacing-vars.spacing('xs'),
-  'sm': spacing-vars.spacing('sm'),
-  'md': spacing-vars.spacing('md'),
-  'lg': spacing-vars.spacing('lg'),
-  'xl': spacing-vars.spacing('xl'),
-  '2xl': spacing-vars.spacing('2xl'),
-);
-
-// 2. Simplified public gap mixin
-@mixin gap($size-key: null) {
-  @if $size-key != null {
-    @if map.has-key($gap-sizes, $size-key) {
-      $base-gap: map.get($gap-sizes, $size-key);
-      gap: scale.fluid-space($base-gap, $base-gap * scale.$MAJOR);
-    } @else {
-      @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($gap-sizes)}";
-    }
+  'xs': calc(#{globals.size('2xs')} * #{globals.$MAJOR-HALF}),
+  'sm': calc(#{globals.size('xs')} * #{globals.$MAJOR-HALF}),
+  'md': calc(#{globals.size('sm')} * #{globals.$MAJOR-HALF}),
+  'lg': calc(#{globals.size('md')} * #{globals.$MAJOR-HALF}),
+  'xl': calc(#{globals.size('lg')} * #{globals.$MAJOR-HALF}),
+  '2xl': calc(#{globals.size('xl')} * #{globals.$MAJOR-HALF}),
+); 
+@function gap($size-key) {
+  @if map.has-key($gap-sizes, $size-key) {
+    $base-gap: map.get($gap-sizes, $size-key);
+    @return $base-gap;
+  } @else {
+    @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($gap-sizes)}";
+    @return null;
   }
 }
 
-// 3. Gap utility classes
+// 2. Generate :root gap variables based on spacing scale
+:root {
+  @each $name, $value in $gap-sizes {
+    --gap-#{$name}: #{$value};
+  }
+}
+
+
+
+// 4. Old gap utility classes (for backward compatibility)
 @each $name, $size in $gap-sizes {
-  .gap__#{$name} {
+  .u_gap__#{$name} {
     gap: $size;
   }
-  
-  .gap-column__#{$name} {
+  .u_gap-column__#{$name} {
     column-gap: $size;
   }
-  
-  .gap-row__#{$name} {
+  .u_gap-row__#{$name} {
     row-gap: $size;
   }
 }

@@ -4,27 +4,44 @@ Below is a categorized list of all single‑purpose (utility) CSS classes define
 
 ---
 
-## Spacing
+## Spacing System (Centralized)
 
-### Margin utilities
+All spacing utilities are now based on a centralized scale linked to typography metrics (line-height). Spacing sizes use CSS custom properties (e.g., `--spacing-sm`) defined in `_variables.scss`. This ensures consistent, accessible, and proportional spacing throughout the project.
 
-Pattern: .m‑{direction}\_\_{size}
+**Spacing Sizes:**
+- `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
 
+**Formula:**
+- Small sizes: `--spacing-{size}: 1em * $line-height * globals.$MINOR-{factor}`
+- Larger sizes: `--spacing-{size}: $line-height * globals.size('{size}')`
+
+### Margin Utilities
+
+Pattern: `.u_m-{direction}__{size}`
 - **Directions:** `top`, `right`, `bottom`, `left`, `block`, `inline`
-- **Sizes:** `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+- **Sizes:** as above
+- Example: `.u_m-top__sm`, `.u_m-inline__lg`
 
-### Padding utilities
+### Padding Utilities
 
-Pattern: .p‑{direction}\_\_{size}
-
+Pattern: `.u_p-{direction}__{size}`
 - **Directions:** `top`, `right`, `bottom`, `left`, `block`, `inline`
-- **Sizes:** `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+- **Sizes:** as above
+- Example: `.u_p-block__md`, `.u_p-bottom__xs`
 
-### Gap utilities
+### Gap Utilities
 
-.gap**{size} .gap‑column**{size} .gap‑row\_\_{size}
+Pattern: `.u_gap__{size}`, `.u_gap-column__{size}`, `.u_gap-row__{size}`
+- **Sizes:** `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+- Example: `.u_gap__md`, `.u_gap-row__lg`
+- All gap utilities use the centralized spacing scale. Old gap class names are still supported for backward compatibility.
 
-- **Sizes:** `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+### Section Padding Utilities
+
+Pattern: `.u_section__{size}`
+- **Sizes:** `xs`, `sm`, `md`, `lg`, `xl`
+- Responsive: These classes adjust their padding at larger breakpoints.
+- Example: `.u_section__md`
 
 ---
 
@@ -54,13 +71,13 @@ Pattern: .p‑{direction}\_\_{size}
 
 ### Text colors
 
-Pattern: .text--{semantic} .text--on-{semantic} .text--on-{semantic}-container
-
+Pattern: `.text--{semantic}`, `.text--on-{semantic}`, `.text--on-{semantic}-container`
 - **Semantic tokens:** `primary`, `secondary`, `tertiary`, `neutral`, `error`, `warning`, `info`, `success`
 
 ### Backgrounds
 
-Pattern: .bg--{semantic} .bg--on-{semantic} .bg--on-{semantic}-container- **Semantic tokens:** `primary`, `secondary`, `tertiary`, `neutral`, `error`, `warning`, `info`, `success`
+Pattern: `.bg--{semantic}`, `.bg--on-{semantic}`, `.bg--on-{semantic}-container`
+- **Semantic tokens:** as above
 
 ### Surface
 
@@ -79,18 +96,18 @@ Pattern: .bg--{semantic} .bg--on-{semantic} .bg--on-{semantic}-container- **Sema
 
 ### Containers
 
-- `.container`
-- `.container__xs`
-- `.container__sm`
-- `.container__md`
-- `.container__lg`
-- `.container__xl`
+- `.u_container`
+- `.u_container__xs`
+- `.u_container__sm`
+- `.u_container__md`
+- `.u_container__lg`
+- `.u_container__xl`
 
 ### Grid utilities
 
 - `.grid`
 - Pattern: `.grid-cols-{n}`, `.grid-rows-{n}` (n = 1…9)
-- Pattern: `.{breakpoint}\:grid-cols-{n}`, `.{breakpoint}\:grid-rows-{n}` (breakpoints: `mobile-end`, `tablet-start`, `tablet-end`, `desktop-start`; n = 1…9)
+- Pattern: `.{breakpoint}:grid-cols-{n}`, `.{breakpoint}:grid-rows-{n}` (breakpoints: `mobile-end`, `tablet-start`, `tablet-end`, `desktop-start`; n = 1…9)
 
 ### Stack utilities
 
@@ -104,4 +121,4 @@ Pattern: .bg--{semantic} .bg--on-{semantic} .bg--on-{semantic}-container- **Sema
 
 ## Sizing utilities
 
-- Pattern: `.w-{key}`, `.h-{key}` (keys: `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`)
+Pattern: `.w-{key}`, `.h-{key}` (keys: `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`)

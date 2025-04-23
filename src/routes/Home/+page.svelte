@@ -6,6 +6,7 @@
   // import Cta from '$lib/components/sections/Cta.svelte';
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
   // For handling fragment navigation (similar to Angular's fragment handling)
+  import FontTesting from '$lib/styles/FontTesting.svelte';
   import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
@@ -42,7 +43,8 @@
 </script>
 
 <main class="page-container">
-  <NewHero />
+  <!-- <NewHero /> -->
+  <FontTesting />
   <div class="gradient-background-container">
     <!-- <Services /> -->
     <!-- <Testimonials /> -->

@@ -1,85 +1,14 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
   import NewHeader from '$lib/components/layout/NewHeader.svelte';
-  import Lenis from 'lenis';
-  import { onDestroy, onMount } from 'svelte';
   let { children } = $props();
 
-  let lenis: any;
-  let prefersReducedMotion = false;
-  let scrollAnimationCleanup: { cleanup: () => void } | undefined;
 
-  onMount(() => {
-    // Check if user prefers reduced motion
-    if (browser) {
-      prefersReducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
-    }
-
-    // Initialize Lenis for smooth scrolling with motion design principles
-    lenis = new Lenis({
-      duration: prefersReducedMotion ? 0 : 1.6, // Slightly longer for more elegant motion
-      easing: (t: number) => {
-        // Improved easing curve - cubic bezier approximation for more natural feel
-        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); // Exponential ease out
-      },
-      orientation: 'vertical',
-      smoothWheel: true,
-      smoothTouch: false, // Better experience on touch devices with no smoothing
-      touchMultiplier: 2, // More responsive touch
-      infinite: false,
-      gestureOrientation: 'vertical',
-      wheelMultiplier: 1.2, // Slightly faster wheel response for better control
-      lerp: 0.1, // Linear interpolation factor - smooths between frames
-    });
-
-    // Listen for reduced motion preference changes
-    if (browser) {
-      const motionMediaQuery = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      );
-      const updateMotionPreference = (event: MediaQueryListEvent) => {
-        prefersReducedMotion = event.matches;
-        // Update Lenis config based on preference
-        if (lenis) {
-          lenis.options.duration = prefersReducedMotion ? 0 : 1.6;
-        }
-      };
-
-      motionMediaQuery.addEventListener('change', updateMotionPreference);
-    }
-
-    // Initialize scroll animations
-    scrollAnimationCleanup = initScrollAnimations();
-  });
-
-  onDestroy(() => {
-    // Clean up Lenis when component is destroyed
-    if (lenis) {
-      lenis.destroy();
-    }
-
-    // Clean up scroll animations
-    if (scrollAnimationCleanup) {
-      scrollAnimationCleanup.cleanup();
-    }
-
-    // Remove event listeners
-    if (browser) {
-      const motionMediaQuery = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      );
-      motionMediaQuery.removeEventListener('change', () => {});
-    }
-  });
 </script>
 
 <svelte:head>
   <title
     >1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable
-    Solutions</title
-  >
+    Solutions</title>
 </svelte:head>
 <div class="layout-wrapper">
   <NewHeader />
@@ -103,6 +32,7 @@
 <!-- SVG filter for noise effect -->
 
 <style lang="scss" global>
+  @use '../lib/styles/main.scss' as *;
   .layout-wrapper {
     display: flex;
     flex-direction: column;
