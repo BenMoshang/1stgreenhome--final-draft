@@ -7,11 +7,6 @@ export default defineConfig({
     // Remove the problematic preprocessorOptions for now
     // Use absolute path for better reliability
 
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use '$lib/styles/main.scss' as *;`,
-      },
-    },
     postcss: new URL('./postcss.config.js', import.meta.url).pathname,
   },
   build: {
@@ -29,7 +24,8 @@ export default defineConfig({
   },
   // Enable caching for better performance
   server: {
-    host: 'localhost',
+    host: '192.168.0.85',
+
     port: 3000,
     fs: {
       strict: true,

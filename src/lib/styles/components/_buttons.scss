@@ -1,9 +1,6 @@
 // styles/components/_buttons.scss
-
 // --------------------------------------------------------------
-
 // Button Component
-
 // --------------------------------------------------------------
 
 /**
@@ -11,8 +8,8 @@
  * - Supports fill & outline modes
  * - Configurable sizes via modifiers
  * - Icon padding helpers
- * - Uses golden ratio pacing for vertical/horizontal spacing
- * Usage: <button class="button button--fill button--large button--start-icon">...
+ * - Consistent spacing based on design system
+ * Usage: <button class="u_button u_button--fill u_button--lg u_button--start-icon">...
  */
 
 @use 'sass:math';
@@ -20,107 +17,79 @@
 @use '../appearance/colors';
 @use '../base/scale';
 
-// Golden ratio split (√φ) for vertical spacing
-
-$btn-ratio: globals.round-to(globals.$MAJOR-HALF);
-
-// Button size configurations: name => ( font, pad-vert, pad-horiz )
-
+// Button size configurations
 $btn-sizes: (
   md: (
     font: globals.size('md'),
-    pv: globals.size('sm'),
-    ph: globals.size('md'),
+    padding-v: globals.size('sm'),
+    padding-h: globals.size('md')
   ),
   lg: (
     font: globals.round-to(globals.size('md') * globals.$MAJOR-QUARTER),
-    pv: globals.size('md'),
-    ph: globals.size('lg'),
-  ),
+    padding-v: globals.size('md'),
+    padding-h: globals.size('lg')
+  )
 );
 
-// Icon padding map: pos => ( left-key, right-key )
-
-$btn-icon-map: (
-  start: (
-    'sm',
-    'md',
-  ),
-  end: (
-    'md',
-    'sm',
-  ),
+// Icon padding configuration
+$btn-icon-positions: (
+  start: ('sm', 'md'),
+  end: ('md', 'sm')
 );
 
-// Mixin: apply size config
-@mixin btn-size($key) {
-
-  $cfg: map-get($btn-sizes, $key);
-  $pv: map-get($cfg, pv);
-  $ph: map-get($cfg, ph);
-
-  padding: globals.round-to(math.div($pv, globals.$MAJOR-HALF)) globals.round-to($ph);
-  font-size: globals.round-to(map-get($cfg, font));
-}
-
-// Mixin: icon padding helper
-@mixin btn-icon($pos) {
-
-  $cfg: map-get($btn-icon-map, $pos);
-
-  padding-inline: globals.round-to(globals.size(nth($cfg, 1))) globals.round-to(globals.size(nth($cfg, 2)));
-}
-
-.button {
-
-  // Base appearance
-  color: var(--primary);
-
+.u_button {
+  // Base styles
   position: relative;
   display: inline-flex;
-  overflow: hidden;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  color: var(--primary);
+  background-color: transparent;
   border: 1px solid transparent;
   border-radius: 9999px;
-  background-color: transparent;
   cursor: pointer;
   text-decoration: none;
   touch-action: manipulation;
-
-  // Default size
-  @include btn-size(md);
-
+  
+  // Default size (md)
+  $default-size: map-get($btn-sizes, md);
+  padding: globals.round-to(map-get($default-size, padding-v) / globals.$MAJOR-HALF) 
+           globals.round-to(map-get($default-size, padding-h));
+  font-size: globals.round-to(map-get($default-size, font));
+  
   // Variants
   &--fill {
     background-color: var(--primary);
     color: var(--on-primary);
   }
-
+  
   &--outline {
-    color: var(--primary);
-
     border-color: var(--outline);
+    color: var(--primary);
   }
-
-  // Icon modifiers
-  @each $pos in map-keys($btn-icon-map) {
-    &--#{$pos}-icon {
-      @include btn-icon($pos);
+  
+  // Size variants
+  @each $size, $config in $btn-sizes {
+    &--#{$size} {
+      padding: globals.round-to(map-get($config, padding-v) / globals.$MAJOR-HALF) 
+               globals.round-to(map-get($config, padding-h));
+      font-size: globals.round-to(map-get($config, font));
     }
   }
-
-  // Size modifiers
-  @each $size in map-keys($btn-sizes) {
-    &--#{$size} {
-      @include btn-size($size);
+  
+  // Icon position variants
+  @each $position, $padding in $btn-icon-positions {
+    &--#{$position}-icon {
+      padding-inline: globals.round-to(globals.size(nth($padding, 1))) 
+                      globals.round-to(globals.size(nth($padding, 2)));
     }
   }
 }
 
 // Content and icon wrappers
-.button__content,
-.button__icon {
+.u_button__content,
+.u_button__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;

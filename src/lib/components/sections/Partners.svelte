@@ -1,92 +1,100 @@
 <script lang="ts">
-	// Import dependencies
-	import { fadeInUpTransition } from '$lib/utils/animations.js';
+  // Import dependencies
+  import { fadeInUpTransition } from '$lib/utils/animations.js';
 
-	// Header data using Svelte 5 Runes
-	const header = $state({
-		label: 'POWERED BY OUR PARTNERS',
-		title: 'Partnered with Leading Energy Providers',
-		description:
-			'Partnering with top energy providers, we deliver reliable, eco-friendly solutions that drive a greener, more sustainable future.'
-	});
+  // Header data using Svelte 5 Runes
+  const header = $state({
+    label: 'POWERED BY OUR PARTNERS',
+    title: 'Partnered with Leading Energy Providers',
+    description:
+      'Partnering with top energy providers, we deliver reliable, eco-friendly solutions that drive a greener, more sustainable future.',
+  });
 
-	// Partners data using Svelte 5 Runes
-	const partners = $state([
-		{ imageSrc: `/assets/landing-page/partners/logo-pepco.svg` },
-		{ imageSrc: `/assets/landing-page/partners/logo-bge.svg` },
-		{ imageSrc: `/assets/landing-page/partners/lgo.svg` },
-		{ imageSrc: `/assets/landing-page/partners/logo-pmed.png` }
-	]);
+  // Partners data using Svelte 5 Runes
+  const partners = $state([
+    { imageSrc: `/assets/landing-page/partners/logo-pepco.svg` },
+    { imageSrc: `/assets/landing-page/partners/logo-bge.svg` },
+    { imageSrc: `/assets/landing-page/partners/lgo.svg` },
+    { imageSrc: `/assets/landing-page/partners/logo-pmed.png` },
+  ]);
 
-	const partnersReverse = $state([
-		{ imageSrc: `/assets/landing-page/partners/EmPOWER_Color.png` },
-		{ imageSrc: `/assets/landing-page/partners/logo-energy-star.png` },
-		{ imageSrc: `/assets/landing-page/partners/logo-SouthernMarylandElectricCooperative.svg` },
-		{ imageSrc: `/assets/landing-page/partners/logo-bpi.png` }
-	]);
+  const partnersReverse = $state([
+    { imageSrc: `/assets/landing-page/partners/EmPOWER_Color.png` },
+    { imageSrc: `/assets/landing-page/partners/logo-energy-star.png` },
+    {
+      imageSrc: `/assets/landing-page/partners/logo-SouthernMarylandElectricCooperative.svg`,
+    },
+    { imageSrc: `/assets/landing-page/partners/logo-bpi.png` },
+  ]);
 
-	// Animation delays for staggered animations
-	const animationDelays = {
-		label: 0,
-		title: 200,
-		description: 400,
-		partners: 600
-	};
+  // Animation delays for staggered animations
+  const animationDelays = {
+    label: 0,
+    title: 200,
+    description: 400,
+    partners: 600,
+  };
 </script>
 
 <section id="partners" class="partners-section">
-	<header class="partners-section__header">
-		<p class="partners-section__label" in:fadeInUpTransition={{ delay: animationDelays.label }}>
-			{header.label}
-		</p>
-		<h2 class="partners-section__title" in:fadeInUpTransition={{ delay: animationDelays.title }}>
-			{header.title}
-		</h2>
-		<p
-			class="partners-section__description"
-			in:fadeInUpTransition={{ delay: animationDelays.description }}
-		>
-			{header.description}
-		</p>
-	</header>
+  <header class="partners-section__header">
+    <p
+      class="partners-section__label"
+      in:fadeInUpTransition={{ delay: animationDelays.label }}
+    >
+      {header.label}
+    </p>
+    <h2
+      class="partners-section__title"
+      in:fadeInUpTransition={{ delay: animationDelays.title }}
+    >
+      {header.title}
+    </h2>
+    <p
+      class="partners-section__description"
+      in:fadeInUpTransition={{ delay: animationDelays.description }}
+    >
+      {header.description}
+    </p>
+  </header>
 
-	<!-- Partners Container Forward -->
-	<div
-		class="partners-section__container"
-		in:fadeInUpTransition={{ delay: animationDelays.partners }}
-	>
-		{#each partners as partner, i}
-			<div class="partner-item" id="forward{i}">
-				<img
-					class="partner-item__logo"
-					src={partner.imageSrc}
-					alt="Partner logo"
-					loading="lazy"
-					width="100"
-					height="100"
-				/>
-			</div>
-		{/each}
-	</div>
+  <!-- Partners Container Forward -->
+  <div
+    class="partners-section__container"
+    in:fadeInUpTransition={{ delay: animationDelays.partners }}
+  >
+    {#each partners as partner, i}
+      <div class="partner-item" id="forward{i}">
+        <img
+          class="partner-item__logo"
+          src={partner.imageSrc}
+          alt="Partner logo"
+          loading="lazy"
+          width="100"
+          height="100"
+        />
+      </div>
+    {/each}
+  </div>
 
-	<!-- Partners Container Reverse -->
-	<div
-		class="partners-section__container"
-		in:fadeInUpTransition={{ delay: animationDelays.partners }}
-	>
-		{#each partnersReverse as partner, i}
-			<div class="partner-item" id="reverse{i}">
-				<img
-					class="partner-item__logo"
-					src={partner.imageSrc}
-					alt="Partner logo"
-					loading="lazy"
-					width="100"
-					height="100"
-				/>
-			</div>
-		{/each}
-	</div>
+  <!-- Partners Container Reverse -->
+  <div
+    class="partners-section__container"
+    in:fadeInUpTransition={{ delay: animationDelays.partners }}
+  >
+    {#each partnersReverse as partner, i}
+      <div class="partner-item" id="reverse{i}">
+        <img
+          class="partner-item__logo"
+          src={partner.imageSrc}
+          alt="Partner logo"
+          loading="lazy"
+          width="100"
+          height="100"
+        />
+      </div>
+    {/each}
+  </div>
 </section>
 
 <style lang="scss">

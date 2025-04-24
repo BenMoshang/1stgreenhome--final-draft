@@ -1,19 +1,19 @@
 <script lang="ts">
-	import FolderButton from './FolderButton.svelte';
+  import FolderButton from './FolderButton.svelte';
 
-	function handleClick() {
-		alert('Button clicked!');
-	}
+  function handleClick() {
+    alert('Button clicked!');
+  }
 </script>
 
 <div class="example-container">
-	<h2>Folder Button Example</h2>
+  <h2>Folder Button Example</h2>
 
-	<div class="button-container">
-		<FolderButton text="Get Started" onClick={handleClick} />
+  <div class="button-container">
+    <FolderButton text="Get Started" onClick={handleClick} />
 
-		<FolderButton text="Continue Application" />
-	</div>
+    <FolderButton text="Continue Application" />
+  </div>
 </div>
 
 <style lang="scss">

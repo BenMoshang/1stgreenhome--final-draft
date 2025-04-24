@@ -1,110 +1,114 @@
 <script lang="ts">
-	// Import dependencies
-	import { fadeInUpTransition } from '$lib/utils/animations.js';
+  // Import dependencies
+  import { fadeInUpTransition } from '$lib/utils/animations.js';
 
-	// Header data using Svelte 5 Runes
-	const header = $state({
-		label: 'EXPLORE OUR BENEFITS',
-		title1: 'Stay Connected',
-		title2: ' With Our Journey Ahead',
-		description:
-			'Join us as we evolve. Be the first to know about our latest innovations and breakthroughs. Together, we can create a brighter, more sustainable future.'
-	});
+  // Header data using Svelte 5 Runes
+  const header = $state({
+    label: 'EXPLORE OUR BENEFITS',
+    title1: 'Stay Connected',
+    title2: ' With Our Journey Ahead',
+    description:
+      'Join us as we evolve. Be the first to know about our latest innovations and breakthroughs. Together, we can create a brighter, more sustainable future.',
+  });
 
-	// Project sections data using Svelte 5 Runes
-	const sections = $state([
-		{
-			title: 'Northwestern High School: Pioneering Energy Efficiency',
-			description:
-				'With over 7,000 LED fixtures upgraded, Northwestern High School has saved an impressive 800,000+ KWH, setting a new benchmark for energy sustainability in educational institutions.',
-			icon: '/assets/landing-page/projects-school-icon.svg',
-			image: '/assets/landing-page/news/theater.jpg'
-		},
-		{
-			title: "McMullen Building: Maryland's Bold Step Towards Sustainability",
-			description: `The McMullen Building exemplifies Maryland's dedication to sustainability, retrofitting 1,500+ LED fixtures and saving more than 100,000 KWH. A powerful commitment to a greener future.`,
-			icon: '/assets/landing-page/building-columns-solid.svg',
-			image: '/assets/landing-page/news/office.jpg'
-		},
-		{
-			title: 'Delmarva Community Center: Lighting the Way Forward',
-			description: `With 2,500+ LED fixtures upgraded, the Delmarva Community Center has reduced energy use by over 230,000 KWH, highlighting the impact of community-focused energy solutions.`,
-			icon: '/assets/landing-page/projects-people-icon.svg',
-			image: '/assets/landing-page/news/warehouse.png'
-		}
-	]);
+  // Project sections data using Svelte 5 Runes
+  const sections = $state([
+    {
+      title: 'Northwestern High School: Pioneering Energy Efficiency',
+      description:
+        'With over 7,000 LED fixtures upgraded, Northwestern High School has saved an impressive 800,000+ KWH, setting a new benchmark for energy sustainability in educational institutions.',
+      icon: '/assets/landing-page/projects-school-icon.svg',
+      image: '/assets/landing-page/news/theater.jpg',
+    },
+    {
+      title: "McMullen Building: Maryland's Bold Step Towards Sustainability",
+      description: `The McMullen Building exemplifies Maryland's dedication to sustainability, retrofitting 1,500+ LED fixtures and saving more than 100,000 KWH. A powerful commitment to a greener future.`,
+      icon: '/assets/landing-page/building-columns-solid.svg',
+      image: '/assets/landing-page/news/office.jpg',
+    },
+    {
+      title: 'Delmarva Community Center: Lighting the Way Forward',
+      description: `With 2,500+ LED fixtures upgraded, the Delmarva Community Center has reduced energy use by over 230,000 KWH, highlighting the impact of community-focused energy solutions.`,
+      icon: '/assets/landing-page/projects-people-icon.svg',
+      image: '/assets/landing-page/news/warehouse.png',
+    },
+  ]);
 
-	// Animation delays for staggered animations
-	const animationDelays = {
-		label: 0,
-		title: 200,
-		description: 400,
-		icons: 400,
-		sections: {
-			start: 450,
-			increment: 50 // Increment delay for each subsequent section
-		}
-	};
+  // Animation delays for staggered animations
+  const animationDelays = {
+    label: 0,
+    title: 200,
+    description: 400,
+    icons: 400,
+    sections: {
+      start: 450,
+      increment: 50, // Increment delay for each subsequent section
+    },
+  };
 </script>
 
 <section id="projects" class="projects-section">
-	<header class="projects-section__header">
-		<small
-			class="projects-section__header--label"
-			in:fadeInUpTransition={{ delay: animationDelays.label }}
-		>
-			{header.label}
-		</small>
-		<h2
-			class="projects-section__header--title"
-			in:fadeInUpTransition={{ delay: animationDelays.title }}
-		>
-			<span class="projects-section__header--title-gradient">{header.title1}</span>
-			{header.title2}
-		</h2>
-		<p
-			class="projects-section__header--description"
-			in:fadeInUpTransition={{ delay: animationDelays.description }}
-		>
-			{header.description}
-		</p>
-	</header>
+  <header class="projects-section__header">
+    <small
+      class="projects-section__header--label"
+      in:fadeInUpTransition={{ delay: animationDelays.label }}
+    >
+      {header.label}
+    </small>
+    <h2
+      class="projects-section__header--title"
+      in:fadeInUpTransition={{ delay: animationDelays.title }}
+    >
+      <span class="projects-section__header--title-gradient"
+        >{header.title1}</span
+      >
+      {header.title2}
+    </h2>
+    <p
+      class="projects-section__header--description"
+      in:fadeInUpTransition={{ delay: animationDelays.description }}
+    >
+      {header.description}
+    </p>
+  </header>
 
-	{#each sections as section, i}
-		<article
-			id={`project-article-${i}`}
-			class="project-article"
-			style="grid-area: article-{i};"
-			in:fadeInUpTransition={{
-				delay: animationDelays.sections.start + i * animationDelays.sections.increment
-			}}
-		>
-			<figure class="project-article__image-container">
-				<img
-					class="project-article__image-container--image"
-					src={section.image}
-					alt="Project image"
-					loading="lazy"
-					width="700"
-					height="700"
-				/>
-			</figure>
-			<figcaption class="project-article__caption">
-				<img
-					class="project-article__caption--icon"
-					src={section.icon}
-					alt="Project icon"
-					in:fadeInUpTransition={{ delay: animationDelays.icons }}
-				/>
-				<h3 class="project-article__caption--title">
-					{section.title}
-				</h3>
-				<p class="project-article__caption--description">
-					{section.description}
-				</p>
-			</figcaption>
-		</article>
-	{/each}
+  {#each sections as section, i}
+    <article
+      id={`project-article-${i}`}
+      class="project-article"
+      style="grid-area: article-{i};"
+      in:fadeInUpTransition={{
+        delay:
+          animationDelays.sections.start +
+          i * animationDelays.sections.increment,
+      }}
+    >
+      <figure class="project-article__image-container">
+        <img
+          class="project-article__image-container--image"
+          src={section.image}
+          alt="Project image"
+          loading="lazy"
+          width="700"
+          height="700"
+        />
+      </figure>
+      <figcaption class="project-article__caption">
+        <img
+          class="project-article__caption--icon"
+          src={section.icon}
+          alt="Project icon"
+          in:fadeInUpTransition={{ delay: animationDelays.icons }}
+        />
+        <h3 class="project-article__caption--title">
+          {section.title}
+        </h3>
+        <p class="project-article__caption--description">
+          {section.description}
+        </p>
+      </figcaption>
+    </article>
+  {/each}
 </section>
 
 <style lang="scss">

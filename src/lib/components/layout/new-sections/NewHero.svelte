@@ -110,54 +110,80 @@
 </script>
 
 {#if hero}
-  <section
-    id="hero"
-    class="hero grid gap__lg p-block__xl p-inline__md bg--surface text--on-surface"
-  >
-    <img
-      in:fadeInUpTransition={{ delay: 1000, duration: 500 }}
-      src="/assets/landing-page/hero/hero-light-bulb.webp"
-      width="640"
-      height="640"
-      alt="Energy efficient light bulb illustration"
-      loading="eager"
-      decoding="sync"
-    />
+  <section id="hero" class="u_p-inline__md u_p-block__lg">
+    <div class="u_container__md container--grid ">
+      <img
+        class="ga-image"
+        src="/assets/landing-page/hero/herobulb.webp"
+        width="640"
+        height="640"
+        alt="Energy efficient light bulb illustration"
+        loading="eager"
+        decoding="sync"
+      />
 
-    <header class="hero__header">
-      <p
-        class="u_label u_label--bold text--secondary mb__sm"
-        in:fadeInUpTransition={{ delay: 0, duration: 500 }}
-      >
-        {hero.label}
-      </p>
-      <h1
-        class="u_display-1 text--primary mb__md"
-        in:fadeInUpTransition={{ delay: 200, duration: 500 }}
-      >
-        {hero.title0 + hero.title}
-        <span class="u_display-1--bold text--primary">{hero.title2}</span>
-      </h1>
-      <p
-        class="u_paragraph text--secondary mb__lg"
-        in:fadeInUpTransition={{ delay: 400, duration: 500 }}
-      >
-        {hero.subtitle + hero.subtitle2}
-      </p>
+      <header class="max-ch-65 ga-header">
+        <p class="brute__label">
+          {hero.label}
+        </p>
+        <h1 class="u_display-1--bold typography--secondary u_m-bottom__md">
+          {hero.title0 + hero.title}
+          <span class="brute__text--primary">{hero.title2}</span>
+        </h1>
+        <p class="u_paragraph typography--tertiary">
+          {hero.subtitle + hero.subtitle2}
+        </p>
 
-      <div in:fadeInUpTransition={{ delay: 600, duration: 500 }}>
-        <button
-          on:click={handleEmailClick}
-          class="u_label--bold text--on-primary bg--primary p-block__sm p-inline__lg"
-        >
+        <button onclick={handleEmailClick} class="brute__button">
           {hero.button}
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-send"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
+              d="M10 14l11 -11"
+            /><path
+              d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"
+            /></svg
+          >
         </button>
-      </div>
-    </header>
+      </header>
+    </div>
   </section>
 {/if}
 
 <style lang="scss">
+  .container--grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "image"
+                         "header";
+
+
+@include respond-to('tablet-end'){
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "image header";
+}
+  }
+
+img{
+  object-fit: cover;
+}
+  .ga-header{
+    grid-area:header;
+  }
+
+  .ga-image{
+    grid-area:image;
+  }
   // No global imports needed here; rely on globally available CSS custom properties from app.scss
 
   /* Apply box-sizing globally if not already done */
@@ -168,44 +194,5 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-  }
-
-  /* --------------------------------------------------
-     Main Container -> Renamed to Hero Section
-   -------------------------------------------------- */
-
-  /* --------------------------------------------------
-     Hero Container
-   -------------------------------------------------- */
-  .hero {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-auto-rows: auto;
-    align-items: center;
-
-    /* --------------------------------------------------
-		 Hero Text Container (Element)
-	   -------------------------------------------------- */
-    &__header {
-      /* --------------------------------------------------
-		 Hero Elements within Text Container
-	   -------------------------------------------------- */
-      &-label {
-      }
-
-      &-display {
-        &--gradient {
-        }
-      }
-
-      &__body {
-      }
-    }
-
-    /* --------------------------------------------------
-		 Image Container (Element)
-	   -------------------------------------------------- */
-    &__image {
-    }
   }
 </style>

@@ -1,14 +1,13 @@
 <script lang="ts">
   import NewHeader from '$lib/components/layout/NewHeader.svelte';
   let { children } = $props();
-
-
 </script>
 
 <svelte:head>
   <title
     >1st Green Home - Free Energy Audits, LED Retrofits, and Sustainable
-    Solutions</title>
+    Solutions</title
+  >
 </svelte:head>
 <div class="layout-wrapper">
   <NewHeader />
@@ -33,6 +32,7 @@
 
 <style lang="scss" global>
   @use '../lib/styles/main.scss' as *;
+
   .layout-wrapper {
     display: flex;
     flex-direction: column;
@@ -44,7 +44,7 @@
   }
   html {
     &::before {
-      position: absolute;
+      position: fixed;
       z-index: -2;
       margin: auto;
       block-size: 100%;
@@ -57,21 +57,21 @@
       transform: translateZ(0);
       will-change: filter;
     }
-    &::after {
-      position: absolute;
-      z-index: -1;
-      margin: auto;
-      background-attachment: fixed;
-      background-image: url('/assets/landing-page/leaves.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      block-size: 100%;
-      content: '';
-      inline-size: 100%;
-      inset: 0;
-      opacity: 0.05;
-    }
+    // &::after {
+    //   position: absolute;
+    //   z-index: -1;
+    //   margin: auto;
+    //   background-attachment: fixed;
+    //   background-image: url('/assets/landing-page/leaves.svg');
+    //   background-position: center;
+    //   background-repeat: no-repeat;
+    //   background-size: cover;
+    //   block-size: 100%;
+    //   content: '';
+    //   inline-size: 100%;
+    //   inset: 0;
+    //   opacity: 0.05;
+    // }
   }
 
   :global([data-scroll]) {

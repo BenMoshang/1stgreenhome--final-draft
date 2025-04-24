@@ -1,31 +1,35 @@
 <!-- Svelte 5 Component with Runes -->
 <script lang="ts">
-	// With Svelte 5 Runes mode, using $props()
-	const props = $props();
+  // With Svelte 5 Runes mode, using $props()
+  const props = $props();
 
-	// Service card props
-	let id = $derived(props.id ?? 0);
-	let title = $derived(props.title ?? '');
-	let description = $derived(props.description ?? '');
-	let image = $derived(props.image ?? '');
-	let imageAlt = $derived(props.imageAlt ?? '');
+  // Service card props
+  let id = $derived(props.id ?? 0);
+  let title = $derived(props.title ?? '');
+  let description = $derived(props.description ?? '');
+  let image = $derived(props.image ?? '');
+  let imageAlt = $derived(props.imageAlt ?? '');
 </script>
 
 <!-- Service card component -->
-<figure id="stepper__card-{id}" class="service-card" aria-labelledby="step-title-{id}">
-	<img
-		class="service-card__image"
-		src={image}
-		alt={imageAlt}
-		width="400"
-		height="300"
-		loading="lazy"
-		fetchpriority="low"
-	/>
-	<figcaption class="service-card__content">
-		<h3 id="step-title-{id}" class="service-card__title">{title}</h3>
-		<p class="service-card__description">{description}</p>
-	</figcaption>
+<figure
+  id="stepper__card-{id}"
+  class="service-card"
+  aria-labelledby="step-title-{id}"
+>
+  <img
+    class="service-card__image"
+    src={image}
+    alt={imageAlt}
+    width="400"
+    height="300"
+    loading="lazy"
+    fetchpriority="low"
+  />
+  <figcaption class="service-card__content">
+    <h3 id="step-title-{id}" class="service-card__title">{title}</h3>
+    <p class="service-card__description">{description}</p>
+  </figcaption>
 </figure>
 
 <style lang="scss">
@@ -73,11 +77,13 @@
       &::before {
         position: absolute;
         z-index: 2;
-        background: linear-gradient(to top,
-        rgb(0 0 0 / 80%) 0%,
-        rgb(0 0 0 / 40%) 40%,
-        rgb(0 0 0 / 20%) 60%,
-        rgb(0 0 0 / 0%) 100%);
+        background: linear-gradient(
+          to top,
+          rgb(0 0 0 / 80%) 0%,
+          rgb(0 0 0 / 40%) 40%,
+          rgb(0 0 0 / 20%) 60%,
+          rgb(0 0 0 / 0%) 100%
+        );
         content: '';
         inset: 0;
         isolation: isolate;
@@ -88,7 +94,11 @@
       position: absolute;
       z-index: 3;
       padding: 1.25rem;
-      background: linear-gradient(to bottom, transparent 0%, hsl(157deg 67% 0%) 100%);
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        hsl(157deg 67% 0%) 100%
+      );
       inline-size: 100%;
       inset-block-end: 0;
       inset-inline-start: 0;

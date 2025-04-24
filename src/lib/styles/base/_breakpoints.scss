@@ -36,4 +36,20 @@ $breakpoints: (
   } @else {
     @warn 'Unknown breakpoint `#{$breakpoint}`. Valid keys: #{map.keys($breakpoints)}`';
   }
-}
+}//for 1stgreen
+  .flex-space-between {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+    align-items: center;
+
+    @include respond-to('tablet-end') {
+      flex-direction: row;
+    }
+  }
+
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+  }

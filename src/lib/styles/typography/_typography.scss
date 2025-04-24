@@ -34,13 +34,22 @@
  %font-family--secondary {
   font-family: 'Manrope', system-ui, sans-serif;
 }
+
+%text-wrap--balance{
+text-wrap: balance;
+}
+%text-wrap--pretty{
+text-wrap: pretty;
+}
 /* Display elements (largest) */
 %u_display-1 {
   @extend %font-family--primary;
-  @include type-scale(globals.size('xl'), -0.022em);
+  @include type-scale(globals.size('xl'), -0.022em, globals.$MAJOR-HALF);
+  @extend %text-wrap--balance;
 }
 %u_display-1--bold {
   @extend %font-family--primary;
+  @extend %text-wrap--balance;
 
   @extend %u_display-1;
   font-weight: 700;
@@ -48,11 +57,13 @@
 
 %u_display-2 {
   @extend %font-family--primary;
+  @extend %text-wrap--balance;
 
-  @include type-scale(globals.size('lg') * globals.$MAJOR-HALF, -0.022em);
+  @include type-scale(globals.size('lg') * globals.$MAJOR-HALF, -0.022em, globals.$MAJOR-HALF);
 }
 %u_display-2--bold {
   @extend %font-family--primary;
+  @extend %text-wrap--balance;
 
   @extend %u_display-2;
   font-weight: 700;
@@ -61,9 +72,12 @@
 /* Title hierarchy */
 %u_title-a {
   @extend %font-family--primary;
-  @include type-scale(globals.size('lg') * globals.$MAJOR-QUARTER, -0.022em);
+  @extend %text-wrap--balance;
+
+  @include type-scale(globals.size('lg') * globals.$MAJOR-QUARTER, -0.022em, globals.$MAJOR-HALF);
 }
 %u_title-a--bold {
+  @extend %text-wrap--balance;
   @extend %font-family--primary;
 
   @extend %u_title-a;
@@ -72,32 +86,39 @@
 
 %u_title-b {
   @extend %font-family--primary;
+  @extend %text-wrap--balance;
 
-  @include type-scale(globals.size('lg'), -0.02em);
+
+  @include type-scale(globals.size('lg'), -0.02em, globals.$MAJOR-HALF);
 }
 
 %u_title-c {
   @extend %font-family--primary;
+  @extend %text-wrap--balance;
 
   @include type-scale(
     math.div(globals.size('lg'), globals.$MAJOR-HALF),
-    -0.017em
+    -0.017em,
+    globals.$MAJOR-HALF
   );
 }
 
 /* Heading elements */
 %u_heading {
+  @extend %text-wrap--balance;
+
   @extend %font-family--primary;
 
   @include type-scale(
     globals.size('md') * globals.$MAJOR-QUARTER,
     -0.014em,
-    null,
+    globals.$MAJOR-HALF,
     600
   );
 }
 %u_heading--bold {
   @extend %font-family--primary;
+  @extend %text-wrap--balance;
 
   @extend %u_heading;
   font-weight: 700;
@@ -105,16 +126,19 @@
 
 %u_subheading {
   @extend %font-family--primary;
+  @extend %text-wrap--balance;
 
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-QUARTER),
-    -0.007em
+    -0.007em,
+    globals.$MAJOR-HALF
   );
 }
 
 /* Body text */
 %u_paragraph {
   @extend %font-family--secondary;
+  @extend %text-wrap--pretty;
 
   @include type-scale(
     globals.size('md'),
@@ -125,16 +149,19 @@
 
 %u_callout {
   @extend %font-family--secondary;
+  @extend %text-wrap--pretty;
 
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-EIGHT),
-    -0.009em
+    -0.009em,
+    globals.$MAJOR-HALF
   );
 }
 
 /* Small text elements */
 %u_label {
   @extend %font-family--secondary;
+  @extend %text-wrap--pretty;
 
   @include type-scale(
     math.div(
@@ -142,7 +169,7 @@
       globals.$MAJOR-EIGHT
     ),
     -0.004em,
-    null,
+    globals.$MAJOR-HALF,
     600
   );
 }
@@ -158,7 +185,8 @@
 
   @include type-scale(
     math.div(globals.size('md'), globals.$MAJOR-HALF),
-    -0.007em
+    -0.007em,
+    globals.$MAJOR-HALF
   );
 }
 
@@ -170,7 +198,8 @@
       math.div(globals.size('md'), globals.$MAJOR-QUARTER),
       globals.$MAJOR-EIGHT
     ),
-    1em * math.div(globals.$MINOR, 10)
+    1em * math.div(globals.$MINOR, 10),
+    globals.$MAJOR-HALF
   );
   text-transform: uppercase;
 }
@@ -187,24 +216,12 @@
 }
 
 /* ----------------- 4. UTILITY CLASSES ----------------- */
-.u_display-1 { @extend %u_display-1;
- }
-.u_display-1--bold { @extend %u_display-1--bold; }
-.u_display-2 { @extend %u_display-2; }
-.u_display-2--bold { @extend %u_display-2--bold; }
-.u_title-a { @extend %u_title-a; }
-.u_title-a--bold { @extend %u_title-a--bold; }
-.u_title-b { @extend %u_title-b; }
-.u_title-c { @extend %u_title-c; }
-.u_heading { @extend %u_heading; }
-.u_heading--bold { @extend %u_heading--bold; }
-.u_subheading { @extend %u_subheading; }
-.u_paragraph { @extend %u_paragraph; }
-.u_callout { @extend %u_callout; }
-.u_label { @extend %u_label; }
-.u_label--bold { @extend %u_label--bold; }
-.u_caption { @extend %u_caption; }
-.u_overline { @extend %u_overline; }
+$typography-list: display-1, display-1--bold, display-2, display-2--bold, title-a, title-a--bold, title-b, title-c, heading, heading--bold, subheading, paragraph, callout, label, label--bold, caption, overline;
+@each $name in $typography-list {
+  .u_#{$name} {
+    @extend %u_#{$name};
+  }
+}
 
 /* ----------------- 5. RESPONSIVE TYPOGRAPHY ----------------- */
 /**

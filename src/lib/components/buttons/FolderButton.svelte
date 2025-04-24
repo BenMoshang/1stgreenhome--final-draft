@@ -1,32 +1,31 @@
 <script lang="ts">
-	import type { MouseEventHandler } from 'svelte/elements';
+  import type { MouseEventHandler } from 'svelte/elements';
 
-	let {
-		text = 'Continue Application',
-		onClick = (() => {}) as MouseEventHandler<HTMLButtonElement>
-	} = $props();
+  let {
+    text = 'Continue Application',
+    onClick = (() => {}) as MouseEventHandler<HTMLButtonElement>,
+  } = $props();
 </script>
 
 <button class="folder-button" on:click={onClick}>
-	<div>
-		<div class="folder-button__pencil"></div>
-		<div class="folder-button__folder">
-			<div class="folder-button__top">
-				<svg viewBox="0 0 24 27">
-					<path
-						d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"
-					></path>
-				</svg>
-			</div>
-			<div class="folder-button__paper"></div>
-		</div>
-	</div>
-	{text}
+  <div>
+    <div class="folder-button__pencil"></div>
+    <div class="folder-button__folder">
+      <div class="folder-button__top">
+        <svg viewBox="0 0 24 27">
+          <path
+            d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="folder-button__paper"></div>
+    </div>
+  </div>
+  {text}
 </button>
 
 <style lang="scss">
   .folder-button {
-
     // Using design system colors instead of hardcoded values
     --color: var(--color-950);
     --background: var(--color-50);
@@ -45,7 +44,8 @@
     --transition-duration: 0.3s;
 
     position: relative;
-    padding: spacing(semi-related) spacing(less-related) spacing(semi-related) 69px;
+    padding: spacing(semi-related) spacing(less-related) spacing(semi-related)
+      69px;
     border: none;
     border-radius: var(--border-radius);
     appearance: none;
@@ -187,11 +187,15 @@
         position: absolute;
         display: block;
         border-radius: var(--br, 2px 2px 0 0);
-        background: var(--b,
-        linear-gradient(var(--pencil-top) 55%,
-        var(--pencil-middle) 55.1%,
-        var(--pencil-middle) 60%,
-        var(--pencil-bottom) 60.1%));
+        background: var(
+          --b,
+          linear-gradient(
+            var(--pencil-top) 55%,
+            var(--pencil-middle) 55.1%,
+            var(--pencil-middle) 60%,
+            var(--pencil-bottom) 60.1%
+          )
+        );
         block-size: var(--h, 20px);
         content: '';
         inline-size: var(--w, 5px);

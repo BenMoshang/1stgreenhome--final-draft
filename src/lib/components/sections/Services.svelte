@@ -1,126 +1,126 @@
 <script lang="ts">
-	// Import Svelte utilities and custom transitions
-	import { fadeInUpTransition } from '../../utils/animations.js';
-	// Import the ServiceCard component
-	import ServiceCard from '../ServiceCard.svelte';
+  // Import Svelte utilities and custom transitions
+  import { fadeInUpTransition } from '../../utils/animations.js';
+  // Import the ServiceCard component
+  import ServiceCard from '../ServiceCard.svelte';
 
-	// --- Type Definitions ---
-	// Consolidate step data into a single interface for better cohesion
-	interface StepperStep {
-		id: number; // Unique identifier for the step
-		icon?: string; // Optional: Path to the icon SVG for the circle
-		iconAlt?: string; // Optional: Alt text for the icon
-		title: string; // Title for the card
-		description: string; // Description for the card
-		image: string; // Image path for the card
-		imageAlt: string; // Alt text for the card image
-	}
+  // --- Type Definitions ---
+  // Consolidate step data into a single interface for better cohesion
+  interface StepperStep {
+    id: number; // Unique identifier for the step
+    icon?: string; // Optional: Path to the icon SVG for the circle
+    iconAlt?: string; // Optional: Alt text for the icon
+    title: string; // Title for the card
+    description: string; // Description for the card
+    image: string; // Image path for the card
+    imageAlt: string; // Alt text for the card image
+  }
 
-	// Interface for the header section
-	interface StepperHeader {
-		label: string;
-		title: string;
-		description: string;
-	}
+  // Interface for the header section
+  interface StepperHeader {
+    label: string;
+    title: string;
+    description: string;
+  }
 
-	// --- Component State ---
-	// Header data remains separate as it serves a different purpose
-	const header = $state<StepperHeader>({
-		label: 'EXPLORE WHAT WE OFFER',
-		title: 'Discover Our Range of Services',
-		description:
-			'We provide a range of services designed to help you cut costs, lower energy consumption, and promote environmental sustainability.'
-	});
+  // --- Component State ---
+  // Header data remains separate as it serves a different purpose
+  const header = $state<StepperHeader>({
+    label: 'EXPLORE WHAT WE OFFER',
+    title: 'Discover Our Range of Services',
+    description:
+      'We provide a range of services designed to help you cut costs, lower energy consumption, and promote environmental sustainability.',
+  });
 
-	// Combine circle and card data into a single array of steps
-	// This makes the relationship between steps explicit and simplifies the template
-	const steps = $state<StepperStep[]>([
-		{
-			id: 1,
-			icon: '/assets/new-icons/lightning.svg', // Icon associated with this step
-			iconAlt: 'Energy audit icon',
-			title: 'Free Energy Audits',
-			description:
-				'Quickly find and fix energy waste in your home or business. Expert audits for fast savings.', // Main point: fast, expert audits for savings
-			image: '/assets/landing-page/stepper/card-01.jpeg',
-			imageAlt: 'Technician performing an energy audit with equipment.' // More descriptive alt text
-		},
-		{
-			id: 2,
-			icon: '/assets/new-icons/light-bulb.svg',
-			iconAlt: 'Cost savings icon',
-			title: 'Tailored Consulting',
-			description:
-				'Custom eco-strategies to save energy and resources. Achieve your sustainability goals faster.', // Main point: custom strategies for faster sustainability
-			image: '/assets/lights.webp',
-			imageAlt: 'Close-up of energy-efficient light bulbs illuminating a room.' // More descriptive alt text
-		},
-		{
-			id: 3,
-			icon: '/assets/new-icons/briefcase.svg',
-			iconAlt: 'Project management icon',
-			title: 'End-to-End Management',
-			description:
-				'We handle your energy projects from start to finish. Smooth, timely, and cost-effective upgrades.', // Main point: complete, smooth, cost-effective project management
-			image: '/assets/landing-page/stepper/card-03.jpeg',
-			imageAlt: 'Team collaborating on an energy project plan.' // More descriptive alt text
-		}
-	]);
+  // Combine circle and card data into a single array of steps
+  // This makes the relationship between steps explicit and simplifies the template
+  const steps = $state<StepperStep[]>([
+    {
+      id: 1,
+      icon: '/assets/new-icons/lightning.svg', // Icon associated with this step
+      iconAlt: 'Energy audit icon',
+      title: 'Free Energy Audits',
+      description:
+        'Quickly find and fix energy waste in your home or business. Expert audits for fast savings.', // Main point: fast, expert audits for savings
+      image: '/assets/landing-page/stepper/card-01.jpeg',
+      imageAlt: 'Technician performing an energy audit with equipment.', // More descriptive alt text
+    },
+    {
+      id: 2,
+      icon: '/assets/new-icons/light-bulb.svg',
+      iconAlt: 'Cost savings icon',
+      title: 'Tailored Consulting',
+      description:
+        'Custom eco-strategies to save energy and resources. Achieve your sustainability goals faster.', // Main point: custom strategies for faster sustainability
+      image: '/assets/lights.webp',
+      imageAlt: 'Close-up of energy-efficient light bulbs illuminating a room.', // More descriptive alt text
+    },
+    {
+      id: 3,
+      icon: '/assets/new-icons/briefcase.svg',
+      iconAlt: 'Project management icon',
+      title: 'End-to-End Management',
+      description:
+        'We handle your energy projects from start to finish. Smooth, timely, and cost-effective upgrades.', // Main point: complete, smooth, cost-effective project management
+      image: '/assets/landing-page/stepper/card-03.jpeg',
+      imageAlt: 'Team collaborating on an energy project plan.', // More descriptive alt text
+    },
+  ]);
 
-	// Define transition delays for staggering animations
-	const animationConfig = {
-		headerDelay: 0,
-		stepperDelay: 300, // Start stepper animation slightly after header
-		circleBaseDelay: 400, // Base delay for the first circle
-		circleIncrement: 100, // Increment delay for subsequent circles
-		cardBaseDelay: 600, // Base delay for the first card
-		duration: 500 // Standard duration for animations
-	};
+  // Define transition delays for staggering animations
+  const animationConfig = {
+    headerDelay: 0,
+    stepperDelay: 300, // Start stepper animation slightly after header
+    circleBaseDelay: 400, // Base delay for the first circle
+    circleIncrement: 100, // Increment delay for subsequent circles
+    cardBaseDelay: 600, // Base delay for the first card
+    duration: 500, // Standard duration for animations
+  };
 </script>
 
 <section class="section__default stepper-section">
-	<header class="stepper-section__header">
-		<small class="stepper-section__header--label">{header.label}</small>
-		<h2 class="stepper-section__header--title">{header.title}</h2>
-		<p class="stepper-section__header--description">{header.description}</p>
-	</header>
-	<div class="stepper-section__line"></div>
+  <header class="stepper-section__header">
+    <small class="stepper-section__header--label">{header.label}</small>
+    <h2 class="stepper-section__header--title">{header.title}</h2>
+    <p class="stepper-section__header--description">{header.description}</p>
+  </header>
+  <div class="stepper-section__line"></div>
 
-	<img
-		id="stepper__icon-1"
-		class="stepper__icon"
-		src={steps[0].icon}
-		alt=""
-		width="20"
-		height="20"
-		loading="lazy"
-	/>
+  <img
+    id="stepper__icon-1"
+    class="stepper__icon"
+    src={steps[0].icon}
+    alt=""
+    width="20"
+    height="20"
+    loading="lazy"
+  />
 
-	<ServiceCard {...steps[0]} />
+  <ServiceCard {...steps[0]} />
 
-	<img
-		id="stepper__icon-2"
-		class="stepper__icon"
-		src={steps[1].icon}
-		alt=""
-		width="20"
-		height="20"
-		loading="lazy"
-	/>
+  <img
+    id="stepper__icon-2"
+    class="stepper__icon"
+    src={steps[1].icon}
+    alt=""
+    width="20"
+    height="20"
+    loading="lazy"
+  />
 
-	<ServiceCard {...steps[1]} />
+  <ServiceCard {...steps[1]} />
 
-	<img
-		id="stepper__icon-3"
-		class="stepper__icon"
-		src={steps[2].icon}
-		alt=""
-		width="20"
-		height="20"
-		loading="lazy"
-	/>
+  <img
+    id="stepper__icon-3"
+    class="stepper__icon"
+    src={steps[2].icon}
+    alt=""
+    width="20"
+    height="20"
+    loading="lazy"
+  />
 
-	<ServiceCard {...steps[2]} />
+  <ServiceCard {...steps[2]} />
 </section>
 
 <style lang="scss">
@@ -183,11 +183,15 @@
       position: absolute;
       z-index: -2;
       background-color: var(--accent-color);
-      block-size: calc(100% - var(--icon-size) * 3 - 4rem); /* Connect down to icon3 */
+      block-size: calc(
+        100% - var(--icon-size) * 3 - 4rem
+      ); /* Connect down to icon3 */
       grid-column: 1 / 1;
       grid-row: 2 / 4;
       inline-size: 0.25rem;
-      inset-block-start: calc(var(--icon-size) + var(--icon-size) + 2rem); /* Start below icon1 */
+      inset-block-start: calc(
+        var(--icon-size) + var(--icon-size) + 2rem
+      ); /* Start below icon1 */
 
       /* Mobile: Vertical line connecting icons */
       inset-inline-start: calc(var(--icon-size) / 2);
@@ -237,8 +241,12 @@
       grid-template-rows: auto auto auto auto;
 
       &__line {
-        block-size: calc(100% - var(--icon-size) * 3 - 6rem); /* End at last icon */
-        inset-block-start: calc(var(--icon-size) * 1.5 + 4rem); /* Start below first icon */
+        block-size: calc(
+          100% - var(--icon-size) * 3 - 6rem
+        ); /* End at last icon */
+        inset-block-start: calc(
+          var(--icon-size) * 1.5 + 4rem
+        ); /* Start below first icon */
 
         /* Desktop: Vertical line centered in middle column */
         inset-inline-start: 50%;

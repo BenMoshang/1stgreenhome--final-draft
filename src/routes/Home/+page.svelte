@@ -43,8 +43,8 @@
 </script>
 
 <main class="page-container">
-  <!-- <NewHero /> -->
-  <FontTesting />
+  <NewHero />
+  <!-- <FontTesting /> -->
   <div class="gradient-background-container">
     <!-- <Services /> -->
     <!-- <Testimonials /> -->
@@ -56,18 +56,12 @@
 <style lang="scss">
   .page-container {
     position: relative;
-
-    /* Positioning */
     z-index: 1;
-
-    /* Dislay & Box Model */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     block-size: 100%;
-
-    // gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
     inline-size: 100%;
     margin-inline: auto;
 
@@ -82,38 +76,27 @@
     flex-direction: column;
     align-items: center;
     inline-size: 100%;
-
-    // gap: clamp(2.5rem, 2.251rem + 1.06vw, 3rem);
   }
 
   .gradient-background {
     position: absolute;
     z-index: -10;
-    background: url('/assets/landing-page/gradient-background.svg') no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-    block-size: 100%; /* Full height of the container */
-    filter: brightness(0.75) saturate(1.5);
-    inline-size: 100vw; /* Full viewport width */
     inset-block-start: 0;
     inset-inline-start: 50%;
     transform: translateX(-50%);
+    background: url('/assets/landing-page/gradient-background.svg') no-repeat
+      center/cover fixed;
+    block-size: 100%;
+    inline-size: 100vw;
+    filter: brightness(0.75) saturate(1.5);
 
     &::after {
-      position: absolute;
-      z-index: -1;
-      margin: auto;
-      background-attachment: fixed;
-      background-image: url('/assets/landing-page/leaves.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      block-size: 100%;
       content: '';
-      filter: contrast(0.7) brightness(0.3);
-      inline-size: 100%;
+      position: absolute;
       inset: 0;
+      background: url('/assets/landing-page/leaves.svg') no-repeat center/cover
+        fixed;
+      filter: contrast(0.7) brightness(0.3);
       opacity: 0.2;
     }
   }

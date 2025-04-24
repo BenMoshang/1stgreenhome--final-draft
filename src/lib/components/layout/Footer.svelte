@@ -1,87 +1,97 @@
 <script>
-	// Import the footer data from a separate file
+  // Import the footer data from a separate file
 
-	// Props (equivalent to @Input in Angular)
-	export const footerData = [
-		{
-			aboutText: `1st Green Home is an energy efficiency firm in MD that has one simple
+  // Props (equivalent to @Input in Angular)
+  export const footerData = [
+    {
+      aboutText: `1st Green Home is an energy efficiency firm in MD that has one simple
           mission: to help lower energy usage. We are committed to providing
-          services to save energy in residential and commercial properties.`
-		}
-	];
+          services to save energy in residential and commercial properties.`,
+    },
+  ];
 
-	// Using $state rune for reactive state management (if needed)
-	// If the data is static, you can omit $state
-	const footer = $state(footerData);
+  // Using $state rune for reactive state management (if needed)
+  // If the data is static, you can omit $state
+  const footer = $state(footerData);
 </script>
 
 <footer>
-	<div class="footer__top">
-		<div class="footer__block">
-			<div class="block__header">
-				<div id="step-03" class="footer__circle">
-					<img src="../assets/header/logo4.png" alt="Logo" width="48" height="48" />
-				</div>
+  <div class="footer__top">
+    <div class="footer__block">
+      <div class="block__header">
+        <div id="step-03" class="footer__circle">
+          <img
+            src="../assets/header/logo4.png"
+            alt="Logo"
+            width="48"
+            height="48"
+          />
+        </div>
 
-				<h2>1st Green Home</h2>
-			</div>
-			<a class="email" href="mailto:info@1stgreenhome.com">info&#64;1stgreenhome.com</a>
-			<a class="email" href="tel:+14432169169">(443) 216-9169</a>
-			<p>10630 Riggs Hill Rd. Unit A</p>
-			<p>Jessup, MD 20794</p>
-		</div>
+        <h2>1st Green Home</h2>
+      </div>
+      <a class="email" href="mailto:info@1stgreenhome.com"
+        >info&#64;1stgreenhome.com</a
+      >
+      <a class="email" href="tel:+14432169169">(443) 216-9169</a>
+      <p>10630 Riggs Hill Rd. Unit A</p>
+      <p>Jessup, MD 20794</p>
+    </div>
 
-		<div class="footer__block">
-			<h2>Home Resources</h2>
-			<ul>
-				<li>
-					<a
-						href="https://homeenergysavings.pepco.com/home-performance-with-energy-star-program"
-						target="_blank">Pepco Home Performance</a
-					>
-				</li>
-				<li>
-					<a href="https://bgesmartenergy.com/business/business-programs/" target="_blank"
-						>BGE Smart Business Programs</a
-					>
-				</li>
-				<li>
-					<a href="https://powur.com/1stgreenhome" target="_blank">Powur Solar Solutions</a>
-				</li>
-			</ul>
-		</div>
+    <div class="footer__block">
+      <h2>Home Resources</h2>
+      <ul>
+        <li>
+          <a
+            href="https://homeenergysavings.pepco.com/home-performance-with-energy-star-program"
+            target="_blank">Pepco Home Performance</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://bgesmartenergy.com/business/business-programs/"
+            target="_blank">BGE Smart Business Programs</a
+          >
+        </li>
+        <li>
+          <a href="https://powur.com/1stgreenhome" target="_blank"
+            >Powur Solar Solutions</a
+          >
+        </li>
+      </ul>
+    </div>
 
-		<div class="footer__block">
-			<h2>Business Solutions</h2>
-			<ul>
-				<li>
-					<a
-						href="https://homeenergysavings.pepco.com/md/business/overview"
-						target="_blank"
-						rel="noopener noreferrer">Pepco Energy Savings for Business</a
-					>
-				</li>
-				<li>
-					<a
-						href="https://www.smeco.coop/save-energy-and-money/business-solutions"
-						target="_blank"
-						rel="noopener noreferrer">SMECO Business Solutions</a
-					>
-				</li>
-				<li>
-					<a
-						href="https://homeenergysavings.delmarva.com/md/business/overview"
-						target="_blank"
-						rel="noopener noreferrer">Delmarva Energy Savings for Business</a
-					>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<hr />
-	<div class="footer__bottom">
-		<p class="footer__copyright">©2018 1st Green Home, All Rights Reserved.</p>
-	</div>
+    <div class="footer__block">
+      <h2>Business Solutions</h2>
+      <ul>
+        <li>
+          <a
+            href="https://homeenergysavings.pepco.com/md/business/overview"
+            target="_blank"
+            rel="noopener noreferrer">Pepco Energy Savings for Business</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.smeco.coop/save-energy-and-money/business-solutions"
+            target="_blank"
+            rel="noopener noreferrer">SMECO Business Solutions</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://homeenergysavings.delmarva.com/md/business/overview"
+            target="_blank"
+            rel="noopener noreferrer">Delmarva Energy Savings for Business</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr />
+  <div class="footer__bottom">
+    <p class="footer__copyright">©2018 1st Green Home, All Rights Reserved.</p>
+  </div>
 </footer>
 
 <style>

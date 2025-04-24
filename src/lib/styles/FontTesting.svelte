@@ -1,7 +1,7 @@
 <script>
   // Demo text for typography previews
-  const demoText = "The quick brown fox jumps over the lazy dog.";
-  
+  const demoText = 'The quick brown fox jumps over the lazy dog.';
+
   // Semantic color tokens for testing
   const semanticColors = [
     'primary',
@@ -11,14 +11,14 @@
     'error',
     'warning',
     'info',
-    'success'
+    'success',
   ];
-  
+
   // Color variants for each semantic color
   const colorVariants = [
     '', // base color
     '-variant',
-    '-container'
+    '-container',
   ];
 </script>
 
@@ -26,7 +26,7 @@
   <h1 class="text--primary">Typography Utility Classes</h1>
 
   <section>
-    <h2 class="text--secondary">Display</h2>
+    <h2 class="text--primary">Display</h2>
     <p class="u_display-1 u_display-1--bold">{demoText}</p>
     <p class="u_display-1">{demoText}</p>
     <p class="u_display-2">{demoText}</p>
@@ -63,7 +63,14 @@
   </section>
 
   <h1 class="text--primary">Color Utility Classes</h1>
-  
+
+  <section>
+    <h2 class="text--secondary">Tone Utilities</h2>
+    <p class="typography--primary">{demoText} (typography--primary)</p>
+    <p class="typography--secondary">{demoText} (typography--secondary)</p>
+    <p class="typography--tertiary">{demoText} (typography--tertiary)</p>
+  </section>
+
   <section>
     <h2 class="text--secondary">Text Colors</h2>
     <div class="color-grid">
@@ -72,7 +79,9 @@
           <h3>{color}</h3>
           <p class={`text--${color}`}>text--{color}</p>
           <p class={`text--on-${color}`}>text--on-{color}</p>
-          <p class={`text--on-${color}-container`}>text--on-{color}-container</p>
+          <p class={`text--on-${color}-container`}>
+            text--on-{color}-container
+          </p>
         </div>
       {/each}
       <div class="color-family">
@@ -109,56 +118,106 @@
       {#each semanticColors as color}
         <div class="color-family">
           <h3>{color} combinations</h3>
-          <p class={`color-box bg--${color} text--on-${color}`}>bg--{color} with text--on-{color}</p>
-          <p class={`color-box bg--${color}-container text--on-${color}-container`}>bg--{color}-container with text--on-{color}-container</p>
+          <p class={`color-box bg--${color} text--on-${color}`}>
+            bg--{color} with text--on-{color}
+          </p>
+          <p
+            class={`color-box bg--${color}-container text--on-${color}-container`}
+          >
+            bg--{color}-container with text--on-{color}-container
+          </p>
         </div>
       {/each}
     </div>
   </section>
-  
+
   <section>
     <h2 class="text--secondary">Semantic Colors (Text & Background)</h2>
-    <p class="text--surface">This is standard body text using <code>.text--surface</code> (applies <code>--on-surface</code>).</p>
+    <p class="text--surface">
+      This is standard body text using <code>.text--surface</code> (applies
+      <code>--on-surface</code>).
+    </p>
 
     <div class="box bg--primary">
       <p>This box uses <code>.bg--primary</code>.</p>
-      <p class="text--on-primary">This text uses <code>.text--on-primary</code> (correct contrast).</p>
-      <p class="text--primary">This text uses <code>.text--primary</code> (<strong>likely poor contrast</strong>).</p>
+      <p class="text--on-primary">
+        This text uses <code>.text--on-primary</code> (correct contrast).
+      </p>
+      <p class="text--primary">
+        This text uses <code>.text--primary</code> (<strong
+          >likely poor contrast</strong
+        >).
+      </p>
     </div>
 
     <div class="box bg--secondary-container">
       <p>This box uses <code>.bg--secondary-container</code>.</p>
-      <p class="text--on-secondary-container">This text uses <code>.text--on-secondary-container</code> (correct contrast).</p>
-      <p class="text--secondary">This text uses <code>.text--secondary</code> (<strong>likely poor contrast</strong>).</p>
+      <p class="text--on-secondary-container">
+        This text uses <code>.text--on-secondary-container</code> (correct contrast).
+      </p>
+      <p class="text--secondary">
+        This text uses <code>.text--secondary</code> (<strong
+          >likely poor contrast</strong
+        >).
+      </p>
     </div>
 
     <div class="box bg--error">
       <p>This box uses <code>.bg--error</code>.</p>
-      <p class="text--on-error">This text uses <code>.text--on-error</code> (correct contrast).</p>
-      <p class="text--error">This text uses <code>.text--error</code> (<strong>potentially poor contrast, especially on this background</strong>).</p>
+      <p class="text--on-error">
+        This text uses <code>.text--on-error</code> (correct contrast).
+      </p>
+      <p class="text--error">
+        This text uses <code>.text--error</code> (<strong
+          >potentially poor contrast, especially on this background</strong
+        >).
+      </p>
     </div>
 
     <h3>Potentially Problematic Usage (Directly on Default Background)</h3>
-    <p class="text--primary">This text uses <code>.text--primary</code> directly on the default background. Contrast might be insufficient.</p>
-    <p class="text--secondary">This text uses <code>.text--secondary</code> directly on the default background. Contrast might be insufficient.</p>
-    <p class="text--tertiary">This text uses <code>.text--tertiary</code> directly on the default background. Contrast might be insufficient.</p>
-    <p class="text--neutral">This text uses <code>.text--neutral</code> directly on the default background. Contrast might be insufficient.</p>
-
+    <p class="text--primary">
+      This text uses <code>.text--primary</code> directly on the default background.
+      Contrast might be insufficient.
+    </p>
+    <p class="text--secondary">
+      This text uses <code>.text--secondary</code> directly on the default background.
+      Contrast might be insufficient.
+    </p>
+    <p class="text--tertiary">
+      This text uses <code>.text--tertiary</code> directly on the default background.
+      Contrast might be insufficient.
+    </p>
+    <p class="text--neutral">
+      This text uses <code>.text--neutral</code> directly on the default background.
+      Contrast might be insufficient.
+    </p>
   </section>
 
   <section>
     <h2 class="text--secondary">Comprehensive Utility Test</h2>
-    {#each ['primary','secondary','tertiary','neutral','error','warning','info','success'] as name}
+    {#each ['primary', 'secondary', 'tertiary', 'neutral', 'error', 'warning', 'info', 'success'] as name}
       <div class="box bg--{name}">
-        <p><code>.bg--{name}</code> <span class="text--on-{name}">{name} on-background text</span></p>
-        <p><code>.text--{name}</code> <span class="text--{name}">This is {name} text</span></p>
+        <p>
+          <code>.bg--{name}</code>
+          <span class="text--on-{name}">{name} on-background text</span>
+        </p>
+        <p>
+          <code>.text--{name}</code>
+          <span class="text--{name}">This is {name} text</span>
+        </p>
       </div>
     {/each}
     <div class="box">
-      <p><code>.text--surface</code> <span class="text--surface">This is surface text</span></p>
+      <p>
+        <code>.text--surface</code>
+        <span class="text--surface">This is surface text</span>
+      </p>
     </div>
     <div class="box bg--background">
-      <p><code>.bg--background</code> <span class="text--on-surface">Background with on-surface text</span></p>
+      <p>
+        <code>.bg--background</code>
+        <span class="text--on-surface">Background with on-surface text</span>
+      </p>
     </div>
   </section>
 
@@ -171,11 +230,17 @@
       <button class="focus-ring--tertiary">Tertiary Focus Ring</button>
     </div>
   </section>
-  
+
   <section>
     <h2 class="text--secondary">Light/Dark Mode Switch</h2>
-    <p class="note">This site uses the CSS light-dark() function to automatically switch between color modes based on system preference.</p>
-    <p class="note">Open your system settings to toggle between light and dark mode to see the changes.</p>
+    <p class="note">
+      This site uses the CSS light-dark() function to automatically switch
+      between color modes based on system preference.
+    </p>
+    <p class="note">
+      Open your system settings to toggle between light and dark mode to see the
+      changes.
+    </p>
   </section>
 </main>
 
@@ -191,10 +256,11 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    border-bottom: 1px solid var(--color-neutral-container);
+    border-bottom: 1px solid var(--neutral-container);
     padding-bottom: var(--spacing-md);
   }
-  h1, h2 {
+  h1,
+  h2 {
     margin: 0 0 var(--spacing-sm) 0;
   }
   h3 {
@@ -236,8 +302,11 @@
     font-style: italic;
   }
   .box {
+    display: flex;
+    flex-direction: column;
     gap: var(--spacing-xs);
     padding: var(--spacing-s);
     border-radius: var(--radius-2);
-    margin-block-start: var(--spacing-s);  }
+    margin: var(--spacing-s) 0;
+  }
 </style>

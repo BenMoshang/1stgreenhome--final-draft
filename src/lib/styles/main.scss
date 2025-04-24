@@ -23,3 +23,102 @@
 
 // ---- COMPONENTS ----
 @forward 'components';
+ :root {
+    --brute-border-radius: 1rem;
+    --brute-primary: oklch(72.3% 0.219 149.579);
+    --brute-secondary: oklch(52.7% 0.154 150.069);
+    --brute-tertiary: oklch(39.3% 0.095 152.535);
+    --brute-tertiary--opacity: oklch(39.3% 0.095 152.535 / 0.35);
+
+    --brute-primary--neu: linear-gradient(145deg in oklch, #55d466, #47b256);
+
+    --brute-secondary--neu: linear-gradient(145deg in oklch, #378943, #2e7339);
+  }
+
+ 
+  .brute__text--primary {
+    color: var(--brute-primary);
+  }
+
+  .brute__text--secondary {
+    color: var(--brute-secondary);
+  }
+
+  .brute__text--tertiary {
+    color: var(--brute-tertiary);
+  }
+  .brute__bg--primary {
+    background-color: var(--brute-primary);
+  }
+
+  .brute__bg--secondary {
+    background-color: var(--brute-secondary);
+  }
+
+  .brute__bg--tertiary {
+    background-color: var(--brute-tertiary);
+  }
+
+  .brute__label {
+    @extend %u_label;
+    color: var(--brute-tertiary);
+    inline-size: fit-content;
+    padding-inline: var(--size-sm);
+    padding-block: var(--size-xs);
+    background: #B3C3B7;
+    border-radius: var(--brute-border-radius);
+    margin-block-end: var(--margin-sm);
+  }
+
+  .brute__button {
+    @extend %u_heading--bold;
+
+    color: oklch(100% 0 0);
+
+    display: flex;
+    gap: var(--size-xs);
+    align-items: center;
+    padding-inline: var(--size-md);
+    padding-block: var(--size-sm);
+    border: unset;
+    isolation: isolate;
+    border-radius: var(--brute-border-radius);
+    z-index: 1;
+    background: var(--brute-secondary--neu);
+    position: relative;
+    box-shadow: var(--shadow-md);
+    transition: all 250ms;
+    overflow: hidden;
+
+    & svg {
+      inline-size: var(--size-md);
+      block-size: var(--size-md);
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      border-radius: var(--brute-border-radius);
+      background: var(--brute-primary--neu);
+      z-index: -1;
+      box-shadow: inherit;
+      transition: all 250ms;
+    }
+    &:hover {
+      &::before {
+        width: 100%;
+      }
+    }
+  }
+  .max-ch-25{
+    max-inline-size: 25ch;
+  }
+  .max-ch-65{
+    max-inline-size: 65ch;
+  }
+.max-ch-45{
+  max-inline-size: 45ch;
+}

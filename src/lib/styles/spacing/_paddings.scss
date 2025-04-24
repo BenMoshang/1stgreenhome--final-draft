@@ -1,5 +1,5 @@
 @use 'sass:map';
-
+@use '../base/scale' as scale;
 /**
  * ===========================================================================
  * primitive
@@ -12,7 +12,7 @@ $padding-sizes: ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl');
 $padding-map: (
   'top': 'padding-block-start',
   'right': 'padding-inline-end',
-  'bottom': 'padding-block-end',
+  'bottom': 'padding-block-end',  
   'left': 'padding-inline-start',
   'block': 'padding-block',
   'inline': 'padding-inline'
@@ -23,13 +23,38 @@ $padding-map: (
 @each $direction, $property in $padding-map {
   
   @each $size in $padding-sizes {
-    .p-#{$direction}__#{$size} {
+    .u_p-#{$direction}__#{$size} {
       #{$property}: var(--size-#{$size});
     }
 
   }
 }
-
+// Padding utilities
+@each $size in $padding-sizes {
+  .u_p-top__#{$size} {
+    padding-block-start: var(--size-#{$size});
+  }
+  
+  .u_p-right__#{$size} {
+    padding-inline-end: var(--size-#{$size});
+  }
+  
+  .u_p-bottom__#{$size} {
+    padding-block-end: var(--size-#{$size});
+  }
+  
+  .u_p-left__#{$size} {
+    padding-inline-start: var(--size-#{$size});
+  }
+  
+  .u_p-block__#{$size} {
+    padding-block: var(--size-#{$size});
+  }
+  
+  .u_p-inline__#{$size} {
+    padding-inline: var(--size-#{$size});
+  }
+}
 /**
  * ===========================================================================
  * semantic
@@ -37,53 +62,53 @@ $padding-map: (
  * Padding size tokens
  */
 .u_section__xs {
-  padding-block: size('lg');
-  padding-inline: size('lg');
+  padding-block: scale.size('lg');
+  padding-inline: scale.size('lg');
 }
 
 .u_section__sm {
-  padding-block: size('xl');
-  padding-inline: size('lg');
+  padding-block: scale.size('xl');
+  padding-inline: scale.size('lg');
 }
 
 .u_section__md {
-  padding-block: size('2xl');
-  padding-inline: size('2xl');
+  padding-block: scale.size('2xl');
+  padding-inline: scale.size('2xl');
 }
 
 .u_section__lg {
-  padding-block: size('2xl');
-  padding-inline: size('lg');
+  padding-block: scale.size('2xl');
+  padding-inline: scale.size('lg');
 }
 
 .u_section__xl {
-  padding-block: size('3xl');
-  padding-inline: size('lg');
+  padding-block: scale.size('3xl');
+  padding-inline: scale.size('lg');
 }
 
 @media screen and (min-width: 62rem) {
   .u_section__xs {
-    padding-block: size('lg');
-    padding-inline: size('2xl');
-  }
+    padding-block: scale.size('lg');
+    padding-inline: scale.size('2xl');
+  } 
 
   .u_section__sm {
-    padding-block: size('xl');
-    padding-inline: size('2xl');
+    padding-block: scale.size('xl');
+    padding-inline: scale.size('2xl');
   }
 
   .u_section__md {
-    padding-block: size('2xl');
-    padding-inline: size('2xl');
+    padding-block: scale.size('2xl');
+    padding-inline: scale.size('2xl');
   }
 
   .u_section__lg {
-    padding-block: size('3xl');
-    padding-inline: size('2xl');
+    padding-block: scale.size('3xl');
+    padding-inline: scale.size('2xl');
   }
 
   .u_section__xl {
-    padding-block: size('4xl');
-    padding-inline: size('2xl');
+    padding-block: scale.size('4xl');
+    padding-inline: scale.size('2xl');
   }
 }

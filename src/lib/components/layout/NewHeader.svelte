@@ -107,14 +107,10 @@
     - Include CTA button in mobile navigation
 -->
 <header
-  class="header p-block__sm p-inline__sm"
+  class="header u_p-inline__sm u_p-block__xs"
   class:header--hidden={isHeaderHidden}
 >
-  <a
-    class="header__logo-container text--secondary"
-    href="/"
-    aria-label="Homepage"
-  >
+  <a class="header__logo-container" href="/" aria-label="Homepage">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -157,7 +153,7 @@
         <li class="header__nav--mobile-route">
           <a
             href="{link.link}#{link.fragment}"
-            class="heading--bold text--primary focus-ring--primary {link.class}"
+            class="typography--primary focus-ring--primary {link.class}"
           >
             {link.text}
           </a>
@@ -225,7 +221,7 @@
     justify-content: space-between;
     align-items: center;
     inline-size: 100%;
-    min-block-size: 2rem;
+    block-size: size('2xl');
     max-inline-size: $PAGE_MAX_INLINE;
     z-index: var(--_z-index-header);
 
@@ -234,21 +230,19 @@
     }
 
     &__logo-container {
-      --_size: #{size('xl')};
+      flex-shrink: 0;
+      --_size: #{size('2xl')};
       inline-size: var(--_size);
       block-size: var(--_size);
-      flex-shrink: 0;
-
+      align-self: flex-start;
       &-image {
+        opacity: 0.83;
+        color: var(--brute-secondary);
         inline-size: 100%;
         block-size: 100%;
         object-fit: cover;
         aspect-ratio: 1/1;
-        mix-blend-mode: difference;
-        filter: saturate(1.2) contrast(1.1);
-        transition:
-          filter 0.3s ease,
-          mix-blend-mode 0.3s ease;
+        mix-blend-mode: overlay;
 
         &:hover {
           filter: saturate(1.5) brightness(1.1);
@@ -289,14 +283,8 @@
         pointer-events: none;
         visibility: hidden;
 
-        transition:
-          transform 0.3s ease,
-          opacity 0.3s ease,
-          visibility 0.3s ease;
-
         &--open {
           visibility: visible;
-          transform: translateX(0);
           opacity: 1;
           pointer-events: auto;
         }
@@ -305,7 +293,7 @@
           flex-direction: column;
           justify-content: center;
 
-          gap: var(--spacing-md);
+          gap: var(--gap-md);
 
           align-items: center;
           text-align: center;
@@ -321,6 +309,8 @@
     }
 
     &__burger {
+      flex-shrink: 0;
+      opacity: 0.83;
       --_size: #{size('xl')};
       z-index: var(--_z-index-burger);
       display: flex;
@@ -335,24 +325,21 @@
         display: none;
       }
       svg {
-        object-fit: contain;
+        fill: none;
+        object-fit: cover;
         width: 100%;
         height: 100%;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .line {
-        color: var(--secondary);
-        fill: none;
+         color: var(--brute-tertiary);
+
         stroke: currentColor;
         stroke-linecap: round;
         stroke-linejoin: round;
-        stroke-width: 3;
-        mix-blend-mode: difference;
-        filter: saturate(1.2) contrast(1.1);
+        stroke-width: 2;
         transition:
-          filter 0.3s ease,
-          mix-blend-mode 0.3s ease,
           stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1),
           stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       }
@@ -376,12 +363,12 @@
   .blur-fade-in {
     --easing-smooth: cubic-bezier(0.32, 0.72, 0, 1);
     animation: blur-fade-in var(--transition-fade-in, 0.5s) var(--easing-smooth)
-      both;
+      forwards;
   }
   .blur-fade-out {
     --easing-smooth: cubic-bezier(0.32, 0.72, 0, 1);
     animation: blur-fade-out var(--transition-standard, 0.3s)
-      var(--easing-smooth) both;
+      var(--easing-smooth) forwards;
     pointer-events: none;
   }
 
@@ -390,11 +377,13 @@
       opacity: 0;
       filter: blur(8px);
       visibility: visible;
+      transform: translateY(-10px);
     }
     100% {
       opacity: 1;
       filter: blur(0);
       visibility: visible;
+      transform: translateY(0);
     }
   }
   @keyframes blur-fade-out {
@@ -402,11 +391,13 @@
       opacity: 1;
       filter: blur(0);
       visibility: visible;
+      transform: translateY(0);
     }
     100% {
       opacity: 0;
       filter: blur(8px);
       visibility: hidden;
+      transform: translateY(-10px);
     }
   }
 </style>

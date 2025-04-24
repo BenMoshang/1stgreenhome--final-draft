@@ -3,116 +3,48 @@
 // Define line height from typography system
 $line-height: globals.$MAJOR-HALF;
 
-:root {
-  // Harmonized line-height-adjustment scale based on typography metrics
-  --line-height-adjustment-2xs: #{globals.round-to(1em * $line-height * globals.$MINOR-QUARTER)};
-  --line-height-adjustment-xs: #{globals.round-to(1em * $line-height * globals.$MINOR-HALF)};
-  --line-height-adjustment-sm: #{globals.round-to(1em * $line-height * globals.$MINOR)};
-  --line-height-adjustment-md: #{globals.round-to($line-height * globals.size('md'))};
-  --line-height-adjustment-lg: #{globals.round-to($line-height * globals.size('lg'))};
-  --line-height-adjustment-xl: #{globals.round-to($line-height * globals.size('xl'))};
-  --line-height-adjustment-2xl: #{globals.round-to($line-height * globals.size('2xl'))};
-}
-
-// Helper function to get line-height-adjustment variable value
-@function line-height-adjustment($key) {
-  @if $key == '2xs' {
-    @return var(--line-height-adjustment-2xs);
-  } @else if $key == 'xs' {
-    @return var(--line-height-adjustment-xs);
-  } @else if $key == 'sm' {
-    @return var(--line-height-adjustment-sm);
-  } @else if $key == 'md' {
-    @return var(--line-height-adjustment-md);
-  } @else if $key == 'lg' {
-    @return var(--line-height-adjustment-lg);
-  } @else if $key == 'xl' {
-    @return var(--line-height-adjustment-xl);
-  } @else if $key == '2xl' {
-    @return var(--line-height-adjustment-2xl);
-  } @else {
-    @error "Unknown line-height-adjustment key: #{$key}";
-    @return 0;
-  }
-}
-
+// Mixin: compute CSS vars for margins based on a given line-height
 @mixin adjust-to($line-height) {
   @if not unitless($line-height) {
     @error '#{$line-height} is not dimensionless';
   }
-  
-  // Updated to use the centralized line-height-adjustment variable names
-  // while keeping the calculation logic for backward compatibility
-  --line-height-adjustment-2xs: #{globals.round-to(1em * $line-height * globals.$MINOR-QUARTER)};
-  --line-height-adjustment-xs: #{globals.round-to(1em * $line-height * globals.$MINOR-HALF)};
-  --line-height-adjustment-sm: #{globals.round-to(1em * $line-height * globals.$MINOR)};
-  --line-height-adjustment-md: #{globals.round-to($line-height * globals.size('md'))};
-  --line-height-adjustment-lg: #{globals.round-to($line-height * globals.size('lg'))};
-  --line-height-adjustment-xl: #{globals.round-to($line-height * globals.size('xl'))};
-  --line-height-adjustment-2xl: #{globals.round-to($line-height * globals.size('2xl'))};
+  --margin-2xs: #{globals.round-to(1em * $line-height * globals.$MINOR-QUARTER)};
+  --margin-xs: #{globals.round-to(1em * $line-height * globals.$MINOR-HALF)};
+  --margin-sm: #{globals.round-to(1em * $line-height * globals.$MINOR)};
+  --margin-md: #{globals.round-to($line-height * globals.size('md'))};
+  --margin-lg: #{globals.round-to($line-height * globals.size('lg'))};
+  --margin-xl: #{globals.round-to($line-height * globals.size('xl'))};
+  --margin-2xl: #{globals.round-to($line-height * globals.size('2xl'))};
 }
 
-// line-height-adjustment sizes
-$line-height-adjustment-sizes: (
-  '2xs': size('2xs'),
-  'xs': size('xs'),
-  'sm': size('sm'),
-  'md': size('md'),
-  'lg': size('lg'),
-  'xl': size('xl'),
-  '2xl': size('2xl')
-);
+// Base: compute CSS vars at root using default typography line-height
+:root {
+  @include adjust-to(globals.$MAJOR-HALF);
+}
 
 // Margin utilities
-@each $size, $value in $line-height-adjustment-sizes {
+@each $size in ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl') {
   .u_m-top__#{$size} {
-    margin-block-start: $value;
+    margin-block-start: var(--margin-#{$size});
   }
   
   .u_m-right__#{$size} {
-    margin-inline-end: $value;
+    margin-inline-end: var(--margin-#{$size});
   }
   
   .u_m-bottom__#{$size} {
-    margin-block-end: $value;
+    margin-block-end: var(--margin-#{$size});
   }
   
   .u_m-left__#{$size} {
-    margin-inline-start: $value;
+    margin-inline-start: var(--margin-#{$size});
   }
   
   .u_m-block__#{$size} {
-    margin-block: $value;
+    margin-block: var(--margin-#{$size});
   }
   
   .u_m-inline__#{$size} {
-    margin-inline: $value;
-  }
-}
-
-// Padding utilities
-@each $size, $value in $line-height-adjustment-sizes {
-  .u_p-top__#{$size} {
-    padding-block-start: $value;
-  }
-  
-  .u_p-right__#{$size} {
-    padding-inline-end: $value;
-  }
-  
-  .u_p-bottom__#{$size} {
-    padding-block-end: $value;
-  }
-  
-  .u_p-left__#{$size} {
-    padding-inline-start: $value;
-  }
-  
-  .u_p-block__#{$size} {
-    padding-block: $value;
-  }
-  
-  .u_p-inline__#{$size} {
-    padding-inline: $value;
+    margin-inline: var(--margin-#{$size});
   }
 }
