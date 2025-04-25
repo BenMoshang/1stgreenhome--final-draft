@@ -1,84 +1,54 @@
-// styles/appearance/_shadows.scss
 
-@use 'sass:map';
-
-//apply-shadow mixin
-
-// 1. Define shadow values in a Sass map for maintainability
-
-$_shadow-definitions: (
-  'xs': (
-    0 1px 2px 0 rgba(0, 0, 0, 0.05),
-  ),
-  'sm': (
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
-    0 1px 2px -1px rgba(0, 0, 0, 0.1),
-  ),
-  'md': (
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1),
-  ),
-  'lg': (
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1),
-  ),
-  'xl': (
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 8px 10px -6px rgba(0, 0, 0, 0.1),
-  ),
-  '2xl': (
-    0 25px 50px -12px rgba(0, 0, 0, 0.25),
-  ), // Add more shadows here if needed
-);
-
-// 2. Generate CSS Custom Properties from the map
 :root {
-  @each $name, $value in $_shadow-definitions {
 
-    // Output as --shadow-xs, --shadow-sm, etc.
-    --shadow-#{$name}: #{$value};
+  --shadow-color: 0deg 0% 0%; 
+
+  // Low elevation shadow - subtle, for elements close to the page
+  --shadow-elevation-low:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.08),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.08),
+    0.9px 1.8px 2.3px -2.4px hsl(var(--shadow-color) / 0.08);
+
+  // Medium elevation shadow - noticeable, for standard interactive elements
+  --shadow-elevation-medium:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.08),
+    0.8px 1.5px 1.9px -0.8px hsl(var(--shadow-color) / 0.08),
+    1.8px 3.6px 4.6px -1.6px hsl(var(--shadow-color) / 0.08),
+    4.4px 8.8px 11.1px -2.4px hsl(var(--shadow-color) / 0.08);
+
+  // High elevation shadow - strong, for modals, popovers, floating elements
+  --shadow-elevation-high:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.07),
+    1.2px 2.3px 2.9px -0.4px hsl(var(--shadow-color) / 0.07),
+    2.1px 4.3px 5.4px -0.7px hsl(var(--shadow-color) / 0.07),
+    3.4px 6.9px 8.7px -1px hsl(var(--shadow-color) / 0.07),
+    5.4px 10.9px 13.8px -1.4px hsl(var(--shadow-color) / 0.07),
+    8.4px 16.9px 21.4px -1.8px hsl(var(--shadow-color) / 0.08),
+    12.8px 25.5px 32.3px -2.1px hsl(var(--shadow-color) / 0.08),
+    18.8px 37.5px 47.5px -2.4px hsl(var(--shadow-color) / 0.08);
+}
+
+
+
+
+@mixin apply-shadow($level: 'md') { // Default to medium
+  @if $level == 'sm' {
+    box-shadow: var(--shadow-elevation-low);
+  } @else if $level == 'md' {
+    box-shadow: var(--shadow-elevation-medium);
+  } @else if $level == 'lg' {
+    box-shadow: var(--shadow-elevation-high);
+  } @else {
+    @warn "Invalid shadow level '#{$level}'. Expected 'low', 'medium', or 'high'. Using 'medium'.";
+    box-shadow: var(--shadow-elevation-medium);
   }
 }
-
-// 3. Define mixins that apply the CSS Custom Properties
-
-//    (Keeps the original mixin names for compatibility)
-
-%shadow__xs {
-  box-shadow: var(--shadow-xs);
+.shadow-sm {
+  @include apply-shadow('sm');
 }
-
-%shadow__sm {
-  box-shadow: var(--shadow-sm);
+.shadow-md {
+  @include apply-shadow('md');
 }
-
-%shadow__md {
-  box-shadow: var(--shadow-md);
-}
-
-%shadow__lg {
-  box-shadow: var(--shadow-lg);
-}
-
-%shadow__xl {
-  box-shadow: var(--shadow-xl);
-}
-
-%shadow__2xl {
-  box-shadow: var(--shadow-2xl);
-}
-
-@mixin apply-shadow($size) {
-  @if not map.has-key($_shadow-definitions, $size) {
-    @error "Invalid shadow size '#{$size}'. Expected one of: #{map.keys($_shadow-definitions)}";
-  }
-
-  @extend %shadow__#{$size};
-}
-
-// 4. Shadow utility classes
-@each $name in map.keys($_shadow-definitions) {
-  .shadow-#{$name} {
-    @include apply-shadow($name);
-  }
+.shadow-lg {
+  @include apply-shadow('lg');
 }

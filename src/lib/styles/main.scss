@@ -23,13 +23,55 @@
 
 // ---- COMPONENTS ----
 @forward 'components';
- :root {
+
+
+// Improved gradient text with seamless animation
+@mixin gradient-text-animated($duration: 8s, $size: 200%) {
+   --gradient-text: linear-gradient(
+    145deg,
+    var(--brute-secondary) 20%,
+     var(--brute-primary) 40%,
+    var(--brute-primary) 60%,
+     var(--brute-primary) 80%,
+       var(--brute-secondary) 100%
+  );
+  background-image: var(--gradient-text);
+  background-size: $size $size;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-loop $duration ease-in-out infinite;
+  will-change: background-position;
+  
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------
+   Gradient Animation Keyframes - Improved for seamless looping
+   -------------------------------------------------- */
+@keyframes gradient-loop {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+:root {
     --brute-border-radius: 1rem;
     --brute-primary: oklch(72.3% 0.219 149.579);
     --brute-secondary: oklch(52.7% 0.154 150.069);
     --brute-tertiary: oklch(39.3% 0.095 152.535);
     --brute-tertiary--opacity: oklch(39.3% 0.095 152.535 / 0.35);
-
+    --brute-secondary--opacity: oklch(52.7% 0.154 150.069 / 0.35);
     --brute-primary--neu: linear-gradient(145deg in oklch, #55d466, #47b256);
 
     --brute-secondary--neu: linear-gradient(145deg in oklch, #378943, #2e7339);
@@ -65,9 +107,10 @@
     inline-size: fit-content;
     padding-inline: var(--size-sm);
     padding-block: var(--size-xs);
-    background: #B3C3B7;
+    background: #dae8dc;
     border-radius: var(--brute-border-radius);
-    margin-block-end: var(--margin-sm);
+    margin-block-end: var(--margin-xs);
+    box-shadow: var(--shadow-elevation-low)
   }
 
   .brute__button {
@@ -84,9 +127,11 @@
     isolation: isolate;
     border-radius: var(--brute-border-radius);
     z-index: 1;
-    background: var(--brute-secondary--neu);
+    background: var(--brute-primary--neu);
     position: relative;
-    box-shadow: var(--shadow-md);
+ box-shadow:
+			var(--shadow-elevation-medium),
+			inset 0 0.0625rem 0 rgba(255, 255, 255, 0.5);
     transition: all 250ms;
     overflow: hidden;
 
@@ -102,7 +147,7 @@
       height: 100%;
       width: 0;
       border-radius: var(--brute-border-radius);
-      background: var(--brute-primary--neu);
+      background: var(--brute-secondary--neu);
       z-index: -1;
       box-shadow: inherit;
       transition: all 250ms;
@@ -113,8 +158,8 @@
       }
     }
   }
-  .max-ch-25{
-    max-inline-size: 25ch;
+  .max-ch-20{
+    max-inline-size: 20ch;
   }
   .max-ch-65{
     max-inline-size: 65ch;

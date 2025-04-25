@@ -15,14 +15,18 @@
 }
 html {
   /* fill the viewport */
+  
   inline-size: 100%;
-  block-size: 100svh;         /* full “small” viewport height */
+  block-size: 100svh;        /* full dynamic viewport height */
   margin: 0;                  /* reset any default */
   scroll-behavior: smooth;
-  scrollbar-color: var(--primary) var(--surface);
-  scrollbar-track-color: var(--surface);
+  scrollbar-color: var(--brute-primary);
+  scrollbar-track-color: var(--brute-tertiary);
   scrollbar-width: thin;
-
+background: light-dark(
+   hsl(0, 0%, 98%), hsl(0, 0%, 7%)
+   
+  );
   /* Enable keyword animations for those who allow motion */
   @media (prefers-reduced-motion: no-preference) {
     interpolate-size: allow-keywords;
@@ -42,7 +46,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricprecision;
-
   /* prevent horizontal overflow */
   overflow-inline: clip;
 }
@@ -55,7 +58,7 @@ body {
 :where(dt, dd, li, p, h1, h2, h3, h4, h5, h6) {
   margin: 0;
   font: inherit;
-  overflow-wrap: break-word; /* Avoid text overflows */
+  // overflow-wrap: break-word; 
 }
 
 /* Reset lists */
@@ -108,28 +111,16 @@ address {
    ========================================================================== */
 
 /* Improve text wrapping for headings and paragraphs */
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word; /* Already set above, but good to see here */
-}
+// p,
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   overflow-wrap: break-word; 
+// }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  text-wrap: balance; /* Attempt to balance line lengths */
-}
-
-p {
-  text-wrap: pretty; /* Improve paragraph line breaking */
-}
 
 /* ==========================================================================
    5. Link Styling

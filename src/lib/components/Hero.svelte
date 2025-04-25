@@ -17,6 +17,7 @@
     subtitle2: string;
     // benefits seem unused in the template, remove if not needed elsewhere
     benefit1: string;
+
     benefit2: string;
     benefit3: string;
     button: string;
@@ -258,7 +259,7 @@
         inline-size: var(--background-dimensions);
         inset-block-start: var(--background-abs-pos);
         inset-inline-start: var(--background-abs-pos);
-        transform: translateX(0.5rem) scaleX(-1); // primitive-spacing(xs)
+        transform: translateX(0.5rem) scaleX(-1);
       }
 
       &::before {

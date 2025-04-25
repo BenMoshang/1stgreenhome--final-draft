@@ -112,6 +112,8 @@ $primitives: (
   'md': round-to(1em * math.pow($SCALE, 0)),
   'lg': round-to(1em * math.pow($SCALE, 1)),
   'xl': round-to(1em * math.pow($SCALE, 2)),
+  'custom': round-to(1em * math.pow($SCALE, 2.5)),
+
   '2xl': round-to(1em * math.pow($SCALE, 3)),
   '3xl': round-to(1em * math.pow($SCALE, 4)),
   '4xl': round-to(1em * math.pow($SCALE, 5)),

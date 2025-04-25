@@ -1,12 +1,7 @@
-<script lang="ts">
-  // These would be imports for other sections once migrated
-  // import Stepper from '$lib/components/sections/Stepper.svelte';
-  // import Partners from '$lib/components/sections/Partners.svelte';
-  // import Faqs from '$lib/components/sections/Faqs.svelte';
-  // import Cta from '$lib/components/sections/Cta.svelte';
+<script lang="ts" runes>
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
-  // For handling fragment navigation (similar to Angular's fragment handling)
-  import FontTesting from '$lib/styles/FontTesting.svelte';
+  import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
+  // import FontTesting from '$lib/styles/FontTesting.svelte';
   import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
@@ -43,7 +38,12 @@
 </script>
 
 <main class="page-container">
-  <NewHero />
+  <div class="leaves-background-container">
+    <NewHero />
+    <!-- <NewServiceSection /> -->
+    <div class="leaves-background"></div>
+  </div>
+
   <!-- <FontTesting /> -->
   <div class="gradient-background-container">
     <!-- <Services /> -->
@@ -54,50 +54,57 @@
 </main>
 
 <style lang="scss">
-  .page-container {
-    position: relative;
-    z-index: 1;
+  %flex-column-center {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    block-size: 100%;
-    inline-size: 100%;
-    margin-inline: auto;
-
-    & > * {
-      flex: 1;
-    }
   }
 
-  .gradient-background-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .page-container {
+    padding-top: size('2xl');
+    @extend %flex-column-center;
     inline-size: 100%;
+    // min-block-size: 100svh;
+    block-size: 100%;
+
+    margin-inline: auto;
+  }
+
+  :is(.leaves-background-container, .gradient-background-container) {
+    @extend %flex-column-center;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .leaves-background {
+    position: sticky;
+    transform-style: preserve-3d; // Essential: Enables 3D positioning for children
+    inset: 0;
+    // Add specific styles:
+    background: url('/assets/landing-page/leaves.svg') repeat center center;
+    background-size: cover;
+    opacity: 0.15;
+    filter: brightness(1.4) saturate(0.5);
+    z-index: -2;
+    block-size: 100%; // Or consider 100dvh for better dynamic height
+    inline-size: 100%;
+
+    @media (prefers-color-scheme: dark) {
+      filter: brightness(0.4) saturate(0.5);
+    }
   }
 
   .gradient-background {
-    position: absolute;
-    z-index: -10;
-    inset-block-start: 0;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    background: url('/assets/landing-page/gradient-background.svg') no-repeat
-      center/cover fixed;
-    block-size: 100%;
-    inline-size: 100vw;
-    filter: brightness(0.75) saturate(1.5);
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url('/assets/landing-page/leaves.svg') no-repeat center/cover
-        fixed;
-      filter: contrast(0.7) brightness(0.3);
-      opacity: 0.2;
-    }
+    // position: absolute;
+    // z-index: -10;
+    // inset-block-start: 0;
+    // inset-inline-start: 50%;
+    // transform: translateX(-50%);
+    // background: url('/assets/landing-page/gradient-background.svg') no-repeat
+    //   center/cover fixed;
+    // block-size: 100%;
+    // inline-size: 100%;
+    // filter: brightness(0.75) saturate(1.5);
   }
 </style>

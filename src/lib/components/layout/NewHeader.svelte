@@ -95,19 +95,8 @@
   });
 </script>
 
-<!-- 
-  Navigation TODOs:
-  - Desktop: 
-    - Assign routes to navigation links
-    - Apply utility classes for route colors
-  - Mobile:
-    - Add text animation effects
-    - Apply big utility text classes
-    - Consider adding background behind mobile menu
-    - Include CTA button in mobile navigation
--->
 <header
-  class="header u_p-inline__sm u_p-block__xs"
+  class="header u_p-inline__xs u_p-block__xs u_container__sm"
   class:header--hidden={isHeaderHidden}
 >
   <a class="header__logo-container" href="/" aria-label="Homepage">
@@ -143,17 +132,17 @@
   <nav
     bind:this={mobileNavContainer}
     id="navigation"
-    class="header__nav--mobile {animationClass}"
+    class={`header__nav--mobile ${animationClass}`}
     class:header__nav--mobile--open={isMenuOpen}
-    onanimationend={onAnimationEnd}
+    on:animationend={onAnimationEnd}
     aria-label="Primary mobile navigation"
   >
     <ul class="header__nav--mobile-list">
       {#each routes as link}
         <li class="header__nav--mobile-route">
           <a
-            href="{link.link}#{link.fragment}"
-            class="typography--primary focus-ring--primary {link.class}"
+            href={link.link + '#' + link.fragment}
+            class={`u_display-1--bold typography--primary ${link.class ?? ''}`}
           >
             {link.text}
           </a>
@@ -166,9 +155,8 @@
       {#each routes as link}
         <li>
           <a
-            href="{link.link}#{link.fragment}"
-            class="header__nav-desktop-route body text--secondary hover:text--primary focus-ring--secondary {link.class ||
-              ''}"
+            href={link.link + '#' + link.fragment}
+            class={`header__nav-desktop-route u_subheading typography--primary ${link.class ?? ''}`}
             tabindex="0"
           >
             <span>{@html link.text}</span>
@@ -180,7 +168,7 @@
   <!-- Burger -->
   <button
     bind:this={burgerButton}
-    onclick={toggleMenu}
+    on:click={toggleMenu}
     class="header__burger"
     class:header__burger--open={isMenuOpen}
     aria-expanded={isMenuOpen}
@@ -211,7 +199,6 @@
     --_z-index-header: 1000;
     --_z-index-burger: 2000;
     --_z-index-nav: 1000;
-
     position: fixed;
     top: 0;
     left: 0;
@@ -222,15 +209,10 @@
     align-items: center;
     inline-size: 100%;
     block-size: size('2xl');
-    max-inline-size: $PAGE_MAX_INLINE;
     z-index: var(--_z-index-header);
-
-    &--hidden {
-      opacity: 0;
-    }
+    background: transparent !important;
 
     &__logo-container {
-      flex-shrink: 0;
       --_size: #{size('2xl')};
       inline-size: var(--_size);
       block-size: var(--_size);
@@ -242,7 +224,6 @@
         block-size: 100%;
         object-fit: cover;
         aspect-ratio: 1/1;
-        mix-blend-mode: overlay;
 
         &:hover {
           filter: saturate(1.5) brightness(1.1);
@@ -256,13 +237,21 @@
         @include respond-to('tablet-end') {
           display: unset;
         }
-        &-route {
-          @extend %u_subheading;
-        }
         &-list {
           list-style: none;
           display: flex;
-          gap: var(--spacing-md);
+          gap: var(--spacing-lg);
+          @extend %typography--primary;
+          @extend %u_callout;
+
+          & li:last-child a {
+            color: var(--brute-primary);
+            font-weight: 700;
+
+            &:hover {
+              filter: brightness(1.2);
+            }
+          }
         }
       }
 
@@ -271,18 +260,15 @@
         justify-content: center;
         align-items: center;
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         margin-inline: auto;
         width: 100%;
-        height: 100vh;
+        height: 100svh;
         z-index: var(--_z-index-nav);
         opacity: 0;
         pointer-events: none;
         visibility: hidden;
-
+        backdrop-filter: blur(1.25rem);
         &--open {
           visibility: visible;
           opacity: 1;
@@ -291,15 +277,26 @@
         &-list {
           display: flex;
           flex-direction: column;
-          justify-content: center;
 
           gap: var(--gap-md);
 
-          align-items: center;
-          text-align: center;
-
           opacity: 0;
           transition: opacity 0.2s ease 0.1s;
+          z-index: 999;
+
+          & li {
+            padding: size('sm');
+          }
+          & * + * {
+            border-top: 1px solid var(--brute-tertiary);
+          }
+          & li:last-child a {
+            color: var(--brute-primary);
+
+            &:hover {
+              filter: brightness(1.2);
+            }
+          }
         }
 
         &--open .header__nav--mobile-list {
@@ -309,7 +306,6 @@
     }
 
     &__burger {
-      flex-shrink: 0;
       opacity: 0.83;
       --_size: #{size('xl')};
       z-index: var(--_z-index-burger);
@@ -333,7 +329,7 @@
       }
 
       .line {
-         color: var(--brute-tertiary);
+        color: var(--brute-tertiary);
 
         stroke: currentColor;
         stroke-linecap: round;

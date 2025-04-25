@@ -32,6 +32,14 @@
 
 <style lang="scss" global>
   @use '../lib/styles/main.scss' as *;
+  :global(*),
+  :global(*::before),
+  :global(*::after),
+  :global(*::backdrop) {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
 
   .layout-wrapper {
     display: flex;
