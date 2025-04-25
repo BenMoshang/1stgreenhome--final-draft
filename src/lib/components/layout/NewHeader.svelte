@@ -194,7 +194,9 @@
     margin: 0;
     padding: 0;
   }
-
+h1{
+  text-wrap:unset;
+}
   .header {
     --_z-index-header: 1000;
     --_z-index-burger: 2000;
