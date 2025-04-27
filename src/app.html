@@ -71,10 +71,27 @@
 		<link rel="icon" type="image/x-icon" href="%sveltekit.assets%/header/logo4.png" />
 		<link rel="apple-touch-icon" sizes="180x180" href="%sveltekit.assets%/header/logo4.png" />
 
-		<!-- Preconnect for Performance -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+		<!-- Preload local fonts -->
+		<link rel="preload" href="%sveltekit.assets%/fonts/Manrope-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+		<link rel="preload" href="%sveltekit.assets%/fonts/Outfit-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+
+		<style lang="scss">
+			/* Local font faces */
+			@font-face {
+				font-family: 'Manrope';
+				src: url('%sveltekit.assets%/fonts/Manrope-VariableFont_wght.ttf') format('truetype');
+				font-weight: 200 800;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: 'Outfit';
+				src: url('%sveltekit.assets%/fonts/Outfit-VariableFont_wght.ttf') format('truetype');
+				font-weight: 100 900;
+				font-style: normal;
+				font-display: swap;
+			}
+		</style>
 
 		<!-- Structured Data (JSON-LD) -->
 		<script type="application/ld+json">

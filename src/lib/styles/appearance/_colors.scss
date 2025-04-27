@@ -289,6 +289,12 @@ $positions: (light: 8, dark: 6);
     /* Add explicit typography color variables for dark mode */
     --on-surface-container: color-contrast(var(--neutral-container) vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA);
     --on-surface-container-high: color-contrast(var(--neutral-container-high) vs oklch(100% 0 0) to AA, oklch(0% 0 0) to AA);
+
+
+//fix typography colors TODO: FIX
+    --typography--primary: light-dark(oklch(20% 0 0), oklch(90% 0 0));
+    --typography--secondary: light-dark(oklch(35% 0 0), oklch(75% 0 0));
+    --typography--tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
   }
 
 }
@@ -469,36 +475,40 @@ $positions: (light: 8, dark: 6);
 
 .focus-ring--tertiary:focus-visible  { @include focus-ring(var(--tertiary)); }
 
+$text-primary:light-dark(oklch(20% 0 0), oklch(90% 0 0));
+$text-secondary:light-dark(oklch(35% 0 0), oklch(75% 0 0));
+$text-tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
+
 
 %typography--primary{
-  color: light-dark(
-    oklch(20% 0 0),
-    oklch(90% 0 0)
-  );
+  color:$text-primary;
 }
-
-.typography--primary {
-  @extend %typography--primary;
-}
-
 %typography--secondary{
-  color: light-dark(
-    oklch(35% 0 0),
-    oklch(75% 0 0)
-  );
+  color:$text-secondary;
 }
+%typography--tertiary{
+  color:$text-tertiary;
+}
+.typography--primary {
+   color: $text-primary;
+}
+
 
 .typography--secondary {
-  @extend %typography--secondary;
+    color: $text-secondary;
+
 }
 
-%typography--tertiary{
-  color: light-dark(
-    oklch(50% 0 0),
-    oklch(60% 0 0)
-  );
-}
+
 
 .typography--tertiary {
-  @extend %typography--tertiary;
+  color: $text-tertiary;
+
+}
+
+%a-link{
+  color:var(--brute-secondary);
+text-decoration: underline;
+text-decoration-offset: 2px;
+
 }

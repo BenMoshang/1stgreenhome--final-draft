@@ -7,21 +7,21 @@
     title0: string;
     title: string;
     title2: string;
-    subtitle: string;
-    subtitle2: string;
+    body: string;
+    body2: string;
     button: string;
   }
 
-  // Initialize hero data using $state
-  const heroData = $state({
-    label: `SIMPLIFY ENERGY SAVINGS`,
-    title0: ``,
-    title: `Empower Your Business For`,
-    title2: `A Greener Tomorrow`,
-    subtitle: `Save money, cut energy use, and protect the planet. `,
-    subtitle2: `Start with our free energy audit to start your sustainable journey!`,
-    button: `GET STARTED`,
-  });
+const heroData = $state({
+  label: `SIMPLIFY ENERGY SAVINGS`,
+  title0: ``,
+  title: `Empower Your Business For`,
+  title2: `A Greener Tomorrow`,
+  body: `Slash overhead by up to 30 % while proving your commitment to sustainability.`,
+  body2: ` Book a free, no-obligation energy audit and unlock incentive-funded upgrades today.`,
+  button: `GET STARTED`,
+});
+
 
   // Constants for email functionality
   const EMAIL_ADDRESS = $state('info@1stgreenhome.com');
@@ -98,19 +98,19 @@
         {heroData.label}
       </p>
 
-      <h1 class="u_display-1--bold typography--secondary max-ch-20">
+      <h1 class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20">
         {heroData.title0 + heroData.title}
         <span class="gradient-text brute__text--primary">{heroData.title2}</span
         >
       </h1>
 
-      <p class="u_paragraph u_m-top__sm typography--tertiary max-ch-45">
-        {heroData.subtitle + heroData.subtitle2}
+      <p class="u_paragraph u_m-bottom__sm tert typography--tertiary max-ch-45">
+        {heroData.body + heroData.body2}
       </p>
 
       <button
         on:click={handleEmailClick}
-        class="u_m-top__md brute__button"
+        class=" brute__button"
         aria-label="Send email to get started"
       >
         {heroData.button}
@@ -143,7 +143,9 @@
   .gradient-text {
     @include gradient-text-animated(3s);
   }
-
+.tert{
+  @extend %typography--tertiary;
+}
   .hero__container {
     inline-size: 100%;
   }
