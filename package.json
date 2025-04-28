@@ -79,6 +79,7 @@
 	],
 	"dependencies": {
 		"@motionone/dom": "^10.18.0",
-		"lenis": "^1.2.3"
+		"lenis": "^1.2.3",
+		"motion": "^12.9.2"
 	}
 }
