@@ -1,6 +1,28 @@
 <script lang="ts">
   import NewHeader from '$lib/components/layout/NewHeader.svelte';
+  import { onMount, onDestroy } from 'svelte';
+  import Lenis from 'lenis';
   let { children } = $props();
+
+  onMount(() => {
+    const lenis = new Lenis({
+      duration: 0.8,
+      easing: (t: number) => 1 - Math.pow(1 - t, 2), // easeOutQuad for smooth deceleration
+      orientation: 'vertical',
+      gestureOrientation: 'vertical', // match scroll gesture direction
+      smoothWheel: true, // enable smooth wheel scrolling
+      wheelMultiplier: 1.5, // boost scroll-to-wheel sensitivity
+      lerp: 0.08, // smoother interpolation with snappier response
+    });
+    let frameId: number;
+    function animate(time: number) {
+      lenis.raf(time);
+      frameId = requestAnimationFrame(animate);
+    }
+    frameId = requestAnimationFrame(animate);
+
+    onDestroy(() => cancelAnimationFrame(frameId));
+  });
 </script>
 
 <svelte:head>
@@ -12,21 +34,23 @@
 <div class="layout-wrapper">
   <NewHeader />
   {@render children()}
-
-  <!-- <Footer /> -->
 </div>
-<filter id="noiseFilter2">
-  <feTurbulence
-    type="fractalNoise"
-    baseFrequency="0.65"
-    numOctaves="3"
-    stitchTiles="stitch"
-  />
-  <feColorMatrix
-    type="matrix"
-    values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-  />
-</filter>
+<svg width="0" height="0" style="position: absolute;">
+  <defs>
+    <filter id="noiseFilter2">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.65"
+        numOctaves="3"
+        stitchTiles="stitch"
+      />
+      <feColorMatrix
+        type="matrix"
+        values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+      />
+    </filter>
+  </defs>
+</svg>
 
 <!-- SVG filter for noise effect -->
 
@@ -50,36 +74,24 @@
     width: 100%;
     margin: 0 auto;
   }
-  html {
+  :global(html) {
     &::before {
-      position: fixed;
-      z-index: -2;
-      margin: auto;
-      block-size: 100%;
       content: '';
-      filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
-      inline-size: 100%;
+      position: absolute;
+
       inset: 0;
+
+      overflow: clip;
+      z-index: 2;
+      margin: auto;
+      block-size: 100svh;
+      inline-size: 100vw;
+      filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
       opacity: 0.05;
       pointer-events: none;
       transform: translateZ(0);
       will-change: filter;
     }
-    // &::after {
-    //   position: absolute;
-    //   z-index: -1;
-    //   margin: auto;
-    //   background-attachment: fixed;
-    //   background-image: url('/assets/landing-page/leaves.svg');
-    //   background-position: center;
-    //   background-repeat: no-repeat;
-    //   background-size: cover;
-    //   block-size: 100%;
-    //   content: '';
-    //   inline-size: 100%;
-    //   inset: 0;
-    //   opacity: 0.05;
-    // }
   }
 
   :global([data-scroll]) {
@@ -101,18 +113,5 @@
   }
   :global([data-scroll='fade-in'].is-inview) {
     opacity: 1;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    :global(*) {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      scroll-behavior: auto !important;
-      transition-duration: 0.01ms !important;
-    }
-    :global([data-scroll]) {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
-    }
   }
 </style>

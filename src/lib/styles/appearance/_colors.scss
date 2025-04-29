@@ -478,7 +478,10 @@ $positions: (light: 8, dark: 6);
 $text-primary:light-dark(oklch(20% 0 0), oklch(90% 0 0));
 $text-secondary:light-dark(oklch(35% 0 0), oklch(75% 0 0));
 $text-tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
-
+/* Text colors for dark mode (light text on dark surfaces) */
+$text-primary-rev: oklch(95% 0 0);    /* Brightest white for primary text */
+$text-secondary-rev: oklch(85% 0 0);  /* Slightly dimmed for secondary text */
+$text-tertiary-rev: oklch(70% 0 0);   /* More muted for tertiary text */
 
 %typography--primary{
   color:$text-primary;
@@ -489,9 +492,19 @@ $text-tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
 %typography--tertiary{
   color:$text-tertiary;
 }
+%typography--primary-rev{
+  color:$text-primary-rev;
+}
+%typography--secondary-rev{
+  color:$text-secondary-rev;
+}
+%typography--tertiary-rev{
+  color:$text-tertiary-rev;
+}
 .typography--primary {
    color: $text-primary;
 }
+
 
 
 .typography--secondary {
@@ -499,11 +512,21 @@ $text-tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
 
 }
 
-
-
 .typography--tertiary {
   color: $text-tertiary;
 
+}
+
+.typography--primary-rev {
+  color: $text-primary-rev;
+}
+
+.typography--secondary-rev {
+  color: $text-secondary-rev;
+}
+
+.typography--tertiary-rev {
+  color: $text-tertiary-rev;
 }
 
 %a-link{

@@ -12,16 +12,15 @@
     button: string;
   }
 
-const heroData = $state({
-  label: `SIMPLIFY ENERGY SAVINGS`,
-  title0: ``,
-  title: `Empower Your Business For`,
-  title2: `A Greener Tomorrow`,
-  body: `Slash overhead by up to 30 % while proving your commitment to sustainability.`,
-  body2: ` Book a free, no-obligation energy audit and unlock incentive-funded upgrades today.`,
-  button: `GET STARTED`,
-});
-
+  const heroData = $state({
+    label: `SIMPLIFY ENERGY SAVINGS`,
+    title0: ``,
+    title: `Empower Your Business For`,
+    title2: `A Greener Tomorrow`,
+    body: `Slash overhead by up to 30 % while proving your commitment to sustainability.`,
+    body2: ` Book a free, no-obligation energy audit and unlock incentive-funded upgrades today.`,
+    button: `GET STARTED`,
+  });
 
   // Constants for email functionality
   const EMAIL_ADDRESS = $state('info@1stgreenhome.com');
@@ -56,27 +55,6 @@ const heroData = $state({
       }
     }, 500);
   }
-
-  /**
-   * Custom transition function for fade-in-up animation
-   */
-  function fadeInUpTransition(
-    node: Element,
-    { delay = 0, duration = 500, y = 30 } = {}
-  ) {
-    const style = getComputedStyle(node);
-    const transform = style.transform === 'none' ? '' : style.transform;
-
-    return {
-      delay,
-      duration,
-      easing: cubicOut,
-      css: (t: number, u: number) => `
-        opacity: ${t};
-        transform: ${transform} translateY(${y * u}px);
-      `,
-    };
-  }
 </script>
 
 <section id="hero" class="hero__section u_p-inline__md u_p-block__lg">
@@ -98,7 +76,9 @@ const heroData = $state({
         {heroData.label}
       </p>
 
-      <h1 class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20">
+      <h1
+        class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20"
+      >
         {heroData.title0 + heroData.title}
         <span class="gradient-text brute__text--primary">{heroData.title2}</span
         >
@@ -143,9 +123,23 @@ const heroData = $state({
   .gradient-text {
     @include gradient-text-animated(3s);
   }
-.tert{
-  @extend %typography--tertiary;
-}
+  .tert {
+    @extend %typography--tertiary;
+  }
+  .hero__section {
+    position: relative;
+    inline-size: 100%;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      inline-size: 100%;
+      clip-path: ellipse(60% 84.78% at 50% 0%);
+    }
+  }
+
   .hero__container {
     inline-size: 100%;
   }
@@ -172,7 +166,8 @@ const heroData = $state({
   .hero__image-container {
     max-inline-size: 31.25rem;
     max-block-size: 31.25rem;
-    filter: drop-shadow(0 0 0.5rem var(--brute-secondary));
+    filter: drop-shadow(0 0 1rem var(--brute-secondary));
+    animation: pulse-shadow 3s infinite ease-in-out;
     position: relative;
     z-index: 3;
     --background-dimensions: 70%;
@@ -219,5 +214,15 @@ const heroData = $state({
 
   .hero__header {
     inline-size: 100%;
+  }
+
+  @keyframes pulse-shadow {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 0.5rem var(--brute-secondary));
+    }
+    50% {
+      filter: drop-shadow(0 0 1rem var(--brute-secondary));
+    }
   }
 </style>

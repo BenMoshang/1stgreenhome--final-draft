@@ -112,6 +112,17 @@
     margin-block-end: var(--margin-sm);
     box-shadow: var(--shadow-elevation-low)
   }
+  .brute__label-rev {
+    @extend %u_label;
+    color: #dae8dc;
+    inline-size: fit-content;
+    padding-inline: var(--size-sm);
+    padding-block: var(--size-xs);
+    background: var(--brute-tertiary);
+    border-radius: var(--brute-border-radius);
+    margin-block-end: var(--margin-sm);
+    box-shadow: var(--shadow-elevation-low)
+  }
 
   .brute__button {
     @extend %u_heading--bold;
