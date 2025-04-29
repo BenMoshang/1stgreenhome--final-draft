@@ -62,7 +62,10 @@
   }
 </script>
 
-<section id="testimonials" class="testimonials-section">
+<section
+  id="testimonials"
+  class="testimonials-section u_p-inline__md u_p-block__xl u_container__sm"
+>
   <div
     id="testimonials-marquee"
     aria-label="Customer testimonials"
@@ -75,7 +78,7 @@
     onfocusout={resumeMarquee}
   >
     <h2
-      class="testimonials-section__title"
+      class="testimonials-section__title u_m-bottom__lg"
       in:fadeInUpTransition={{ delay: animationDelays.title }}
     >
       {header.title0}
@@ -117,32 +120,35 @@
 
 <style lang="scss">
   .testimonials-section {
-    @extend %flex-col-center;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     block-size: 100%;
-    gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
+    gap: size('xl');
     inline-size: 100%;
     margin-inline: auto;
-    max-inline-size: $PAGE_MAX_WIDTH;
     overflow-inline: clip;
-    padding-block: 5rem;
 
     &__marquee {
-      @extend %flex-col-center;
-      --gap: spacing(not-related);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      --gap: size('xl');
 
       gap: var(--gap);
       inline-size: 100%;
     }
 
     &__title {
-      @extend %h4;
+      @extend %u_title-a;
 
-      color: $light-1;
-      margin-block-end: 2rem;
+      color: $text-primary-rev;
       text-align: center;
 
       &-standout {
+        font-weight: 600;
         animation: gradient-loop 5s ease-in-out infinite;
         background: linear-gradient(
           45deg,
@@ -164,35 +170,11 @@
       display: flex;
       border-radius: var(--border-radius);
       animation: scroll 20s linear infinite;
-      gap: spacing(not-related);
+      gap: size('lg');
 
       &.paused {
         animation-play-state: paused;
       }
-    }
-  }
-
-  /* --------------------------------------------------
-   Media Queries
-   -------------------------------------------------- */
-  @media (prefers-reduced-motion: reduce) {
-    .testimonials-section {
-      &__title-standout {
-        animation: none;
-      }
-
-      &__track {
-        animation: none;
-      }
-    }
-
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      scroll-behavior: auto !important;
-      transition-duration: 0.01ms !important;
     }
   }
 

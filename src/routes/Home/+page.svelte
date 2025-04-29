@@ -2,6 +2,7 @@
   import { parallax } from '$lib/actions/parallax.svelte';
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
   import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
+  import Testimonials from '$lib/components/sections/Testimonials.svelte';
   import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
@@ -44,6 +45,7 @@
   <!-- add round section divider here  -->
   <div class="gradient-background-container">
     <NewServiceSection />
+    <Testimonials />
   </div>
   <!-- add round section divider here  -->
 </main>
@@ -99,5 +101,17 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
+    @include respond-to('tablet-end') {
+      background-image: radial-gradient(
+        circle at top right,
+        var(--brute-primary) 10%,
+        var(--brute-secondary) 60%,
+        var(--brute-tertiary) 100%
+      );
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
 </style>

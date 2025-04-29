@@ -75,6 +75,14 @@
     margin: 0 auto;
   }
   :global(html) {
+    scrollbar-color: var(--brute-secondary) transparent;
+    scrollbar-width: thin;
+    background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
+
+    ::selection {
+      background: var(--brute-tertiary);
+      color: white;
+    }
     &::before {
       content: '';
       position: absolute;

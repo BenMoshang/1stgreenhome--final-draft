@@ -15,15 +15,12 @@
 }
 html {
   /* fill the viewport */
-  
+
   inline-size: 100%;
   block-size: 100svh;        /* full dynamic viewport height */
   margin: 0;                  /* reset any default */
   scroll-behavior: smooth;
-  scrollbar-color: var(--brute-primary);
-  scrollbar-track-color: var(--brute-tertiary);
-  scrollbar-width: thin;
-background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
+  
   /* Enable keyword animations for those who allow motion */
   @media (prefers-reduced-motion: no-preference) {
     interpolate-size: allow-keywords;
@@ -140,10 +137,7 @@ address {
    ========================================================================== */
 
 /* Text selection style */
-::selection {
-  background: var(--primary);
-  color: var(--on-primary);
-}
+
 
 /* Interactive Elements */
 button,
@@ -153,12 +147,3 @@ select {
   touch-action: manipulation;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--surface);
-}
-
-::-webkit-scrollbar-thumb {
-  border: 0.125rem solid var(--surface);
-  border-radius: 0.25rem;
-  background-color: var(--primary);
-}

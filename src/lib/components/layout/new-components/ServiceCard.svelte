@@ -69,14 +69,15 @@
 
     border-radius: $br;
     overflow: clip;
-    box-shadow: 0 0.75rem 1.5rem rgba(#000, 0.12);
+    box-shadow: var(--shadow-elevation-medium);
+
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
 
     &:hover {
       transform: translateY(-0.25rem);
-      box-shadow: 0 1.25rem 2rem rgba(#000, 0.15);
+      box-shadow: var(--shadow-elevation-high);
 
       & .service-card__image {
         transform: scale(1.05) translateZ(0);

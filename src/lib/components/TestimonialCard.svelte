@@ -26,34 +26,38 @@
     flex: 0 0 auto; /* Keep this: essential for marquee */
     flex-direction: column;
     justify-content: space-between;
-    padding: 1.25rem;
-    border-radius: var(--border-radius);
+    padding: size('md');
+    border-radius: $border-radius;
+    inline-size: $PAGE_MAX_INLINE / 4; /* Example: Adjust based on your design */
 
-    /* Or use viewport units carefully: width: clamp(250px, 80vw, 320px); */
+    box-shadow: var(--shadow-elevation-medium);
 
-    /* Avoid % width with flex: 0 0 auto in this marquee context */
-
-    /* Visual */
-    background: var(--convex-light);
+    background: linear-gradient(
+      in oklch 145deg,
+      /* 0%: brightest highlight with slightly increased chroma */
+        oklch(0.97 0.008 15deg) 0%,
+      /* 40%: transition into neutral midtone */ oklch(0.93 0.006 5deg) 40%,
+      /* 75%: deeper shadow with a cool hue shift */ oklch(0.88 0.005 -20deg)
+        75%,
+      /* 100%: darkest shadow hint at the edge */ oklch(0.85 0.004 -20deg) 100%
+    );
     block-size: 100%; /* Use height: auto or manage height carefully if content varies a lot */
-    box-shadow: var(--shadow-medium--secondary);
 
     /* --- RESPONSIVE WIDTH --- */
 
     /* Mobile First: Define a base width that works on small screens */
-    inline-size: $PAGE_MAX_WIDTH / 4; /* Example: Adjust based on your design */
 
     /* Elements */
     &__message {
-      @extend %p;
+      @extend %u_paragraph;
+      @extend %typography--secondary;
 
       display: -webkit-box;
       overflow: hidden;
       -webkit-box-orient: block-axis;
-      -webkit-line-clamp: 5; /* Good for controlling height */
-      margin-block-end: spacing(semi-related);
+      -webkit-line-clamp: 4; /* Good for controlling height */
+      margin-block-end: size('md');
 
-      /* Consider setting a min-height if empty statements are possible */
       min-block-size: 6em; /* Example: Adjust based on font size and line height */
       text-overflow: ellipsis;
     }
@@ -69,35 +73,33 @@
       /* Layout */
       inline-size: 100%;
       margin-block-start: auto; /* Push header to the bottom */
-      padding-block-start: 0.25rem; /* Add padding-top instead of padding: 0.25rem to avoid affecting bottom */
+      padding-block-start: size('xs');
     }
 
     &__pfp {
-      border-radius: 50%;
-      block-size: 2.5rem;
-      box-shadow: inset 0 2px 2px hsl(0deg 0% 0% / 84.9%);
+      $size: size('xl');
       grid-area: pfp;
-      inline-size: 2.5rem;
+      aspect-ratio: 1;
+      block-size: $size;
+      inline-size: $size;
+      border-radius: 50%;
       object-fit: cover;
+
+      box-shadow: inset 0 2px 2px hsl(0deg 0% 0% / 84.9%);
     }
 
     &__name {
       align-self: end;
-      font-weight: 600;
       grid-area: name;
-      letter-spacing: 0.02em;
-
-      @extend %h6;
+      @extend %u_heading;
+      @extend %typography--primary;
     }
 
     &__company {
-      @extend %p;
-
-      color: var(--color-secondary-900);
-      font-size: var(--label-p);
-      font-weight: 300;
       grid-area: company;
-      letter-spacing: 0.05em;
+
+      @extend %u_subheading;
+      color: var(--brute-primary);
     }
   }
 
