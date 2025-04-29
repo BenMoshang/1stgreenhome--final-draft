@@ -44,7 +44,7 @@
       </h3>
 
       <p
-        class="service-card__description u_paragraph typography--secondary-rev max-ch-45"
+        class="service-card__description u_paragraph typography--secondary-rev"
       >
         {service.description}
       </p>
@@ -61,64 +61,71 @@
   $br: $border-radius;
 
   .service-card {
-    position: relative;
+    position: sticky;
+    top: size('md');
     inline-size: 100%;
-    max-inline-size: 22rem; // feel free to override via parent
+    block-size: 100%;
+    max-inline-size: clamp(250px, 100%, 450px);
+
     border-radius: $br;
     overflow: clip;
-    background: #fff;
     box-shadow: 0 0.75rem 1.5rem rgba(#000, 0.12);
     transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
 
     &:hover {
       transform: translateY(-0.25rem);
       box-shadow: 0 1.25rem 2rem rgba(#000, 0.15);
+
+      & .service-card__image {
+        transform: scale(1.05) translateZ(0);
+      }
+
+      @include respond-to('mobile-end') {
+        position: static;
+        top: unset;
+      }
+      @include respond-to('tablet-end') {
+        position: sticky;
+        top: size('md');
+      }
     }
 
     /* ----- Media ----- */
     &__media {
+      display: grid;
       position: relative;
-      aspect-ratio: 1 / 1; // square on mobile
-    }
-
-    @media (min-width: 40rem) {
-      // ≥640 px
-      &__media {
-        aspect-ratio: 4 / 3;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0) 40%
+        );
+        pointer-events: none;
       }
     }
 
     &__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.9) saturate(1.05);
-    }
+      $image-size: 100%;
+      position: absolute;
+      place-self: center;
+      width: $image-size;
+      height: $image-size;
+      transform-origin: center;
+      transform: scale(1) translateZ(0);
+      filter: saturate(1.2) contrast(0.85);
 
-    /* Brand glow + darken bottom for legibility */
-    &__media::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        120% 70% at 50% 80%,
-        rgba($brand, 0.3) 0%,
-        transparent 70%
-      );
-      pointer-events: none;
-    }
-    &__media::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(#000, 0) 40%,
-        rgba(#000, 0.75) 100%
-      );
-      pointer-events: none;
+      transition:
+        filter 200ms linear,
+        transform 200ms linear;
+      // object-fit: cover;
     }
 
     /* ----- Tags strip ----- */
@@ -151,10 +158,16 @@
       z-index: $text-z;
     }
     &__title {
-      color: #fff;
+      text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
     }
     &__description {
-      color: rgba(#fff, 0.85);
+      max-inline-size: 35ch;
+
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 </style>

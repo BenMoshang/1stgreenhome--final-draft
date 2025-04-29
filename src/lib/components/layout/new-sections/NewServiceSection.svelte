@@ -78,37 +78,52 @@
       display: grid;
       grid-template-columns: 1fr;
 
-      grid-template-areas: 'content' 'image';
+      grid-template-areas: 'content' 'cards';
 
       @include respond-to('tablet-end') {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-areas: 'content image';
+        grid-template-areas: 'content cards';
       }
     }
     &__header {
+      place-self: center;
       inline-size: 100%;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       grid-area: content;
+      position: sticky;
+      top: size('md');
+      margin-bottom: size('xl');
+      @include respond-to('tablet-start') {
+        position: unset;
+      }
+      @include respond-to('tablet-end') {
+        margin-bottom: unset;
+        position: sticky;
+
+        align-items: unset;
+        text-align: unset;
+        justify-content: flex-start;
+        align-self: start;
+      }
 
       &-label {
         text-wrap: nowrap;
       }
       &-heading {
-        margin-block-end: var(--margin-md);
+        margin-block-end: var(--margin-sm);
       }
       &-body {
-        align-self: flex-start;
       }
     }
     &__cards {
       inline-size: 100%;
       display: grid;
-      gap: var(--gap-xl);
-      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-      @include respond-to('tablet-end') {
-        gap: var(--gap-lg);
-      }
+      grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+      gap: size('xl');
     }
   }
 </style>
