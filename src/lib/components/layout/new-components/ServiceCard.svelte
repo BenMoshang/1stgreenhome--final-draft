@@ -62,7 +62,7 @@
 
   .service-card {
     position: sticky;
-    top: size('md');
+    top: size('2xl');
     inline-size: 100%;
     block-size: 100%;
     max-inline-size: clamp(250px, 100%, 450px);
@@ -88,7 +88,7 @@
       }
       @include respond-to('tablet-end') {
         position: sticky;
-        top: size('md');
+        top: size('2xl');
       }
     }
 

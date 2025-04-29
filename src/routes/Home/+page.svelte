@@ -1,7 +1,6 @@
 <script lang="ts">
-  import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
-
   import { parallax } from '$lib/actions/parallax.svelte';
+  import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
   import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
   import { onMount } from 'svelte';
 
@@ -39,80 +38,66 @@
 </script>
 
 <main class="page-container">
+  <div class="leaves-background" use:parallax={{ offset: 50 }}></div>
+
   <NewHero />
-
+  <!-- add round section divider here  -->
   <div class="gradient-background-container">
-    <!-- top curved divider-->
-
     <NewServiceSection />
-
-    <!-- <Testimonials /> -->
-    <div class="gradient-background"></div>
-    <div class="leaves-background" use:parallax={{ offset: 50 }}></div>
   </div>
-
-  <!-- <Projects /> -->
+  <!-- add round section divider here  -->
 </main>
 
 <style lang="scss">
-  %flex-column-center {
+  .page-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-  }
+    position: relative; /* establishes containing block for abs. children */
+    --gap: clamp(1rem, 4vw, 3rem);
 
-  .page-container {
-    padding-top: size('2xl');
-    --_gap: #{size('2xl')};
+    gap: var(--gap);
+    width: 100%;
+    height: 100%; /* full viewport height */
+    & > * {
+      flex: 1;
+    }
+    /* Decorative leaves background */
 
-    @extend %flex-column-center;
-    gap: var(--_gap);
-    inline-size: 100%;
-    block-size: 100%;
-    overflow: clip;
-    margin-inline: auto;
-    position: relative;
     & .leaves-background {
-      position: absolute; // Changed from fixed
-      inset: 0;
+      position: absolute;
+      inset: 0; /* top:0; right:0; bottom:0; left:0; */
+      inline-size: 100%;
+      block-size: 100%;
       margin: auto;
-      background: url('/assets/landing-page/leaves.svg') repeat center center;
-      background-size: cover;
+      background: url('/assets/landing-page/leaves.svg') center/cover repeat;
       opacity: 0.15;
       filter: brightness(1.4) saturate(0.5);
       z-index: -2;
-      block-size: 100%;
-      inline-size: 100%;
-      will-change: transform; // Added for performance
-
+      will-change: transform;
       @media (prefers-color-scheme: dark) {
         filter: brightness(0.4) saturate(0.5);
       }
     }
-    .gradient-background-container {
-      position: relative;
-      @extend %flex-column-center;
-      gap: var(--_gap);
+  }
 
-      inline-size: 100%;
-      block-size: 100%;
+  .gradient-background-container {
+    position: relative; /* establishes containing block for abs. children */
 
-      & .gradient-background {
-        position: absolute; // Added
-        top: 0;
-        left: 0;
-        z-index: -1; // Added
-        background-image: radial-gradient(
-          circle at top center,
-          var(--brute-primary) 10%,
-          var(--brute-secondary) 60%,
-          var(--brute-tertiary) 100%
-        );
-
-        block-size: 100%; // Added
-        inline-size: 100%; // Added
-      }
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--gap);
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+      circle at top center,
+      var(--brute-primary) 10%,
+      var(--brute-secondary) 60%,
+      var(--brute-tertiary) 100%
+    );
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 </style>

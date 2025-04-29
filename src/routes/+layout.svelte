@@ -1,7 +1,7 @@
 <script lang="ts">
   import NewHeader from '$lib/components/layout/NewHeader.svelte';
-  import { onMount, onDestroy } from 'svelte';
   import Lenis from 'lenis';
+  import { onDestroy, onMount } from 'svelte';
   let { children } = $props();
 
   onMount(() => {
@@ -84,8 +84,8 @@
       overflow: clip;
       z-index: 2;
       margin: auto;
-      block-size: 100svh;
-      inline-size: 100vw;
+      block-size: 500%;
+      inline-size: 100%;
       filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
       opacity: 0.05;
       pointer-events: none;

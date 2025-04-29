@@ -1,6 +1,4 @@
 <script lang="ts" runes>
-  import { cubicOut } from 'svelte/easing';
-
   // Define hero data interface with only needed properties
   interface HeroData {
     label: string;
@@ -57,7 +55,7 @@
   }
 </script>
 
-<section id="hero" class="hero__section u_p-inline__md u_p-block__lg">
+<section id="hero" class="hero__section u_p-inline__md u_p-block__xl">
   <div class="hero__container u_container__sm container--grid u_gap__xl">
     <div class="hero__image-container ga-image">
       <img
@@ -84,7 +82,9 @@
         >
       </h1>
 
-      <p class="u_paragraph u_m-bottom__sm tert typography--tertiary max-ch-45">
+      <p
+        class="hero__body u_paragraph u_m-bottom__sm tert typography--tertiary max-ch-45"
+      >
         {heroData.body + heroData.body2}
       </p>
 
@@ -164,8 +164,8 @@
   }
 
   .hero__image-container {
-    max-inline-size: 31.25rem;
-    max-block-size: 31.25rem;
+    max-inline-size: 40rem;
+    max-block-size: 40rem;
     filter: drop-shadow(0 0 1rem var(--brute-secondary));
     animation: pulse-shadow 3s infinite ease-in-out;
     position: relative;
@@ -213,7 +213,15 @@
   }
 
   .hero__header {
-    inline-size: 100%;
+    inline-size: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    & > * {
+      inline-size: fit-content;
+    }
   }
 
   @keyframes pulse-shadow {

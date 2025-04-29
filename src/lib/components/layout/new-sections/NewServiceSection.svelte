@@ -44,7 +44,7 @@
   ]);
 </script>
 
-<section id="services" class="services u_p-inline__md u_p-block__lg">
+<section id="services" class="services u_p-inline__md u_p-block__xl">
   <div class="services__container u_container__sm u_gap__xl">
     <header class="services__header">
       <small class="services__header-label brute__label-rev"
@@ -73,6 +73,7 @@
 <style lang="scss">
   .services {
     inline-size: 100%;
+    block-size: fit-content;
     &__container {
       inline-size: 100%;
       display: grid;
@@ -82,7 +83,7 @@
 
       @include respond-to('tablet-end') {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-areas: 'content cards';
+        grid-template-areas: 'cards content';
       }
     }
     &__header {
@@ -95,7 +96,7 @@
       text-align: center;
       grid-area: content;
       position: sticky;
-      top: size('md');
+      top: size('2xl');
       margin-bottom: size('xl');
       @include respond-to('tablet-start') {
         position: unset;
@@ -105,9 +106,14 @@
         position: sticky;
 
         align-items: unset;
-        text-align: unset;
-        justify-content: flex-start;
+        text-align: right;
+        justify-content: flex-end;
+        align-items: flex-end;
         align-self: start;
+
+        & .services__header-label {
+          text-align: right !important;
+        }
       }
 
       &-label {

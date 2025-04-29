@@ -201,6 +201,9 @@
       content: '';
       position: absolute;
       inset: 0;
+      inline-size: 200%;
+      margin-left: -50%;
+      block-size: size('2xl');
       pointer-events: none;
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
@@ -224,6 +227,9 @@
       content: '';
       position: absolute;
       inset: 0;
+      inline-size: 200%;
+      block-size: size('2xl');
+      margin-left: -50%;
       pointer-events: none;
       background: linear-gradient(
         to bottom,
