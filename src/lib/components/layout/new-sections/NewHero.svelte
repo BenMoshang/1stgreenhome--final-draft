@@ -195,7 +195,7 @@
     &::after {
       @include apply-shadow('lg');
       background: oklch(26.6% 0.065 152.934);
-      filter: brightness(0.9) saturate(0.7);
+      filter: brightness(0.9) saturate(0.75);
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;

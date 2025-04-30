@@ -74,7 +74,10 @@
       inline-size: 100%;
       block-size: 100%;
       margin: auto;
-      background: url('/assets/landing-page/leaves.svg') center/cover repeat;
+      background-image: url('/assets/landing-page/leaves.svg');
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
       opacity: 0.15;
       filter: brightness(1.4) saturate(0.5);
       z-index: -2;

@@ -24,7 +24,7 @@ export default defineConfig({
   },
   // Enable caching for better performance
   server: {
-    host: '192.168.0.85',
+    host: '192.168.0.167',
     port: 3000,
 
     fs: {
