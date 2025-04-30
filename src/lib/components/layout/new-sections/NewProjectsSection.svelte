@@ -88,6 +88,13 @@
 </section>
 
 <style lang="scss">
+  @mixin only-green {
+    // Fallback for very old browsers
+    // CSS-only approach (better browser support)
+    // SVG filter with improved green isolation
+    filter: hue-rotate(315deg) saturate(170%) brightness(1.2)
+      url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxmaWx0ZXIgaWQ9ImciPjxmZUNvbG9yTWF0cml4IHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwLjMzIDAuMzMgMC4zMyAwIDAgMCAxLjAgMCAwIDAgMC4zMyAwLjMzIDAuMzMgMCAwIDAgMCAwIDEgMCIvPjwvZmlsdGVyPjwvc3ZnPg==#g');
+  }
   .projects-section {
     inline-size: 100%;
     block-size: fit-content;
@@ -158,13 +165,12 @@
     }
 
     &__image-container {
+      $border-custom: 40% 7% 7% 7% / 40% 7% 7% 7%;
       grid-area: image;
       position: relative;
       overflow: clip;
-      border-radius: 100% 100% 8% 9% / 65% 67% 8% 8%;
       // border-radius: 90% 10% 91% 9% / 11% 85% 15% 89%;
-
-      box-shadow: var(--shadow-elevation-medium);
+      border-radius: 0% 7% 7% 7% / 0% 7% 7% 7%;
       $image-container-size: 100%;
       block-size: $image-container-size;
 
@@ -184,7 +190,10 @@
         inset: 0;
         inline-size: 100%;
         block-size: 100%;
-        border-radius: inherit;
+        border-radius: $border-custom;
+        overflow: hidden;
+        @extend %image-hover;
+
         background: radial-gradient(
           circle at center,
           transparent 50%,
@@ -200,12 +209,14 @@
         inset: 0;
         margin: auto;
         aspect-ratio: inherit;
-        border-radius: inherit;
+        border-radius: $border-custom;
+        overflow: hidden;
         block-size: 100%;
         inline-size: 100%;
         z-index: 1;
+        box-shadow: var(--shadow-elevation-medium);
 
-        filter: brightness(120%) contrast(110%) saturate(110%);
+        @include only-green;
         object-fit: cover;
       }
       &--icon {
