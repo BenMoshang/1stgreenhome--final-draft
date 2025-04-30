@@ -58,9 +58,8 @@
     flex-direction: column;
     justify-content: center;
     position: relative; /* establishes containing block for abs. children */
-    --gap: clamp(1rem, 4vw, 3rem);
 
-    gap: var(--gap);
+    gap: size('2xl');
     width: 100%;
     height: 100%; /* full viewport height */
     & > * {
