@@ -1,8 +1,9 @@
 <script lang="ts">
   import { parallax } from '$lib/actions/parallax.svelte';
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
+  import NewProjectsSection from '$lib/components/layout/new-sections/NewProjectsSection.svelte';
   import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
-  import Testimonials from '$lib/components/sections/Testimonials.svelte';
+  import NewTestimonials from '$lib/components/layout/new-sections/NewTestimonials.svelte';
   import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
@@ -45,8 +46,9 @@
   <!-- add round section divider here  -->
   <div class="gradient-background-container">
     <NewServiceSection />
-    <Testimonials />
+    <NewTestimonials />
   </div>
+  <NewProjectsSection />
   <!-- add round section divider here  -->
 </main>
 

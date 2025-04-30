@@ -178,3 +178,32 @@
 .max-ch-45{
   max-inline-size: 45ch;
 }
+
+%flex-col-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+%image-hover {
+      box-shadow: var(--shadow-elevation-medium);
+
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
+       will-change: transform box-shadow;
+
+    &:hover {
+      transform: translateY(-0.25rem);
+      box-shadow: var(--shadow-elevation-high);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+      & img {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+        transform: scale(1.05) translateZ(0);
+
+      }
+    }
+}

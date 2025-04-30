@@ -78,8 +78,7 @@
         class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20"
       >
         {heroData.title0 + heroData.title}
-        <span class="gradient-text brute__text--primary">{heroData.title2}</span
-        >
+        <span class="gradient-text">{heroData.title2}</span>
       </h1>
 
       <p

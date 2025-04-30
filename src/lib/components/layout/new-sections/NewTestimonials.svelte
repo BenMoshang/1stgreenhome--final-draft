@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fadeInUpTransition } from '$lib/utils/animations.js';
-  import TestimonialCard from '../TestimonialCard.svelte';
+  import TestimonialCard from '../new-components/TestimonialCard.svelte';
 
   // Header data
   const header = $state({

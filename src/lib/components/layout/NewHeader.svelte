@@ -205,8 +205,7 @@
       margin-left: -50%;
       block-size: size('2xl');
       pointer-events: none;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(0.5rem);
       mask-image: linear-gradient(
         to bottom,
         black 0%,
@@ -233,10 +232,10 @@
       pointer-events: none;
       background: linear-gradient(
         to bottom,
-        oklch(100% 0 0 / 0.3) 0%,
-        oklch(100% 0 0 / 0.2) 25%,
-        oklch(100% 0 0 / 0.1) 50%,
-        oklch(100% 0 0 / 0.05) 75%,
+        oklch(100% 0 0 / 0.2) 0%,
+        oklch(100% 0 0 / 0.1) 25%,
+        oklch(100% 0 0 / 0.05) 50%,
+        oklch(100% 0 0 / 0.005) 75%,
         oklch(100% 0 0 / 0) 100%
       );
       z-index: 2;
@@ -290,6 +289,7 @@
       @extend %typography--secondary;
       font-family: 'Manrope', system-ui;
       font-weight: 500;
+      filter: drop-shadow(0 0.125rem 0.25rem rgba(0, 0, 0, 0.2));
     }
   }
 

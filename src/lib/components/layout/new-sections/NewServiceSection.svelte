@@ -56,7 +56,7 @@
         {injectableStaticText.heading}
       </h2>
       <p
-        class="services__header-body max-ch-45 u_paragraph typography--primary-rev"
+        class="services__header-body max-ch-45 u_paragraph typography--secondary-rev"
       >
         {injectableStaticText.body}
       </p>
@@ -128,7 +128,8 @@
     &__cards {
       inline-size: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+      place-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
       gap: size('xl');
     }
   }

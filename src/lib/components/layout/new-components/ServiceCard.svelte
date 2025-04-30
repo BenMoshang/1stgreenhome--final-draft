@@ -69,28 +69,14 @@
 
     border-radius: $br;
     overflow: clip;
-    box-shadow: var(--shadow-elevation-medium);
-
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-
-    &:hover {
-      transform: translateY(-0.25rem);
-      box-shadow: var(--shadow-elevation-high);
-
-      & .service-card__image {
-        transform: scale(1.05) translateZ(0);
-      }
-
-      @include respond-to('mobile-end') {
-        position: static;
-        top: unset;
-      }
-      @include respond-to('tablet-end') {
-        position: sticky;
-        top: size('2xl');
-      }
+    @extend %image-hover;
+    @include respond-to('mobile-end') {
+      position: static;
+      top: unset;
+    }
+    @include respond-to('tablet-end') {
+      position: sticky;
+      top: size('2xl');
     }
 
     /* ----- Media ----- */

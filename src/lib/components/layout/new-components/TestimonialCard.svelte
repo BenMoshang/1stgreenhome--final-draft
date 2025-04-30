@@ -23,6 +23,7 @@
   .card {
     /* Layout */
     display: flex;
+    aspect-ratio: 3 / 2;
     flex: 0 0 auto; /* Keep this: essential for marquee */
     flex-direction: column;
     justify-content: space-between;
@@ -42,7 +43,7 @@
       /* 100%: darkest shadow hint at the edge */ oklch(0.85 0.004 -20deg) 100%
     );
     block-size: 100%; /* Use height: auto or manage height carefully if content varies a lot */
-
+    @extend %image-hover;
     /* --- RESPONSIVE WIDTH --- */
 
     /* Mobile First: Define a base width that works on small screens */
@@ -58,7 +59,6 @@
       -webkit-line-clamp: 4; /* Good for controlling height */
       margin-block-end: size('md');
 
-      min-block-size: 6em; /* Example: Adjust based on font size and line height */
       text-overflow: ellipsis;
     }
 

@@ -92,7 +92,7 @@
       overflow: clip;
       z-index: 2;
       margin: auto;
-      block-size: 500%;
+      min-block-size: 1000%;
       inline-size: 100%;
       filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
       opacity: 0.05;
