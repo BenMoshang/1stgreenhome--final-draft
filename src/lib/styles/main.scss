@@ -143,14 +143,14 @@
  box-shadow:
 			var(--shadow-elevation-medium),
 			inset 0 0.0625rem 0 rgba(255, 255, 255, 0.5);
-    transition: all 250ms;
+    transition: all 200ms;
     overflow: hidden;
-
-    & svg {
-      inline-size: var(--size-md);
-      block-size: var(--size-md);
+    &:hover {
+      &::before {
+        width: 100%;
+      }
     }
-    &::before {
+ &::before {
       content: '';
       position: absolute;
       top: 0;
@@ -161,13 +161,16 @@
       background: var(--brute-secondary--neu);
       z-index: -1;
       box-shadow: inherit;
-      transition: all 250ms;
+      transition: all 200ms;
     }
-    &:hover {
-      &::before {
-        width: 100%;
-      }
+    & svg {
+      display: block;
+      position:relative;
+      inline-size: var(--size-md);
+      block-size: var(--size-md);
     }
+   
+  
   }
   .max-ch-20{
     max-inline-size: 20ch;

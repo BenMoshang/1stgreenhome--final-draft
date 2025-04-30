@@ -93,7 +93,6 @@
         aria-label="Send email to get started"
       >
         {heroData.button}
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -104,7 +103,6 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="icon icon-tabler icons-tabler-outline icon-tabler-send"
           aria-hidden="true"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />

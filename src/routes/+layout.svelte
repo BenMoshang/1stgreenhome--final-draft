@@ -34,23 +34,23 @@
 <div class="layout-wrapper">
   <NewHeader />
   {@render children()}
+  <svg width="0" height="0">
+    <defs>
+      <filter id="noiseFilter2">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.65"
+          numOctaves="3"
+          stitchTiles="stitch"
+        />
+        <feColorMatrix
+          type="matrix"
+          values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+        />
+      </filter>
+    </defs>
+  </svg>
 </div>
-<svg width="0" height="0" style="position: absolute;">
-  <defs>
-    <filter id="noiseFilter2">
-      <feTurbulence
-        type="fractalNoise"
-        baseFrequency="0.65"
-        numOctaves="3"
-        stitchTiles="stitch"
-      />
-      <feColorMatrix
-        type="matrix"
-        values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-      />
-    </filter>
-  </defs>
-</svg>
 
 <!-- SVG filter for noise effect -->
 
@@ -66,6 +66,7 @@
   }
 
   .layout-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -73,6 +74,28 @@
     height: 100%;
     width: 100%;
     margin: 0 auto;
+    svg {
+      position: absolute;
+      min-block-size: 100%;
+      inline-size: 100%;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+
+      inset: 0;
+
+      overflow: clip;
+      z-index: 3;
+      margin: auto;
+      min-block-size: 100%;
+      inline-size: 100%;
+      filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
+      opacity: 0.05;
+      pointer-events: none;
+      transform: translateZ(0);
+      will-change: filter;
+    }
   }
   :global(html) {
     scrollbar-color: var(--brute-secondary) transparent;
@@ -82,23 +105,6 @@
     ::selection {
       background: var(--brute-tertiary);
       color: white;
-    }
-    &::before {
-      content: '';
-      position: absolute;
-
-      inset: 0;
-
-      overflow: clip;
-      z-index: 2;
-      margin: auto;
-      min-block-size: 1000%;
-      inline-size: 100%;
-      filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
-      opacity: 0.05;
-      pointer-events: none;
-      transform: translateZ(0);
-      will-change: filter;
     }
   }
 

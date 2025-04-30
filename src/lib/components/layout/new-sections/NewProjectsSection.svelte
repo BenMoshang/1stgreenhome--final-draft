@@ -44,7 +44,7 @@
         {header.label}
       </small>
       <h2
-        class="projects-section__header-title u_m-bottom__sm u_display-2--bold typography--primary max-ch-20"
+        class="projects-section__header-title u_m-bottom__sm u_display-1--bold typography--primary max-ch-20"
       >
         <span class="projects-section__header-title--gradient"
           >{header.title1}</span
@@ -151,7 +151,7 @@
 
       &--description {
         margin-right: auto;
-        max-inline-size: 45ch;
+        max-inline-size: 50ch;
         @extend %u_paragraph;
         @extend %typography--tertiary;
       }
@@ -206,20 +206,18 @@
         object-fit: cover;
       }
       &--icon {
-        $position: size('sm');
-        @extend %glass;
+        $position: size('md');
+        $icon-size: size('lg');
+
         position: absolute;
         top: $position;
         left: $position;
-        place-self: start;
-        $icon-size: size('xl');
-        padding: size('xs');
-        object-fit: cover;
-        border-radius: 50%;
+        object-fit: contain;
         block-size: $icon-size;
         inline-size: $icon-size;
         z-index: 3;
-        color: var(--brute-tertiary);
+        color: var(--brute-primary);
+        filter: drop-shadow(0 0.125rem 0.25rem rgba(0, 0, 0, 0.3));
       }
     }
   }
