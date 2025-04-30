@@ -136,9 +136,9 @@
     &__caption {
       grid-area: caption;
 
-      justify-self: start;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
 
       &--title {
@@ -161,7 +161,9 @@
       grid-area: image;
       position: relative;
       overflow: clip;
-      border-radius: $border-radius;
+      border-radius: 100% 100% 8% 9% / 65% 67% 8% 8%;
+      // border-radius: 90% 10% 91% 9% / 11% 85% 15% 89%;
+
       box-shadow: var(--shadow-elevation-medium);
       $image-container-size: 100%;
       block-size: $image-container-size;
@@ -175,7 +177,6 @@
         aspect-ratio: 16 / 9;
       }
 
-      @extend %image-hover;
       z-index: 1;
       &::before {
         content: '';
@@ -193,6 +194,8 @@
         z-index: 2;
       }
       &--image {
+        @extend %image-hover;
+
         position: absolute;
         inset: 0;
         margin: auto;
