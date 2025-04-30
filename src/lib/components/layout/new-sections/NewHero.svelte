@@ -126,7 +126,7 @@
   .hero__section {
     position: relative;
     inline-size: 100%;
-
+    border-radius: 10% 10% 100% 100% / 10% 10% 24% 24%;
     &::after {
       content: '';
       position: absolute;

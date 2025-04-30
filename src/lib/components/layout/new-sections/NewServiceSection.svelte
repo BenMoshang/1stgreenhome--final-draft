@@ -28,7 +28,7 @@
       title: 'Tailored Consulting',
       description:
         'Custom eco-strategies to save energy and resources. Achieve your sustainability goals faster.', // Main point: custom strategies for faster sustainability
-      image: '/assets/lights.webp',
+      image: '/assets/landing-page/news/lights.webp',
       imageAlt: 'Close-up of energy-efficient light bulbs illuminating a room.', // More descriptive alt text
     },
     {

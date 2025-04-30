@@ -4,6 +4,7 @@
   import NewProjectsSection from '$lib/components/layout/new-sections/NewProjectsSection.svelte';
   import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
   import NewTestimonials from '$lib/components/layout/new-sections/NewTestimonials.svelte';
+  import NewPartners from '$lib/components/layout/new-sections/NewPartners.svelte';
   import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
@@ -43,20 +44,22 @@
   <div class="leaves-background" use:parallax={{ offset: 50 }}></div>
 
   <NewHero />
-  <!-- add round section divider here  -->
   <div class="gradient-background-container">
     <NewServiceSection />
     <NewTestimonials />
   </div>
+
   <NewProjectsSection />
-  <!-- add round section divider here  -->
+  <NewPartners />
 </main>
 
 <style lang="scss">
   .page-container {
+    padding-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     position: relative; /* establishes containing block for abs. children */
 
     gap: size('2xl');
@@ -88,12 +91,11 @@
   }
 
   .gradient-background-container {
-    position: relative; /* establishes containing block for abs. children */
-
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: var(--gap);
+    gap: size('2xl');
     width: 100%;
     height: 100%;
     background-image: radial-gradient(
@@ -113,9 +115,6 @@
         var(--brute-secondary) 60%,
         var(--brute-tertiary) 100%
       );
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
     }
   }
 </style>
