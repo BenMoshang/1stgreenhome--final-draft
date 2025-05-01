@@ -123,6 +123,7 @@
 
   .hero__container {
     inline-size: 100%;
+    margin: 0 auto;
   }
 
   .container--grid {
@@ -142,21 +143,23 @@
   .hero__image {
     inline-size: 100%;
     block-size: 100%;
-    max-inline-size: 40rem;
-    max-block-size: 20.7763rem;
+    max-inline-size: 20.7763rem;
+    object-fit: cover;
+
     filter: brightness(1.5) saturate(1.3);
   }
 
   .hero__image-container {
     max-inline-size: 40rem;
-    max-block-size: 20.7763rem;
     filter: drop-shadow(0 0 1rem var(--brute-secondary));
     animation: pulse-shadow 3s infinite ease-in-out;
     position: relative;
     z-index: 3;
     --background-dimensions: 70%;
     --background-abs-pos: 14%;
-
+    @include respond-to('tablet-end') {
+      margin-left: auto;
+    }
     &::before,
     &::after {
       content: '';
@@ -203,9 +206,6 @@
     justify-content: center;
     align-items: flex-start;
     text-align: left;
-    & > * {
-      inline-size: fit-content;
-    }
   }
 
   @keyframes pulse-shadow {

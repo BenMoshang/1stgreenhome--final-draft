@@ -154,12 +154,29 @@
     inline-size: 100%;
 
     &__container {
+      inline-size: 100%;
       margin-inline: auto; // centred by u_container__sm
       @extend %flex-col-center;
+
+      @include respond-to('tablet-end') {
+        flex-direction: row;
+        justify-content: space-between;
+
+        & .faq__header {
+          position: sticky;
+          top: size('2xl');
+
+          align-self: flex-start;
+          text-align: right;
+          order: 2;
+        }
+        .faq__label {
+          margin-left: auto;
+        }
+      }
     }
 
     &__header {
-      display: flex;
       @extend %flex-col-center;
       text-align: center;
     }
@@ -169,6 +186,10 @@
       inline-size: 100%;
       gap: size('lg');
       overflow: clip;
+      @include respond-to('tablet-end') {
+        align-items: unset;
+        justify-content: unset;
+      }
     }
 
     &__entry {

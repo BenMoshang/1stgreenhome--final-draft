@@ -51,13 +51,11 @@
         >{injectableStaticText.label}</small
       >
       <h2
-        class="max-ch-20 services__header-heading u_display-2--bold typography--primary-rev"
+        class=" services__header-heading u_display-2--bold typography--primary-rev"
       >
         {injectableStaticText.heading}
       </h2>
-      <p
-        class="services__header-body max-ch-45 u_paragraph typography--secondary-rev"
-      >
+      <p class="services__header-body u_paragraph typography--secondary-rev">
         {injectableStaticText.body}
       </p>
     </header>
@@ -115,7 +113,6 @@
         position: sticky;
         place-self: start;
         text-align: right;
-        margin-left: -1rem;
         & .services__header-label {
           justify-self: end;
           align-self: end;
@@ -123,9 +120,11 @@
       }
 
       &-heading {
+        max-inline-size: 25ch;
         margin-block-end: var(--margin-sm);
       }
       &-body {
+        max-inline-size: 50ch;
       }
     }
     &__cards {
@@ -134,6 +133,10 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
       gap: size('xl');
+
+      @include respond-to('tablet-end') {
+        place-items: start;
+      }
     }
   }
 </style>

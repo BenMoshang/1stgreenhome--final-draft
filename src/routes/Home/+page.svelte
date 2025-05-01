@@ -47,17 +47,17 @@
 
   <NewHero />
   <div class="gradient-background-container">
-    <section class="curved"></section>
+    <!-- <section class="curved"></section> -->
     <NewServiceSection />
     <NewTestimonials />
-    <section class="curved"></section>
+    <!-- <section class="curved"></section> -->
   </div>
   <NewProjectsSection />
   <div class="gradient-background-container-2">
-    <section class="curved"></section>
+    <!-- <section class="curved"></section> -->
     <NewPartners />
     <NewFaqs />
-    <section class="curved"></section>
+    <!-- <section class="curved"></section  > -->
   </div>
   <NewCta />
 </main>
@@ -65,6 +65,7 @@
 <style lang="scss">
   .page-container {
     padding-top: 4.1875rem;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -105,6 +106,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
     gap: size('2xl');
     width: 100%;
     height: 100%;

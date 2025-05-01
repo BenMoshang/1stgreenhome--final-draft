@@ -23,8 +23,24 @@ export default defineConfig({
     },
   },
   // Enable caching for better performance
+  /**
+   * Vite server configuration.
+   *
+   * @property {string} host - IP address to bind the server to.
+   * @property {number} port - Port number to listen on.
+   * @property {object} fs - File system options.
+   * @property {boolean} fs.strict - Whether to enable strict file system watching.
+   */
   server: {
-    host: '192.168.0.85',
+    host: '192.168.0.167',
+    port: 3000,
+
+    fs: {
+      strict: true,
+    },
+  },
+  server: {
+    host: '192.168.0.167',
     port: 3000,
 
     fs: {

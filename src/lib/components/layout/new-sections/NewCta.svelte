@@ -59,7 +59,7 @@
         >
       </h2>
       <p
-        class=" u_m-bottom__md cta-section__header-body m u_paragraph typography--secondary"
+        class=" u_m-bottom__md cta-section__header-body m u_paragraph typography--tertiary"
       >
         {cta.description}
       </p>
@@ -90,28 +90,44 @@
     inline-size: 100%;
 
     &__container {
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center;
+      @extend %flex-col-center;
       gap: size('xl');
-      grid-template-areas:
-        'header'
-        'map';
+      & > * {
+        flex: 1;
+      }
+      @include respond-to('tablet-end') {
+        flex-direction: row;
+        justify-content: space-between;
+      }
     }
 
     &__header {
-      grid-area: header;
-      @extend %flex-col-center;
       text-align: center;
+
+      @extend %flex-col-center;
+      @include respond-to('tablet-end') {
+        margin-right: auto;
+        position: sticky;
+        top: size('2xl');
+        align-self: flex-start;
+        text-align: left;
+
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
 
       &-heading {
         &--gradient {
           @include gradient-text-animated(3s);
         }
+
+        @include respond-to('tablet-end') {
+          margin-right: auto;
+        }
       }
 
       &-body {
-        max-inline-size: 50ch;
+        max-inline-size: 35ch;
       }
     }
 
