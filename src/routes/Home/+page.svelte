@@ -1,10 +1,10 @@
 <script lang="ts">
   import { parallax } from '$lib/actions/parallax.svelte';
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
+  import NewPartners from '$lib/components/layout/new-sections/NewPartners.svelte';
   import NewProjectsSection from '$lib/components/layout/new-sections/NewProjectsSection.svelte';
   import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
   import NewTestimonials from '$lib/components/layout/new-sections/NewTestimonials.svelte';
-  import NewPartners from '$lib/components/layout/new-sections/NewPartners.svelte';
   import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
@@ -48,9 +48,10 @@
     <NewServiceSection />
     <NewTestimonials />
   </div>
-
   <NewProjectsSection />
-  <!-- <NewPartners /> -->
+  <div class="gradient-background-container-2">
+    <NewPartners />
+  </div>
 </main>
 
 <style lang="scss">
@@ -90,7 +91,8 @@
     }
   }
 
-  .gradient-background-container {
+  .gradient-background-container,
+  .gradient-background-container-2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -107,7 +109,9 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+  }
 
+  .gradient-background-container {
     @include respond-to('tablet-end') {
       background-image: radial-gradient(
         circle at top right,

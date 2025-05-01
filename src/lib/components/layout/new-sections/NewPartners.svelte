@@ -1,7 +1,6 @@
 <script lang="ts">
+  import { animate, inView } from 'motion';
   import { onMount } from 'svelte';
-  import { inView, animate, scroll, stagger } from 'motion';
-  import { fade } from 'svelte/transition';
 
   let container: HTMLElement;
   let labelEl: HTMLElement;
@@ -31,13 +30,17 @@
       imageSrc:
         '/assets/landing-page/partners/logo-SouthernMarylandElectricCooperative.svg',
     },
-    { imageSrc: '/assets/landing-page/partners/logo-bpi.png' },
+    { imageSrc: '/assets/landing-page/partners/logo-bpi.webp' },
   ];
 
   onMount(() => {
     inView(labelEl, (element, entry) => {
       if (entry.isIntersecting) {
-        animate(entry.target as HTMLElement, { opacity: [0, 1], y: [20, 0] }, { duration: 0.6 });
+        animate(
+          entry.target as HTMLElement,
+          { opacity: [0, 1], y: [20, 0] },
+          { duration: 0.6 }
+        );
       }
     });
     inView(titleEl, (element, entry) => {
@@ -60,32 +63,36 @@
     });
 
     // Animate logos when container scrolls into view
-    inView(container, () => {
-      const allLogos = [...forwardEls, ...reverseEls];
-      const staggerDelay = 0.15; // Base delay between animations
+    inView(
+      container,
+      () => {
+        const allLogos = [...forwardEls, ...reverseEls];
+        const staggerDelay = 0.15; // Base delay between animations
 
-      allLogos.forEach((logo, index) => {
-        // Explicitly type keyframes object
-        const keyframes: Record<string, any> = {
-          opacity: [0, 1],
-          transform: [
-            'translateY(20px) scale(0.8)',
-            'translateY(0px) scale(1)'
-          ]
-        };
+        allLogos.forEach((logo, index) => {
+          // Explicitly type keyframes object
+          const keyframes: Record<string, any> = {
+            opacity: [0, 1],
+            transform: [
+              'translateY(20px) scale(0.8)',
+              'translateY(0px) scale(1)',
+            ],
+          };
 
-        animate(
-          logo, // Animate individual logo
-          keyframes, // Pass typed keyframes
-          { // Options
-            duration: 0.8,
-            delay: index * staggerDelay, // Manual stagger calculation
-            easing: 'cubic-bezier(0.16, 1, 0.3, 1)' // Modern cubic bezier
-          }
-        );
-      });
-    }, { amount: 0.1 }); // Trigger when 10% of the container is visible
-
+          animate(
+            logo, // Animate individual logo
+            keyframes, // Pass typed keyframes
+            {
+              // Options
+              duration: 0.8,
+              delay: index * staggerDelay, // Manual stagger calculation
+              easing: 'cubic-bezier(0.16, 1, 0.3, 1)', // Modern cubic bezier
+            }
+          );
+        });
+      },
+      { amount: 0.1 }
+    ); // Trigger when 10% of the container is visible
   });
 </script>
 
@@ -95,25 +102,22 @@
   bind:this={container}
 >
   <div class="partners__container u_container__sm">
-    <header class="partners__header">
+    <header class="partners__header u_m-bottom__xl">
       <small
-        class="partners__header-label brute__label"
+        class="partners__header-label brute__label-rev"
         bind:this={labelEl}
-        transition:fade={{ duration: 0.6 }}
       >
         {header.label}
       </small>
       <h2
-        class="max-ch-20 partners__header-heading u_display-2--bold typography--primary"
+        class=" partners__header-heading max-ch-20 u_display-2--bold typography--primary-rev u_m-bottom__sm"
         bind:this={titleEl}
-        transition:fade={{ delay: 200, duration: 0.6 }}
       >
         {header.title}
       </h2>
       <p
-        class="partners__header-body max-ch-45 u_paragraph typography--secondary"
+        class="partners__header-body m u_paragraph typography--secondary-rev"
         bind:this={descEl}
-        transition:fade={{ delay: 400, duration: 0.6 }}
       >
         {header.description}
       </p>
@@ -154,24 +158,35 @@
 
 <style lang="scss">
   .partners {
+    inline-size: 100%;
     &__header {
-      text-align: center;
-    }
-
-    &__logos-container {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-inline: auto;
+
+      &-body {
+        max-inline-size: 50ch;
+      }
+    }
+    &__logos-container {
+      inline-size: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: size('lg');
+      place-items: center;
+      max-inline-size: calc(4 * 10rem + 3 * var(--size-lg));
+      margin-inline: auto;
 
       &-item {
-        flex: 1 1 45%;
         box-shadow: var(--shadow-elevation-medium);
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 1rem;
-        margin-bottom: 1rem;
-
+        inline-size: size('md');
+        block-size: size('sm');
         border-radius: $border-radius;
 
         &:hover {
@@ -179,10 +194,8 @@
         }
         &--image {
           object-fit: contain;
-          width: fit-content;
           height: auto;
-          aspect-ratio: 1 / 1;
-          filter: drop-shadow(0 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
+          aspect-ratio: 3 / 2;
         }
       }
     }
@@ -192,23 +205,13 @@
   #forward0,
   #forward1,
   #forward2 {
-    background: linear-gradient(145deg, #eee4fa, #77618f);
   }
   #forward3 {
-    background: linear-gradient(145deg, #f0ffff, #69c1da);
   }
   #reverse0,
   #reverse1 {
-    background: linear-gradient(145deg, #f0ffff, #69c1da);
   }
   #reverse2,
   #reverse3 {
-    background: linear-gradient(145deg, #e3fdf2, #faffc9);
-  }
-
-  @include respond-to('tablet-start') {
-    .partners__logo-item {
-      flex: 1 1 22%;
-    }
   }
 </style>

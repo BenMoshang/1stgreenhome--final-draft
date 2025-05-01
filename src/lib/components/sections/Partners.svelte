@@ -38,20 +38,20 @@
 
 <section id="partners" class="partners-section">
   <header class="partners-section__header">
-    <p
-      class="partners-section__label"
+    <small
+      class="partners-section__label brute__label"
       in:fadeInUpTransition={{ delay: animationDelays.label }}
     >
       {header.label}
-    </p>
+    </small>
     <h2
-      class="partners-section__title"
+      class="max-ch-20 partners-section__title u_display-2--bold typography--primary"
       in:fadeInUpTransition={{ delay: animationDelays.title }}
     >
       {header.title}
     </h2>
     <p
-      class="partners-section__description"
+      class="partners-section__description max-ch-45 u_paragraph typography--secondary"
       in:fadeInUpTransition={{ delay: animationDelays.description }}
     >
       {header.description}
@@ -128,14 +128,10 @@
     text-align: center;
 
     .partners-section__label {
-      @extend %text-label--secondary;
-
       margin-block-end: 1rem;
     }
 
     .partners-section__title {
-      @extend %h2;
-
       color: $light-1;
       max-inline-size: 20ch;
     }
@@ -180,6 +176,8 @@
   /* Partner logo */
   .partner-item__logo {
     block-size: 8rem;
+    max-inline-size: 12.6875rem;
+
     filter: drop-shadow(0 0.25rem 0.25rem rgb(0 0 0 / 25%));
     inline-size: 100%;
     max-inline-size: 12.6875rem;

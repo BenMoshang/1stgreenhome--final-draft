@@ -71,9 +71,9 @@
     </div>
 
     <header class="hero__header ga-header">
-      <p class="brute__label">
+      <small class="brute__label">
         {heroData.label}
-      </p>
+      </small>
 
       <h1
         class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20"
@@ -128,7 +128,6 @@
   .hero__section {
     position: relative;
     inline-size: 100%;
-    border-radius: 10% 10% 100% 100% / 10% 10% 24% 24%;
     &::after {
       content: '';
       position: absolute;
