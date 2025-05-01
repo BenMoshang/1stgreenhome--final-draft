@@ -231,7 +231,6 @@
         inline-size: $icon-size;
         z-index: 3;
         color: var(--brute-primary);
-        filter: drop-shadow(0 0.125rem 0.25rem rgba(0, 0, 0, 0.3));
       }
     }
   }
