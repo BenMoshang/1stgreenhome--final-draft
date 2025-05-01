@@ -77,6 +77,7 @@
     &__container {
       inline-size: 100%;
       display: grid;
+      place-content: center;
       grid-template-columns: 1fr;
 
       grid-template-areas: 'content' 'cards';
@@ -128,7 +129,6 @@
     &__cards {
       inline-size: 100%;
       display: grid;
-      place-items: center;
       grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
       gap: size('xl');
     }

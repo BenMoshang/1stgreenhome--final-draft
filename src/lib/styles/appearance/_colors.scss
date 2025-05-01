@@ -475,13 +475,13 @@ $positions: (light: 8, dark: 6);
 
 .focus-ring--tertiary:focus-visible  { @include focus-ring(var(--tertiary)); }
 
-$text-primary:light-dark(oklch(20% 0 0), oklch(90% 0 0));
-$text-secondary:light-dark(oklch(35% 0 0), oklch(75% 0 0));
-$text-tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
+$text-primary:light-dark(oklch(20% 0 0), oklch(95% 0 0));
+$text-secondary:light-dark(oklch(35% 0 0), oklch(90% 0 0));
+$text-tertiary: light-dark(oklch(50% 0 0), oklch(80% 0 0));
 /* Text colors for dark mode (light text on dark surfaces) */
 $text-primary-rev: oklch(95% 0 0);    /* Brightest white for primary text */
 $text-secondary-rev: oklch(90% 0 0);  /* Slightly dimmed for secondary text */
-$text-tertiary-rev: oklch(70% 0 0);   /* More muted for tertiary text */
+$text-tertiary-rev: oklch(80% 0 0);   /* More muted for tertiary text */
 
 %typography--primary{
   color:$text-primary;
@@ -531,7 +531,9 @@ $text-tertiary-rev: oklch(70% 0 0);   /* More muted for tertiary text */
 
 %a-link{
   color:var(--brute-secondary);
-text-decoration: underline;
-text-decoration-offset: 2px;
+  text-decoration: underline;
+  text-decoration-offset: .125rem;
+
+ 
 
 }

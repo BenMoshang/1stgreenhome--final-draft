@@ -1,5 +1,7 @@
 <script lang="ts">
   import { parallax } from '$lib/actions/parallax.svelte';
+  import NewCta from '$lib/components/layout/new-sections/NewCta.svelte';
+  import NewFaqs from '$lib/components/layout/new-sections/NewFaqs.svelte';
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
   import NewPartners from '$lib/components/layout/new-sections/NewPartners.svelte';
   import NewProjectsSection from '$lib/components/layout/new-sections/NewProjectsSection.svelte';
@@ -51,7 +53,9 @@
   <NewProjectsSection />
   <div class="gradient-background-container-2">
     <NewPartners />
+    <NewFaqs />
   </div>
+  <NewCta />
 </main>
 
 <style lang="scss">
@@ -79,8 +83,8 @@
       margin: auto;
       background-image: url('/assets/landing-page/leaves.svg');
       background-position: center;
-      background-size: contain;
-      background-repeat: no-repeat;
+
+      background-repeat: repeat;
       opacity: 0.15;
       filter: brightness(1.4) saturate(0.5);
       z-index: -2;

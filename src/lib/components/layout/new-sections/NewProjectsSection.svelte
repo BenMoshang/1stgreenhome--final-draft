@@ -39,7 +39,7 @@
 
 <section id="projects" class="projects-section u_p-inline__md u_p-block__x">
   <div class="projects-section__container u_container__sm">
-    <header class="projects-section__header">
+    <header class="projects-section__header u_m-bottom__xl">
       <small class="projects-section__header--label brute__label">
         {header.label}
       </small>
@@ -110,7 +110,6 @@
     &__header {
       @extend %flex-col-center;
       text-align: center;
-      margin-bottom: size('xl');
 
       &-title {
         &--gradient {
@@ -127,7 +126,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    gap: size('lg');
+    gap: size('xl');
 
     & > * {
       flex: 1;
@@ -222,10 +221,11 @@
       &--icon {
         $position: size('md');
         $icon-size: size('lg');
+        place-self: start;
 
         position: absolute;
-        top: $position;
-        left: $position;
+        margin-top: $position;
+        margin-left: $position;
         object-fit: contain;
         block-size: $icon-size;
         inline-size: $icon-size;

@@ -57,7 +57,7 @@
 </script>
 
 <section id="hero" class="hero__section u_p-inline__md u_p-block__xl">
-  <div class="hero__container u_container__sm container--grid u_gap__xl">
+  <div class="hero__container u_container__sm container--grid">
     <div class="hero__image-container ga-image">
       <img
         class="hero__image"
@@ -84,35 +84,18 @@
 
       <p
         use:lineStagger
-        class="hero__body u_paragraph u_m-bottom__sm tert typography--tertiary max-ch-45"
+        class="hero__body u_paragraph u_m-bottom__md tert typography--tertiary max-ch-45"
       >
         {heroData.body + heroData.body2}
       </p>
 
       <button
-        on:click={handleEmailClick}
-        class=" brute__button"
+        onclick={handleEmailClick}
+        class="brute__button"
         aria-label="Send email to get started"
       >
         {heroData.button}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M10 14l11 -11" />
-          <path
-            d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"
-          />
-        </svg>
+        <img src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
       </button>
     </header>
   </div>
@@ -143,9 +126,10 @@
   }
 
   .container--grid {
+    place-content: center;
     display: grid;
     grid-template-columns: 1fr;
-
+    gap: size('xl');
     place-items: center;
     grid-template-areas: 'header' 'image';
 
@@ -156,6 +140,8 @@
   }
 
   .hero__image {
+    max-block-size: 20.7763rem;
+
     inline-size: 100%;
     block-size: 100%;
     filter: brightness(1.5) saturate(1.3);
@@ -163,7 +149,8 @@
 
   .hero__image-container {
     max-inline-size: 40rem;
-    max-block-size: 40rem;
+    max-block-size: 20.7763rem;
+
     filter: drop-shadow(0 0 1rem var(--brute-secondary));
     animation: pulse-shadow 3s infinite ease-in-out;
     position: relative;

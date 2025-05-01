@@ -163,7 +163,7 @@
       box-shadow: inherit;
       transition: all 200ms;
     }
-    & svg {
+    & img {
       display: block;
       position:relative;
       inline-size: var(--size-md);
@@ -207,7 +207,7 @@
 }
 
 %glass{
-      backdrop-filter: blur(1.5rem) saturate(180%);
+      backdrop-filter: blur(1.5rem);
     background-color: oklch(100% 0 0 / 0.25);
     border: 1px solid oklch(85% 0 0 / 0.1);
 }

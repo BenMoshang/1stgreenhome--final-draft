@@ -14,10 +14,7 @@ export interface TextAnimateOptions {
  * @param node   The DOM element whose text you want to animate
  * @param opts   Configuration overrides
  */
-export function textAnimate(
-  node: HTMLElement,
-  opts: TextAnimateOptions = {}
-) {
+export function textAnimate(node: HTMLElement, opts: TextAnimateOptions = {}) {
   const { delay = 0.05, duration = 0.5, easing = 'ease-out' } = opts;
 
   // Grab the raw text, then clear the node
@@ -37,18 +34,20 @@ export function textAnimate(
   });
 
   // Fire off the staggered motion
-  animate(
-    letters,
-    { opacity: [0, 1], y: [20, 0] },
-    { delay: stagger(delay), duration, easing } as any
-  );
+  animate(letters, { opacity: [0, 1], y: [20, 0] }, {
+    delay: stagger(delay),
+    duration,
+    easing,
+  } as any);
 
   return {
     update(newOpts: TextAnimateOptions) {
       // You could re-run or tweak the animation here if needed
+      // For this use case, re-creating the element is simpler
     },
     destroy() {
-      // Cleanup if you injected anything extra
-    }
+      // Clear the spans created by the action
+      node.textContent = original;
+    },
   };
 }

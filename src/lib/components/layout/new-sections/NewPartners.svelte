@@ -19,13 +19,13 @@
   const partners = [
     { imageSrc: '/assets/landing-page/partners/logo-pepco.svg' },
     { imageSrc: '/assets/landing-page/partners/logo-bge.svg' },
-    { imageSrc: '/assets/landing-page/partners/lgo.svg' },
+    { imageSrc: '/assets/landing-page/partners/logo-delmarva.svg' },
     { imageSrc: '/assets/landing-page/partners/logo-pmed.png' },
   ];
 
   const partnersReverse = [
-    { imageSrc: '/assets/landing-page/partners/EmPOWER_Color.png' },
-    { imageSrc: '/assets/landing-page/partners/logo-energy-star.png' },
+    { imageSrc: '/assets/landing-page/partners/logo-empower.webp' },
+    { imageSrc: '/assets/landing-page/partners/logo-energy-star.svg' },
     {
       imageSrc:
         '/assets/landing-page/partners/logo-SouthernMarylandElectricCooperative.svg',
@@ -160,10 +160,7 @@
   .partners {
     inline-size: 100%;
     &__header {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      @extend %flex-col-center;
       text-align: center;
       margin-inline: auto;
 
@@ -174,7 +171,7 @@
     &__logos-container {
       inline-size: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
       gap: size('lg');
       place-items: center;
       max-inline-size: calc(4 * 10rem + 3 * var(--size-lg));
@@ -187,31 +184,22 @@
         align-items: center;
         inline-size: size('md');
         block-size: size('sm');
+        padding: size('xs');
         border-radius: $border-radius;
-
         &:hover {
           transform: scale(1.05);
         }
         &--image {
           object-fit: contain;
-          height: auto;
-          aspect-ratio: 3 / 2;
+          aspect-ratio: 16 / 9;
+          inline-size: 100%;
+          block-size: 100%;
         }
       }
     }
   }
 
-  /* Gradients carried over from original CSS */
-  #forward0,
-  #forward1,
-  #forward2 {
-  }
-  #forward3 {
-  }
-  #reverse0,
   #reverse1 {
-  }
-  #reverse2,
-  #reverse3 {
+    mix-blend-mode: multiply;
   }
 </style>

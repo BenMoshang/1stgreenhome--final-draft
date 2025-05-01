@@ -34,7 +34,7 @@
 <div class="layout-wrapper">
   <NewHeader />
   {@render children()}
-  <svg width="0" height="0">
+  <svg class="layout-wrapper__svg" width="0" height="0">
     <defs>
       <filter id="noiseFilter2">
         <feTurbulence
@@ -71,20 +71,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    min-height: 100dvh;
     width: 100%;
     margin: 0 auto;
-    svg {
+    &__svg {
       position: absolute;
       min-block-size: 100%;
       inline-size: 100%;
+      visibility: hidden;
     }
     &::before {
       content: '';
       position: absolute;
 
       inset: 0;
-
       overflow: clip;
       z-index: 3;
       margin: auto;
@@ -92,9 +92,8 @@
       inline-size: 100%;
       filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
       opacity: 0.05;
+
       pointer-events: none;
-      transform: translateZ(0);
-      will-change: filter;
     }
   }
   :global(html) {

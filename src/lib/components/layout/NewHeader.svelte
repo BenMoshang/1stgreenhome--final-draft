@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { textAnimate } from '$lib/actions/textAnimate.svelte';
   // Define interface for navigation links
   interface NavLink {
     link: string;
@@ -71,7 +72,7 @@
 </script>
 
 <header
-  class="header u_p-inline__xs u_p-block__xs u_container__sm"
+  class="header u_p-inline__sm u_p-block__xs u_container__sm"
   class:header--hidden={isHeaderHidden}
 >
   <a class="header__logo" href="/" aria-label="Homepage">
@@ -97,41 +98,56 @@
     aria-label="Primary mobile navigation"
   >
     <ul class="header__nav-list header__nav-list--mobile">
-      {#each routes as link}
-        <li class="header__nav-item header__nav-item--mobile">
-          <a
-            href={link.link + '#' + link.fragment}
-            class={`header__nav-link ${link.class ?? ''}`}
-          >
-            {link.text}
-          </a>
-        </li>
-      {/each}
+      {#if isMenuOpen}
+        {#each routes as link (link.fragment)}
+          <li class="header__nav-item header__nav-item--mobile">
+            <a
+              use:textAnimate
+              href={link.link + '#' + link.fragment}
+              class={`header__nav-link ${link.class ?? ''}`}
+            >
+              {link.text}
+            </a>
+          </li>
+        {/each}
+      {/if}
     </ul>
-    <footer class="u_m-top__lg header__nav-footer header__nav-footer--mobile">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1024 1024"
-        role="img"
-        aria-label="1st Green Home Logo"
-        class="header__footer-logo-image"
-      >
-        <path fill="currentColor" d={logoPathMain} />
-        <path fill="currentColor" d={logoPathSecondary} />
-      </svg>
-      <div class="header__nav-footer-content-container">
-        <a class="header__nav-footer-email" href="mailto:info@1stgreenhome.com">
-          info@1stgreenhome.com
-        </a>
-        <a class="header__nav-footer-phone" href="tel:+14432169169">
-          (443) 216-9169
-        </a>
-        <p class="header__nav-footer-address">
-          10630 Riggs Hill Rd. Unit A <br />
-          Jessup, MD 20794
-        </p>
-      </div>
-    </footer>
+    {#if isMenuOpen}
+      <footer class="u_m-top__lg header__nav-footer header__nav-footer--mobile">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1024 1024"
+          role="img"
+          aria-label="1st Green Home Logo"
+          class="header__footer-logo-image"
+        >
+          <path fill="currentColor" d={logoPathMain} />
+          <path fill="currentColor" d={logoPathSecondary} />
+        </svg>
+        <div class="header__nav-footer-content-container">
+          <a
+            use:textAnimate
+            class="header__nav-footer-email"
+            href="mailto:info@1stgreenhome.com"
+          >
+            info@1stgreenhome.com
+          </a>
+          <a
+            use:textAnimate
+            class="header__nav-footer-phone"
+            href="tel:+14432169169"
+          >
+            (443) 216-9169
+          </a>
+          <p use:textAnimate class="header__nav-footer-address">
+            10630 Riggs Hill Rd. Unit A
+          </p>
+          <span use:textAnimate class="header__nav-footer-address">
+            Jessup, MD 20794</span
+          >
+        </div>
+      </footer>
+    {/if}
   </nav>
 
   <!-- desktop navigation -->
@@ -173,7 +189,6 @@
     </svg>
   </button>
 </header>
-```
 
 <style lang="scss">
   .header {
@@ -282,7 +297,7 @@
   .header__nav-list--desktop {
     list-style: none;
     display: flex;
-    gap: var(--spacing-lg);
+    gap: size('lg');
 
     & span {
       @extend %u_callout;
@@ -327,11 +342,14 @@
   .header__nav-list--mobile {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: size('md');
+    padding-top: size('2xl');
+
+    padding-inline: size('sm');
+    padding-bottom: size('sm');
+    gap: size('xl');
     opacity: 1;
     transition: opacity 0.2s ease 0.1s;
+    text-align: left;
     margin-bottom: size('lg');
   }
 
@@ -339,7 +357,8 @@
     @extend %u_display-2;
     font-weight: 500;
     @extend %typography--secondary;
-    text-align: left;
+    text-align: left !important;
+    margin-inline: auto;
     padding: size('xs');
   }
 
@@ -355,10 +374,7 @@
   .header__nav-footer-content-container {
     inline-size: fit-content;
     text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @extend %flex-col-center;
     gap: size('sm');
   }
 
@@ -379,6 +395,7 @@
   :is(.header__nav-footer-email, .header__nav-footer-phone) {
     @extend %u_callout;
     @extend %a-link;
+
     align-self: flex-start;
   }
 
@@ -394,7 +411,9 @@
 
   .header__nav-footer-address {
     align-self: flex-start;
-
+    max-inline-size: 20ch;
+    overflow-wrap: break-word;
+    text-wrap: balance;
     @extend %u_callout;
     @extend %typography--tertiary;
     line-height: 1.5;
