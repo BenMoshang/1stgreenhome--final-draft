@@ -10,13 +10,14 @@
     button: string;
   }
 
+  import { lineStagger } from '$lib/actions/lineStagger.svelte.js';
   const heroData = $state({
     label: `SIMPLIFY ENERGY SAVINGS`,
     title0: ``,
     title: `Empower Your Business For`,
     title2: `A Greener Tomorrow`,
-    body: `Slash overhead by up to 30 % while proving your commitment to sustainability.`,
-    body2: ` Book a free, no-obligation energy audit and unlock incentive-funded upgrades today.`,
+    body: `Slash overhead by up to 30 % while proving your commitment\n to sustainability.`,
+    body2: ` Book a free, no-obligation energy audit and\n unlock incentive-funded upgrades today.`,
     button: `GET STARTED`,
   });
 
@@ -82,6 +83,7 @@
       </h1>
 
       <p
+        use:lineStagger
         class="hero__body u_paragraph u_m-bottom__sm tert typography--tertiary max-ch-45"
       >
         {heroData.body + heroData.body2}

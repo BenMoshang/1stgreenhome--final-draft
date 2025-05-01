@@ -80,6 +80,7 @@
 	"dependencies": {
 		"@motionone/dom": "^10.18.0",
 		"lenis": "^1.2.3",
-		"motion": "^12.9.2"
+		"motion": "^12.9.2",
+		"split-type": "^0.3.4"
 	}
 }

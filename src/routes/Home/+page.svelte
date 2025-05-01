@@ -50,7 +50,7 @@
   </div>
 
   <NewProjectsSection />
-  <NewPartners />
+  <!-- <NewPartners /> -->
 </main>
 
 <style lang="scss">

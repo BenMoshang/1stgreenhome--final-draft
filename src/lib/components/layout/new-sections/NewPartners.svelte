@@ -1,7 +1,6 @@
-<!-- src/lib/components/Partners.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { inView, animate, scroll } from 'motion';
+  import { inView, animate, scroll, stagger } from 'motion';
   import { fade } from 'svelte/transition';
 
   let container: HTMLElement;
@@ -36,60 +35,57 @@
   ];
 
   onMount(() => {
-    inView(labelEl, ({ target, isInView }) => {
-      if (isInView)
-        animate(target, { opacity: [0, 1], y: [20, 0] }, { duration: 0.6 });
+    inView(labelEl, (element, entry) => {
+      if (entry.isIntersecting) {
+        animate(entry.target as HTMLElement, { opacity: [0, 1], y: [20, 0] }, { duration: 0.6 });
+      }
     });
-    inView(titleEl, ({ target, isInView }) => {
-      if (isInView)
+    inView(titleEl, (element, entry) => {
+      if (entry.isIntersecting) {
         animate(
-          target,
+          entry.target as HTMLElement,
           { opacity: [0, 1], y: [20, 0] },
           { delay: 0.2, duration: 0.6 }
         );
+      }
     });
-    inView(descEl, ({ target, isInView }) => {
-      if (isInView)
+    inView(descEl, (element, entry) => {
+      if (entry.isIntersecting) {
         animate(
-          target,
+          entry.target as HTMLElement,
           { opacity: [0, 1], y: [20, 0] },
           { delay: 0.4, duration: 0.6 }
         );
+      }
     });
 
-    scroll(
-      forwardEls,
-      {
-        x: ['-750px', '0px'],
-        opacity: [0, 1],
-        scale: [0.5, 1],
-        rotate: [0, 360],
-        skewX: [0, 5, 0],
-        scale: [1, 1.1, 1],
-      },
-      {
-        target: container,
-        offset: ['start end', 'end start'],
-        easing: 'ease-out',
-      }
-    );
+    // Animate logos when container scrolls into view
+    inView(container, () => {
+      const allLogos = [...forwardEls, ...reverseEls];
+      const staggerDelay = 0.15; // Base delay between animations
 
-    scroll(
-      reverseEls,
-      {
-        x: ['750px', '0px'],
-        opacity: [0, 1],
-        scale: [0.5, 1],
-        rotate: [0, -360],
-        skewX: [0, -5, 0],
-        scale: [1, 1.1, 1],
-      },
-      {
-        target: container,
-        offset: ['start end', 'end start'],
-        easing: 'ease-out',
-      }
-    );
+      allLogos.forEach((logo, index) => {
+        // Explicitly type keyframes object
+        const keyframes: Record<string, any> = {
+          opacity: [0, 1],
+          transform: [
+            'translateY(20px) scale(0.8)',
+            'translateY(0px) scale(1)'
+          ]
+        };
+
+        animate(
+          logo, // Animate individual logo
+          keyframes, // Pass typed keyframes
+          { // Options
+            duration: 0.8,
+            delay: index * staggerDelay, // Manual stagger calculation
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)' // Modern cubic bezier
+          }
+        );
+      });
+    }, { amount: 0.1 }); // Trigger when 10% of the container is visible
+
   });
 </script>
 
@@ -98,7 +94,7 @@
   class="partners u_p-inline__md u_p-block__xl"
   bind:this={container}
 >
-  <div class="partners__container u_container__sm u_gap__xl">
+  <div class="partners__container u_container__sm">
     <header class="partners__header">
       <small
         class="partners__header-label brute__label"
@@ -123,15 +119,15 @@
       </p>
     </header>
 
-    <div class="partners__logos">
+    <div class="partners__logos-container">
       {#each partners as p, i}
         <div
-          class="partners__logo-item"
+          class="partners__logo-container-item"
           id={'forward' + i}
           bind:this={forwardEls[i]}
         >
           <img
-            class="partner__image"
+            class="partners__logo-container-item--image"
             src={p.imageSrc}
             alt="partner logo"
             loading="lazy"
@@ -141,11 +137,15 @@
 
       {#each partnersReverse as p, i}
         <div
-          class="partners__logo-item"
+          class="partners__logo--container-item"
           id={'reverse' + i}
           bind:this={reverseEls[i]}
         >
-          <img class="partner__image" src={p.imageSrc} alt="partner logo" />
+          <img
+            class="partners__logo-container-item--image"
+            src={p.imageSrc}
+            alt="partner logo"
+          />
         </div>
       {/each}
     </div>
@@ -158,36 +158,34 @@
       text-align: center;
     }
 
-    &__logos {
+    &__logos-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-    }
 
-    &__logo-item {
-      flex: 1 1 45%;
-      box-shadow: var(--shadow-medium--secondary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-      border-radius: var(--border-radius);
-      background: var(--convex-light);
-      outline: 0.0625rem solid var(--color-light);
-      margin-bottom: 1rem;
+      &-item {
+        flex: 1 1 45%;
+        box-shadow: var(--shadow-elevation-medium);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        margin-bottom: 1rem;
 
-      &:hover {
-        transform: scale(1.05);
+        border-radius: $border-radius;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+        &--image {
+          object-fit: contain;
+          width: fit-content;
+          height: auto;
+          aspect-ratio: 1 / 1;
+          filter: drop-shadow(0 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
+        }
       }
     }
-  }
-
-  .partner__image {
-    object-fit: contain;
-    width: 100%;
-    height: 8rem;
-    max-width: 12.6875rem;
-    filter: drop-shadow(0 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
   }
 
   /* Gradients carried over from original CSS */
@@ -208,7 +206,7 @@
     background: linear-gradient(145deg, #e3fdf2, #faffc9);
   }
 
-  @media (min-width: 50.625rem) {
+  @include respond-to('tablet-start') {
     .partners__logo-item {
       flex: 1 1 22%;
     }
