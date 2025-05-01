@@ -47,16 +47,18 @@
 
   <NewHero />
   <div class="gradient-background-container">
+    <section class="curved"></section>
     <NewServiceSection />
     <NewTestimonials />
+    <section class="curved"></section>
   </div>
-  <section class="curved"></section>
   <NewProjectsSection />
   <div class="gradient-background-container-2">
+    <section class="curved"></section>
     <NewPartners />
     <NewFaqs />
+    <section class="curved"></section>
   </div>
-  <section class="curved"></section>
   <NewCta />
 </main>
 
@@ -89,7 +91,7 @@
       background-repeat: repeat;
       opacity: 0.15;
       filter: brightness(1.4) saturate(0.5);
-      z-index: -2;
+      z-index: -1;
       will-change: transform;
       @media (prefers-color-scheme: dark) {
         filter: brightness(0.4) saturate(0.5);
@@ -129,20 +131,13 @@
   }
 
   .curved {
-    flex: none; /* Prevent flex:1 from parent */
+    flex: none;
     position: relative;
     width: 100%;
-    height: 50px; /* Visible height */
-    background: black;
+    height: 50vh;
+    margin-top: -30vh;
+    background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
     border-bottom-left-radius: 50% 20%;
     border-bottom-right-radius: 50% 20%;
-    display: block;
-    z-index: 10;
-  }
-
-  .page-container > .curved {
-    flex: none !important;
-    height: 50px !important;
-    background: red !important;
   }
 </style>
