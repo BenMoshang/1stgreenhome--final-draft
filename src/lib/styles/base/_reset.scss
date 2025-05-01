@@ -122,6 +122,7 @@ address {
 
 :where(a) {
   color: currentcolor; /* Inherit text color */
+  text-decoration: none;
 }
 
 :where(a:active, a:hover, a:focus-visible) {

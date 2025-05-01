@@ -74,10 +74,12 @@
   .services {
     inline-size: 100%;
     block-size: fit-content;
+    margin-inline: auto;
     &__container {
       inline-size: 100%;
       display: grid;
       place-content: center;
+
       grid-template-columns: 1fr;
 
       grid-template-areas: 'content' 'cards';
@@ -88,38 +90,38 @@
       }
     }
     &__header {
-      place-self: center;
-      inline-size: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
       grid-area: content;
       position: sticky;
       top: size('2xl');
+      place-self: center;
+      display: flex;
+      flex-direction: column;
+      inline-size: fit-content;
+      margin-inline: auto;
       margin-bottom: size('xl');
-      @include respond-to('tablet-start') {
+      &-label {
+        text-wrap: nowrap;
+        place-self: start;
+      }
+      @include respond-to('mobile-end') {
         position: unset;
+        text-align: center;
+        & .services__header-label {
+          justify-self: center;
+          align-self: center;
+        }
       }
       @include respond-to('tablet-end') {
-        margin-bottom: unset;
         position: sticky;
-
-        align-items: unset;
+        place-self: start;
         text-align: right;
-        justify-content: flex-end;
-        align-items: flex-end;
-        align-self: start;
-
+        margin-left: -1rem;
         & .services__header-label {
-          text-align: right !important;
+          justify-self: end;
+          align-self: end;
         }
       }
 
-      &-label {
-        text-wrap: nowrap;
-      }
       &-heading {
         margin-block-end: var(--margin-sm);
       }
@@ -127,6 +129,7 @@
       }
     }
     &__cards {
+      place-items: center;
       inline-size: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));

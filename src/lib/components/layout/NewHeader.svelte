@@ -259,10 +259,6 @@
       position: relative;
       z-index: 3;
     }
-
-    &--hidden {
-      transform: translateY(-100%);
-    }
   }
 
   .header__logo {
@@ -298,8 +294,8 @@
     list-style: none;
     display: flex;
     gap: size('lg');
-
     & span {
+      text-decoration: none !important;
       @extend %u_callout;
       @extend %typography--secondary;
       font-family: 'Manrope', system-ui;

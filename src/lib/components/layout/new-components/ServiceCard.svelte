@@ -70,7 +70,7 @@
     border-radius: $br;
     overflow: clip;
     @extend %image-hover;
-    @include respond-to('mobile-end') {
+    @include respond-to('tablet-start') {
       position: static;
       top: unset;
     }

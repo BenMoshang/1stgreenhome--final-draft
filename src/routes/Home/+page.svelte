@@ -50,17 +50,19 @@
     <NewServiceSection />
     <NewTestimonials />
   </div>
+  <section class="curved"></section>
   <NewProjectsSection />
   <div class="gradient-background-container-2">
     <NewPartners />
     <NewFaqs />
   </div>
+  <section class="curved"></section>
   <NewCta />
 </main>
 
 <style lang="scss">
   .page-container {
-    padding-top: 3rem;
+    padding-top: 4.1875rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -124,5 +126,23 @@
         var(--brute-tertiary) 100%
       );
     }
+  }
+
+  .curved {
+    flex: none; /* Prevent flex:1 from parent */
+    position: relative;
+    width: 100%;
+    height: 50px; /* Visible height */
+    background: black;
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
+    display: block;
+    z-index: 10;
+  }
+
+  .page-container > .curved {
+    flex: none !important;
+    height: 50px !important;
+    background: red !important;
   }
 </style>

@@ -127,10 +127,10 @@
 
   .container--grid {
     place-content: center;
+    place-items: center;
     display: grid;
     grid-template-columns: 1fr;
     gap: size('xl');
-    place-items: center;
     grid-template-areas: 'header' 'image';
 
     @include respond-to('tablet-end') {
@@ -140,17 +140,16 @@
   }
 
   .hero__image {
-    max-block-size: 20.7763rem;
-
     inline-size: 100%;
     block-size: 100%;
+    max-inline-size: 40rem;
+    max-block-size: 20.7763rem;
     filter: brightness(1.5) saturate(1.3);
   }
 
   .hero__image-container {
     max-inline-size: 40rem;
     max-block-size: 20.7763rem;
-
     filter: drop-shadow(0 0 1rem var(--brute-secondary));
     animation: pulse-shadow 3s infinite ease-in-out;
     position: relative;
