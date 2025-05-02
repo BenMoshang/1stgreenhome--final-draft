@@ -1,6 +1,6 @@
 <script lang="ts">
-  import NewHeader from '$lib/components/layout/NewHeader.svelte';
   import Footer from '$lib/components/layout/Footer.svelte';
+  import NewHeader from '$lib/components/layout/NewHeader.svelte';
   import Lenis from 'lenis';
   import { onDestroy, onMount } from 'svelte';
   let { children } = $props();
@@ -14,7 +14,27 @@
       smoothWheel: true, // enable smooth wheel scrolling
       wheelMultiplier: 1.5, // boost scroll-to-wheel sensitivity
       lerp: 0.08, // smoother interpolation with snappier response
+      infinite: false, // ensure we don't get stuck in infinite scroll
     });
+
+    // Add window resize handler to recalculate scroll boundaries
+    const resizeObserver = new ResizeObserver(() => {
+      // Force Lenis to recalculate dimensions
+      lenis.resize();
+    });
+
+    // Observe body for size changes
+    resizeObserver.observe(document.body);
+
+    // Set up a scroll listener to update content when needed
+    lenis.on('scroll', (e: any) => {
+      // This keeps Lenis aware of scroll position
+      document.documentElement.setAttribute(
+        'data-scroll-position',
+        e.scroll.toString()
+      );
+    });
+
     let frameId: number;
     function animate(time: number) {
       lenis.raf(time);
@@ -22,7 +42,10 @@
     }
     frameId = requestAnimationFrame(animate);
 
-    onDestroy(() => cancelAnimationFrame(frameId));
+    onDestroy(() => {
+      cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+    });
   });
 </script>
 
@@ -34,7 +57,7 @@
 </svelte:head>
 <div class="layout-wrapper">
   <NewHeader />
-  <main class="main-content">
+  <main class="page-container">
     {@render children()}
   </main>
   <svg class="layout-wrapper__svg" width="0" height="0">
@@ -69,15 +92,6 @@
     margin: 0;
   }
 
-  .main-content {
-    flex-grow: 1;
-    width: 100%;
-    padding-bottom: var(--footer-height, 25rem);
-    background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
-    position: relative;
-    z-index: 1;
-  }
-
   .layout-wrapper {
     position: relative;
     display: flex;
@@ -85,19 +99,19 @@
     justify-content: center;
     align-items: center;
     min-block-size: 100%;
-
     width: 100%;
     margin: 0 auto;
+
     &__svg {
       position: absolute;
       min-block-size: 100%;
       inline-size: 100%;
       visibility: hidden;
     }
+
     &::before {
       content: '';
       position: absolute;
-
       inset: 0;
       overflow: clip;
       z-index: 3;
@@ -106,10 +120,31 @@
       inline-size: 100%;
       filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
       opacity: 0.05;
-
       pointer-events: none;
     }
   }
+
+  .page-container {
+    background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
+    flex-grow: 1;
+    padding-top: 4.1875rem;
+    margin-inline: auto;
+    margin-bottom: var(--footer-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative; /* establishes containing block for abs. children */
+    z-index: 3;
+    gap: size('2xl');
+    width: 100%;
+    min-height: 100vh;
+    box-shadow: var(--shadow-elevation-high);
+    & > * {
+      flex: 1;
+    }
+  }
+
   :global(html) {
     scrollbar-color: var(--brute-secondary) transparent;
     scrollbar-width: thin;

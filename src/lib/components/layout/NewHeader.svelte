@@ -297,7 +297,7 @@
     & span {
       text-decoration: none !important;
       @extend %u_callout;
-      @extend %typography--secondary;
+      @extend %typography--primary;
       font-family: 'Manrope', system-ui;
       font-weight: 500;
       filter: drop-shadow(0 0.125rem 0.25rem rgba(0, 0, 0, 0.2));

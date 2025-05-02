@@ -42,8 +42,8 @@
   });
 </script>
 
-<main class="page-container">
-  <div class="leaves-background" use:parallax={{ offset: 50 }}></div>
+<div class="home-content">
+  <div class="leaves-background" use:parallax={{ offset: 100 }}></div>
 
   <NewHero />
   <div class="gradient-background-container">
@@ -60,43 +60,35 @@
     <!-- <section class="curved"></section  > -->
   </div>
   <NewCta />
-</main>
+</div>
 
 <style lang="scss">
-  .page-container {
-    padding-top: 4.1875rem;
-    margin: 0 auto;
+  /* Home content container to give proper context to absolute positioned elements */
+  .home-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative; /* establishes containing block for abs. children */
-
     gap: size('2xl');
-    width: 100%;
-    height: 100%; /* full viewport height */
-    & > * {
-      flex: 1;
-    }
-    /* Decorative leaves background */
+  }
 
-    & .leaves-background {
-      position: absolute;
-      inset: 0; /* top:0; right:0; bottom:0; left:0; */
-      inline-size: 100%;
-      block-size: 100%;
-      margin: auto;
-      background-image: url('/assets/landing-page/leaves.svg');
-      background-position: center;
-
-      background-repeat: repeat;
-      opacity: 0.15;
-      filter: brightness(1.4) saturate(0.5);
-      z-index: -1;
-      will-change: transform;
-      @media (prefers-color-scheme: dark) {
-        filter: brightness(0.4) saturate(0.5);
-      }
+  /* Decorative leaves background */
+  .leaves-background {
+    position: absolute;
+    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    inline-size: 100%;
+    block-size: 100%;
+    margin: auto;
+    background-image: url('/assets/landing-page/leaves.svg');
+    background-position: center;
+    background-repeat: repeat;
+    opacity: 0.15;
+    filter: brightness(1.4) saturate(0.5);
+    z-index: -1;
+    will-change: transform;
+    @media (prefers-color-scheme: dark) {
+      filter: brightness(0.4) saturate(0.5);
     }
   }
 

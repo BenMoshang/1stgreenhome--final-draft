@@ -159,7 +159,7 @@
       height: 100%;
       width: 0;
       border-radius: var(--brute-border-radius);
-      background: var(--brute-secondary--neu);
+      background: oklch(79.5% 0.184 86.047);
       z-index: -1;
       box-shadow: inherit;
       transition: all 200ms;

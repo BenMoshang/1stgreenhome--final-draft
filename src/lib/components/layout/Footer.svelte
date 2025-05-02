@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { parallaxReveal } from '$lib/actions/parallaxReveal.svelte.js';
   // Data for navigation links
   const homeResources = [
     {
@@ -37,11 +36,7 @@
   const currentYear = new Date().getFullYear();
 </script>
 
-<footer
-  use:parallaxReveal={{ threshold: 0.05, startOffset: '25%' }}
-  class="footer u_p-inline__md u_p-block__xl"
-  style="--footer-height: 25rem;"
->
+<footer class="footer u_p-inline__md u_p-block__xl">
   <div class="footer__container u_container__sm">
     <div class="footer__content">
       <!-- Contact Block -->
@@ -134,15 +129,50 @@
 
 <style lang="scss">
   .footer {
-    position: sticky;
-    z-index: -2;
+    position: fixed;
     bottom: 0;
-    z-index: 0;
+    width: 100%;
+    z-index: -10;
     height: var(--footer-height);
-    background-color: var(--brute-secondary);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%068437' fill-opacity='0.69' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
     color: var(--on-surface-container);
     will-change: transform, opacity;
+    transform: translateZ(0); /* Force hardware acceleration */
+    backface-visibility: hidden; /* Improve performance */
+    background:
+      radial-gradient(
+          oklch(98% 0 0) 4%,
+          oklch(95% 0 0) 9%,
+          oklch(95% 0 0 / 0%) 9%
+        )
+        0 0,
+      radial-gradient(
+          oklch(98% 0 0) 4%,
+          oklch(95% 0 0) 8%,
+          oklch(95% 0 0 / 0%) 10%
+        )
+        50px 50px,
+      radial-gradient(oklch(98% 0 0 / 80%) 20%, oklch(95% 0 0 / 0%)) 50px 0,
+      radial-gradient(oklch(98% 0 0 / 80%) 20%, oklch(95% 0 0 / 0%)) 0 50px,
+      radial-gradient(oklch(95% 0 0) 35%, oklch(95% 0 0 / 0%) 60%) 50px 0,
+      radial-gradient(oklch(95% 0 0) 35%, oklch(95% 0 0 / 0%) 60%) 100px 50px,
+      radial-gradient(oklch(92% 0 0 / 70%), oklch(95% 0 0 / 0%)) 0 0,
+      radial-gradient(oklch(92% 0 0 / 70%), oklch(95% 0 0 / 0%)) 50px 50px,
+      linear-gradient(
+          45deg,
+          oklch(95% 0 0 / 0%) 49%,
+          oklch(88% 0 0) 50%,
+          oklch(95% 0 0 / 0%) 70%
+        )
+        0 0,
+      linear-gradient(
+          -45deg,
+          oklch(95% 0 0 / 0%) 49%,
+          oklch(88% 0 0) 50%,
+          oklch(95% 0 0 / 0%) 70%
+        )
+        0 0;
+    background-color: oklch(99% 0 0);
+    background-size: 6.25rem 6.25rem;
 
     &__container {
       display: flex;

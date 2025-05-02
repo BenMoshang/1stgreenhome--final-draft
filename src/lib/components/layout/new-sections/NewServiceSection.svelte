@@ -120,11 +120,11 @@
       }
 
       &-heading {
-        max-inline-size: 25ch;
+        max-inline-size: 20ch;
         margin-block-end: var(--margin-sm);
       }
       &-body {
-        max-inline-size: 50ch;
+        max-inline-size: 45ch;
       }
     }
     &__cards {
