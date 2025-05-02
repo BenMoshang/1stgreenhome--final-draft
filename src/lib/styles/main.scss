@@ -127,7 +127,7 @@
   .brute__button {
     $bg: linear-gradient(145deg, #ffa90c, #dd8e0a);
     @extend %u_heading--bold;
-
+inline-size: fit-content;
     color: oklch(100% 0 0);
 
     display: flex;

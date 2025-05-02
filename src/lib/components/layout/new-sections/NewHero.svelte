@@ -10,7 +10,6 @@
     button: string;
   }
 
-  import { lineStagger } from '$lib/actions/lineStagger.svelte.js';
   const heroData = $state({
     label: `SIMPLIFY ENERGY SAVINGS`,
     title0: ``,
@@ -57,19 +56,7 @@
 </script>
 
 <section id="hero" class="hero__section u_p-inline__md u_p-block__xl">
-  <div class="hero__container u_container__sm container--grid">
-    <div class="hero__image-container ga-image">
-      <img
-        class="hero__image"
-        src="/assets/landing-page/hero/herobulb.webp"
-        width="640"
-        height="640"
-        alt="Energy efficient light bulb illustration"
-        loading="eager"
-        decoding="sync"
-      />
-    </div>
-
+  <div class="hero__container u_container__sm">
     <header class="hero__header ga-header">
       <small class="brute__label">
         {heroData.label}
@@ -83,7 +70,6 @@
       </h1>
 
       <p
-        use:lineStagger
         class="hero__body u_paragraph u_m-bottom__md tert typography--tertiary max-ch-45"
       >
         {heroData.body + heroData.body2}
@@ -98,68 +84,105 @@
         <img src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
       </button>
     </header>
+
+    <div class="hero__image-container">
+      <img
+        class="hero__image"
+        src="/assets/landing-page/hero/herobulb.webp"
+        width="640"
+        height="640"
+        alt="Energy efficient light bulb illustration"
+        loading="eager"
+        decoding="sync"
+      />
+    </div>
   </div>
 </section>
 
 <style lang="scss">
+  /* ---------------------------------------------
+   * Base Styles and Animations
+   * --------------------------------------------- */
+
+  // Animated gradient text for hero titles
   .gradient-text {
     @include gradient-text-animated(3s);
   }
-  .tert {
-    @extend %typography--tertiary;
+
+  // Animation for pulsing shadow effect
+  @keyframes pulse-shadow {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 0.5rem var(--brute-secondary));
+    }
+    50% {
+      filter: drop-shadow(0 0 1rem var(--brute-secondary));
+    }
   }
+
+  /* ---------------------------------------------
+   * Layout Structure
+   * --------------------------------------------- */
+
+  // Main hero section container
   .hero__section {
     position: relative;
     inline-size: 100%;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      inline-size: 100%;
-      clip-path: ellipse(60% 84.78% at 50% 0%);
-    }
   }
 
+  // Inner container with flex layout
   .hero__container {
     inline-size: 100%;
-    margin: 0 auto;
-  }
-
-  .container--grid {
-    place-content: center;
-    place-items: center;
-    display: grid;
-    grid-template-columns: 1fr;
+    @extend %flex-col-center;
     gap: size('xl');
-    grid-template-areas: 'header' 'image';
+
+    & > * {
+      flex: 1;
+    }
 
     @include respond-to('tablet-end') {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-areas: 'header image';
+      flex-direction: row;
     }
   }
 
-  .hero__image {
-    inline-size: 100%;
-    block-size: 100%;
-    max-inline-size: 20.7763rem;
-    object-fit: cover;
+  /* ---------------------------------------------
+   * Content Elements
+   * --------------------------------------------- */
 
+  // Text content container
+  .hero__header {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  /* ---------------------------------------------
+   * Visual Elements
+   * --------------------------------------------- */
+
+  // Hero image and decorative elements
+  .hero__image {
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
     filter: brightness(1.5) saturate(1.3);
   }
 
+  // Container with decorative pseudo-elements
   .hero__image-container {
-    max-inline-size: 40rem;
-    filter: drop-shadow(0 0 1rem var(--brute-secondary));
-    animation: pulse-shadow 3s infinite ease-in-out;
+    // Positioning
     position: relative;
     z-index: 3;
+    aspect-ratio: 1 / 1;
+
+    // Visual effects
+    filter: drop-shadow(0 0 1rem var(--brute-secondary));
+    animation: pulse-shadow 3s infinite ease-in-out;
+
+    // Custom properties
     --background-dimensions: 70%;
     --background-abs-pos: 14%;
-    @include respond-to('tablet-end') {
-      margin-left: auto;
-    }
+
+    // Decorative pseudo-elements
     &::before,
     &::after {
       content: '';
@@ -173,48 +196,20 @@
     }
 
     &::before {
+      z-index: -1;
       background-image: url('/assets/landing-page/hero/abstract.webp');
       background-position: 0% 100%;
       background-size: cover;
       mix-blend-mode: screen;
-      z-index: -1;
     }
 
     &::after {
-      @include apply-shadow('lg');
+      z-index: -2;
       background: oklch(26.6% 0.065 152.934);
-      filter: brightness(0.9) saturate(0.75);
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
-      z-index: -2;
-    }
-  }
-
-  .ga-header {
-    grid-area: header;
-  }
-
-  .ga-image {
-    grid-area: image;
-  }
-
-  .hero__header {
-    inline-size: fit-content;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  @keyframes pulse-shadow {
-    0%,
-    100% {
-      filter: drop-shadow(0 0 0.5rem var(--brute-secondary));
-    }
-    50% {
-      filter: drop-shadow(0 0 1rem var(--brute-secondary));
+      filter: brightness(0.9) saturate(0.75);
     }
   }
 </style>

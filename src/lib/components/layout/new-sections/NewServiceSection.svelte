@@ -77,7 +77,7 @@
       inline-size: 100%;
       display: grid;
       place-content: center;
-
+      place-items: center;
       grid-template-columns: 1fr;
 
       grid-template-areas: 'content' 'cards';

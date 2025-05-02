@@ -41,17 +41,12 @@
     <div class="footer__content">
       <!-- Contact Block -->
       <section class="footer__contact">
-        <a href="/" class="footer__logo" aria-label="Homepage">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1024 1024"
-            role="img"
-            aria-label="1st Green Home Logo"
-            class="footer__logo-svg"
-          >
-            <path fill="currentColor" d={logoPathMain} />
-            <path fill="currentColor" d={logoPathSecondary} />
-          </svg>
+        <a href="/" aria-label="Homepage">
+          <img
+            src="../../../../static/1stgreenhome--old-logo.webp"
+            alt="1stgreenhome"
+            class="footer__logo"
+          />
         </a>
         <h2 class="footer__company-name">1st Green Home</h2>
         <address class="footer__address">
@@ -195,7 +190,8 @@
 
     &__logo {
       // Styles for the logo link itself, if needed
-      color: var(--brute-primary);
+
+      mix-blend-mode: multiply;
       display: inline-block; // Example
     }
 
