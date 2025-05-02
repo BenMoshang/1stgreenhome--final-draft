@@ -1,5 +1,6 @@
 <script lang="ts">
   import NewHeader from '$lib/components/layout/NewHeader.svelte';
+  import Footer from '$lib/components/layout/Footer.svelte';
   import Lenis from 'lenis';
   import { onDestroy, onMount } from 'svelte';
   let { children } = $props();
@@ -33,7 +34,9 @@
 </svelte:head>
 <div class="layout-wrapper">
   <NewHeader />
-  {@render children()}
+  <main class="main-content">
+    {@render children()}
+  </main>
   <svg class="layout-wrapper__svg" width="0" height="0">
     <defs>
       <filter id="noiseFilter2">
@@ -51,6 +54,7 @@
     </defs>
   </svg>
 </div>
+<Footer />
 
 <!-- SVG filter for noise effect -->
 
@@ -65,13 +69,23 @@
     margin: 0;
   }
 
+  .main-content {
+    flex-grow: 1;
+    width: 100%;
+    padding-bottom: var(--footer-height, 25rem);
+    background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
+    position: relative;
+    z-index: 1;
+  }
+
   .layout-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100dvh;
+    min-block-size: 100%;
+
     width: 100%;
     margin: 0 auto;
     &__svg {
@@ -88,7 +102,7 @@
       overflow: clip;
       z-index: 3;
       margin: auto;
-      min-block-size: 100%;
+      block-size: 100%;
       inline-size: 100%;
       filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
       opacity: 0.05;

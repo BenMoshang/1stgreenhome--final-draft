@@ -37,7 +37,7 @@
   ]);
 </script>
 
-<section id="projects" class="projects-section u_p-inline__md u_p-block__x">
+<section id="projects" class="projects-section u_p-inline__md u_p-block__xl">
   <div class="projects-section__container u_container__sm">
     <header class="projects-section__header u_m-bottom__xl">
       <small class="projects-section__header--label brute__label">
@@ -166,13 +166,13 @@
     &__image-container {
       $border-custom: 40% 7% 7% 7% / 40% 7% 7% 7%;
       grid-area: image;
+      border-radius: 0% 7% 7% 7% / 0% 7% 7% 7%;
       position: relative;
       overflow: clip;
       // border-radius: 90% 10% 91% 9% / 11% 85% 15% 89%;
-      border-radius: 0% 7% 7% 7% / 0% 7% 7% 7%;
       $image-container-size: 100%;
       block-size: $image-container-size;
-
+      filter: $shadow-drop;
       inline-size: $image-container-size;
       max-inline-size: $PAGE_MAX_INLINE / 2;
       max-block-size: $PAGE_MAX_INLINE / 2;
@@ -192,7 +192,6 @@
         border-radius: $border-custom;
         overflow: hidden;
         @extend %image-hover;
-
         background: radial-gradient(
           circle at center,
           transparent 50%,
@@ -213,13 +212,12 @@
         block-size: 100%;
         inline-size: 100%;
         z-index: 1;
-        box-shadow: var(--shadow-elevation-medium);
 
         @include only-green;
         object-fit: cover;
       }
       &--icon {
-        $position: size('md');
+        $position: size('xs');
         $icon-size: size('lg');
         place-self: start;
 

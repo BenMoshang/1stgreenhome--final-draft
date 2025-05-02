@@ -248,7 +248,7 @@
     &__panel {
       max-height: 0;
       overflow: hidden;
-
+      @extend %inset-shadow;
       transition:
         max-height 0.2s ease-in-out,
         padding 0.2s ease-in-out;

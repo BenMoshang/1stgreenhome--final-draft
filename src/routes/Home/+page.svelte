@@ -136,8 +136,8 @@
     flex: none;
     position: relative;
     width: 100%;
-    height: 50vh;
-    margin-top: -30vh;
+    height: size('2xl');
+    margin-top: calc(-1 * #{size('2xl')});
     background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
     border-bottom-left-radius: 50% 20%;
     border-bottom-right-radius: 50% 20%;
