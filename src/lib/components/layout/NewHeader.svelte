@@ -11,10 +11,10 @@
 
   // Navigation link data
   const routes: NavLink[] = [
-    { link: '/home', fragment: 'services', text: 'Services' },
-    { link: '/home', fragment: 'projects', text: 'Projects' },
-    { link: '/home', fragment: 'faqs', text: 'FAQs' },
-    { link: '/home', fragment: 'cta', text: 'Contact', class: 'nav-link--cta' },
+    { link: '/Home/', fragment: 'services', text: 'Services' },
+    { link: '/Home/', fragment: 'projects', text: 'Projects' },
+    { link: '/Home/', fragment: 'faqs', text: 'FAQs' },
+    { link: '/Home/', fragment: 'cta', text: 'Contact', class: 'nav-link--cta' },
   ];
 
   // State
@@ -292,7 +292,7 @@
   .header__nav-list--desktop {
     list-style: none;
     display: flex;
-    gap: size('lg');
+    gap: size('xl');
     & span {
       text-decoration: none !important;
       @extend %u_callout;

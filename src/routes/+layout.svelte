@@ -23,8 +23,8 @@
       lenis.resize();
     });
 
-    // Observe body for size changes
-    resizeObserver.observe(document.body);
+    // Observe document element for size changes
+    resizeObserver.observe(document.documentElement);
 
     // Set up a scroll listener to update content when needed
     lenis.on('scroll', (e: any) => {
@@ -129,6 +129,8 @@
     flex-grow: 1;
     padding-top: 4.1875rem;
     margin-inline: auto;
+    box-shadow: var(--shadow-elevation-high);
+
     margin-bottom: 95vh;
     @include respond-to('tablet-end') {
       margin-bottom: $footer-height;
@@ -142,7 +144,6 @@
     gap: size('2xl');
     width: 100%;
     min-height: 100vh;
-    box-shadow: var(--shadow-elevation-high);
     & > * {
       flex: 1;
     }
@@ -152,6 +153,7 @@
     scrollbar-color: var(--brute-secondary) transparent;
     scrollbar-width: thin;
     background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
+    scroll-behavior: smooth;
 
     ::selection {
       background: var(--brute-tertiary);

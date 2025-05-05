@@ -53,11 +53,7 @@
   );
 </script>
 
-<section
-  class="faq u_p-inline__md u_p-block__xl"
-  itemscope
-  itemtype="https://schema.org/FAQPage"
->
+<section id="faqs" class="faq u_p-inline__md u_p-block__xl" itemscope itemtype="https://schema.org/FAQPage">
   <div class="faq__container u_container__sm">
     <header class="faq__header u_m-bottom__xl">
       {#if header.label}
