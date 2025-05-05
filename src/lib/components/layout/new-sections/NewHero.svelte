@@ -15,8 +15,8 @@
     title0: ``,
     title: `Empower Your Business For`,
     title2: `A Greener Tomorrow`,
-    body: `Slash overhead by up to 30 % while proving your commitment\n to sustainability.`,
-    body2: ` Book a free, no-obligation energy audit and\n unlock incentive-funded upgrades today.`,
+    body: `Slash overhead by up to 30 % while proving your commitment to sustainability.`,
+    body2: ` Book a free, no-obligation energy audit and unlock incentive-funded upgrades today.`,
     button: `GET STARTED`,
   });
 
