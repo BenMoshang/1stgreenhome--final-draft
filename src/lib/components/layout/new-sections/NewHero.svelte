@@ -81,7 +81,10 @@
         aria-label="Send email to get started"
       >
         {heroData.button}
-        <img src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
+        <img
+        loading="eager"
+        
+        src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
       </button>
     </header>
 
@@ -93,6 +96,7 @@
         height="640"
         alt="Energy efficient light bulb illustration"
         loading="eager"
+        fetchpriority="high"
         decoding="sync"
       />
     </div>

@@ -13,9 +13,7 @@
   const steps = $state<Service[]>([
     {
       tag: '1',
-      icon: '/assets/new-icons/lightning.svg', // Icon associated with this step
-      iconAlt: 'Energy audit icon',
-      title: 'Free Energy Audits',
+      title: 'Offered Energy Audits',
       description:
         'Quickly find and fix energy waste in your home or business. Expert audits for fast savings.', // Main point: fast, expert audits for savings
       image: '/assets/landing-page/stepper/card-01.jpeg',
@@ -23,8 +21,6 @@
     },
     {
       tag: '2',
-      icon: '/assets/new-icons/light-bulb.svg',
-      iconAlt: 'Cost savings icon',
       title: 'Tailored Consulting',
       description:
         'Custom eco-strategies to save energy and resources. Achieve your sustainability goals faster.', // Main point: custom strategies for faster sustainability
@@ -33,8 +29,14 @@
     },
     {
       tag: '3',
-      icon: '/assets/new-icons/briefcase.svg',
-      iconAlt: 'Project management icon',
+      title: 'Solar Program',
+      description:
+        'Custom eco-strategies to save energy and resources. Achieve your sustainability goals faster.', // Main point: custom strategies for faster sustainability
+      image: '/assets/landing-page/stepper/solar-program.webp',
+      imageAlt: 'Close-up of energy-efficient light bulbs illuminating a room.', // More descriptive alt text
+    },
+    {
+      tag: '4',
       title: 'End-to-End Management',
       description:
         'We handle your energy projects from start to finish. Smooth, timely, and cost-effective upgrades.', // Main point: complete, smooth, cost-effective project management

@@ -1,138 +1,144 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="robots" content="index, follow" />
+  <head>
+    <!-- ------------------------------------------------------------------
+         GLOBAL META
+    ------------------------------------------------------------------ -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="index, follow, max-snippet:160, max-image-preview:large" />
 
-		<!-- Primary Meta Tags -->
-		<title>1st Green Home - Energy Audits & LED Retrofits for Maryland Homes & Businesses</title>
-		<meta
-			name="description"
-			content="Save money and reduce energy consumption with 1st Green Home's professional energy audits, LED retrofits, and sustainable energy solutions in Maryland. Free consultations available."
-		/>
+    <!-- ------------------------------------------------------------------
+         TITLE & DESCRIPTION
+    ------------------------------------------------------------------ -->
+    <title>1stGreenHome</title>
+    <meta name="description" content="Certified Maryland auditors and turnkey LED retrofits that cut energy costs and boost comfort — book a free consultation with 1st Green Home today." />
 
-		<!-- Author Information -->
-		<meta name="author" content="1st Green Home" />
+    <!-- ------------------------------------------------------------------
+         CANONICAL & SITEMAP
+    ------------------------------------------------------------------ -->
+    <link rel="canonical" href="https://www.1stgreenhome.com/" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 
-		<!-- Geo Meta Tags -->
-		<meta name="geo.region" content="US-MD" />
-		<meta name="geo.placename" content="Jessup, Maryland" />
+    <!-- ------------------------------------------------------------------
+         HREFLANG (extend as you add locales)
+    ------------------------------------------------------------------ -->
+    <link rel="alternate" hreflang="en-us" href="https://www.1stgreenhome.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.1stgreenhome.com/" />
 
-		<!-- Language -->
-		<meta property="og:locale" content="en_US" />
+    <!-- ------------------------------------------------------------------
+         SOCIAL META
+    ------------------------------------------------------------------ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.1stgreenhome.com/" />
+    <meta property="og:title" content="1stGreenHome" />
+    <meta property="og:description" content="Save energy and money with professional audits and LED upgrades across Maryland." />
+    <meta property="og:image" content="https://www.1stgreenhome.com/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:updated_time" content="2025-05-05T09:00:00-04:00" />
+    <meta property="og:site_name" content="1st Green Home" />
+    <meta property="og:locale" content="en_US" />
 
-		<!-- Canonical URL -->
-		<link rel="canonical" href="https://www.1stgreenhome.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@1stGreenHome" />
+    <meta name="twitter:title" content="1stGreenHome" />
+    <meta name="twitter:description" content="Certified Maryland auditors and turnkey LED retrofits that cut energy costs and boost comfort." />
+    <meta name="twitter:image" content="https://www.1stgreenhome.com/og-cover.jpg" />
+    <meta name="twitter:image:width" content="1200" />
+    <meta name="twitter:image:height" content="630" />
+    <meta name="twitter:image:alt" content="Illustration of an energy‑efficient Maryland home with LED lighting." />
 
-		<!-- Open Graph Meta Tags -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://www.1stgreenhome.com/" />
-		<meta
-			property="og:title"
-			content="1st Green Home - Energy Audits & LED Retrofits for Sustainability"
-		/>
-		<meta
-			property="og:description"
-			content="Discover 1st Green Home's expert energy audits and LED retrofits that help reduce energy costs and promote sustainability. Empower your home or business with eco-friendly solutions for a greener tomorrow."
-		/>
-		<meta property="og:image" content="https://www.1stgreenhome.com/assets/imessage.png" />
-		<meta
-			property="og:image:alt"
-			content="1st Green Home - Sustainable LED lighting retrofits and energy audits"
-		/>
-		<meta property="og:site_name" content="1st Green Home" />
+    <!-- ------------------------------------------------------------------
+         PWA · ICONS · MANIFEST
+    ------------------------------------------------------------------ -->
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#2e7d32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2e7d32" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="1st Green Home" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-		<!-- Twitter Card Meta Tags -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:site" content="@1stGreenHome" />
-		<meta
-			name="twitter:title"
-			content="1st Green Home - Energy Audits & LED Retrofits for Sustainable Homes & Businesses"
-		/>
-		<meta
-			name="twitter:description"
-			content="Discover 1st Green Home's expert energy audits and LED retrofits that help reduce energy costs and promote sustainability. Empower your home or business with eco-friendly solutions for a greener future."
-		/>
-		<meta name="twitter:image" content="https://www.1stgreenhome.com/assets/header/logo4.png" />
-		<meta
-			name="twitter:image:alt"
-			content="1st Green Home logo - LED retrofits and energy audits"
-		/>
+    <!-- ------------------------------------------------------------------
+         RESOURCE HINTS & PERFORMANCE
+    ------------------------------------------------------------------ -->
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+    <link rel="preload" href="/fonts/Manrope-VF.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Outfit-VF.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/styles/critical.css" fetchpriority="high" />
 
-		<!-- Keywords -->
-		<meta
-			name="keywords"
-			content="Energy Audits, LED Retrofits, Energy Efficiency Maryland, Commercial Energy Solutions, Renewable Energy, Sustainable Living, Green Energy Maryland, Eco-Friendly Home Upgrades, Energy Cost Savings, Maryland Energy Rebates, Jessup Energy Services"
-		/>
+    <!-- ------------------------------------------------------------------
+         STRUCTURED DATA (LocalBusiness + Breadcrumb)
+    ------------------------------------------------------------------ -->
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "@id": "https://www.1stgreenhome.com",
+          "name": "1st Green Home",
+          "image": "https://www.1stgreenhome.com/og-cover.jpg",
+          "url": "https://www.1stgreenhome.com/",
+          "telephone": "+14432169169",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "10630 Riggs Hill Rd. Unit A",
+            "addressLocality": "Jessup",
+            "addressRegion": "MD",
+            "postalCode": "20794",
+            "addressCountry": "US"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.134177,
+            "longitude": -76.8006977
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "17:00"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "128"
+          },
+          "sameAs": [
+            "https://www.facebook.com/1stgreenhome",
+            "https://twitter.com/1stGreenHome",
+            "https://www.linkedin.com/company/1st-green-home"
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://www.1stgreenhome.com/"
+            }
+          ]
+        }
+      ]
+    </script>
 
-		<!-- Favicon & Apple Touch Icons -->
-		<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/header/logo4.png" />
-		<link rel="icon" type="image/x-icon" href="%sveltekit.assets%/header/logo4.png" />
-		<link rel="apple-touch-icon" sizes="180x180" href="%sveltekit.assets%/header/logo4.png" />
+    <!-- ------------------------------------------------------------------
+         SECURITY HEADERS (note: replace 'unsafe-inline' with nonce/hashes in prod)
+    ------------------------------------------------------------------ -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; font-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com;" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), geolocation=(), microphone=()" />
 
-		<!-- Preload local fonts -->
-		<link rel="preload" href="%sveltekit.assets%/fonts/Manrope-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
-		<link rel="preload" href="%sveltekit.assets%/fonts/Outfit-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
-
-		<style lang="scss">
-			/* Local font faces */
-			@font-face {
-				font-family: 'Manrope';
-				src: url('%sveltekit.assets%/fonts/Manrope-VariableFont_wght.ttf') format('truetype');
-				font-weight: 200 800;
-				font-style: normal;
-				font-display: swap;
-			}
-			@font-face {
-				font-family: 'Outfit';
-				src: url('%sveltekit.assets%/fonts/Outfit-VariableFont_wght.ttf') format('truetype');
-				font-weight: 100 900;
-				font-style: normal;
-				font-display: swap;
-			}
-		</style>
-
-		<!-- Structured Data (JSON-LD) -->
-		<script type="application/ld+json">
-			{
-				"@context": "https://schema.org",
-				"@type": "LocalBusiness",
-				"name": "1st Green Home",
-				"image": "https://www.1stgreenhome.com/assets/header/logo4.png",
-				"@id": "https://www.1stgreenhome.com",
-				"url": "https://www.1stgreenhome.com",
-				"telephone": "+14432169169",
-				"address": {
-					"@type": "PostalAddress",
-					"streetAddress": "10630 Riggs Hill Rd. Unit A",
-					"addressLocality": "Jessup",
-					"addressRegion": "MD",
-					"postalCode": "20794",
-					"addressCountry": "US"
-				},
-				"geo": {
-					"@type": "GeoCoordinates",
-					"latitude": 39.134177,
-					"longitude": -76.8006977
-				},
-				"openingHoursSpecification": {
-					"@type": "OpeningHoursSpecification",
-					"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-					"opens": "09:00",
-					"closes": "17:00"
-				},
-				"sameAs": [
-					"https://www.facebook.com/1stgreenhome",
-					"https://twitter.com/1stGreenHome",
-					"https://www.linkedin.com/company/1st-green-home"
-				]
-			}
-		</script>
-
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div>%sveltekit.body%</div>
-	</body>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    %sveltekit.body%
+  </body>
 </html>

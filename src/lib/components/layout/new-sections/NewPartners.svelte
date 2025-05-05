@@ -99,25 +99,21 @@
 <section
   id="partners"
   class="partners u_p-inline__md u_p-block__xl"
-  bind:this={container}
 >
   <div class="partners__container u_container__sm">
     <header class="partners__header u_m-bottom__xl">
       <small
         class="partners__header-label brute__label-rev"
-        bind:this={labelEl}
       >
         {header.label}
       </small>
       <h2
         class=" partners__header-heading max-ch-20 u_display-2--bold typography--primary-rev u_m-bottom__sm"
-        bind:this={titleEl}
       >
         {header.title}
       </h2>
       <p
         class="partners__header-body m u_paragraph typography--secondary-rev"
-        bind:this={descEl}
       >
         {header.description}
       </p>

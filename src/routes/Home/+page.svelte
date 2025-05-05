@@ -1,5 +1,6 @@
 <script lang="ts">
   import { parallax } from '$lib/actions/parallax.svelte';
+  import { onMount } from 'svelte';
   import NewCta from '$lib/components/layout/new-sections/NewCta.svelte';
   import NewFaqs from '$lib/components/layout/new-sections/NewFaqs.svelte';
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
@@ -7,7 +8,6 @@
   import NewProjectsSection from '$lib/components/layout/new-sections/NewProjectsSection.svelte';
   import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
   import NewTestimonials from '$lib/components/layout/new-sections/NewTestimonials.svelte';
-  import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
   function jumpToFragment(fragment: string) {
@@ -57,7 +57,7 @@
     <!-- <section class="curved"></section> -->
     <NewPartners />
     <NewFaqs />
-    <!-- <section class="curved"></section  > -->
+    <!-- <section class="curved"></section> -->
   </div>
   <NewCta />
 </div>
@@ -67,7 +67,7 @@
   .home-content {
     position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     gap: size('2xl');

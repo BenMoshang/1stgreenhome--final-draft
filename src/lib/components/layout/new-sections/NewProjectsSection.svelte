@@ -80,6 +80,7 @@
             alt=""
             aria-hidden="true"
             loading="lazy"
+            fetchpriority="low"
             width="700"
             height="700"
           />

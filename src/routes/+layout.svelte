@@ -94,13 +94,13 @@
 
   .layout-wrapper {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @extend %flex-col-center;
     min-block-size: 100%;
     width: 100%;
     margin: 0 auto;
+    isolation: isolate;
+    overscroll-behavior: contain;
+    pointer-events: auto;
 
     &__svg {
       position: absolute;
@@ -129,7 +129,10 @@
     flex-grow: 1;
     padding-top: 4.1875rem;
     margin-inline: auto;
-    margin-bottom: var(--footer-height);
+    margin-bottom: 95vh;
+    @include respond-to('tablet-end') {
+      margin-bottom: $footer-height;
+    }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

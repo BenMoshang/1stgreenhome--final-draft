@@ -1,4 +1,9 @@
+# 1st Green Home — robots.txt
+# Last updated: 2025‑05‑05
+# Guidelines: allow full crawl, point bots at XML sitemap
+
 User-agent: *
 Allow: /
 
+# XML sitemap location (multiple allowed)
 Sitemap: https://www.1stgreenhome.com/sitemap.xml

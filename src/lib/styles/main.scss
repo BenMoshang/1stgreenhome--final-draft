@@ -48,7 +48,17 @@
     animation: none;
   }
 }
+:root {
+    --brute-border-radius: 1rem;
+    --brute-primary: oklch(72.3% 0.219 149.579);
+    --brute-secondary: oklch(52.7% 0.154 150.069);
+    --brute-tertiary: oklch(39.3% 0.095 152.535);
+    --brute-tertiary--opacity: oklch(39.3% 0.095 152.535 / 0.35);
+    --brute-secondary--opacity: oklch(52.7% 0.154 150.069 / 0.35);
+    --brute-primary--neu: linear-gradient(145deg in oklch, #55d466, #47b256);
 
+    --brute-secondary--neu: linear-gradient(145deg in oklch, #378943, #2e7339);
+  }
 /* --------------------------------------------------
    Gradient Animation Keyframes - Improved for seamless looping
    -------------------------------------------------- */
@@ -65,17 +75,7 @@
 }
 
 
-:root {
-    --brute-border-radius: 1rem;
-    --brute-primary: oklch(72.3% 0.219 149.579);
-    --brute-secondary: oklch(52.7% 0.154 150.069);
-    --brute-tertiary: oklch(39.3% 0.095 152.535);
-    --brute-tertiary--opacity: oklch(39.3% 0.095 152.535 / 0.35);
-    --brute-secondary--opacity: oklch(52.7% 0.154 150.069 / 0.35);
-    --brute-primary--neu: linear-gradient(145deg in oklch, #55d466, #47b256);
 
-    --brute-secondary--neu: linear-gradient(145deg in oklch, #378943, #2e7339);
-  }
 
  
   .brute__text--primary {
@@ -107,7 +107,7 @@
     inline-size: fit-content;
     padding-inline: var(--size-sm);
     padding-block: var(--size-xs);
-    background: #dae8dc;
+    background: oklch(90% 0.04 150);
     border-radius: var(--brute-border-radius);
     margin-block-end: var(--margin-md);
     box-shadow: var(--shadow-elevation-low)
@@ -115,7 +115,7 @@
   }
   .brute__label-rev {
     @extend %u_label;
-    color: #dae8dc;
+    color: oklch(87% 0.04 150);
     padding-inline: var(--size-sm);
     padding-block: var(--size-xs);
     background: var(--brute-tertiary);
@@ -125,13 +125,25 @@
   }
 
   .brute__button {
-    $bg: linear-gradient(145deg, #ffa90c, #dd8e0a);
-    @extend %u_heading--bold;
-inline-size: fit-content;
-    color: oklch(100% 0 0);
 
+
+
+ $bg: linear-gradient(
+  145deg,
+  oklch(79.5% 0.184 86.047),
+oklch(69.5% 0.164 85.047)
+  
+);
+
+
+    @extend %u_heading--bold;
+    @extend %typography--primary-rev;
+inline-size: fit-content;
+background: $bg;
     display: flex;
     gap: var(--size-xs);
+
+
     align-items: center;
     padding-inline: var(--size-md);
     padding-block: var(--size-sm);
@@ -139,18 +151,18 @@ inline-size: fit-content;
     isolation: isolate;
     border-radius: var(--brute-border-radius);
     z-index: 1;
-    background: $bg;
     position: relative;
+    
  box-shadow:
 			var(--shadow-elevation-medium),
-			inset 0 0.0625rem 0 rgba(255, 255, 255, 0.5);
+			inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3);
     transition: all 200ms;
     overflow: hidden;
     &:hover {
       &::before {
         width: 100%;
       }
-    }
+    } 
  &::before {
       content: '';
       position: absolute;
@@ -165,6 +177,8 @@ inline-size: fit-content;
       transition: all 200ms;
     }
     & img {
+    object-fit: contain;
+      
       display: block;
       position:relative;
       inline-size: var(--size-md);
@@ -173,6 +187,20 @@ inline-size: fit-content;
    
   
   }
+  // Icon-specific color treatments
+  img[src*="icon-lightbulb.svg"] {
+    filter: invert(1); // This ensures the svg paths use the color we want
+    @media (prefers-color-scheme: dark) {
+      color: oklch(20% 0 0); // Modern browser support
+
+    }
+    @media (prefers-color-scheme: light) {
+      color: oklch(95% 0 0); // Modern browser support
+
+    }
+  }
+
+  // Heading styles
   .max-ch-20{
     max-inline-size: 20ch;
   }
