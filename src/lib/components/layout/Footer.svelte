@@ -141,6 +141,7 @@
    * Base Footer Styles
    * --------------------------------------------- */
   .footer {
+    isolation: isolate;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -148,7 +149,7 @@ height: 100%;
     z-index: -10;
     background-color: oklch(35% 0.08 152.535);
     box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
-
+pointer-events: none;
     will-change: transform, opacity;
     transform: translateZ(0);
     backface-visibility: hidden;

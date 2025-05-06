@@ -109,6 +109,7 @@
   .projects-section {
     inline-size: 100%;
     block-size: fit-content;
+  pointer-events: auto;
 
     &__container {
       display: flex;
@@ -193,62 +194,42 @@
 
       filter: $shadow-drop;
 
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: $border-custom;
-        pointer-events: none;
-        z-index: 1;
-        background: radial-gradient(
-          circle at center,
-          transparent 50%,
-          rgba(0, 0, 0, 0.5) 100%
-        );
-      }
 
-      /* clean base photo */
-      &--image {
-        position: absolute;
-        inset: 0;
-        margin: auto;
-        block-size: 100%;
-        inline-size: 100%;
-        object-fit: cover;
-        border-radius: $border-custom;
-        z-index: 2;
-        transition:
-          transform 200ms ease-in-out,
-          box-shadow 200ms ease-in-out;
-        will-change: transform, box-shadow;
-        scale: 1.05;
-      }
 
-      /* clone carrying full filter */
-      &--image--filtered {
-        @extend .project-article__image-container--image;
-        z-index: 3;
-        pointer-events: none;
-        filter: hue-rotate(315deg) saturate(170%) brightness(1.2)
+/* clean base photo */
+&--image {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  border-radius: $border-custom;
+  z-index: 2;
+
+
+}
+
+/* clone carrying full filter */
+&--image--filtered {
+  @extend .project-article__image-container--image;
+  z-index: 5;
+  filter: hue-rotate(315deg) saturate(170%) brightness(1.2)
           url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxmaWx0ZXIgaWQ9ImciPjxmZUNvbG9yTWF0cml4IHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwLjMzIDAuMzMgMC4zMyAwIDAgMCAxLjAgMCAwIDAgMC4zMyAwLjMzIDAuMzMgMCAwIDAgMCAwIDEgMCIvPjwvZmlsdGVyPjwvc3ZnPg==#g');
-        opacity: 1;
-        transition:
-          opacity 500ms ease-in-out,
-          scale 500ms ease-in-out;
-        will-change: opacity, scale;
-      }
+    isolation: isolate;
 
-      &:hover {
-        .project-article__image-container--image {
-          scale: 1;
-          box-shadow: var(--shadow-elevation-high);
-        }
 
-        .project-article__image-container--image--filtered {
-          opacity: 0;
-          scale: 1;
-        }
-      }
+  /* switch from scale: to transform: */
+  transform: scale(1.05);
+  opacity: 1;
+  transition:
+    opacity   500ms ease-in-out,
+    transform 500ms ease-in-out;
+  will-change: opacity, transform;
+&:hover {
+    opacity: 0;
+  transform: scale(1);
+}
+}
+
+
 
       &--icon {
         $pos: size('xs');
