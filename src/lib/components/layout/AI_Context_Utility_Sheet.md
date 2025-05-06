@@ -13,7 +13,7 @@ This document provides a quick reference for AI agents working within the `src/l
 *   **Component Structure:** A common pattern for section components is:
     ```html
     <section id="section-name" class="... u_p-inline__md u_p-block__xl">
-      <div class="...__container u_container__sm">
+      <div class="...__container u_container__sm ">
         <header class="...__header">
           <!-- Header content (label, title, description) -->
         </header>
@@ -34,7 +34,7 @@ This document provides a quick reference for AI agents working within the `src/l
     *   Margin: `u_m-bottom__*` (e.g., `u_m-bottom__sm`, `u_m-bottom__lg`)
     *   Gap: `u_gap__*` (e.g., `u_gap__xl`)
 *   **Layout:**
-    *   Container: `u_container__sm` (Constrains content width)
+    *   Container: `brute-container` (Constrains content width)
     *   Grid specific: `container--grid` (Used in `NewHero`)
 *   **Typography (Tied to Color System - see Memory `71f5251c`):**
     *   Hierarchy/Style: `u_display-*`, `u_title-*`, `u_paragraph`, `u_heading`, `u_subheading` (often via `@extend`)

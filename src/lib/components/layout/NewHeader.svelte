@@ -72,7 +72,7 @@
 </script>
 
 <header
-  class="header u_p-inline__sm u_p-block__xs u_container__sm"
+  class="header u_p-inline__sm u_p-block__xs u_container__sm "
   class:header--hidden={isHeaderHidden}
 >
   <a class="header__logo" href="/" aria-label="Homepage">

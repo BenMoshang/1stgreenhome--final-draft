@@ -100,7 +100,7 @@
   id="partners"
   class="partners u_p-inline__md u_p-block__xl"
 >
-  <div class="partners__container u_container__sm">
+  <div class="partners__container u_container__sm ">
     <header class="partners__header u_m-bottom__xl">
       <small
         class="partners__header-label brute__label-rev"
@@ -155,6 +155,11 @@
 <style lang="scss">
   .partners {
     inline-size: 100%;
+
+    &__container {
+    @extend %flex-col-center;
+      gap: size('2xl');
+    }
     &__header {
       @extend %flex-col-center;
       text-align: center;
@@ -168,18 +173,15 @@
       inline-size: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-      gap: size('lg');
+      gap: size('xl');
       place-items: center;
       max-inline-size: calc(4 * 10rem + 3 * var(--size-lg));
       margin-inline: auto;
 
       &-item {
         box-shadow: var(--shadow-elevation-medium);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        inline-size: size('md');
-        block-size: size('sm');
+        inline-size: size('xl');
+        block-size: size('xl');
         padding: size('xs');
         border-radius: $border-radius;
         &:hover {

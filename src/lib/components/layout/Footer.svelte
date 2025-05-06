@@ -33,7 +33,7 @@
 </script>
 
 <footer class="footer u_p-inline__md u_p-block__xl">
-  <div class="footer__container u_container__sm">
+  <div class="footer__container u_container__sm ">
 
           <!-- Logo & Company Name -->
     <div class="footer__name-container">

@@ -58,7 +58,7 @@
 </script>
 
 <section id="hero" class="hero__section u_p-inline__md u_p-block__xl">
-  <div class="hero__container u_container__sm">
+  <div class="hero__container u_container__sm ">
     <header class="hero__header ga-header">
       <small class="brute__label"
         use:textAnimate={{ duration: 1, delay: 0.04 }}

@@ -65,7 +65,7 @@
     top: size('2xl');
     inline-size: 100%;
     block-size: 100%;
-    max-inline-size: clamp(250px, 100%, 450px);
+    max-inline-size: clamp(15.625rem, 100%, 28.125rem);
 
     border-radius: $br;
     overflow: clip;
@@ -122,17 +122,17 @@
       top: $pad;
       left: $pad;
       display: flex;
-      gap: 0.5rem;
+      gap: 8px;
       z-index: $text-z;
     }
     &__tag {
-      font-size: 0.75rem;
+      font-size: 12px;
       font-weight: 600;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
+      padding: 4px 12px;
+      border-radius: 624.9375rem;
       color: $brand;
       background: rgba($brand, 0.15);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(.25rem);
       white-space: nowrap;
     }
 
@@ -145,7 +145,7 @@
       z-index: $text-z;
     }
     &__title {
-      text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+      text-shadow: .125rem .125rem 1.25rem rgba(0, 0, 0, 0.2);
     }
     &__description {
       max-inline-size: 35ch;

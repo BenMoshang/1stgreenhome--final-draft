@@ -181,4 +181,8 @@
   :global([data-scroll='fade-in'].is-inview) {
     opacity: 1;
   }
+  :global(.brute-container){
+    max-inline-size: 80rem;
+    margin-inline: auto;
+  }
 </style>

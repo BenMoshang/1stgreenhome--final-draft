@@ -47,7 +47,7 @@
 </script>
 
 <section id="services" class="services u_p-inline__md u_p-block__xl">
-  <div class="services__container u_container__sm u_gap__xl">
+  <div class="services__container u_container__sm  u_gap__xl">
     <header class="services__header">
       <small class="services__header-label brute__label-rev"
         >{injectableStaticText.label}</small

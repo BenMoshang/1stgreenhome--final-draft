@@ -64,7 +64,7 @@
 
 <section
   id="testimonials"
-  class="testimonials-section u_p-inline__md u_p-block__xl u_container__sm"
+  class="testimonials-section u_p-inline__md u_p-block__xl u_container__sm "
 >
   <div
     id="testimonials-marquee"

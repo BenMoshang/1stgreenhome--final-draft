@@ -54,7 +54,7 @@
 </script>
 
 <section id="faqs" class="faq u_p-inline__md u_p-block__xl" itemscope itemtype="https://schema.org/FAQPage">
-  <div class="faq__container u_container__sm">
+  <div class="faq__container u_container__sm ">
     <header class="faq__header u_m-bottom__xl">
       {#if header.label}
         <small class="faq__label brute__label-rev">{header.label}</small>
@@ -150,25 +150,24 @@
     inline-size: 100%;
 
     &__container {
-      inline-size: 100%;
-      margin-inline: auto; // centred by u_container__sm
       @extend %flex-col-center;
 
+      & > *{
+        flex:1;
+      }
       @include respond-to('tablet-end') {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-evenly;
 
         & .faq__header {
           position: sticky;
           top: size('2xl');
-
+max-inline-size: 40ch;
           align-self: flex-start;
           text-align: right;
           order: 2;
         }
-        .faq__label {
-          margin-left: auto;
-        }
+    
       }
     }
 
@@ -176,7 +175,9 @@
       @extend %flex-col-center;
       text-align: center;
     }
-
+&__label{
+  margin-left: auto;
+}
     &__list {
       @extend %flex-col-center;
       inline-size: 100%;

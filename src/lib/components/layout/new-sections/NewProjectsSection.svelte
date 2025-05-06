@@ -34,7 +34,7 @@
 </script>
 
 <section id="projects" class="projects-section u_p-inline__md u_p-block__xl">
-  <div class="projects-section__container u_container__sm">
+  <div class="projects-section__container u_container__sm ">
     <header class="projects-section__header u_m-bottom__xl">
       <small class="projects-section__header--label brute__label">
         {header.label}
@@ -131,7 +131,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    gap: size('xl');
+    gap: size('2xl');
 
     & > * {
       flex: 1;
