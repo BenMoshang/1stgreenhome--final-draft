@@ -1,5 +1,7 @@
-<script lang="ts" runes>
-  // Define hero data interface with only needed properties
+<script lang="ts">
+  import { textAnimate } from '$lib/actions/textAnimate.svelte';
+  import { wipeDown } from '$lib/actions/wipeDown.svelte';
+    // Define hero data interface with only needed properties
   interface HeroData {
     label: string;
     title0: string;
@@ -58,18 +60,24 @@
 <section id="hero" class="hero__section u_p-inline__md u_p-block__xl">
   <div class="hero__container u_container__sm">
     <header class="hero__header ga-header">
-      <small class="brute__label">
+      <small class="brute__label"
+        use:textAnimate={{ duration: 1, delay: 0.04 }}
+      >
         {heroData.label}
       </small>
 
       <h1
         class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20"
+                use:wipeDown
+
+
       >
         {heroData.title0 + heroData.title}
         <span class="gradient-text">{heroData.title2}</span>
       </h1>
 
       <p
+        use:wipeDown
         class="hero__body u_paragraph u_m-bottom__md tert typography--tertiary max-ch-45"
       >
         {heroData.body + heroData.body2}

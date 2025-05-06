@@ -1,4 +1,4 @@
-import { scroll, transform } from 'motion';
+import { scroll, transform } from 'motion'; // Revert imports
 
 interface ParallaxParams {
   offset?: number; // Negative offset in pixels for translateY
@@ -11,35 +11,36 @@ interface ParallaxParams {
  * @param params.offset The maximum negative vertical offset (in pixels) for the parallax effect. Defaults to 150.
  */
 export function parallax(node: HTMLElement, params: ParallaxParams = {}) {
-  const offset = params.offset ?? 150;
+  let currentOffset = params.offset ?? 150;
 
-  const unsubscribe = scroll(
-    (progress: number) => { 
-      // Map scroll progress [0, 1] to translateY [0px, -offset px]
-      // Ensure progress is within [0, 1] bounds
-      const clampedProgress = Math.max(0, Math.min(1, progress));
-      const yValue = transform(clampedProgress, [0, 1], ['0px', `-${offset}px`]);
-      node.style.transform = `translateY(${yValue})`;
-    },
-    {
-      // Default target is the viewport, which is usually what's needed for parallax
-    }
-  );
+  // Revert scroll handler signature to accept a number
+  const handleScroll = (progress: number) => {
+    // Map scroll progress [0, 1] to translateY [0, -offset]
+    // Clamp progress to ensure it's within [0, 1]
+    const clampedProgress = Math.max(0, Math.min(1, progress));
+    // Use numbers for transform range
+    const yValue = transform(clampedProgress, [0, 1], [0, -currentOffset]);
 
-  // Set will-change for performance
+    // Apply the transform using px units
+    node.style.transform = `translateY(${yValue}px)`;
+  };
+
+  // Pass the corrected handler to scroll
+  const unsubscribe = scroll(handleScroll, {
+    // Default target (viewport) and offset are likely fine
+  });
+
   node.style.willChange = 'transform';
 
   return {
     destroy() {
-      // Stop listening to scroll events and clean up styles
       unsubscribe();
       node.style.willChange = 'auto';
-      node.style.transform = ''; // Reset transform on destroy
+      node.style.transform = '';
     },
-    // Optional: Add an update method if parameters need to be reactive
-    // update(newParams: ParallaxParams) {
-    //   offset = newParams.offset ?? 150;
-    //   // Note: Re-calculating inside the scroll handler might be needed if offset changes live
-    // }
+    update(newParams: ParallaxParams) {
+       currentOffset = newParams.offset ?? 150;
+       // Force a recalculation on next scroll event
+    }
   };
 }

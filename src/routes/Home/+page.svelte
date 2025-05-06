@@ -1,6 +1,5 @@
 <script lang="ts">
   import { parallax } from '$lib/actions/parallax.svelte';
-  import { onMount } from 'svelte';
   import NewCta from '$lib/components/layout/new-sections/NewCta.svelte';
   import NewFaqs from '$lib/components/layout/new-sections/NewFaqs.svelte';
   import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
@@ -8,6 +7,7 @@
   import NewProjectsSection from '$lib/components/layout/new-sections/NewProjectsSection.svelte';
   import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
   import NewTestimonials from '$lib/components/layout/new-sections/NewTestimonials.svelte';
+  import { onMount } from 'svelte';
 
   // Function to handle fragment navigation
   function jumpToFragment(fragment: string) {
@@ -83,7 +83,7 @@
     background-image: url('/assets/landing-page/leaves.svg');
     background-position: center;
     background-repeat: repeat;
-    opacity: 0.15;
+    opacity: 0.2;
     filter: brightness(1.4) saturate(0.5);
     z-index: -1;
     will-change: transform;
