@@ -110,7 +110,7 @@
     inline-size: 100%;
     block-size: fit-content;
   pointer-events: auto;
-
+    
     &__container {
       display: flex;
       flex-direction: column;

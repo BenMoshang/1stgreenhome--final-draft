@@ -140,6 +140,7 @@
   .hero__section {
     position: relative;
     inline-size: 100%;
+    
   }
 
   // Inner container with flex layout

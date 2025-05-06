@@ -1,7 +1,17 @@
 <script lang="ts">
 	import { textAnimate } from '$lib/actions/textAnimate.svelte';
+	import { wipeDown } from '$lib/actions/wipeDown.svelte';
 	import ServiceCard from '$lib/components/layout/new-components/ServiceCard.svelte';
-    import { wipeDown } from '$lib/actions/wipeDown.svelte';
+
+  // Define the Service interface to fix the TypeScript error
+  interface Service {
+    tag: string;
+    title: string;
+    description: string;
+    image: string;
+    imageAlt: string;
+  }
+
   const injectableStaticText = $state<{
     label: string;
     heading: string;
@@ -12,7 +22,7 @@
     body: 'We offer a range of services designed to help you cut costs, lower energy consumption, and promote environmental sustainability.',
   });
 
-  const steps = $state<Service[]>([
+  const steps: Service[] = [
     {
       tag: '1',
       title: 'Offered Energy Audits',
@@ -45,7 +55,7 @@
       image: '/assets/landing-page/stepper/card-03.jpeg',
       imageAlt: 'Team collaborating on an energy project plan.', // More descriptive alt text
     },
-  ]);
+  ];
 </script>
 
 <section id="services" class="services u_p-inline__md u_p-block__xl">
@@ -78,6 +88,7 @@
 
 <style lang="scss">
   .services {
+    
     inline-size: 100%;
     block-size: fit-content;
     margin-inline: auto;
@@ -87,6 +98,7 @@
       place-content: center;
       place-items: center;
       grid-template-columns: 1fr;
+      overflow: visible; /* Ensure parent container allows sticky positioning */
 
       grid-template-areas: 'content' 'cards';
 
@@ -105,17 +117,15 @@
       inline-size: fit-content;
       margin-inline: auto;
       margin-bottom: size('xl');
+      z-index: 10; /* Add z-index to ensure header stays above other content */
       &-label {
+            justify-self: center;
+          align-self: center;
         text-wrap: nowrap;
-        place-self: start;
       }
       @include respond-to('mobile-end') {
         position: unset;
-        text-align: center;
-        & .services__header-label {
-          justify-self: center;
-          align-self: center;
-        }
+     
       }
       @include respond-to('tablet-end') {
         position: sticky;
@@ -125,13 +135,21 @@
           justify-self: end;
           align-self: end;
         }
+        & .services__header-heading {
+          text-align: right;
+        }
+        & .services__header-body {
+          text-align: right;
+        }
       }
 
       &-heading {
+        text-align: center;
         max-inline-size: 20ch;
         margin-block-end: var(--margin-sm);
       }
       &-body {
+        text-align: center;
         max-inline-size: 45ch;
       }
     }

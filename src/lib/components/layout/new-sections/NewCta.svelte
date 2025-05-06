@@ -80,15 +80,20 @@
         <img src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
       </button>
     </header>
-    <iframe
-      title="Google Maps"
-      class="cta-section__map"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3094.782656476396!2d-76.8006977!3d39.13417700000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7e73848ba10bd%3A0xa7dcb9ad3abc617a!2s10630%20Riggs%20Hill%20Rd%20STE%20A%2C%20Jessup%2C%20MD%2020794!5e0!3m2!1sen!2sus!4v1725738684350!5m2!1sen!2sus"
-      style="border: 0"
-      allowfullscreen
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
+    <div class="cta-section__map-container">
+      <iframe
+        class="cta-section__map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3097.5463320227776!2d-76.80009168402638!3d39.1491968435434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7e19db4c40b81%3A0x8892a6ba28a0442a!2s10630%20Riggs%20Hill%20Rd%20Unit%20A%2C%20Jessup%2C%20MD%2020794!5e0!3m2!1sen!2sus!4v1620160000000!5m2!1sen!2sus"
+        frameborder="0"
+        style="border:0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="1st Green Home Location: 10630 Riggs Hill Rd. Unit A, Jessup, MD 20794"
+        aria-label="Google Maps showing 1st Green Home's office location at 10630 Riggs Hill Rd. Unit A, Jessup, MD 20794"
+      ></iframe>
+
+    </div>
   </div>
 </section>
 
@@ -99,6 +104,7 @@
     &__container {
       @extend %flex-col-center;
       gap: size('xl');
+      overflow: visible; /* Ensure parent container allows sticky positioning */
       & > * {
         flex: 1;
       }
@@ -118,6 +124,7 @@
         top: size('2xl');
         align-self: flex-start;
         text-align: left;
+        z-index: 10; /* Add z-index to ensure header appears above other content */
 
         align-items: flex-start;
         justify-content: flex-start;
@@ -138,9 +145,20 @@
       }
     }
 
-    &__map {
-      grid-area: map;
+    &__map-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-block: size('xl');
+      
+      @include respond-to('tablet-end') {
+        margin-block: 0;
+      }
+    }
 
+    &__map {
       display: block;
       margin-inline: auto;
       inline-size: 100%;
@@ -149,7 +167,14 @@
       aspect-ratio: 16 / 9;
       border-radius: $border-radius;
       box-shadow: var(--shadow-elevation-medium);
-      margin-block: size('xl');
+      margin-block: size('md');
+    }
+
+    &__address {
+      font-size: var(--font-size-body);
+      margin-top: size('sm');
+      color: var(--on-surface-container-high);
+      font-weight: 500;
     }
 
     &__button {

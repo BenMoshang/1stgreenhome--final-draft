@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { textAnimate } from '$lib/actions/textAnimate.svelte';
-  import TestimonialCard from '../new-components/TestimonialCard.svelte';
-  
+  import { fadeInUpTransition } from '$lib/utils/animations.js';
+  import TestimonialCard from '../TestimonialCard.svelte';
+
   // Header data
   const header = $state({
     title0: 'Over',
@@ -62,32 +62,32 @@
   }
 </script>
 
-<section
-  id="testimonials"
-  class="testimonials-section u_p-inline__md u_p-block__xl u_container__sm "
->
+<section id="testimonials" class="testimonials-section">
   <div
     id="testimonials-marquee"
     aria-label="Customer testimonials"
     aria-roledescription="Customer testimonials"
     class="testimonials-section__marquee"
+    in:fadeInUpTransition={{ delay: animationDelays.marquee }}
     onmouseenter={pauseMarquee}
     onmouseleave={resumeMarquee}
     onfocusin={pauseMarquee}
     onfocusout={resumeMarquee}
   >
- 
     <h2
       class="testimonials-section__title"
+      in:fadeInUpTransition={{ delay: animationDelays.title }}
     >
-     <span use:textAnimate={{ duration: 0.3, delay: 0.04 }}>{header.title0}</span>
+      {header.title0}
       <span
         class="testimonials-section__title-standout"
+        in:fadeInUpTransition={{ delay: animationDelays.standout }}
       >
         {header.title1}
       </span>
-      <span use:textAnimate={{ duration: 0.3, delay: 0.04 }}>{header.title2}</span>
+      {header.title2}
     </h2>
+
     <div
       class="testimonials-section__track"
       class:paused={isPaused}
@@ -117,31 +117,32 @@
 
 <style lang="scss">
   .testimonials-section {
-@extend %flex-col-center;
+    @extend %flex-col-center;
 
     block-size: 100%;
-    gap: size('xl');
+    gap: clamp(2rem, 1.751rem + 1.06vw, 2.5rem);
     inline-size: 100%;
     margin-inline: auto;
+    max-inline-size: $PAGE_MAX_WIDTH;
     overflow-inline: clip;
+    padding-block: 5rem;
 
     &__marquee {
-    @extend %flex-col-center;
-      --gap: size('xl');
+      @extend %flex-col-center;
+      --gap: spacing(not-related);
 
       gap: var(--gap);
       inline-size: 100%;
     }
 
     &__title {
-      @extend %u_title-a;
+      @extend %h4;
 
-      color: $text-primary-rev;
+      color: $light-1;
+      margin-block-end: 2rem;
       text-align: center;
-      margin-bottom: var(--margin-lg);
 
       &-standout {
-        font-weight: 600;
         animation: gradient-loop 5s ease-in-out infinite;
         background: linear-gradient(
           45deg,
@@ -163,11 +164,35 @@
       display: flex;
       border-radius: var(--border-radius);
       animation: scroll 20s linear infinite;
-      gap: size('lg');
+      gap: spacing(not-related);
 
       &.paused {
         animation-play-state: paused;
       }
+    }
+  }
+
+  /* --------------------------------------------------
+   Media Queries
+   -------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials-section {
+      &__title-standout {
+        animation: none;
+      }
+
+      &__track {
+        animation: none;
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
     }
   }
 

@@ -266,7 +266,8 @@ pointer-events: none;
    "logo name"
    "logo address";
 
- gap: var(--margin-xs);
+ grid-column-gap: var(--margin-sm);
+ grid-row-gap: var(--margin-xs);
 
         #footer-address-line{
    grid-area: address;
@@ -369,8 +370,9 @@ position:relative;
     position: absolute;
     left: 0;
     top: 0;
+    margin-left: -35vw;
     margin-top: calc(-1 * var(--margin-lg));
-    width: 100%;
+    width:100vw;
     height: 1px;
   }
       

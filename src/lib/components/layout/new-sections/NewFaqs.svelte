@@ -1,6 +1,6 @@
 <script lang="ts">
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
-import { wipeDown } from '$lib/actions/wipeDown.svelte';
+  import { wipeDown } from '$lib/actions/wipeDown.svelte';
   // Define interfaces for type safety
   interface HeaderData {
     label: string;
@@ -171,6 +171,9 @@ max-inline-size: 40ch;
           text-align: right;
           order: 2;
         }
+        & .faq__label{
+          margin-left: auto;
+        }
     
       }
     }
@@ -180,13 +183,13 @@ max-inline-size: 40ch;
       text-align: center;
     }
 &__label{
-  margin-left: auto;
+  margin-inline: auto;
 }
     &__list {
       @extend %flex-col-center;
       inline-size: 100%;
       gap: size('lg');
-      overflow: clip;
+      overflow: visible; /* Changed from clip to visible to allow sticky elements to work */
       @include respond-to('tablet-end') {
         align-items: unset;
         justify-content: unset;

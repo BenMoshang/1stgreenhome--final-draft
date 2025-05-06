@@ -274,7 +274,7 @@
       block-size: 100%;
       object-fit: cover;
       aspect-ratio: 1/1;
-
+transition: filter 0.2s ease;
       &:hover {
         filter: saturate(1.5) brightness(1.1);
       }

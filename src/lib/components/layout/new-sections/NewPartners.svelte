@@ -1,6 +1,8 @@
 <script lang="ts">
+import { scaleOnView } from '$lib/actions/scaleOnView.svelte';
 import { textAnimate } from '$lib/actions/textAnimate.svelte';
 import { wipeDown } from '$lib/actions/wipeDown.svelte';
+
   const header = {
     label: 'POWERED BY OUR PARTNERS',
     title: 'Partnered with Leading Energy Providers',
@@ -58,9 +60,7 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
 
     <div class="partners__logos-container">
       {#each partners as p, i}
-        <div
-          class="partners__logo-container-item"
-        >
+        <div use:scaleOnView={{ delay: i * 0.1 }} class="partners__logo-container-item">
           <img
             class="partners__logo-container-item--image"
             src={p.imageSrc}
@@ -71,10 +71,9 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
       {/each}
 
       {#each partnersReverse as p, i}
-        <div
-          class="partners__logo--container-item"
-        >
+        <div use:scaleOnView={{ delay: i * 0.1 }} class="partners__logo--container-item">
           <img
+          id={`reverse${i}`}
             class="partners__logo-container-item--image"
             src={p.imageSrc}
             alt="partner logo"
@@ -88,6 +87,7 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
 <style lang="scss">
   .partners {
     inline-size: 100%;
+    
 
     &__container {
     @extend %flex-col-center;
@@ -130,7 +130,5 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
     }
   }
 
-  #reverse1 {
-    mix-blend-mode: multiply;
-  }
+
 </style>

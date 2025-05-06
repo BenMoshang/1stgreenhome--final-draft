@@ -133,7 +133,7 @@
     <!-- ------------------------------------------------------------------
          SECURITY HEADERS (note: replace 'unsafe-inline' with nonce/hashes in prod)
     ------------------------------------------------------------------ -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; font-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; font-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com; frame-src 'self' https://www.google.com https://*.google.com;" />
     <meta http-equiv="Permissions-Policy" content="camera=(), geolocation=(), microphone=()" />
 
     %sveltekit.head%

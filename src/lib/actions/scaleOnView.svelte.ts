@@ -1,73 +1,54 @@
-import { animate } from '@motionone/dom';
+import { inView, animate } from 'motion';
 
 export interface ScaleOnViewOptions {
-  /** starting scale value */
+  /** initial scale for element */
   scaleFrom?: number;
+  /** final scale for element */
+  scaleTo?: number;
   /** animation duration in seconds */
   duration?: number;
-  /** delay before animation in seconds */
-  delay?: number;
   /** easing string or cubic-bezier array */
-  easing?: string | [number, number, number, number] | ((v: number) => number);
-  /** respect prefers-reduced-motion media query */
-  respectReducedMotion?: boolean;
-  /** IntersectionObserver threshold(s) */
-  threshold?: number | number[];
-  /** whether to run animation only once */
-  once?: boolean;
+  easing?: string | [number, number, number, number];
+  /** delay before starting animation */
+  delay?: number;
+  /** fraction of element visible to trigger */
+  amount?: number;
 }
 
-/**
- * Action to scale an element from a given scale to normal (1) when scrolled into view.
- */
 export function scaleOnView(node: HTMLElement, opts: ScaleOnViewOptions = {}) {
   const {
-    scaleFrom = 1.2,
-    duration = 0.8,
-    delay = 0,
+    scaleFrom = 0.8,
+    scaleTo = 1,
+    duration = 0.5,
     easing = 'ease-out',
-    respectReducedMotion = true,
-    threshold = 0.1,
-    once = true,
+    delay = 0,
+    amount = 0.1
   } = opts;
 
-  const prefersReducedMotion =
-    respectReducedMotion &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Set initial scale
+  // set initial state
+  node.style.opacity = '0';
   node.style.transform = `scale(${scaleFrom})`;
-  node.style.transformOrigin = 'center';
+  node.style.willChange = 'transform, opacity';
 
-  let hasAnimated = false;
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting && (!once || !hasAnimated)) {
-        hasAnimated = true;
-        if (prefersReducedMotion) {
-          node.style.transform = 'scale(1)';
-        } else {
-          animate(
-            node,
-            { scale: [scaleFrom, 1] },
-            { delay, duration, easing } as any
-          );
-        }
-        if (once) observer.disconnect();
-      }
+  // observe when in view
+  const stop = inView(
+    node,
+    () => {
+      (animate as any)(
+        node,
+        { scale: [scaleFrom, scaleTo], opacity: [0, 1] },
+        { delay, duration, easing }
+      );
     },
-    { threshold }
+    { amount }
   );
 
-  observer.observe(node);
-
   return {
-    update(newOpts: ScaleOnViewOptions) {
-      // Optionally handle dynamic updates here
-    },
     destroy() {
-      observer.disconnect();
-    },
+      stop();
+      node.style.opacity = '';
+      node.style.transform = '';
+      node.style.willChange = '';
+    }
   };
 }
