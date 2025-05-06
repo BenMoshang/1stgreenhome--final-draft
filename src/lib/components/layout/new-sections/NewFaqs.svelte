@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Assuming the transition utility exists as per AI_Context_Utility_Sheet.md
+  import { textAnimate } from '$lib/actions/textAnimate.svelte';
 
   // Define interfaces for type safety
   interface HeaderData {
@@ -57,7 +57,9 @@
   <div class="faq__container u_container__sm ">
     <header class="faq__header u_m-bottom__xl">
       {#if header.label}
-        <small class="faq__label brute__label-rev">{header.label}</small>
+        <small 
+        use:textAnimate={{ duration: 1, delay: 0.04 }}
+        class="faq__label brute__label-rev">{header.label}</small>
       {/if}
       {#if header.title}
         <h2 class="faq__title u_display-2--bold typography--primary-rev">

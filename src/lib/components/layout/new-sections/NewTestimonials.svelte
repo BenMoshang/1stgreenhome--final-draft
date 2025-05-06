@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { fadeInUpTransition } from '$lib/utils/animations.js';
+  import { textAnimate } from '$lib/actions/textAnimate.svelte';
   import TestimonialCard from '../new-components/TestimonialCard.svelte';
-
   // Header data
   const header = $state({
     title0: 'Over',
@@ -71,26 +70,23 @@
     aria-label="Customer testimonials"
     aria-roledescription="Customer testimonials"
     class="testimonials-section__marquee"
-    in:fadeInUpTransition={{ delay: animationDelays.marquee }}
     onmouseenter={pauseMarquee}
     onmouseleave={resumeMarquee}
     onfocusin={pauseMarquee}
     onfocusout={resumeMarquee}
   >
+ 
     <h2
-      class="testimonials-section__title u_m-bottom__lg"
-      in:fadeInUpTransition={{ delay: animationDelays.title }}
+      class="testimonials-section__title"
     >
-      {header.title0}
+     <span use:textAnimate={{ duration: 1, delay: 0.04 }}>{header.title0}</span>
       <span
         class="testimonials-section__title-standout"
-        in:fadeInUpTransition={{ delay: animationDelays.standout }}
       >
         {header.title1}
       </span>
-      {header.title2}
+      <span use:textAnimate={{ duration: 1, delay: 0.04 }}>{header.title2}</span>
     </h2>
-
     <div
       class="testimonials-section__track"
       class:paused={isPaused}
@@ -120,10 +116,7 @@
 
 <style lang="scss">
   .testimonials-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@extend %flex-col-center;
     block-size: 100%;
     gap: size('xl');
     inline-size: 100%;
@@ -131,10 +124,7 @@
     overflow-inline: clip;
 
     &__marquee {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    @extend %flex-col-center;
       --gap: size('xl');
 
       gap: var(--gap);
@@ -146,6 +136,7 @@
 
       color: $text-primary-rev;
       text-align: center;
+      margin-bottom: var(--margin-lg);
 
       &-standout {
         font-weight: 600;
