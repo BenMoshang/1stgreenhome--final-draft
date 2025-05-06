@@ -66,7 +66,7 @@
     inline-size: 100%;
     block-size: 100%;
     max-inline-size: clamp(15.625rem, 100%, 28.125rem);
-
+z-index:5 !important;
     border-radius: $br;
     overflow: clip;
     @extend %image-hover;

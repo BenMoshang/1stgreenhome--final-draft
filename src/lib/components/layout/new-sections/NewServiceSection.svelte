@@ -117,7 +117,6 @@
       inline-size: fit-content;
       margin-inline: auto;
       margin-bottom: size('xl');
-      z-index: 10; /* Add z-index to ensure header stays above other content */
       &-label {
             justify-self: center;
           align-self: center;

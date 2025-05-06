@@ -191,11 +191,10 @@
 </header>
 
 <style lang="scss">
+  $z-index--header: 1000;
+  $z-index--burger:2000;
+  $z-index--nav: 1000;
   .header {
-    --_z-index-header: 1000;
-    --_z-index-burger: 2000;
-    --_z-index-nav: 1000;
-
     position: fixed;
     top: 0;
     left: 0;
@@ -206,7 +205,7 @@
     align-items: center;
     inline-size: 100%;
     block-size: size('2xl');
-    z-index: var(--_z-index-header);
+    z-index:$z-index--header;
     overflow: visible;
     transition:
       transform var(--transition-standard, 0.3s) ease,
@@ -321,7 +320,7 @@ transition: filter 0.2s ease;
     height: 100svh;
     margin-inline: auto;
     overflow-x: clip;
-    z-index: var(--_z-index-nav);
+    z-index: $z-index--nav;
     opacity: 0;
     visibility: hidden;
     background-color: oklch(100% 0 0 / 0.75);
@@ -417,10 +416,11 @@ transition: filter 0.2s ease;
   }
 
   .header__burger {
+    z-index: 2000;
     opacity: 0.83;
     inline-size: size('xl');
     block-size: size('xl');
-    z-index: var(--_z-index-burger);
+    z-index: $z-index--burger;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -434,12 +434,14 @@ transition: filter 0.2s ease;
     }
 
     svg {
+
       fill: none;
       object-fit: cover;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .line {
+
       color: var(--brute-secondary);
       stroke: currentColor;
       stroke-linecap: round;
