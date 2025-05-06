@@ -1,6 +1,7 @@
 <script lang="ts">
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
   import TestimonialCard from '../new-components/TestimonialCard.svelte';
+  
   // Header data
   const header = $state({
     title0: 'Over',
@@ -79,13 +80,13 @@
     <h2
       class="testimonials-section__title"
     >
-     <span use:textAnimate={{ duration: 1, delay: 0.04 }}>{header.title0}</span>
+     <span use:textAnimate={{ duration: 0.3, delay: 0.04 }}>{header.title0}</span>
       <span
         class="testimonials-section__title-standout"
       >
         {header.title1}
       </span>
-      <span use:textAnimate={{ duration: 1, delay: 0.04 }}>{header.title2}</span>
+      <span use:textAnimate={{ duration: 0.3, delay: 0.04 }}>{header.title2}</span>
     </h2>
     <div
       class="testimonials-section__track"

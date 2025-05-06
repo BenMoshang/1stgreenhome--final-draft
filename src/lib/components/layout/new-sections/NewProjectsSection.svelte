@@ -1,5 +1,8 @@
 <script lang="ts">
-  // Svelte 5 runes state for header and project data
+	import { textAnimate } from '$lib/actions/textAnimate.svelte';
+	import { wipeDown } from '$lib/actions/wipeDown.svelte';
+    
+    // Svelte 5 runes state for header and project data
   const header = $state({
     label: 'EXPLORE OUR BENEFITS',
     title1: 'Stay Connected',
@@ -36,11 +39,12 @@
 <section id="projects" class="projects-section u_p-inline__md u_p-block__xl">
   <div class="projects-section__container u_container__sm ">
     <header class="projects-section__header u_m-bottom__xl">
-      <small class="projects-section__header--label brute__label">
+      <small use:textAnimate class="projects-section__header--label brute__label">
         {header.label}
       </small>
 
       <h2
+        use:wipeDown
         class="projects-section__header-title u_m-bottom__sm u_display-1--bold typography--primary max-ch-20"
       >
         <span class="projects-section__header-title--gradient">
@@ -50,6 +54,7 @@
       </h2>
 
       <p
+        use:wipeDown
         class="projects-section__header--description max-ch-45 u_paragraph typography--tertiary"
       >
         {header.description}

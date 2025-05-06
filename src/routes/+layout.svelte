@@ -1,7 +1,6 @@
 <script lang="ts">
   import Footer from '$lib/components/layout/Footer.svelte';
   import NewHeader from '$lib/components/layout/NewHeader.svelte';
-  import { wipeDown } from '$lib/actions/wipeDown.svelte';
   import Lenis from 'lenis';
   import { onDestroy, onMount } from 'svelte';
   let { children } = $props();
@@ -101,7 +100,7 @@
     margin: 0 auto;
     isolation: isolate;
     overscroll-behavior: contain;
-    pointer-events: auto;
+    pointer-events: none;
 
     &__svg {
       position: absolute;

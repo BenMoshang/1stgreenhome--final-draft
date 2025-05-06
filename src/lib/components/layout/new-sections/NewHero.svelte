@@ -68,7 +68,7 @@
 
       <h1
         class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20"
-                use:wipeDown
+          use:wipeDown
 
 
       >
@@ -78,7 +78,7 @@
 
       <p
         use:wipeDown
-        class="hero__body u_paragraph u_m-bottom__md tert typography--tertiary max-ch-45"
+        class="hero__body u_paragraph u_m-bottom__lg tert typography--tertiary max-ch-45"
       >
         {heroData.body + heroData.body2}
       </p>

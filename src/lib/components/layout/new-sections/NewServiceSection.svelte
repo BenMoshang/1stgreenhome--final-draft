@@ -1,5 +1,7 @@
 <script lang="ts">
-  import ServiceCard from '$lib/components/layout/new-components/ServiceCard.svelte';
+	import { textAnimate } from '$lib/actions/textAnimate.svelte';
+	import ServiceCard from '$lib/components/layout/new-components/ServiceCard.svelte';
+    import { wipeDown } from '$lib/actions/wipeDown.svelte';
   const injectableStaticText = $state<{
     label: string;
     heading: string;
@@ -50,14 +52,18 @@
   <div class="services__container u_container__sm  u_gap__xl">
     <header class="services__header">
       <small class="services__header-label brute__label-rev"
-        >{injectableStaticText.label}</small
+        use:textAnimate>{injectableStaticText.label}</small
       >
       <h2
+        use:wipeDown
         class=" services__header-heading u_display-2--bold typography--primary-rev"
       >
         {injectableStaticText.heading}
       </h2>
-      <p class="services__header-body u_paragraph typography--secondary-rev">
+      <p
+        use:wipeDown
+        class="services__header-body u_paragraph typography--secondary-rev"
+      >
         {injectableStaticText.body}
       </p>
     </header>

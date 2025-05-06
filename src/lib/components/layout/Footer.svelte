@@ -46,14 +46,17 @@
           height="150"
         />
       </div>
-      <p class="footer__company-name">1stGreenHome</p>
+      <p
+       class="footer__company-name">1stGreenHome<br>
+</p>
+      <span id="footer-address-line" class="footer__address-line">10630 Riggs Hill Rd. Unit A, <br> Jessup, MD 20794</span>
+
     </div>
 
       <address class="footer__address">
           <h3 class="footer__nav-title" id="footer-nav-home-title">
         Contact
       </h3>
-        <span class="footer__address-line">10630 Riggs Hill Rd. Unit A, <br> Jessup, MD 20794</span>
 
         <a
           class="footer__contact-link footer__address-email"
@@ -130,7 +133,9 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 0.25rem;
     color: $text-tertiary-rev;
+    cursor: pointer;
   }
+
 
   /* ---------------------------------------------
    * Base Footer Styles
@@ -141,10 +146,13 @@
     width: 100%;
 height: 100%;
     z-index: -10;
+    background-color: oklch(35% 0.08 152.535);
+    box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
 
     will-change: transform, opacity;
     transform: translateZ(0);
     backface-visibility: hidden;
+    box-shadow: inset 0 0 150px 60px rgba(0, 0, 0, 0.4);
 
  
   // Complex background pattern
@@ -251,12 +259,23 @@ height: 100%;
      * Logo & Branding Elements
      * --------------------------------------------- */
     &__name-container {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--margin-xs);
+ display:grid;
+ grid-template-columns: auto 1fr;
+ grid-template-areas:
+   "logo name"
+   "logo address";
+
+ gap: var(--margin-xs);
+
+        #footer-address-line{
+   grid-area: address;
+   @extend %u_callout;
+   @extend %typography--secondary-rev;
+  }
     }
     &__logo--background {
+      align-self: center;
+      grid-area: logo;
       $size: size('2xl');
       inline-size: $size;
       block-size: $size;
@@ -281,6 +300,7 @@ height: 100%;
       }
     }
     &__company-name {
+      grid-area: name;
       @extend %u_title-a--bold;
       @extend %typography--primary-rev;
     }
@@ -302,10 +322,7 @@ height: 100%;
         @extend %u_callout;
         @extend %typography--secondary-rev;
       }
-      &-line {
-        @extend %u_callout;
-        @extend %typography--secondary-rev;
-      }
+   
     }
 
     /* ---------------------------------------------
@@ -315,7 +332,7 @@ height: 100%;
       &-title {
         @extend %u_title-a--bold;
         @extend %typography--primary-rev;
-        margin-bottom: var(--margin-sm);
+        margin-bottom: var(--margin-xs);
       }
       &-list {
         list-style: none;
@@ -337,10 +354,25 @@ height: 100%;
      * Copyright
      * --------------------------------------------- */
     &__copyright {
+      margin-top:var(--margin-lg);
+position:relative;
+
       margin-inline:auto; 
       place-self: center;
       @extend %typography--tertiary-rev;
       @extend %u_caption;
+
+       &:before {
+    content: '';
+    background: linear-gradient(to right, transparent, var(--brute-secondary), transparent);
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top: calc(-1 * var(--margin-lg));
+    width: 100%;
+    height: 1px;
+  }
+      
     }
   }
 </style>

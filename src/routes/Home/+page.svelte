@@ -63,75 +63,81 @@
 </div>
 
 <style lang="scss">
-  /* Home content container to give proper context to absolute positioned elements */
-  .home-content {
-    position: relative;
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: size('2xl');
-  }
 
-  /* Decorative leaves background */
-  .leaves-background {
-    position: absolute;
-    inset: 0; /* top:0; right:0; bottom:0; left:0; */
-    inline-size: 100%;
-    block-size: 100%;
-    margin: auto;
-    background-image: url('/assets/landing-page/leaves.svg');
-    background-position: center;
-    background-repeat: repeat;
-    opacity: 0.2;
-    filter: brightness(1.4) saturate(0.5);
-    z-index: -1;
-    will-change: transform;
-    @media (prefers-color-scheme: dark) {
-      filter: brightness(0.4) saturate(0.5);
-    }
-  }
+/* --- Page Container --- */
+.home-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: size('2xl');
+  width: 100%;
+  min-height: 100%;
+}
 
-  .gradient-background-container,
-  .gradient-background-container-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    gap: size('2xl');
-    width: 100%;
-    height: 100%;
+/* --- Decorative Backgrounds --- */
+.leaves-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: auto;
+  background-image: url('/assets/landing-page/leaves.svg');
+  background-position: center;
+  background-repeat: repeat;
+  opacity: 0.2;
+  filter: brightness(1.4) saturate(0.5);
+  will-change: transform; // Hint for browser optimization for parallax effect.
+
+  @media (prefers-color-scheme: dark) {
+    filter: brightness(0.4) saturate(0.5);
+  }
+}
+
+/* --- Section Wrappers --- */
+.gradient-background-container,
+.gradient-background-container-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: size('2xl');
+  width: 100%;
+  height: 100%; // Consider if this should be min-height or if content dictates height.
+  margin: 0 auto;
+  background-image: radial-gradient(
+    circle at top center,
+    var(--brute-primary) 10%,
+    var(--brute-secondary) 60%,
+    var(--brute-tertiary) 100%
+  );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+// Specific override for the first gradient container on larger screens
+.gradient-background-container {
+@include respond-to('tablet-end') {
     background-image: radial-gradient(
-      circle at top center,
+      circle at top right,
       var(--brute-primary) 10%,
       var(--brute-secondary) 60%,
       var(--brute-tertiary) 100%
     );
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
   }
+}
 
-  .gradient-background-container {
-    @include respond-to('tablet-end') {
-      background-image: radial-gradient(
-        circle at top right,
-        var(--brute-primary) 10%,
-        var(--brute-secondary) 60%,
-        var(--brute-tertiary) 100%
-      );
-    }
-  }
-
-  .curved {
-    flex: none;
-    position: relative;
-    width: 100%;
-    height: size('2xl');
-    margin-top: calc(-1 * #{size('2xl')});
-    background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
-    border-bottom-left-radius: 50% 20%;
-    border-bottom-right-radius: 50% 20%;
-  }
-</style>
+/* --- Decorative Elements --- */
+// Styles for .curved element, which is currently commented out in the HTML.
+.curved {
+  position: relative;
+  flex: none; // Prevents the element from growing or shrinking in a flex container.
+  width: 100%;
+  height: size('2xl');
+  margin-top: calc(-1 * #{size('2xl')}); // Negative margin to create overlap for the curve effect.
+  background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%)); // Adapts background based on light/dark mode.
+  border-bottom-left-radius: 50% 20%;
+  border-bottom-right-radius: 50% 20%;
+}</style>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
-
+import { wipeDown } from '$lib/actions/wipeDown.svelte';
   // Define interfaces for type safety
   interface HeaderData {
     label: string;
@@ -62,7 +62,9 @@
         class="faq__label brute__label-rev">{header.label}</small>
       {/if}
       {#if header.title}
-        <h2 class="faq__title u_display-2--bold typography--primary-rev">
+        <h2 
+        use:wipeDown
+        class="faq__title u_display-2--bold typography--primary-rev">
           {header.title}
         </h2>
       {/if}

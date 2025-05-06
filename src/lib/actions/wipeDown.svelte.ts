@@ -10,12 +10,14 @@ export interface WipeDownOptions {
   easing?: string | [number, number, number, number] | ((v: number) => number);
   /** delay before starting animation */
   delay?: number;
-  /** seconds between each line’s start */
+  /** seconds between each line's start */
   staggerDelay?: number;
   /** respect reduced-motion preference */
   respectReducedMotion?: boolean;
   /** Fraction (0–1) of element visible to trigger */
   amount?: number;
+  /** will change properties to optimize animation */
+  willChange?: boolean;
 }
 
 export function wipeDown(
@@ -29,7 +31,8 @@ export function wipeDown(
     delay = 0,
     staggerDelay = 0.08,
     respectReducedMotion = true,
-    amount = 0.5
+    amount = 0.5,
+    willChange = true
   } = opts;
 
   const prefersReducedMotion =
@@ -63,6 +66,9 @@ export function wipeDown(
           line.style.display = 'inline-block';
           line.style.opacity = '0';
           line.style.transform = `translateY(${yFrom})`;
+          if (willChange) {
+            line.style.willChange = 'transform, opacity';
+          }
         });
 
         if (prefersReducedMotion) {

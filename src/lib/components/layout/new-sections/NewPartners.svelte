@@ -1,14 +1,6 @@
 <script lang="ts">
-  import { animate, inView } from 'motion';
-  import { onMount } from 'svelte';
-
-  let container: HTMLElement;
-  let labelEl: HTMLElement;
-  let titleEl: HTMLElement;
-  let descEl: HTMLElement;
-  let forwardEls: HTMLElement[] = [];
-  let reverseEls: HTMLElement[] = [];
-
+import { textAnimate } from '$lib/actions/textAnimate.svelte';
+import { wipeDown } from '$lib/actions/wipeDown.svelte';
   const header = {
     label: 'POWERED BY OUR PARTNERS',
     title: 'Partnered with Leading Energy Providers',
@@ -33,67 +25,7 @@
     { imageSrc: '/assets/landing-page/partners/logo-bpi.webp' },
   ];
 
-  onMount(() => {
-    inView(labelEl, (element, entry) => {
-      if (entry.isIntersecting) {
-        animate(
-          entry.target as HTMLElement,
-          { opacity: [0, 1], y: [20, 0] },
-          { duration: 0.6 }
-        );
-      }
-    });
-    inView(titleEl, (element, entry) => {
-      if (entry.isIntersecting) {
-        animate(
-          entry.target as HTMLElement,
-          { opacity: [0, 1], y: [20, 0] },
-          { delay: 0.2, duration: 0.6 }
-        );
-      }
-    });
-    inView(descEl, (element, entry) => {
-      if (entry.isIntersecting) {
-        animate(
-          entry.target as HTMLElement,
-          { opacity: [0, 1], y: [20, 0] },
-          { delay: 0.4, duration: 0.6 }
-        );
-      }
-    });
 
-    // Animate logos when container scrolls into view
-    inView(
-      container,
-      () => {
-        const allLogos = [...forwardEls, ...reverseEls];
-        const staggerDelay = 0.15; // Base delay between animations
-
-        allLogos.forEach((logo, index) => {
-          // Explicitly type keyframes object
-          const keyframes: Record<string, any> = {
-            opacity: [0, 1],
-            transform: [
-              'translateY(20px) scale(0.8)',
-              'translateY(0px) scale(1)',
-            ],
-          };
-
-          animate(
-            logo, // Animate individual logo
-            keyframes, // Pass typed keyframes
-            {
-              // Options
-              duration: 0.8,
-              delay: index * staggerDelay, // Manual stagger calculation
-              easing: 'cubic-bezier(0.16, 1, 0.3, 1)', // Modern cubic bezier
-            }
-          );
-        });
-      },
-      { amount: 0.1 }
-    ); // Trigger when 10% of the container is visible
-  });
 </script>
 
 <section
@@ -103,16 +35,21 @@
   <div class="partners__container u_container__sm ">
     <header class="partners__header u_m-bottom__xl">
       <small
+        use:textAnimate
         class="partners__header-label brute__label-rev"
       >
         {header.label}
       </small>
       <h2
+        use:wipeDown
+
         class=" partners__header-heading max-ch-20 u_display-2--bold typography--primary-rev u_m-bottom__sm"
       >
         {header.title}
       </h2>
       <p
+        use:wipeDown
+
         class="partners__header-body m u_paragraph typography--secondary-rev"
       >
         {header.description}
@@ -123,8 +60,6 @@
       {#each partners as p, i}
         <div
           class="partners__logo-container-item"
-          id={'forward' + i}
-          bind:this={forwardEls[i]}
         >
           <img
             class="partners__logo-container-item--image"
@@ -138,8 +73,6 @@
       {#each partnersReverse as p, i}
         <div
           class="partners__logo--container-item"
-          id={'reverse' + i}
-          bind:this={reverseEls[i]}
         >
           <img
             class="partners__logo-container-item--image"

@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { wipeDown } from '$lib/actions/wipeDown.svelte';
+
+  import { textAnimate } from '$lib/actions/textAnimate.svelte';
   // CTA section data using Svelte 5 Runes
   const cta = $state({
     label: 'CONTACT US',
@@ -47,10 +50,13 @@
 <section id="cta" class="cta-section u_p-inline__md u_p-block__xl">
   <div class="cta-section__container u_container__sm ">
     <header class="cta-section__header">
-      <small class="cta-section__header-label brute__label">
+      <small
+      use:textAnimate
+      class="cta-section__header-label brute__label">
         {cta.label}
       </small>
       <h2
+      use:wipeDown
         class=" cta-section__header-heading max-ch-20 u_display-2--bold typography--primary u_m-bottom__sm"
       >
         {cta.title1}
@@ -59,7 +65,8 @@
         >
       </h2>
       <p
-        class=" u_m-bottom__md cta-section__header-body m u_paragraph typography--tertiary"
+      use:wipeDown
+        class=" u_m-bottom__lg cta-section__header-body m u_paragraph typography--tertiary"
       >
         {cta.description}
       </p>
