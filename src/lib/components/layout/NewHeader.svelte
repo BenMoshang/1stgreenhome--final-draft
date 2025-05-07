@@ -1,5 +1,6 @@
 <script lang="ts">
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
+  import { wipeDown } from '$lib/actions/wipeDown.svelte';
   // Define interface for navigation links
   interface NavLink {
     link: string;
@@ -115,7 +116,7 @@
     {#if isMenuOpen}
       <footer class="u_m-top__lg header__nav-footer header__nav-footer--mobile">
         <svg
-          xmlns="http://www.w3.org/2000/svg"
+            xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
           role="img"
           aria-label="1st Green Home Logo"
@@ -124,25 +125,26 @@
           <path fill="currentColor" d={logoPathMain} />
           <path fill="currentColor" d={logoPathSecondary} />
         </svg>
-        <div class="header__nav-footer-content-container">
+        <div
+        
+        use:wipeDown
+        class="header__nav-footer-content-container">
           <a
-            use:textAnimate
             class="header__nav-footer-email"
             href="mailto:info@1stgreenhome.com"
           >
             info@1stgreenhome.com
           </a>
           <a
-            use:textAnimate
             class="header__nav-footer-phone"
             href="tel:+14432169169"
           >
             (443) 216-9169
           </a>
-          <p use:textAnimate class="header__nav-footer-address">
+          <p class="header__nav-footer-address">
             10630 Riggs Hill Rd. Unit A
           </p>
-          <span use:textAnimate class="header__nav-footer-address">
+          <span class="header__nav-footer-address">
             Jessup, MD 20794</span
           >
         </div>
@@ -273,8 +275,9 @@
       block-size: 100%;
       object-fit: cover;
       aspect-ratio: 1/1;
-transition: filter 0.2s ease;
+transition: scale filter 200ms ease;
       &:hover {
+scale: 1.1;
         filter: saturate(1.5) brightness(1.1);
       }
     }
@@ -477,7 +480,6 @@ transition: filter 0.2s ease;
     --easing-smooth: cubic-bezier(0.32, 0.72, 0, 1);
     animation: blur-fade-out var(--transition-standard, 0.3s)
       var(--easing-smooth) forwards;
-    pointer-events: none;
   }
 
   @keyframes blur-fade-in {

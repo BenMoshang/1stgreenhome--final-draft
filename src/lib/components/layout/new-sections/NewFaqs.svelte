@@ -58,7 +58,7 @@
     <header class="faq__header u_m-bottom__xl">
       {#if header.label}
         <small 
-        use:textAnimate={{ duration: 1, delay: 0.04 }}
+        use:textAnimate
         class="faq__label brute__label-rev">{header.label}</small>
       {/if}
       {#if header.title}

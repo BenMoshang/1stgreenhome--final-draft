@@ -52,16 +52,26 @@ background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
 :where(dt, dd, li, p, h1, h2, h3, h4, h5, h6) {
   margin: 0;
   font: inherit;
-  // overflow-wrap: break-word; 
 }
-
+/* Reset margins and font inheritance for common elements */
+:where(h1, h2, h3, h4, h5, h6) {
+text-wrap: balance;
+}
+:where(p){
+  text-wrap:pretty;
+  @supports not (text-wrap: pretty) {
+    text-wrap:balance;
+  }
+}
 /* Reset lists */
 :where(ul, ol, dl) {
   padding: 0;
   margin: 0;
   list-style: none;
 }
-
+:where(span, div){
+  text-wrap:balance !important;
+}
 /* Basic table reset */
 table {
   border-collapse: collapse;

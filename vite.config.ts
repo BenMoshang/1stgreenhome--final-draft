@@ -3,30 +3,33 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [sveltekit()],
-  css: {
-    // Remove the problematic preprocessorOptions for now
-    // Use absolute path for better reliability
 
-    postcss: new URL('./postcss.config.js', import.meta.url).pathname,
+  css: {
+    transformer: 'lightningcss',
+    lightningcss: {
+      drafts: {
+        customMedia: true, 
+      },
+    },
   },
+
   build: {
-    target: 'esnext',
-    minify: 'esbuild',
-    sourcemap: true,
+    target: 'esnext',         
+    minify: 'esbuild',        
+    cssMinify: 'lightningcss',
+    sourcemap: true,          
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split vendor code into separate chunk
-          vendor: ['@sveltejs/kit'],
+          vendor: ['@sveltejs/kit', 'lenis', 'motion', 'split-type'],
         },
       },
     },
   },
 
   server: {
-    host: '10.0.0.85',
+    host: 'localhost',
     port: 3000,
-
     fs: {
       strict: true,
     },

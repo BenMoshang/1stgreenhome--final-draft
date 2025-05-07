@@ -82,7 +82,6 @@
 <!-- SVG filter for noise effect -->
 
 <style lang="scss" global>
-  @use '../lib/styles/main.scss' as *;
   :global(*),
   :global(*::before),
   :global(*::after),
@@ -93,6 +92,7 @@
   }
 
   .layout-wrapper {
+
     position: relative;
     @extend %flex-col-center;
     min-block-size: 100%;
@@ -100,7 +100,6 @@
     margin: 0 auto;
     isolation: isolate;
     overscroll-behavior: contain;
-    pointer-events: none;
 
     &__svg {
       position: absolute;
@@ -116,7 +115,7 @@
       overflow: clip;
       z-index: 3;
       margin: auto;
-      block-size: 100%;
+      block-size: 10%;
       inline-size: 100%;
       filter: url('#noiseFilter2') contrast(300%) brightness(120%) opacity(1);
       opacity: 0.05;
@@ -131,7 +130,7 @@
     margin-inline: auto;
     box-shadow: var(--shadow-elevation-high);
 
-    margin-bottom: 95vh;
+    margin-bottom: 80vh;
     @include respond-to('tablet-end') {
       margin-bottom: $footer-height;
     }
@@ -143,7 +142,7 @@
     z-index: 3;
     gap: size('2xl');
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     & > * {
       flex: 1;
     }

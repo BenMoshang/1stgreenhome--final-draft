@@ -75,7 +75,12 @@
 }
 
 
-
+span{
+  text-wrap:pretty;
+  @supports not (text-wrap: pretty) {
+    text-wrap:balance;
+  }
+}
 
  
   .brute__text--primary {

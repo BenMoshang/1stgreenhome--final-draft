@@ -61,7 +61,7 @@
   <div class="hero__container u_container__sm ">
     <header class="hero__header ga-header">
       <small class="brute__label"
-        use:textAnimate={{ duration: 1, delay: 0.04 }}
+        use:textAnimate
       >
         {heroData.label}
       </small>

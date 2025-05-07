@@ -28,7 +28,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: size('md');
-    border-radius: $border-radius;
+    border-radius:1rem;
     inline-size: $PAGE_MAX_INLINE / 4; /* Example: Adjust based on your design */
 
     box-shadow: var(--shadow-elevation-medium);
@@ -64,7 +64,7 @@
 
     &__header {
       display: grid;
-      grid-column-gap: 0.5rem;
+      grid-column-gap: .5rem;
       grid-template-areas:
         'pfp name'
         'pfp company';

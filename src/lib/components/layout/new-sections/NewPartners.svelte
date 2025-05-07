@@ -52,7 +52,7 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
       <p
         use:wipeDown
 
-        class="partners__header-body m u_paragraph typography--secondary-rev"
+        class="partners__header-body  u_paragraph typography--secondary-rev"
       >
         {header.description}
       </p>

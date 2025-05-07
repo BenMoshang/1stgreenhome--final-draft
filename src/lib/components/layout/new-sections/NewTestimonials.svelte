@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { textAnimate } from '$lib/actions/textAnimate.svelte';
   import TestimonialCard from '../new-components/TestimonialCard.svelte';
+  import { wipeDown } from '$lib/actions/wipeDown.svelte';
   
   // Header data
   const header = $state({
@@ -67,6 +67,7 @@
   class="testimonials-section u_p-inline__md u_p-block__xl u_container__sm "
 >
   <div
+  
     id="testimonials-marquee"
     aria-label="Customer testimonials"
     aria-roledescription="Customer testimonials"
@@ -76,17 +77,17 @@
     onfocusin={pauseMarquee}
     onfocusout={resumeMarquee}
   >
- 
     <h2
+    use:wipeDown
       class="testimonials-section__title"
     >
-     <span use:textAnimate={{ duration: 0.3, delay: 0.04 }}>{header.title0}</span>
-      <span
+     <span >{header.title0}
+      <strong
         class="testimonials-section__title-standout"
       >
         {header.title1}
-      </span>
-      <span use:textAnimate={{ duration: 0.3, delay: 0.04 }}>{header.title2}</span>
+      </strong>
+    {header.title2}</span>
     </h2>
     <div
       class="testimonials-section__track"
@@ -116,6 +117,7 @@
 </section>
 
 <style lang="scss">
+
   .testimonials-section {
 @extend %flex-col-center;
 

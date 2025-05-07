@@ -1,4 +1,5 @@
-import { animate, inView, stagger } from '@motionone/dom';
+import { animate, inView, stagger } from 'motion';
+import type { DOMKeyframesDefinition, AnimationOptions } from 'motion';
 import SplitType from 'split-type';
 
 export interface WipeDownOptions {
@@ -26,7 +27,7 @@ export function wipeDown(
 ) {
   const {
     yFrom = '0.5em',
-    duration = 2,
+    duration = .5,
     easing = [0.19, 1, 0.22, 1] as [number, number, number, number],
     delay = 0,
     staggerDelay = 0.08,
@@ -75,24 +76,28 @@ export function wipeDown(
           // Minimal motion for reduced-motion users
           animate(
             lines,
-            { clipPath: ['inset(0 0 0 0)'], y: 0, opacity: 1 },
-            { duration: 0.01 }
+            {
+              clipPath: ['inset(0 0 0 0)'], 
+              y: 0, 
+              opacity: 1 
+            } as DOMKeyframesDefinition,
+            { duration: 0.01 } as AnimationOptions
           );
         } else {
           // Staggered wipe-down animation
+          const keyframes: DOMKeyframesDefinition = {
+            clipPath: ['inset(0 0 100% 0)', 'inset(0 0 0 0)'],
+            opacity: [0, 1],
+            y: [yFrom, '0px'],
+          };
           animate(
             lines,
+            keyframes,
             {
-              clipPath: ['inset(0 0 100% 0)', 'inset(0 0 0 0)'],
-              opacity: [0, 1],
-              y: [yFrom, '0px'],
-            },
-            {
-              delay: stagger(staggerDelay, { start: delay }),
+              delay: stagger(staggerDelay, { startDelay: delay }),
               duration,
               easing,
-              times: [0, 0.6, 0.8],
-            } as any
+            } as AnimationOptions
           );
         }
       }

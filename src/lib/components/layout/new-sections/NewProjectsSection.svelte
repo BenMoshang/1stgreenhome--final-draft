@@ -46,11 +46,14 @@
       <h2
         use:wipeDown
         class="projects-section__header-title u_m-bottom__sm u_display-1--bold typography--primary max-ch-20"
-      >
-        <span class="projects-section__header-title--gradient">
-          {header.title1}
-        </span>
-        {header.title2}
+      > 
+      <strong class="projects-section__header-title--gradient">
+          {header.title1} 
+
+          
+      </strong>
+          <span>{header.title2}</span>
+
       </h2>
 
       <p
@@ -92,10 +95,16 @@
         </figure>
 
         <figcaption class="project-article__caption">
-          <h3 class="project-article__caption--title">
+          <h3 
+          
+        use:wipeDown
+          class="project-article__caption--title">
             {section.title}
           </h3>
-          <p class="project-article__caption--description">
+          <p 
+          
+        use:wipeDown
+          class="project-article__caption--description">
             {section.description}
           </p>
         </figcaption>
@@ -121,6 +130,10 @@
     &__header {
       @extend %flex-col-center;
       text-align: center;
+
+      &:where(div, span){
+        text-wrap:balance !important;
+      }
 
       &-title {
         &--gradient {

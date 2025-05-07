@@ -141,7 +141,7 @@
       }
 
       &-body {
-        max-inline-size: 35ch;
+        max-inline-size: 45ch;
       }
     }
 

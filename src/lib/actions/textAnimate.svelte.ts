@@ -1,4 +1,5 @@
-import { animate, inView, stagger } from '@motionone/dom';
+import { animate, inView, stagger } from 'motion';
+import type { DOMKeyframesDefinition, AnimationOptions } from 'motion';
 
 export interface TextAnimateOptions {
   /** seconds between each letter's start */
@@ -20,7 +21,7 @@ export interface TextAnimateOptions {
 export function textAnimate(node: HTMLElement, opts: TextAnimateOptions = {}) {
   const { 
     delay = 0.05, 
-    duration = 0.5, 
+    duration = .5, 
     easing = 'ease-out',
     startY = 20,
     respectReducedMotion = true
@@ -38,7 +39,7 @@ export function textAnimate(node: HTMLElement, opts: TextAnimateOptions = {}) {
     node.textContent = '';
     
     // If reduced motion is preferred, just show the text without animation
-    if (prefersReducedMotion) {
+    if (opts.respectReducedMotion && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
       node.textContent = text;
       return;
     }
@@ -48,20 +49,25 @@ export function textAnimate(node: HTMLElement, opts: TextAnimateOptions = {}) {
       span.textContent = char === ' ' ? '\u00A0' : char;
       span.style.display = 'inline-block';
       span.style.opacity = '0';
-      span.style.transform = `translateY(${startY}px)`;
+      span.style.transform = `translateY(${opts.startY ?? 20}px)`;
       span.style.willChange = 'opacity, transform';
       node.append(span);
       return span;
     });
     
+    const keyframes: DOMKeyframesDefinition = {
+      opacity: [0, 1],
+      y: [opts.startY ?? 20, 0]
+    };
+
     animate(
       letters,
-      { opacity: [0, 1], y: [startY, 0] },
+      keyframes,
       {
-        delay: stagger(delay),
-        duration,
-        easing,
-      }
+        delay: stagger(opts.delay ?? 0.05),
+        duration: opts.duration ?? 0.5,
+        easing: opts.easing ?? 'ease-out',
+      } as AnimationOptions
     );
   }
 

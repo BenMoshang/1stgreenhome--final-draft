@@ -124,8 +124,8 @@
         &copy; {currentYear} 1st Green Home, All Rights Reserved.
       </small>
         <small class="invisible">
-        Created by <a href="https://www.mymodernsite.com" target="_blank">mymodernsite</a>
-        Created by <a href="https://www.benmoshang.com" target="_blank">Ben Moshang</a>
+        Created by <a href="https://www.mymodernsite.com" target="_blank">mymodernsite</a> • 
+        Developed by <a href="https://www.benmoshang.com" target="_blank">Ben Moshang</a>
       </small>
   </div>
  
@@ -141,89 +141,76 @@
   }
 
 .invisible{
-  color:black;
-  opacity:.3;
+  text-transform: uppercase;
+  @extend %u_callout;
+    color: $text-tertiary-rev;
+
+  opacity:.2;
+  text-align: center;
+  font-size: .75rem;
+  & a{
+    @extend %link;
+    color:inherit;
+  }
 }
   /* ---------------------------------------------
    * Base Footer Styles
-   * --------------------------------------------- */
+   * --------------------------------------------- */ 
+
+
   .footer {
     isolation: isolate;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-height: 100%;
-    z-index: -10;
-    background-color: oklch(35% 0.08 152.535);
-    box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
-pointer-events: none;
     will-change: transform, opacity;
     transform: translateZ(0);
     backface-visibility: hidden;
-    box-shadow: inset 0 0 150px 60px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+height: 90%;
+    z-index: -10;
+    // background-color: oklch(35% 0.08 152.535);
+    // box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
 
- 
-  // Complex background pattern
-  background:
+    // box-shadow: inset 0 0 150px 60px rgba(0, 0, 0, 0.4);
+
+  background: radial-gradient(
+        oklch(39.3% 0.095 152.535 / 1) 4%,
+        oklch(39.3% 0.095 152.535 / 0.9) 9%,
+        oklch(39.3% 0.095 152.535 / 0) 9%
+      )
+      0 0,
     radial-gradient(
-      var(--brute-tertiary) 4%,
-      oklch(35% 0.08 152.535) 9%,
-      oklch(35% 0.08 152.535 / 0%) 9%
-    )
-    0 0,
-    radial-gradient(
-      var(--brute-tertiary) 4%,
-      oklch(35% 0.08 152.535) 8%,
-      oklch(35% 0.08 152.535 / 0%) 10%
-    )
-    50px 50px,
-    radial-gradient(
-      oklch(39.3% 0.095 152.535 / 80%) 20%,
-      oklch(35% 0.08 152.535 / 0%)
-    )
-    50px 0,
-    radial-gradient(
-      oklch(39.3% 0.095 152.535 / 80%) 20%,
-      oklch(35% 0.08 152.535 / 0%)
-    )
-    0 50px,
-    radial-gradient(
-      oklch(35% 0.08 152.535) 35%,
-      oklch(35% 0.08 152.535 / 0%) 60%
-    )
-    50px 0,
-    radial-gradient(
-      oklch(35% 0.08 152.535) 35%,
-      oklch(35% 0.08 152.535 / 0%) 60%
-    )
-    100px 50px,
-    radial-gradient(
-      oklch(32% 0.07 152.535 / 70%),
-      oklch(35% 0.08 152.535 / 0%)
-    )
-    0 0,
-    radial-gradient(
-      oklch(32% 0.07 152.535 / 70%),
-      oklch(35% 0.08 152.535 / 0%)
-    )
-    50px 50px,
+        oklch(39.3% 0.095 152.535 / 1) 4%,
+        oklch(39.3% 0.095 152.535 / 0.9) 8%,
+        oklch(39.3% 0.095 152.535 / 0) 10%
+      )
+      50px 50px,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 0.8) 20%, oklch(39.3% 0.095 152.535 / 0)) 50px 0,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 0.8) 20%, oklch(39.3% 0.095 152.535 / 0)) 0 50px,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 1) 35%, oklch(39.3% 0.095 152.535 / 0) 60%) 50px 0,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 1) 35%, oklch(39.3% 0.095 152.535 / 0) 60%) 100px 50px,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 0.7), oklch(39.3% 0.095 152.535 / 0)) 0 0,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 0.7), oklch(39.3% 0.095 152.535 / 0)) 50px 50px,
     linear-gradient(
-      45deg,
-      oklch(35% 0.08 152.535 / 0%) 49%,
-      oklch(28% 0.06 152.535) 50%,
-      oklch(35% 0.08 152.535 / 0%) 70%
-    )
-    0 0,
+        45deg,
+        oklch(39.3% 0.095 152.535 / 0) 49%,
+        oklch(0% 0 0 / 1) 50%,
+        oklch(39.3% 0.095 152.535 / 0) 70%
+      )
+      0 0,
     linear-gradient(
-      -45deg,
-      oklch(35% 0.08 152.535 / 0%) 49%,
-      oklch(28% 0.06 152.535) 50%,
-      oklch(35% 0.08 152.535 / 0%) 70%
-    )
-    0 0;
-    background-color: oklch(45% 0.11 152.535);
-    background-size: 6.25rem 6.25rem;
+        -45deg,
+        oklch(39.3% 0.095 152.535 / 0) 49%,
+        oklch(0% 0 0 / 1) 50%,
+        oklch(39.3% 0.095 152.535 / 0) 70%
+      )
+      0 0;
+      margin-bottom: size('2xl') * -1;
+  background-color: oklch(39.3% 0.095 152.535);
+  background-size: 6.25rem 6.25rem;
        @include respond-to('tablet-end') {
+      margin-bottom: unset;
+
     height: $footer-height;
     }
 
@@ -375,11 +362,10 @@ position:relative;
     content: '';
     background: linear-gradient(to right, transparent, var(--brute-secondary), transparent);
     position: absolute;
-    left: 0;
+    left: -100%;
     top: 0;
-    margin-left: -35vw;
     margin-top: calc(-1 * var(--margin-lg));
-    width:100vw;
+    width:300%;
     height: 1px;
   }
       
