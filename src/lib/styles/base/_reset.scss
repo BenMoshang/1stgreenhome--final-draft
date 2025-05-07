@@ -41,7 +41,7 @@ background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricprecision;
   /* prevent horizontal overflow */
-  overflow-inline: clip;
+  overflow: hidden;
 }
 
 /* ==========================================================================

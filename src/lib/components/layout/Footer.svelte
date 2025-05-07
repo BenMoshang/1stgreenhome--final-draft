@@ -162,14 +162,16 @@
     isolation: isolate;
     will-change: transform, opacity;
     transform: translateZ(0);
+    overflow: hidden;
     backface-visibility: hidden;
     position: fixed;
     bottom: 0;
     width: 100%;
+    max-height:10rem;
 height: 90%;
     z-index: -10;
     // background-color: oklch(35% 0.08 152.535);
-    // box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
+    box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
 
     // box-shadow: inset 0 0 150px 60px rgba(0, 0, 0, 0.4);
 
