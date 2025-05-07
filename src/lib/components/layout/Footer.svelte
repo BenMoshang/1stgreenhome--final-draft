@@ -123,6 +123,10 @@
        <small class="footer__copyright">
         &copy; {currentYear} 1st Green Home, All Rights Reserved.
       </small>
+        <small class="invisible">
+        Created by <a href="https://www.mymodernsite.com" target="_blank">mymodernsite</a>
+        Created by <a href="https://www.benmoshang.com" target="_blank">Ben Moshang</a>
+      </small>
   </div>
  
 </footer>
@@ -136,7 +140,10 @@
     cursor: pointer;
   }
 
-
+.invisible{
+  color:black;
+  opacity:.3;
+}
   /* ---------------------------------------------
    * Base Footer Styles
    * --------------------------------------------- */
