@@ -54,7 +54,7 @@
 		"lightningcss": "^1.29.3",
 		"postcss": "^8.5.3",
 		"postcss-html": "^1.8.0",
-		"postcss-load-config": "^5.0.0",
+		"postcss-load-config": "^5.1.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.3.3",
 		"publint": "^0.3.2",
