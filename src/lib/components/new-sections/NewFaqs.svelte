@@ -172,6 +172,8 @@ max-inline-size: 40ch;
           order: 2;
         }
         & .faq__label{
+          text-align: right;
+margin-inline:0;
           margin-left: auto;
         }
     

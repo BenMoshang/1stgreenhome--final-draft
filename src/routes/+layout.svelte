@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Footer from '$lib/components/layout/Footer.svelte';
-  import NewHeader from '$lib/components/layout/NewHeader.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  import NewHeader from '$lib/components/NewHeader.svelte';
   import Lenis from 'lenis';
   import { onDestroy, onMount } from 'svelte';
   let { children } = $props();
@@ -13,7 +13,7 @@
       gestureOrientation: 'vertical', // match scroll gesture direction
       smoothWheel: true, // enable smooth wheel scrolling
       wheelMultiplier: 1.5, // boost scroll-to-wheel sensitivity
-      lerp: 0.08, // smoother interpolation with snappier response
+      lerp: 0.08, // smnoother interpolation with snappier response
       infinite: false, // ensure we don't get stuck in infinite scroll
     });
 
@@ -130,14 +130,9 @@
     margin-inline: auto;
     box-shadow: var(--shadow-elevation-high);
 
-    margin-bottom: 80vh;
-    @include respond-to('tablet-end') {
-      margin-bottom: $footer-height;
-    }
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    margin-bottom: 90svh;
+  align-content:center;
+  @extend %flex-col-center;
     position: relative; /* establishes containing block for abs. children */
     z-index: 3;
     gap: size('2xl');
@@ -145,6 +140,10 @@
     min-height: 100%;
     & > * {
       flex: 1;
+    }
+
+    @include respond-to('tablet-end') {
+      margin-bottom: $footer-height;
     }
   }
 

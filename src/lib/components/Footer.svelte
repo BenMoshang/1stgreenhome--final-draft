@@ -123,12 +123,12 @@
        <small class="footer__copyright">
         &copy; {currentYear} 1st Green Home, All Rights Reserved.
       </small>
+ 
+  </div>
         <small class="invisible">
         Created by <a href="https://www.mymodernsite.com" target="_blank">mymodernsite</a> • 
         Developed by <a href="https://www.benmoshang.com" target="_blank">Ben Moshang</a>
       </small>
-  </div>
- 
 </footer>
 
 <style lang="scss">
@@ -141,10 +141,12 @@
   }
 
 .invisible{
+  display:flex;
   text-transform: uppercase;
   @extend %u_callout;
     color: $text-tertiary-rev;
-
+text-align: center;
+margin-top: size('xl');
   opacity:.2;
   text-align: center;
   font-size: .75rem;
@@ -167,8 +169,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    max-height:10rem;
-height: 90%;
+height: calc(100% + 2rem);
     z-index: -10;
     // background-color: oklch(35% 0.08 152.535);
     box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
@@ -207,12 +208,12 @@ height: 90%;
         oklch(39.3% 0.095 152.535 / 0) 70%
       )
       0 0;
-      margin-bottom: size('2xl') * -1;
+      margin-bottom: size('3xl') * -1;
   background-color: oklch(39.3% 0.095 152.535);
   background-size: 6.25rem 6.25rem;
-       @include respond-to('tablet-end') {
+   @include respond-to('tablet-end') {
       margin-bottom: unset;
-
+      max-height: unset;
     height: $footer-height;
     }
 

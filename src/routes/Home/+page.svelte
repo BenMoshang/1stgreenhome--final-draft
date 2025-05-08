@@ -1,12 +1,12 @@
 <script lang="ts">
   import { parallax } from '$lib/actions/parallax.svelte';
-  import NewCta from '$lib/components/layout/new-sections/NewCta.svelte';
-  import NewFaqs from '$lib/components/layout/new-sections/NewFaqs.svelte';
-  import NewHero from '$lib/components/layout/new-sections/NewHero.svelte';
-  import NewPartners from '$lib/components/layout/new-sections/NewPartners.svelte';
-  import NewProjectsSection from '$lib/components/layout/new-sections/NewProjectsSection.svelte';
-  import NewServiceSection from '$lib/components/layout/new-sections/NewServiceSection.svelte';
-  import NewTestimonials from '$lib/components/layout/new-sections/NewTestimonials.svelte';
+  import NewCta from '$lib/components/new-sections/NewCta.svelte';
+  import NewFaqs from '$lib/components/new-sections/NewFaqs.svelte';
+  import NewHero from '$lib/components/new-sections/NewHero.svelte';
+  import NewPartners from '$lib/components/new-sections/NewPartners.svelte';
+  import NewProjectsSection from '$lib/components/new-sections/NewProjectsSection.svelte';
+  import NewServiceSection from '$lib/components/new-sections/NewServiceSection.svelte';
+  import NewTestimonials from '$lib/components/new-sections/NewTestimonials.svelte';
   import { onMount } from 'svelte';
 
   function jumpToFragment(fragment: string) {
@@ -70,8 +70,8 @@
   inset: 0;
   z-index: 2;
   background: url('/assets/landing-page/leaves.svg') center repeat;
-  opacity: 0.05;
-  filter: brightness(1.4) saturate(0.2);
+  opacity: 0.08;
+  // filter: brightness(1.4) saturate(0.2);
   will-change: transform;
 
   @media (prefers-color-scheme: dark) {

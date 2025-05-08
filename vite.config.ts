@@ -21,14 +21,14 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['@sveltejs/kit', 'lenis', 'motion', 'split-type'],
+          vendor: ['@sveltejs/kit', 'motion', 'split-type'],
         },
       },
     },
   },
 
   server: {
-    host: '192.168.0.167',
+    host: 'localhost',
     port: 3000,
     fs: {
       strict: true,

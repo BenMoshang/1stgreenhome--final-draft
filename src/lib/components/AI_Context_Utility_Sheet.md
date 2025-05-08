@@ -1,6 +1,6 @@
 # AI Agent Context & Utility Reference Sheet
 
-This document provides a quick reference for AI agents working within the `src/lib/components/layout/new-sections` and `src/lib/components/layout/new-components` folders of the 1stgreenhome project.
+This document provides a quick reference for AI agents working within the `src/lib/components/new-sections` and `src/lib/components/new-components` folders of the 1stgreenhome project.
 
 ## Core Technologies & Conventions
 
@@ -64,7 +64,7 @@ This document provides a quick reference for AI agents working within the `src/l
     *   SCSS Variables: `$br` (border-radius), `$text-z`, etc.
     *   `size('*')`: Function likely resolving to spacing values (e.g., `size('md')`, `size('xl')`).
 
-## Reusable Components (`src/lib/components/layout/new-components/`)
+## Reusable Components (`src/lib/components/new-components/`)
 
 *   **`ServiceCard.svelte`**
     *   Purpose: Displays a single service offering with an image, title, description, and tags.

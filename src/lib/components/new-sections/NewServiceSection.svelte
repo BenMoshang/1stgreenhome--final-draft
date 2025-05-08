@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { textAnimate } from '$lib/actions/textAnimate.svelte';
 	import { wipeDown } from '$lib/actions/wipeDown.svelte';
-	import ServiceCard from '$lib/components/layout/new-components/ServiceCard.svelte';
+	import ServiceCard from '$lib/components/new-components/ServiceCard.svelte';
 
   // Define the Service interface to fix the TypeScript error
   interface Service {
@@ -136,15 +136,18 @@
         }
         & .services__header-heading {
           text-align: right;
+          margin-left:auto;
+max-inline-size: 20ch;
         }
         & .services__header-body {
+          margin-left:auto;
           text-align: right;
         }
       }
 
       &-heading {
         text-align: center;
-        max-inline-size: 20ch;
+        max-inline-size: 25ch;
         margin-block-end: var(--margin-sm);
       }
       &-body {

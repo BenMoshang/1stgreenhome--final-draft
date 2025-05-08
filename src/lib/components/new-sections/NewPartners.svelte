@@ -105,7 +105,7 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
     &__logos-container {
       inline-size: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
       gap: size('xl');
       place-items: center;
       max-inline-size: calc(4 * 10rem + 3 * var(--size-lg));
