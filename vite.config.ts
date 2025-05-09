@@ -27,6 +27,10 @@ export default defineConfig({
     },
   },
 
+  ssr: {
+    noExternal: ['motion'],
+  },
+
   server: {
     host: 'localhost',
     port: 3000,

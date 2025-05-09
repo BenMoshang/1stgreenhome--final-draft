@@ -1,6 +1,5 @@
 @use 'sass:math';
 @use 'sass:map';
-@use '../base/global-variables' as globals;
 
 /* ==========================================================================
  Golden Ratio (Phi) Configuration
@@ -125,13 +124,8 @@ $primitives: (
 
 // Dynamically generate size variables using the map.
 
-@each $name, $value in $primitives {
-
-
-
-  :root {
-    --spacing-#{$name}: #{$value};
+:root {
+  @each $name, $value in $primitives {
     --size-#{$name}: #{$value};
   }
-
 }

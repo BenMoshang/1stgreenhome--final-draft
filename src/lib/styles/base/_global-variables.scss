@@ -1,4 +1,31 @@
 $PAGE_MAX_INLINE: 80rem;
 $border-radius: 1rem;
 
+@use 'sass:map';
+@use 'scale' as globals; // Access scale.scss variables and functions
+
 $footer-height:25rem;
+
+// Centralized Spacing System based on Typography
+// Using globals.$MAJOR-HALF as a base line-height for calculations
+// and size() from scale.scss
+
+$base-line-height: globals.$MAJOR-HALF; // Common line-height from _typography.scss
+
+:root {
+  // Small spacing (using minor proportions of line-height)
+  --spacing-3xs: #{globals.round-to(1em * $base-line-height * globals.$MINOR-EIGHT)};
+  --spacing-2xs: #{globals.round-to(1em * $base-line-height * globals.$MINOR-QUARTER)};
+  --spacing-xs: #{globals.round-to(1em * $base-line-height * globals.$MINOR-HALF)};
+  --spacing-sm: #{globals.round-to(1em * $base-line-height * globals.$MINOR)};
+
+  // Medium spacing (directly related to base line-height or base font size)
+  --spacing-md: #{globals.round-to(1em * $base-line-height)}; // Could also be globals.size('md') if 1em is desired
+
+  // Large spacing (using major proportions of line-height and size scale)
+  --spacing-lg: #{globals.round-to($base-line-height * globals.size('lg'))};
+  --spacing-xl: #{globals.round-to($base-line-height * globals.size('xl'))};
+  --spacing-2xl: #{globals.round-to($base-line-height * globals.size('2xl'))};
+  --spacing-3xl: #{globals.round-to($base-line-height * globals.size('3xl'))};
+  --spacing-4xl: #{globals.round-to($base-line-height * globals.size('4xl'))};
+}
