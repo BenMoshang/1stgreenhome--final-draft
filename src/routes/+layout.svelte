@@ -1,8 +1,9 @@
 <script lang="ts">
-  import Footer from '$lib/components/Footer.svelte';
-  import NewHeader from '$lib/components/NewHeader.svelte';
-  import Lenis from 'lenis';
-  import { onDestroy, onMount } from 'svelte';
+    import Footer from '$lib/components/Footer.svelte';
+    import NewHeader from '$lib/components/NewHeader.svelte';
+    import '$lib/styles/main.scss';
+    import Lenis from 'lenis';
+    import { onDestroy, onMount } from 'svelte';
   let { children } = $props();
 
   onMount(() => {

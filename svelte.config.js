@@ -12,7 +12,7 @@ const config = {
       },
     }),
     vitePreprocess({
-      sourceMap: true, 
+      sourceMap: false, 
     }),
   ],
 
