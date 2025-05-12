@@ -17,11 +17,10 @@ export default defineConfig({
     target: 'esnext',         
     minify: 'esbuild',        
     cssMinify: 'lightningcss',
-    sourcemap: true,          
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['@sveltejs/kit', 'motion', 'split-type'],
+          vendor: ['@sveltejs/kit', 'motion'],
         },
       },
     },
