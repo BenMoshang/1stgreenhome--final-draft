@@ -1,7 +1,7 @@
 // styles/layout/_flex.scss
 
 // Import necessary modules using the modern @use rule
-@use '../base/globals';
+@use '../base/global-variables';
 @use 'sass:map';
 @use 'sass:string'; // Import string module for potential manipulation if needed
 @use 'sass:meta'; // Import meta module for type checking

@@ -1,6 +1,0 @@
-// Alias module to combine core globals and scale utilities for easier imports
-@use 'sass:map';
-@forward 'global-variables';
-@forward 'scale';
-
-// Removed direct scale usage to prevent circular dependency

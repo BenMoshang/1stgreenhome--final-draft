@@ -1,6 +1,6 @@
 // 1. Unified size utilities: define and loop for width & height
 @use 'sass:map';
-@use '../base/globals' as globals;
+@use '../base' as globals;
 
 $inline-size-map:(
   2xs: globals.size('md'),

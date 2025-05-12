@@ -1,6 +1,6 @@
 @use 'sass:math';
 @use 'sass:map';
-@use '../base/globals' as globals;
+@use '../base' as globals;
 
 $_WIDTH: globals.$PAGE_MAX_INLINE;
 

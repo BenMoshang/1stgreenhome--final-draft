@@ -1,15 +1,16 @@
 // Central gap logic and utilities moved from _flex.scss
-@use '../base/globals';
+@use '../base/global-variables' as globals;
+@use '../base/scale' as scale;
 @use 'sass:map';
 
 // Legacy and custom gap logic (if needed)
 $gap-sizes: (
-  'xs': calc(#{globals.size('2xs')} * #{globals.$MAJOR-HALF}),
-  'sm': calc(#{globals.size('xs')} * #{globals.$MAJOR-HALF}),
-  'md': calc(#{globals.size('sm')} * #{globals.$MAJOR-HALF}),
-  'lg': calc(#{globals.size('md')} * #{globals.$MAJOR-HALF}),
-  'xl': calc(#{globals.size('lg')} * #{globals.$MAJOR-HALF}),
-  '2xl': calc(#{globals.size('xl')} * #{globals.$MAJOR-HALF}),
+  'xs': calc(#{scale.size('2xs')} * #{scale.$MAJOR-HALF}),
+  'sm': calc(#{scale.size('xs')} * #{scale.$MAJOR-HALF}),
+  'md': calc(#{scale.size('sm')} * #{scale.$MAJOR-HALF}),
+  'lg': calc(#{scale.size('md')} * #{scale.$MAJOR-HALF}),
+  'xl': calc(#{scale.size('lg')} * #{scale.$MAJOR-HALF}),
+  '2xl': calc(#{scale.size('xl')} * #{scale.$MAJOR-HALF}),
 ); 
 @function gap($size-key) {
   @if map.has-key($gap-sizes, $size-key) {
