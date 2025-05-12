@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess';
 
@@ -21,7 +21,15 @@ const config = {
   },
 
   kit: {
-    adapter: adapter(),
+    adapter: adapter({
+      // default options are generally suitable for GitHub Pages
+      // See https://kit.svelte.dev/docs/adapter-static#options
+      pages: 'build',
+      assets: 'build',
+      fallback: 'index.html', // Use index.html as fallback for SPA behavior
+      precompress: false,
+      strict: true // Ensures all pages are prerenderable
+    }),
     csrf: {
       checkOrigin: true,
     },
@@ -31,6 +39,11 @@ const config = {
     alias: {
       $lib: 'src/lib',
       $components: 'src/lib/components',
+    },
+    paths: {
+      // Set base path for GitHub Pages deployment
+      // Replace '1stgreenhome--final-draft' with your actual repo name if different
+      base: process.env.NODE_ENV === 'production' ? '/1stgreenhome--final-draft' : '',
     },
   },
 };

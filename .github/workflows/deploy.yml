@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+# Run workflow on pushes to the main branch
+on:
+  push:
+    branches:
+      - new-design # or master, depending on your default branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🔐
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 🤖
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use a recent LTS version
+          cache: 'npm'
+
+      - name: Install dependencies 📦
+        run: npm ci
+
+      - name: Build project 💾
+        # Ensure NODE_ENV is set to production for the base path config
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Add .nojekyll file 🚫
+        # Prevents GitHub Pages from running the static files through Jekyll
+        run: touch build/.nojekyll
+
+      - name: Deploy to GitHub Pages 🚀
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          # Optional: specify a custom domain if you have one
+          # cname: example.com
