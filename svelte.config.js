@@ -42,7 +42,7 @@ const config = {
     },
     paths: {
       // Set base path for GitHub Pages deployment
-      base: '/1stgreenhome--final-draft',
+      base: '',
     },
     prerender: {
       handleHttpError: ({ path, referrer, message }) => {
