@@ -73,10 +73,10 @@ text-wrap: balance;
   text-wrap:balance !important;
 }
 /* Basic table reset */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+// table {
+//   border-collapse: collapse;
+//   border-spacing: 0;
+// }
 
 /* Form element font inheritance */
 :where(input, button, textarea, select) {

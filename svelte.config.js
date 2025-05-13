@@ -42,9 +42,18 @@ const config = {
     },
     paths: {
       // Set base path for GitHub Pages deployment
-      // Replace '1stgreenhome--final-draft' with your actual repo name if different
-      base: process.env.NODE_ENV === 'production' ? '/1stgreenhome--final-draft' : '',
+      base: '/1stgreenhome--final-draft',
     },
+    prerender: {
+      handleHttpError: ({ path, referrer, message }) => {
+        // ignore missing files
+        if (message.includes('does not begin with `base`')) {
+          return;
+        }
+        // fail on other errors
+        throw new Error(message);
+      }
+    }
   },
 };
 
