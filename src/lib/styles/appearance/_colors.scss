@@ -18,14 +18,14 @@
 
 :root {
 
-  color-scheme: light dark;
+  color-scheme: light;
 
     --typography--primary: light-dark(oklch(20% 0 0), oklch(90% 0 0));
     --typography--secondary: light-dark(oklch(35% 0 0), oklch(75% 0 0));
     --typography--tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
 
 }
-  
+
 
 
 
@@ -111,6 +111,6 @@ $text-tertiary-rev: oklch(80% 0 0);   /* More muted for tertiary text */
 text-underline-offset: .25rem;
 text-decoration-thickness: .125rem;
 
- 
+
 
 }
