@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { textAnimate } from '$lib/actions/textAnimate.svelte';
-	import { textReveal } from '$lib/actions/textReveal.svelte';
 	import { base } from '$app/paths';
+	import { textAnimate } from '$lib/actions/textAnimate.svelte';
+	import { textReveal } from '$lib/actions/textReveal.svelte.js';
 
     // Svelte 5 runes state for header and project data
   const header = $state({
@@ -95,7 +95,7 @@
           />
         </figure>
 
-        <figcaption class="project-article__caption">
+        <div class="project-article__caption">
           <h3
             use:textReveal
             class="project-article__caption--title">
@@ -106,7 +106,7 @@
             class="project-article__caption--description">
             {section.description}
           </p>
-        </figcaption>
+        </div>
       </article>
     {/each}
   </div>

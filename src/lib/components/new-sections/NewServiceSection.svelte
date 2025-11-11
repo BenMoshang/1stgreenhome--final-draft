@@ -19,7 +19,6 @@
     description: string;
     image: string;
     imageAlt: string;
-    tags: { label: string }[];
   }
 
   const injectableStaticText = $state<{
@@ -94,8 +93,7 @@
           title: stepData.title,
           description: stepData.description,
           image: stepData.image,
-          imageAlt: stepData.imageAlt,
-          tags: [{ label: stepData.tag }]
+          imageAlt: stepData.imageAlt
         }}
         <ServiceCard service={service} />
       {/each}

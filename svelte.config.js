@@ -1,24 +1,6 @@
-import staticAdapter from '@sveltejs/adapter-static';
 import vercelAdapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess';
-
-const isVercel = Boolean(process.env.VERCEL);
-
-const staticAdapterOptions = {
-  // default options are generally suitable for GitHub Pages
-  // See https://kit.svelte.dev/docs/adapter-static#options
-  pages: 'build',
-  assets: 'build',
-  fallback: 'index.html', // Use index.html as fallback for SPA behavior
-  precompress: false,
-  strict: true, // Ensures all pages are prerenderable
-};
-
-const basePath =
-  isVercel || process.env.NODE_ENV !== 'production'
-    ? ''
-    : '/1stgreenhome--final-draft';
 
 const config = {
   preprocess: [
@@ -38,7 +20,11 @@ const config = {
   },
 
   kit: {
-    adapter: isVercel ? vercelAdapter() : staticAdapter(staticAdapterOptions),
+    adapter: vercelAdapter({
+      // Vercel adapter options
+      // See https://kit.svelte.dev/docs/adapter-vercel#options
+      runtime: 'nodejs20.x', // Explicitly specify Node.js 20 runtime
+    }),
     csrf: {
       checkOrigin: true,
     },
@@ -50,9 +36,8 @@ const config = {
       $components: 'src/lib/components',
     },
     paths: {
-      // Set base path for GitHub Pages deployment
-      // Replace '1stgreenhome--final-draft' with your actual repo name if different
-      base: basePath,
+      // Base path is empty for Vercel deployment
+      base: '',
     },
   },
 };

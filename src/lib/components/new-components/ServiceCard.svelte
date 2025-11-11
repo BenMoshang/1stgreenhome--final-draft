@@ -6,37 +6,23 @@
    *    - title        (string)
    *    - description  (string)
    *    - image        (string | static import)
-   *    - tags         ({ label: string }[])
    * ----------------------------------------------------------------*/
   interface Service {
     title: string;
     description: string;
     image: string;
     imageAlt?: string;
-    tags: { label: string }[];
   }
 
   let { service } = $props<{ service: Service }>();
 </script>
 
 <article class="service-card">
-  <figure class="service-card__media">
-    <img
-      class="service-card__image"
-      src={service.image}
-      alt={service.imageAlt || service.title}
-      loading="lazy"
-      width="600"
-      height="600"
-    />
-
-    <!-- Frosted-glass tag strip -->
-    <header class="service-card__tags">
-      {#each service.tags as tag}
-        <span class="service-card__tag">{tag.label}</span>
-      {/each}
-    </header>
-
+  <figure
+    class="service-card__media"
+    style="background-image: url('{service.image}'); width: 100%; height: 100%;"
+    aria-label={service.imageAlt || service.title}
+  >
     <figcaption class="service-card__caption">
       <h3
         class="service-card__title u_title-a--bold typography--primary-rev u_m-bottom__xs max-ch-25"

@@ -37,27 +37,15 @@ $MINOR-QUARTER: $MAJOR-QUARTER - 1; // ϕ^1/4 - 1
 $MINOR-EIGHT: $MAJOR-EIGHT - 1; // ϕ^1/8 - 1
 
 /* ==========================================================================
-   Golden Ratio Size Scale (Based on em units) - Optimized
-   ========================================================================== */
-
-$_size-scale-powers: (
-  '4xs': -5,
-  '3xs': -4,
-  '2xs': -3,
-  'xs': -2,
-  'sm': -1,
-  'md': 0, // Base size (Phi^0 = 1)
-  'lg': 1,
-  'xl': 2,
-  '2xl': 3,
-  '3xl': 4,
-  '4xl': 5,
-);
-
-/* ==========================================================================
    Utility Functions
    ========================================================================== */
 
+/// Rounds a number to a specified number of decimal places
+/// @param {Number} $number - The number to round
+/// @param {Number} $n-digits - Number of decimal places (default: $PRECISION)
+/// @return {Number} Rounded number
+/// @example
+///   round-to(1.618033988749895, 3) // => 1.618
 @function round-to($number, $n-digits: $PRECISION) {
   @if meta.type-of($number) != number {
     @error '`#{$number}` is not a number for the round-to function.';
@@ -77,22 +65,34 @@ $_size-scale-powers: (
   @return math.div(math.round($number * $factor), $factor);
 }
 
-// Exported size map and accessor
-$primitives: (
-  '4xs': round-to(1em * math.pow($SCALE, -5)),
-  '3xs': round-to(1em * math.pow($SCALE, -4)),
-  '2xs': round-to(1em * math.pow($SCALE, -3)),
-  'xs': round-to(1em * math.pow($SCALE, -2)),
-  'sm': round-to(1em * math.pow($SCALE, -1)),
-  'md': round-to(1em * math.pow($SCALE, 0)),
-  'lg': round-to(1em * math.pow($SCALE, 1)),
-  'xl': round-to(1em * math.pow($SCALE, 2)),
-  'custom': round-to(1em * math.pow($SCALE, 2.5)),
-  '2xl': round-to(1em * math.pow($SCALE, 3)),
-  '3xl': round-to(1em * math.pow($SCALE, 4)),
-  '4xl': round-to(1em * math.pow($SCALE, 5)),
+// Exported size map and accessor (generated dynamically)
+$size-scale-powers: (
+  '4xs': -5,
+  '3xs': -4,
+  '2xs': -3,
+  'xs': -2,
+  'sm': -1,
+  'md': 0,
+  'lg': 1,
+  'xl': 2,
+  'custom': 2.5,
+  '2xl': 3,
+  '3xl': 4,
+  '4xl': 5,
 );
 
+$primitives: ();
+
+@each $name, $power in $size-scale-powers {
+  $primitives: map.set($primitives, $name, round-to(1em * math.pow($SCALE, $power)));
+}
+
+/// Retrieves a size value from the primitives map based on Golden Ratio scale
+/// @param {String} $key - Size key (e.g., 'xs', 'sm', 'md', 'lg', 'xl', '2xl', etc.)
+/// @return {Length} Size value in em units
+/// @example
+///   size('md') // => 1em (base size)
+///   size('lg') // => 1.618em (Phi^1)
 @function size($key) {
   @return map.get($primitives, $key);
 }
@@ -105,12 +105,69 @@ $PAGE_MAX_INLINE: 80rem;
 $border-radius: 1rem;
 $footer-height: 25rem;
 
+// Typography constants
+$letter-spacing-heading: -0.022em; // Negative letter spacing for headings
+
+// Shadow constants
+$inset-shadow-offset: 0.0625rem; // Inset shadow offset for buttons
+
+// Animation/Transform constants
+$transform-offset-base: 50px; // Base transform offset for animations
+
+// Grid constants
+$grid-min-size-sm: 6.25rem; // Minimum grid item size (small)
+$grid-min-size-lg: 18.75rem; // Minimum grid item size (large)
+
+// Footer gradient color (dark green)
+$footer-gradient-color: oklch(39.3% 0.095 152.535);
+
+// Gap sizes map (used in :root and utilities)
+// Simplified: gap = size * MAJOR-HALF (pre-calculated)
+$gap-sizes: (
+  'xs': round-to(size('2xs') * $MAJOR-HALF),
+  'sm': round-to(size('xs') * $MAJOR-HALF),
+  'md': round-to(size('sm') * $MAJOR-HALF),
+  'lg': round-to(size('md') * $MAJOR-HALF),
+  'xl': round-to(size('lg') * $MAJOR-HALF),
+  '2xl': round-to(size('xl') * $MAJOR-HALF),
+);
+
+// Container scales map (used in :root and utilities)
+$_WIDTH: $PAGE_MAX_INLINE;
+$container-scales: (
+  'xs': math.round(math.div($_WIDTH, $MAJOR-HALF)),
+  'sm': math.round(math.div($_WIDTH, $MAJOR-QUARTER)),
+  'md': 1,
+  'lg': math.round($_WIDTH * $MAJOR-QUARTER),
+  'xl': math.round($_WIDTH * $MAJOR-HALF),
+);
+
 // ===========================================================================
 // 3. Design Tokens
 // ===========================================================================
 
 // ---------------------------------------------------------------------------
-// Colors
+// Mixins (needed for :root block)
+// ---------------------------------------------------------------------------
+/// Adjusts margin CSS variables based on line-height for consistent spacing
+/// @param {Number} $line-height - Line height multiplier (must be unitless)
+/// @example
+///   @include adjust-to($MAJOR-HALF);
+@mixin adjust-to($line-height) {
+  @if not math.is-unitless($line-height) {
+    @error '#{$line-height} is not dimensionless';
+  }
+  --margin-2xs: #{round-to(1em * $line-height * $MINOR-QUARTER)};
+  --margin-xs: #{round-to(1em * $line-height * $MINOR-HALF)};
+  --margin-sm: #{round-to(1em * $line-height * $MINOR)};
+  --margin-md: #{round-to($line-height * size('md'))};
+  --margin-lg: #{round-to($line-height * size('lg'))};
+  --margin-xl: #{round-to($line-height * size('xl'))};
+  --margin-2xl: #{round-to($line-height * size('2xl'))};
+}
+
+// ---------------------------------------------------------------------------
+// Design Tokens - Consolidated :root Declaration
 // ---------------------------------------------------------------------------
 :root {
   // Brand colors (brute theme)
@@ -133,22 +190,8 @@ $footer-height: 25rem;
 
   // Color scheme
   color-scheme: light;
-}
 
-// Sass variables for typography (used in placeholders and utilities)
-$text-primary: light-dark(oklch(20% 0 0), oklch(95% 0 0));
-$text-secondary: light-dark(oklch(35% 0 0), oklch(90% 0 0));
-$text-tertiary: light-dark(oklch(50% 0 0), oklch(80% 0 0));
-
-// Text colors for dark mode (light text on dark surfaces)
-$text-primary-rev: oklch(95% 0 0);
-$text-secondary-rev: oklch(90% 0 0);
-$text-tertiary-rev: oklch(80% 0 0);
-
-// ---------------------------------------------------------------------------
-// Shadows
-// ---------------------------------------------------------------------------
-:root {
+  // Shadow tokens
   --shadow-color: 0deg 0% 0%;
 
   // Low elevation shadow
@@ -174,7 +217,56 @@ $text-tertiary-rev: oklch(80% 0 0);
     8.4px 16.9px 21.4px -1.8px hsl(var(--shadow-color) / 0.08),
     12.8px 25.5px 32.3px -2.1px hsl(var(--shadow-color) / 0.08),
     18.8px 37.5px 47.5px -2.4px hsl(var(--shadow-color) / 0.08);
+
+  // Spacing tokens (using minor proportions of line-height)
+  --spacing-3xs: #{round-to(1em * $MAJOR-HALF * $MINOR-EIGHT)};
+  --spacing-2xs: #{round-to(1em * $MAJOR-HALF * $MINOR-QUARTER)};
+  --spacing-xs: #{round-to(1em * $MAJOR-HALF * $MINOR-HALF)};
+  --spacing-sm: #{round-to(1em * $MAJOR-HALF * $MINOR)};
+  --spacing-md: #{round-to(1em * $MAJOR-HALF)};
+  --spacing-lg: #{round-to($MAJOR-HALF * size('lg'))};
+  --spacing-xl: #{round-to($MAJOR-HALF * size('xl'))};
+  --spacing-2xl: #{round-to($MAJOR-HALF * size('2xl'))};
+  --spacing-3xl: #{round-to($MAJOR-HALF * size('3xl'))};
+  --spacing-4xl: #{round-to($MAJOR-HALF * size('4xl'))};
+
+  // Typography size tokens (dynamically generated from scale map)
+  @each $name, $value in $primitives {
+    --size-#{$name}: #{$value};
+  }
+
+  // Border tokens
+  --brute-border-radius: 1rem;
+
+  // Margin tokens (via adjust-to mixin)
+  @include adjust-to($MAJOR-HALF);
+
+  // Gap tokens
+  @each $name, $value in $gap-sizes {
+    --gap-#{$name}: #{$value};
+  }
+
+  // Container tokens
+  @each $key, $scale in $container-scales {
+    --container-#{$key}: #{$scale};
+  }
+
+  // Base typography
+  font:
+    #{round-to(size('md'))} /
+    #{round-to($MAJOR-HALF)};
 }
+
+// Sass variables for typography (used in placeholders and utilities)
+$text-primary: light-dark(oklch(20% 0 0), oklch(95% 0 0));
+$text-secondary: light-dark(oklch(35% 0 0), oklch(90% 0 0));
+$text-tertiary: light-dark(oklch(50% 0 0), oklch(80% 0 0));
+
+// Text colors for dark mode (light text on dark surfaces)
+$text-primary-rev: oklch(95% 0 0);
+$text-secondary-rev: oklch(90% 0 0);
+$text-tertiary-rev: oklch(80% 0 0);
+
 
 // Drop shadow version of inset shadow (Sass variable)
 $shadow-drop: drop-shadow(0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.08))
@@ -182,46 +274,9 @@ $shadow-drop: drop-shadow(0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.08))
   drop-shadow(1.8px 3.6px 4.6px hsl(var(--shadow-color) / 0.08))
   drop-shadow(4.4px 8.8px 11.1px hsl(var(--shadow-color) / 0.08));
 
-// ---------------------------------------------------------------------------
-// Spacing Tokens
-// ---------------------------------------------------------------------------
-:root {
-  // Small spacing (using minor proportions of line-height)
-  --spacing-3xs: #{round-to(1em * $MAJOR-HALF * $MINOR-EIGHT)};
-  --spacing-2xs: #{round-to(1em * $MAJOR-HALF * $MINOR-QUARTER)};
-  --spacing-xs: #{round-to(1em * $MAJOR-HALF * $MINOR-HALF)};
-  --spacing-sm: #{round-to(1em * $MAJOR-HALF * $MINOR)};
 
-  // Medium spacing (directly related to base line-height or base font size)
-  --spacing-md: #{round-to(1em * $MAJOR-HALF)};
 
-  // Large spacing (using major proportions of line-height and size scale)
-  --spacing-lg: #{round-to($MAJOR-HALF * size('lg'))};
-  --spacing-xl: #{round-to($MAJOR-HALF * size('xl'))};
-  --spacing-2xl: #{round-to($MAJOR-HALF * size('2xl'))};
-  --spacing-3xl: #{round-to($MAJOR-HALF * size('3xl'))};
-  --spacing-4xl: #{round-to($MAJOR-HALF * size('4xl'))};
-}
-
-// ---------------------------------------------------------------------------
-// Typography Tokens
-// ---------------------------------------------------------------------------
-:root {
-  // Dynamically generate size variables using the scale map
-  @each $name, $value in $primitives {
-    --size-#{$name}: #{$value};
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Borders
-// ---------------------------------------------------------------------------
-:root {
-  --brute-border-radius: 1rem;
-}
-.line {
-  /* Prevent accidental line breaks inside .line spans */
-}
+// Line utility class - prevents accidental line breaks (handled by text-wrap: balance)
 // ===========================================================================
 // 4. Base Styles
 // ===========================================================================
@@ -236,6 +291,13 @@ $breakpoints: (
   'desktop-start': 80rem,
 );
 
+/// Creates a responsive media query for a given breakpoint
+/// @param {String} $breakpoint - Breakpoint key ('mobile-end', 'tablet-end', 'desktop-end')
+/// @content Styles to apply within the media query
+/// @example
+///   @include respond-to('tablet-end') {
+///     font-size: size('lg');
+///   }
 @mixin respond-to($breakpoint) {
   $size: map.get($breakpoints, $breakpoint);
 
@@ -252,19 +314,29 @@ $breakpoints: (
 // Reset
 // ---------------------------------------------------------------------------
 *,
-::before,
-::after {
+*::before,
+*::after,
+*::backdrop {
   box-sizing: border-box;
 }
 
 html {
   inline-size: 100%;
-  block-size: 100svh;
+  min-block-size: 100svh;
   margin: 0;
+  overflow-x: hidden;
   scroll-behavior: smooth;
+  scrollbar-color: var(--brute-secondary) transparent;
+  scrollbar-width: thin;
+  background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
 
   @media (prefers-reduced-motion: no-preference) {
     interpolate-size: allow-keywords;
+  }
+
+  ::selection {
+    background: var(--brute-tertiary);
+    color: white;
   }
 }
 
@@ -357,6 +429,11 @@ select {
 // ---------------------------------------------------------------------------
 // Gradient Text
 // ---------------------------------------------------------------------------
+/// Creates animated gradient text effect using brand colors
+/// @param {Time} $duration - Animation duration (default: 8s)
+/// @param {Length} $size - Background size percentage (default: 200%)
+/// @example
+///   @include gradient-text-animated(3s);
 @mixin gradient-text-animated($duration: 8s, $size: 200%) {
   --gradient-text: linear-gradient(
     145deg,
@@ -395,9 +472,70 @@ select {
 // ---------------------------------------------------------------------------
 // Focus Ring
 // ---------------------------------------------------------------------------
+/// Applies accessible focus ring styling
+/// @param {Color} $clr - Focus ring color (default: var(--secondary))
+/// @param {Length} $w - Focus ring width (default: 2px)
+/// @example
+///   @include focus-ring(var(--brute-primary), 3px);
 @mixin focus-ring($clr: var(--secondary), $w: 2px) {
   outline: $w solid $clr;
   outline-offset: 2px;
+}
+
+// ---------------------------------------------------------------------------
+// Common Component Patterns
+// ---------------------------------------------------------------------------
+
+/// Section header pattern with optional sticky positioning
+/// @param {String} $align - Text alignment ('left', 'center', 'right', default: 'center')
+/// @param {Boolean} $sticky - Enable sticky positioning on tablet+ (default: false)
+/// @param {Length} $sticky-top - Top offset for sticky positioning (default: size('2xl'))
+/// @example
+///   @include section-header(center, true, size('xl'));
+@mixin section-header($align: center, $sticky: false, $sticky-top: size('2xl')) {
+  @extend %flex-col-center;
+  text-align: $align;
+
+  @if $sticky {
+    @include respond-to('tablet-end') {
+      position: sticky;
+      top: $sticky-top;
+      align-self: flex-start;
+      text-align: if($align == center, left, $align);
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+  }
+}
+
+/// Applies sticky positioning at a specified breakpoint
+/// @param {Length} $top - Top offset for sticky positioning (default: size('2xl'))
+/// @param {String} $breakpoint - Breakpoint to apply sticky positioning (default: 'tablet-end')
+/// @example
+///   @include sticky-position(size('xl'), 'desktop-end');
+@mixin sticky-position($top: size('2xl'), $breakpoint: 'tablet-end') {
+  @include respond-to($breakpoint) {
+    position: sticky;
+    top: $top;
+    align-self: flex-start;
+  }
+}
+
+/// Creates a grid container with optional template areas
+/// @param {String|List} $columns - Grid template columns (default: '1fr')
+/// @param {Length} $gap - Grid gap size (default: size('xl'))
+/// @param {String|Null} $areas - Grid template areas (null uses columns, default: null)
+/// @example
+///   @include grid-container(repeat(3, 1fr), size('lg'), 'header header header');
+@mixin grid-container($columns: 1fr, $gap: size('xl'), $areas: null) {
+  display: grid;
+  gap: $gap;
+
+  @if $areas {
+    grid-template-areas: $areas;
+  } @else {
+    grid-template-columns: $columns;
+  }
 }
 
 .focus-ring:focus-visible {
@@ -424,23 +562,6 @@ select {
 // Spacing Utilities
 // ---------------------------------------------------------------------------
 $line-height: $MAJOR-HALF;
-
-@mixin adjust-to($line-height) {
-  @if not math.is-unitless($line-height) {
-    @error '#{$line-height} is not dimensionless';
-  }
-  --margin-2xs: #{round-to(1em * $line-height * $MINOR-QUARTER)};
-  --margin-xs: #{round-to(1em * $line-height * $MINOR-HALF)};
-  --margin-sm: #{round-to(1em * $line-height * $MINOR)};
-  --margin-md: #{round-to($line-height * size('md'))};
-  --margin-lg: #{round-to($line-height * size('lg'))};
-  --margin-xl: #{round-to($line-height * size('xl'))};
-  --margin-2xl: #{round-to($line-height * size('2xl'))};
-}
-
-:root {
-  @include adjust-to($MAJOR-HALF);
-}
 
 @each $size in ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl') {
   .u_m-top__#{$size} {
@@ -484,32 +605,6 @@ $padding-map: (
     .u_p-#{$direction}__#{$size} {
       #{$property}: var(--size-#{$size});
     }
-  }
-}
-
-@each $size in $padding-sizes {
-  .u_p-top__#{$size} {
-    padding-block-start: var(--size-#{$size});
-  }
-
-  .u_p-right__#{$size} {
-    padding-inline-end: var(--size-#{$size});
-  }
-
-  .u_p-bottom__#{$size} {
-    padding-block-end: var(--size-#{$size});
-  }
-
-  .u_p-left__#{$size} {
-    padding-inline-start: var(--size-#{$size});
-  }
-
-  .u_p-block__#{$size} {
-    padding-block: var(--size-#{$size});
-  }
-
-  .u_p-inline__#{$size} {
-    padding-inline: var(--size-#{$size});
   }
 }
 
@@ -565,15 +660,11 @@ $padding-map: (
   }
 }
 
-$gap-sizes: (
-  'xs': calc(#{size('2xs')} * #{$MAJOR-HALF}),
-  'sm': calc(#{size('xs')} * #{$MAJOR-HALF}),
-  'md': calc(#{size('sm')} * #{$MAJOR-HALF}),
-  'lg': calc(#{size('md')} * #{$MAJOR-HALF}),
-  'xl': calc(#{size('lg')} * #{$MAJOR-HALF}),
-  '2xl': calc(#{size('xl')} * #{$MAJOR-HALF}),
-);
-
+/// Retrieves a gap size value (size * MAJOR-HALF)
+/// @param {String} $size-key - Gap size key ('xs', 'sm', 'md', 'lg', 'xl', '2xl')
+/// @return {Length} Gap size value
+/// @example
+///   gap('md') // => size('sm') * MAJOR-HALF
 @function gap($size-key) {
   @if map.has-key($gap-sizes, $size-key) {
     $base-gap: map.get($gap-sizes, $size-key);
@@ -581,12 +672,6 @@ $gap-sizes: (
   } @else {
     @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($gap-sizes)}";
     @return null;
-  }
-}
-
-:root {
-  @each $name, $value in $gap-sizes {
-    --gap-#{$name}: #{$value};
   }
 }
 
@@ -605,6 +690,13 @@ $gap-sizes: (
 // ---------------------------------------------------------------------------
 // Typography Utilities
 // ---------------------------------------------------------------------------
+/// Applies typography scaling with size, letter-spacing, line-height, and weight
+/// @param {Length} $size - Font size
+/// @param {Length} $spacing - Letter spacing (typically negative for headings)
+/// @param {Number} $line-height - Line height multiplier (null uses default MAJOR-HALF)
+/// @param {Number} $weight - Font weight (default: 400)
+/// @example
+///   @include type-scale(size('lg'), $letter-spacing-heading, $MAJOR-HALF, 600);
 @mixin type-scale($size, $spacing, $line-height: null, $weight: 400) {
   @if $line-height != null {
     @include adjust-to($line-height);
@@ -634,13 +726,11 @@ $gap-sizes: (
 
 %u_display-1 {
   @extend %font-family--primary;
-  @include type-scale(size('xl'), -0.022em, $MAJOR-HALF);
+  @include type-scale(size('xl'), $letter-spacing-heading, $MAJOR-HALF);
   @extend %text-wrap--balance;
 }
 
 %u_display-1--bold {
-  @extend %font-family--primary;
-  @extend %text-wrap--balance;
   @extend %u_display-1;
   font-weight: 700;
 }
@@ -648,12 +738,10 @@ $gap-sizes: (
 %u_display-2 {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-  @include type-scale(size('lg') * $MAJOR-HALF, -0.022em, $MAJOR-HALF);
+  @include type-scale(size('lg') * $MAJOR-HALF, $letter-spacing-heading, $MAJOR-HALF);
 }
 
 %u_display-2--bold {
-  @extend %font-family--primary;
-  @extend %text-wrap--balance;
   @extend %u_display-2;
   font-weight: 700;
 }
@@ -661,12 +749,10 @@ $gap-sizes: (
 %u_title-a {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-  @include type-scale(size('lg') * $MAJOR-QUARTER, -0.022em, $MAJOR-HALF);
+  @include type-scale(size('lg') * $MAJOR-QUARTER, $letter-spacing-heading, $MAJOR-HALF);
 }
 
 %u_title-a--bold {
-  @extend %text-wrap--balance;
-  @extend %font-family--primary;
   @extend %u_title-a;
   font-weight: 700;
 }
@@ -699,8 +785,6 @@ $gap-sizes: (
 }
 
 %u_heading--bold {
-  @extend %font-family--primary;
-  @extend %text-wrap--balance;
   @extend %u_heading;
   font-weight: 700;
 }
@@ -750,7 +834,6 @@ $gap-sizes: (
 }
 
 %u_label--bold {
-  @extend %font-family--secondary;
   @extend %u_label;
   font-weight: 700;
 }
@@ -775,14 +858,6 @@ $gap-sizes: (
     $MAJOR-HALF
   );
   text-transform: uppercase;
-}
-
-:root {
-  @include adjust-to($MAJOR-HALF);
-
-  font:
-    #{round-to(size('md'))} /
-    #{round-to($MAJOR-HALF)};
 }
 
 $typography-list: display-1, display-1--bold, display-2, display-2--bold, title-a, title-a--bold, title-b, title-c, heading, heading--bold, subheading, paragraph, callout, label, label--bold, caption, overline;
@@ -811,7 +886,7 @@ $typography-list: display-1, display-1--bold, display-2, display-2--bold, title-
   .u_display-1 {
     @include type-scale(
       size('2xl'),
-      -0.022em,
+      $letter-spacing-heading,
       $MAJOR-QUARTER
     );
   }
@@ -841,28 +916,20 @@ $typography-list: display-1, display-1--bold, display-2, display-2--bold, title-
   color: $text-tertiary-rev;
 }
 
-.typography--primary {
-  color: $text-primary;
-}
+// Generate typography color classes from placeholders
+$typography-variants: (
+  'primary': $text-primary,
+  'secondary': $text-secondary,
+  'tertiary': $text-tertiary,
+  'primary-rev': $text-primary-rev,
+  'secondary-rev': $text-secondary-rev,
+  'tertiary-rev': $text-tertiary-rev,
+);
 
-.typography--secondary {
-  color: $text-secondary;
-}
-
-.typography--tertiary {
-  color: $text-tertiary;
-}
-
-.typography--primary-rev {
-  color: $text-primary-rev;
-}
-
-.typography--secondary-rev {
-  color: $text-secondary-rev;
-}
-
-.typography--tertiary-rev {
-  color: $text-tertiary-rev;
+@each $variant, $color in $typography-variants {
+  .typography--#{$variant} {
+    color: $color;
+  }
 }
 
 %a-link {
@@ -875,26 +942,16 @@ $typography-list: display-1, display-1--bold, display-2, display-2--bold, title-
 // ---------------------------------------------------------------------------
 // Layout Utilities
 // ---------------------------------------------------------------------------
-$_WIDTH: $PAGE_MAX_INLINE;
-
-$container-scales: (
-  'xs': math.round(math.div($_WIDTH, $MAJOR-HALF)),
-  'sm': math.round(math.div($_WIDTH, $MAJOR-QUARTER)),
-  'md': 1,
-  'lg': math.round($_WIDTH * $MAJOR-QUARTER),
-  'xl': math.round($_WIDTH * $MAJOR-HALF),
-);
-
-:root {
-  @each $key, $scale in $container-scales {
-    --container-#{$key}: #{$scale};
-  }
-}
-
 %_margin-inline {
   margin-inline: auto;
 }
 
+/// Retrieves a container width scale value
+/// @param {String} $key - Container scale key ('xs', 'sm', 'md', 'lg', 'xl')
+/// @return {Number} Container scale value
+/// @example
+///   container('md') // => 1 (base)
+///   container('lg') // => PAGE_MAX_INLINE * MAJOR-QUARTER
 @function container($key) {
   @return map.get($container-scales, $key);
 }
@@ -906,17 +963,15 @@ $container-scales: (
   }
 }
 
-@mixin _flex-container($direction: row, $display: flex) {
-  display: $display;
-  flex-direction: $direction;
-}
-
+/// Applies flexbox layout with optional gap
+/// @param {String} $direction - Flex direction ('row' or 'column', default: 'row')
+/// @param {String} $gap-size - Gap size key (optional)
+/// @param {Boolean} $inline - Use inline-flex instead of flex (default: false)
+/// @example
+///   @include apply-flex(column, 'md', false);
 @mixin apply-flex($direction: row, $gap-size: null, $inline: false) {
-  @if $inline {
-    @include _flex-container($direction, inline-flex);
-  } @else {
-    @include _flex-container($direction, flex);
-  }
+  display: if($inline, inline-flex, flex);
+  flex-direction: $direction;
 
   @if $gap-size {
     gap: gap($gap-size);
@@ -978,16 +1033,18 @@ $container-scales: (
   box-shadow: inset 0 2px 2px hsl(0deg 0% 0% / 20%);
 }
 
-.max-ch-20 {
-  max-inline-size: 25ch;
-}
+// Max character width utilities (generated from map)
+$max-ch-sizes: (
+  '20': 25ch,
+  '25': 25ch,
+  '45': 45ch,
+  '65': 65ch,
+);
 
-.max-ch-65 {
-  max-inline-size: 65ch;
-}
-
-.max-ch-45 {
-  max-inline-size: 45ch;
+@each $name, $size in $max-ch-sizes {
+  .max-ch-#{$name} {
+    max-inline-size: $size;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -1016,16 +1073,24 @@ $inline-size-map: (
 // ---------------------------------------------------------------------------
 // Appearance Utilities
 // ---------------------------------------------------------------------------
+$shadow-levels: (
+  'sm': var(--shadow-elevation-low),
+  'md': var(--shadow-elevation-medium),
+  'lg': var(--shadow-elevation-high),
+);
+
+/// Applies elevation shadow based on level
+/// @param {String} $level - Shadow level ('sm', 'md', 'lg', default: 'md')
+/// @example
+///   @include apply-shadow('lg');
 @mixin apply-shadow($level: 'md') {
-  @if $level == 'sm' {
-    box-shadow: var(--shadow-elevation-low);
-  } @else if $level == 'md' {
-    box-shadow: var(--shadow-elevation-medium);
-  } @else if $level == 'lg' {
-    box-shadow: var(--shadow-elevation-high);
+  $shadow: map.get($shadow-levels, $level);
+
+  @if $shadow {
+    box-shadow: $shadow;
   } @else {
     @warn "Invalid shadow level '#{$level}'. Expected 'sm', 'md', or 'lg'. Using 'md'.";
-    box-shadow: var(--shadow-elevation-medium);
+    box-shadow: map.get($shadow-levels, 'md');
   }
 }
 
@@ -1115,7 +1180,7 @@ $inline-size-map: (
   position: relative;
   box-shadow:
     var(--shadow-elevation-medium),
-    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3);
+    inset 0 #{$inset-shadow-offset} 0 rgba(255, 255, 255, 0.3);
   transition: all 200ms;
   overflow: hidden;
 
@@ -1166,17 +1231,10 @@ img[src*="icon-lightbulb.svg"] {
 // ---------------------------------------------------------------------------
 // Global Layout Styles (from +layout.svelte)
 // ---------------------------------------------------------------------------
-*,
-*::before,
-*::after,
-*::backdrop {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
 
 .layout-wrapper {
   position: relative;
+  z-index: 2;
   @extend %flex-col-center;
   min-block-size: 100%;
   width: 100%;
@@ -1232,17 +1290,6 @@ img[src*="icon-lightbulb.svg"] {
   }
 }
 
-html {
-  scrollbar-color: var(--brute-secondary) transparent;
-  scrollbar-width: thin;
-  background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
-  scroll-behavior: smooth;
-
-  ::selection {
-    background: var(--brute-tertiary);
-    color: white;
-  }
-}
 
 [data-scroll] {
   transition:
@@ -1253,7 +1300,7 @@ html {
 
 [data-scroll='fade-up'] {
   opacity: 0;
-  transform: translateY(50px);
+  transform: translateY($transform-offset-base);
 }
 
 [data-scroll='fade-up'].is-inview {
@@ -1335,6 +1382,7 @@ html {
 $z-index--header: 1000;
 $z-index--burger: 2000;
 $z-index--nav: 1000;
+$z-index--footer: 100;
 
 .header {
   position: fixed;
@@ -1490,7 +1538,6 @@ $z-index--nav: 1000;
   gap: size('xl');
   opacity: 1;
   transition: opacity 0.2s ease 0.1s;
-  text-align: left;
   margin-bottom: size('lg');
 }
 
@@ -1559,11 +1606,10 @@ $z-index--nav: 1000;
 }
 
 .header__burger {
-  z-index: 2000;
+  z-index: $z-index--burger;
   opacity: 0.83;
   inline-size: size('xl');
   block-size: size('xl');
-  z-index: $z-index--burger;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1669,7 +1715,6 @@ $z-index--nav: 1000;
   text-align: center;
   margin-top: size('xl');
   opacity: 0.2;
-  text-align: center;
   font-size: 0.75rem;
 
   & a {
@@ -1688,8 +1733,10 @@ $z-index--nav: 1000;
   bottom: 0;
   width: 100%;
   height: calc(100% + 2rem);
-  z-index: -10;
+  z-index: 1;
   box-shadow: inset 0 0 100px 40px oklch(15% 0.05 152.535);
+  // Complex footer gradient using $footer-gradient-color variable
+  // Note: Opacity variations use inline values due to CSS oklch() limitations
   background: radial-gradient(
         oklch(39.3% 0.095 152.535 / 1) 4%,
         oklch(39.3% 0.095 152.535 / 0.9) 9%,
@@ -1701,13 +1748,13 @@ $z-index--nav: 1000;
         oklch(39.3% 0.095 152.535 / 0.9) 8%,
         oklch(39.3% 0.095 152.535 / 0) 10%
       )
-      50px 50px,
-    radial-gradient(oklch(39.3% 0.095 152.535 / 0.8) 20%, oklch(39.3% 0.095 152.535 / 0)) 50px 0,
-    radial-gradient(oklch(39.3% 0.095 152.535 / 0.8) 20%, oklch(39.3% 0.095 152.535 / 0)) 0 50px,
-    radial-gradient(oklch(39.3% 0.095 152.535 / 1) 35%, oklch(39.3% 0.095 152.535 / 0) 60%) 50px 0,
-    radial-gradient(oklch(39.3% 0.095 152.535 / 1) 35%, oklch(39.3% 0.095 152.535 / 0) 60%) 100px 50px,
+      #{$transform-offset-base} #{$transform-offset-base},
+    radial-gradient(oklch(39.3% 0.095 152.535 / 0.8) 20%, oklch(39.3% 0.095 152.535 / 0)) #{$transform-offset-base} 0,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 0.8) 20%, oklch(39.3% 0.095 152.535 / 0)) 0 #{$transform-offset-base},
+    radial-gradient(oklch(39.3% 0.095 152.535 / 1) 35%, oklch(39.3% 0.095 152.535 / 0) 60%) #{$transform-offset-base} 0,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 1) 35%, oklch(39.3% 0.095 152.535 / 0) 60%) 100px #{$transform-offset-base},
     radial-gradient(oklch(39.3% 0.095 152.535 / 0.7), oklch(39.3% 0.095 152.535 / 0)) 0 0,
-    radial-gradient(oklch(39.3% 0.095 152.535 / 0.7), oklch(39.3% 0.095 152.535 / 0)) 50px 50px,
+    radial-gradient(oklch(39.3% 0.095 152.535 / 0.7), oklch(39.3% 0.095 152.535 / 0)) #{$transform-offset-base} #{$transform-offset-base},
     linear-gradient(
         45deg,
         oklch(39.3% 0.095 152.535 / 0) 49%,
@@ -1723,8 +1770,8 @@ $z-index--nav: 1000;
       )
       0 0;
   margin-bottom: calc(#{size('3xl')} * -1);
-  background-color: oklch(39.3% 0.095 152.535);
-  background-size: 6.25rem 6.25rem;
+  background-color: $footer-gradient-color;
+  background-size: #{$grid-min-size-sm} #{$grid-min-size-sm};
 
   @include respond-to('tablet-end') {
     margin-bottom: unset;
@@ -1883,108 +1930,264 @@ $z-index--nav: 1000;
 // ---------------------------------------------------------------------------
 // Service Card Component (from ServiceCard.svelte)
 // ---------------------------------------------------------------------------
-.service-card {
-  $brand: var(--brand, #00c248);
-  $text-z: 2;
-  $br: $border-radius;
+/* ===============================================================
+   service-card - Modern card with image background
+   =============================================================== */
 
-  position: sticky;
-  top: size('2xl');
-  inline-size: 100%;
-  block-size: 100%;
-  max-inline-size: clamp(15.625rem, 100%, 28.125rem);
-  z-index: 5 !important;
-  border-radius: $br;
-  overflow: clip;
-  @extend %image-hover;
+  .service-card {
+    // ========================================================================
+    // Configuration Variables
+    // ========================================================================
+    $brand-color: var(--brute-primary);
+    $z-index-text: 2;
+    $z-index-card: 5;
+    $border-radius-multiplier: 1.25;
+    $border-radius: calc($border-radius * $border-radius-multiplier);
 
-  @include respond-to('tablet-start') {
-    position: static;
-    top: unset;
-  }
+    // Animation Configuration
+    $easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    $easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    $duration-fast: 300ms;
+    $duration-medium: 400ms;
+    $duration-slow: 500ms;
 
-  @include respond-to('tablet-end') {
+    // Layout & Sizing
+    $sticky-offset: size('2xl');
+    $max-width-min: 15.625rem; // 250px
+    $max-width-max: 28.125rem; // 450px
+    $aspect-ratio-media: 16 / 10;
+
+    // Visual Effects
+    $hover-lift: -0.5rem;
+    $hover-scale: 1.02;
+    $text-lift: -2px;
+    $glass-opacity-base: 0.18;
+    $glass-opacity-hover: 0.25;
+    $glass-blur-base: 0.5rem;
+    $glass-blur-hover: 1rem;
+    $glass-saturate: 180%;
+
+    // Filter Values
+    $filter-base: saturate(1.2) contrast(0.88);
+    $filter-hover: saturate(1.4) contrast(0.95) brightness(1.05);
+
+    // ========================================================================
+    // Base Styles
+    // ========================================================================
     position: sticky;
-    top: size('2xl');
-  }
+    top: $sticky-offset;
+    inline-size: 100%;
+    block-size: 100%;
+    z-index: $z-index-card !important;
+    border-radius: $border-radius;
+    overflow: clip;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
 
-  &__media {
-    display: grid;
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
+    // Elevation & Depth
+    box-shadow:
+      var(--shadow-elevation-medium),
+      0 0 0 1px oklch(0% 0 0 / 0.05) inset;
 
-    &::after {
-      content: '';
+    // Performance-optimized transitions
+    transition:
+      transform $duration-medium $easing-bounce,
+      box-shadow $duration-medium $easing-bounce;
+    will-change: transform;
+
+    // ========================================================================
+    // Responsive Behavior
+    // ========================================================================
+    @include respond-to('tablet-start') {
+      position: static;
+      top: unset;
+    }
+
+    @include respond-to('tablet-end') {
+      position: sticky;
+      top: $sticky-offset;
+    }
+
+    // ========================================================================
+    // Interactive States
+    // ========================================================================
+    &:hover {
+      transform: translateY($hover-lift) scale($hover-scale);
+
+      .service-card__media {
+        filter: $filter-hover;
+      }
+
+      .service-card__tag {
+        backdrop-filter: blur($glass-blur-hover) saturate($glass-saturate);
+        background: oklch(from $brand-color l c h / $glass-opacity-hover);
+        transform: translateY($text-lift);
+      }
+
+      .service-card__title,
+      .service-card__description {
+        transform: translateY($text-lift);
+      }
+    }
+
+    // ========================================================================
+    // Media Container
+    // ========================================================================
+    &__media {
+      display: grid;
+      position: relative;
+      aspect-ratio: $aspect-ratio-media;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      flex: 1 1 auto;
+      min-height: 0;
+
+      // Background Image Configuration
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      // Base Filter State
+      filter: $filter-base;
+
+      // Smooth Transitions
+      transition:
+        filter $duration-slow $easing-standard,
+        transform $duration-slow $easing-standard;
+
+      // Gradient Overlay (Bottom-to-Top)
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.45) 30%,
+          rgba(0, 0, 0, 0.15) 60%,
+          rgba(0, 0, 0, 0) 85%
+        );
+        pointer-events: none;
+        transition: background $duration-medium $easing-standard;
+      }
+
+      // Inner Border Definition
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        border-radius: $border-radius;
+        box-shadow: 0 0 0 1px oklch(100% 0 0 / 0.08) inset;
+        pointer-events: none;
+      }
+    }
+
+    // ========================================================================
+    // Tags Container
+    // ========================================================================
+    &__tags {
+      $padding: size('sm');
       position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0) 80%
-      );
-      pointer-events: none;
+      top: $padding;
+      left: $padding;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      z-index: $z-index-text;
+    }
+
+    // ========================================================================
+    // Tag Element (Glassmorphism)
+    // ========================================================================
+    &__tag {
+      @extend %u_caption;
+      font-weight: 600;
+      padding: 0.375rem 0.875rem;
+      border-radius: 624.9375rem; // Pill shape
+      white-space: nowrap;
+      color: oklch(from $brand-color l c h);
+
+      background:
+        linear-gradient(145deg, #f5f7fa 0%, #e8eaea 100%);
+
+      backdrop-filter: blur($glass-blur-base) saturate($glass-saturate);
+      border: 1px solid oklch(from $brand-color l c h / $glass-opacity-hover);
+
+
+      // Smooth Transitions
+      transition:
+        transform $duration-fast $easing-bounce,
+        backdrop-filter $duration-fast ease,
+        background $duration-fast ease;
+    }
+
+    // ========================================================================
+    // Caption Container
+    // ========================================================================
+    &__caption {
+      $padding: size('md');
+      position: absolute;
+      inset-inline: $padding;
+      bottom: $padding;
+      z-index: $z-index-text;
+      filter: drop-shadow(0 2px 4px oklch(0% 0 0 / 0.3));
+    }
+
+    // ========================================================================
+    // Title
+    // ========================================================================
+    &__title {
+      text-shadow:
+        0.125rem 0.125rem 0.5rem rgba(0, 0, 0, 0.4),
+        0 0.25rem 1rem rgba(0, 0, 0, 0.3);
+      transition: transform $duration-fast $easing-bounce;
+    }
+
+    // ========================================================================
+    // Description
+    // ========================================================================
+    &__description {
+      max-inline-size: 35ch;
+      line-height: 1.5;
+      text-shadow:
+        0.0625rem 0.0625rem 0.375rem rgba(0, 0, 0, 0.5),
+        0 0.125rem 0.5rem rgba(0, 0, 0, 0.4);
+
+      // Multi-line Truncation
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      transition: transform $duration-fast $easing-bounce;
     }
   }
 
-  &__image {
-    $image-size: 100%;
-    position: absolute;
-    place-self: center;
-    width: $image-size;
-    height: $image-size;
-    transform-origin: center;
-    transform: scale(1) translateZ(0);
-    filter: saturate(1.2) contrast(0.85);
-    transition:
-      filter 200ms linear,
-      transform 200ms linear;
-  }
+  // Reduced motion support
+  @media (prefers-reduced-motion: reduce) {
+    .service-card {
+      transition-duration: 0.01ms !important;
 
-  &__tags {
-    $pad: size('sm');
-    position: absolute;
-    top: $pad;
-    left: $pad;
-    display: flex;
-    gap: 8px;
-    z-index: $text-z;
-  }
+      &:hover {
+        transform: none;
+      }
 
-  &__tag {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 624.9375rem;
-    color: $brand;
-    background: rgba($brand, 0.15);
-    backdrop-filter: blur(0.25rem);
-    white-space: nowrap;
-  }
+      .service-card__tag {
+        transition-duration: 0.01ms !important;
+      }
 
-  &__caption {
-    $pad: size('md');
-    position: absolute;
-    inset-inline: $pad;
-    bottom: $pad;
-    z-index: $text-z;
+      .service-card__title,
+      .service-card__description {
+        transition-duration: 0.01ms !important;
+      }
+    }
   }
-
-  &__title {
-    text-shadow: 0.125rem 0.125rem 1.25rem rgba(0, 0, 0, 0.2);
-  }
-
-  &__description {
-    max-inline-size: 35ch;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
 // ---------------------------------------------------------------------------
 // Sticky Card Component (from StickyCard.svelte)
 // ---------------------------------------------------------------------------
@@ -2025,6 +2228,7 @@ $z-index--nav: 1000;
     overflow: hidden;
     -webkit-box-orient: block-axis;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
     margin-block-end: size('md');
     text-overflow: ellipsis;
   }
@@ -2298,7 +2502,7 @@ $z-index--nav: 1000;
   }
 
   &__divider {
-    block-size: 0.0625rem;
+    block-size: $inset-shadow-offset;
     inline-size: 100%;
     margin-block: 0;
     background: var(--brute-secondary);
@@ -2421,7 +2625,7 @@ $z-index--nav: 1000;
   &__logos-container {
     inline-size: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(#{$grid-min-size-sm}, 1fr));
     gap: size('xl');
     place-items: center;
     max-inline-size: calc(4 * 10rem + 3 * var(--size-lg));
@@ -2467,8 +2671,6 @@ $z-index--nav: 1000;
     @extend %flex-col-center;
     text-align: center;
 
-    &:where(div, span) {
-    }
 
     &-title {
       &--gradient {
@@ -2502,20 +2704,36 @@ $z-index--nav: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+
+    @include respond-to('tablet-start') {
+      text-align: left;
+      align-items: flex-start;
+    }
 
     &--title {
       @extend %u_title-a--bold;
       @extend %typography--secondary;
       max-inline-size: 30ch;
-      margin-right: auto;
+      width: 100%;
       margin-block-end: var(--margin-sm);
+
+      @include respond-to('tablet-start') {
+        margin-right: auto;
+      }
     }
 
     &--description {
       @extend %u_paragraph;
       @extend %typography--tertiary;
       max-inline-size: 50ch;
-      margin-right: auto;
+      width: 100%;
+
+      @include respond-to('tablet-start') {
+        margin-right: auto;
+      }
     }
   }
 
@@ -2534,14 +2752,18 @@ $z-index--nav: 1000;
     max-block-size: $container-max-size;
     aspect-ratio: 4 / 3;
     filter: $shadow-drop;
+    margin-inline: auto;
 
     @include respond-to('tablet-start') {
       aspect-ratio: 16 / 9;
+      margin-inline: 0;
     }
 
     &--image {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: $border-custom;
       z-index: 2;
@@ -2661,14 +2883,16 @@ $z-index--nav: 1000;
   }
 
   &__cards {
-    place-items: center;
+    place-items: stretch;
     inline-size: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(#{$grid-min-size-lg}, 1fr));
     gap: size('xl');
+    align-items: stretch;
 
     @include respond-to('tablet-end') {
       place-items: start;
+      align-items: stretch;
     }
   }
 }
@@ -2709,7 +2933,6 @@ $z-index--nav: 1000;
         #ffd700
       );
       background-clip: text;
-      background-clip: text;
       background-size: 200% 200%;
       color: transparent;
       -webkit-text-fill-color: transparent;
@@ -2725,18 +2948,6 @@ $z-index--nav: 1000;
     &.paused {
       animation-play-state: paused;
     }
-  }
-}
-
-@keyframes gradient-loop {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
   }
 }
 
