@@ -93,22 +93,20 @@
             width="700"
             height="700"
           />
-
-          <figcaption class="project-article__caption">
-            <h3
-
-        use:wipeDown
-          class="project-article__caption--title">
-              {section.title}
-            </h3>
-            <p
-
-        use:wipeDown
-          class="project-article__caption--description">
-              {section.description}
-            </p>
-          </figcaption>
         </figure>
+
+        <figcaption class="project-article__caption">
+          <h3
+            use:wipeDown
+            class="project-article__caption--title">
+            {section.title}
+          </h3>
+          <p
+            use:wipeDown
+            class="project-article__caption--description">
+            {section.description}
+          </p>
+        </figcaption>
       </article>
     {/each}
   </div>
