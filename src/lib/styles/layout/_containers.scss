@@ -1,15 +1,15 @@
 @use 'sass:math';
 @use 'sass:map';
-@use '../base' as globals;
+@use '../base/variables' as vars;
 
-$_WIDTH: globals.$PAGE_MAX_INLINE;
+$_WIDTH: vars.$PAGE_MAX_INLINE;
 
 $container-scales: (
-  'xs': round(math.div($_WIDTH, globals.$MAJOR-HALF)),
-  'sm': round(math.div($_WIDTH, globals.$MAJOR-QUARTER)),
+  'xs': round(math.div($_WIDTH, vars.$MAJOR-HALF)),
+  'sm': round(math.div($_WIDTH, vars.$MAJOR-QUARTER)),
   'md': 1,
-  'lg': round($_WIDTH * globals.$MAJOR-QUARTER),
-  'xl': round($_WIDTH * globals.$MAJOR-HALF),
+  'lg': round($_WIDTH * vars.$MAJOR-QUARTER),
+  'xl': round($_WIDTH * vars.$MAJOR-HALF),
 );
 
 // Generate CSS variables for container sizes

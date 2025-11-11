@@ -1,0 +1,197 @@
+// ===========================================================================
+// styles/utilities/_spacing.scss
+// Spacing utility classes (margins, paddings, gaps)
+// ===========================================================================
+
+@use 'sass:map';
+@use '../base/variables' as vars;
+
+// Define line height from typography system
+$line-height: vars.$MAJOR-HALF;
+
+// Mixin: compute CSS vars for margins based on a given line-height
+@mixin adjust-to($line-height) {
+  @if not unitless($line-height) {
+    @error '#{$line-height} is not dimensionless';
+  }
+  --margin-2xs: #{vars.round-to(1em * $line-height * vars.$MINOR-QUARTER)};
+  --margin-xs: #{vars.round-to(1em * $line-height * vars.$MINOR-HALF)};
+  --margin-sm: #{vars.round-to(1em * $line-height * vars.$MINOR)};
+  --margin-md: #{vars.round-to($line-height * vars.size('md'))};
+  --margin-lg: #{vars.round-to($line-height * vars.size('lg'))};
+  --margin-xl: #{vars.round-to($line-height * vars.size('xl'))};
+  --margin-2xl: #{vars.round-to($line-height * vars.size('2xl'))};
+}
+
+// Base: compute CSS vars at root using default typography line-height
+:root {
+  @include adjust-to(vars.$MAJOR-HALF);
+}
+
+// Margin utilities
+@each $size in ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl') {
+  .u_m-top__#{$size} {
+    margin-block-start: var(--margin-#{$size});
+  }
+
+  .u_m-right__#{$size} {
+    margin-inline-end: var(--margin-#{$size});
+  }
+
+  .u_m-bottom__#{$size} {
+    margin-block-end: var(--margin-#{$size});
+  }
+
+  .u_m-left__#{$size} {
+    margin-inline-start: var(--margin-#{$size});
+  }
+
+  .u_m-block__#{$size} {
+    margin-block: var(--margin-#{$size});
+  }
+
+  .u_m-inline__#{$size} {
+    margin-inline: var(--margin-#{$size});
+  }
+}
+
+// Padding utilities
+$padding-sizes: ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl');
+
+$padding-map: (
+  'top': 'padding-block-start',
+  'right': 'padding-inline-end',
+  'bottom': 'padding-block-end',
+  'left': 'padding-inline-start',
+  'block': 'padding-block',
+  'inline': 'padding-inline'
+);
+
+// Generate utility classes for each direction and size
+@each $direction, $property in $padding-map {
+  @each $size in $padding-sizes {
+    .u_p-#{$direction}__#{$size} {
+      #{$property}: var(--size-#{$size});
+    }
+  }
+}
+
+// Padding utilities (explicit)
+@each $size in $padding-sizes {
+  .u_p-top__#{$size} {
+    padding-block-start: var(--size-#{$size});
+  }
+
+  .u_p-right__#{$size} {
+    padding-inline-end: var(--size-#{$size});
+  }
+
+  .u_p-bottom__#{$size} {
+    padding-block-end: var(--size-#{$size});
+  }
+
+  .u_p-left__#{$size} {
+    padding-inline-start: var(--size-#{$size});
+  }
+
+  .u_p-block__#{$size} {
+    padding-block: var(--size-#{$size});
+  }
+
+  .u_p-inline__#{$size} {
+    padding-inline: var(--size-#{$size});
+  }
+}
+
+// Semantic section padding utilities
+.u_section__xs {
+  padding-block: vars.size('lg');
+  padding-inline: vars.size('lg');
+}
+
+.u_section__sm {
+  padding-block: vars.size('xl');
+  padding-inline: vars.size('lg');
+}
+
+.u_section__md {
+  padding-block: vars.size('2xl');
+  padding-inline: vars.size('2xl');
+}
+
+.u_section__lg {
+  padding-block: vars.size('2xl');
+  padding-inline: vars.size('lg');
+}
+
+.u_section__xl {
+  padding-block: vars.size('3xl');
+  padding-inline: vars.size('lg');
+}
+
+@media screen and (min-width: 62rem) {
+  .u_section__xs {
+    padding-block: vars.size('lg');
+    padding-inline: vars.size('2xl');
+  }
+
+  .u_section__sm {
+    padding-block: vars.size('xl');
+    padding-inline: vars.size('2xl');
+  }
+
+  .u_section__md {
+    padding-block: vars.size('2xl');
+    padding-inline: vars.size('2xl');
+  }
+
+  .u_section__lg {
+    padding-block: vars.size('3xl');
+    padding-inline: vars.size('2xl');
+  }
+
+  .u_section__xl {
+    padding-block: vars.size('4xl');
+    padding-inline: vars.size('2xl');
+  }
+}
+
+// Gap utilities
+$gap-sizes: (
+  'xs': calc(#{vars.size('2xs')} * #{vars.$MAJOR-HALF}),
+  'sm': calc(#{vars.size('xs')} * #{vars.$MAJOR-HALF}),
+  'md': calc(#{vars.size('sm')} * #{vars.$MAJOR-HALF}),
+  'lg': calc(#{vars.size('md')} * #{vars.$MAJOR-HALF}),
+  'xl': calc(#{vars.size('lg')} * #{vars.$MAJOR-HALF}),
+  '2xl': calc(#{vars.size('xl')} * #{vars.$MAJOR-HALF}),
+);
+
+@function gap($size-key) {
+  @if map.has-key($gap-sizes, $size-key) {
+    $base-gap: map.get($gap-sizes, $size-key);
+    @return $base-gap;
+  } @else {
+    @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($gap-sizes)}";
+    @return null;
+  }
+}
+
+// Generate :root gap variables based on spacing scale
+:root {
+  @each $name, $value in $gap-sizes {
+    --gap-#{$name}: #{$value};
+  }
+}
+
+// Gap utility classes
+@each $name, $size in $gap-sizes {
+  .u_gap__#{$name} {
+    gap: $size;
+  }
+  .u_gap-column__#{$name} {
+    column-gap: $size;
+  }
+  .u_gap-row__#{$name} {
+    row-gap: $size;
+  }
+}

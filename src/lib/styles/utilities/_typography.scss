@@ -1,11 +1,12 @@
+// ===========================================================================
+// styles/utilities/_typography.scss
+// Typography utility classes and placeholders
+// ===========================================================================
+
 @use 'sass:math';
 @use '../base/variables' as vars;
 @use '../utilities/spacing' as spacing;
-
-/* =============================================================================
- * TYPOGRAPHY 2.1
- * Placeholder-driven typography system using golden ratio scale
- * ============================================================================= */
+@use '../tokens/colors' as *;
 
 /* ----------------- 1. HELPER MIXINS ----------------- */
 @mixin type-scale($size, $spacing, $line-height: null, $weight: 400) {
@@ -28,29 +29,32 @@
  * - Body: Based on 'md' (1em)
  * - Small: Scaled down using φ reciprocal (MINOR)
  */
- %font-family--primary {
+%font-family--primary {
   font-family: 'Outfit', system-ui;
 }
- %font-family--secondary {
+
+%font-family--secondary {
   font-family: 'Manrope', system-ui;
 }
 
-%text-wrap--balance{
-text-wrap: balance;
+%text-wrap--balance {
+  text-wrap: balance;
 }
-%text-wrap--pretty{
-text-wrap: pretty;
+
+%text-wrap--pretty {
+  text-wrap: pretty;
 }
+
 /* Display elements (largest) */
 %u_display-1 {
   @extend %font-family--primary;
   @include type-scale(vars.size('xl'), -0.022em, vars.$MAJOR-HALF);
   @extend %text-wrap--balance;
 }
+
 %u_display-1--bold {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
   @extend %u_display-1;
   font-weight: 700;
 }
@@ -58,13 +62,12 @@ text-wrap: pretty;
 %u_display-2 {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
   @include type-scale(vars.size('lg') * vars.$MAJOR-HALF, -0.022em, vars.$MAJOR-HALF);
 }
+
 %u_display-2--bold {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
   @extend %u_display-2;
   font-weight: 700;
 }
@@ -73,13 +76,12 @@ text-wrap: pretty;
 %u_title-a {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
   @include type-scale(vars.size('lg') * vars.$MAJOR-QUARTER, -0.022em, vars.$MAJOR-HALF);
 }
+
 %u_title-a--bold {
   @extend %text-wrap--balance;
   @extend %font-family--primary;
-
   @extend %u_title-a;
   font-weight: 700;
 }
@@ -87,15 +89,12 @@ text-wrap: pretty;
 %u_title-b {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
-
   @include type-scale(vars.size('lg'), -0.02em, vars.$MAJOR-HALF);
 }
 
 %u_title-c {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
   @include type-scale(
     math.div(vars.size('lg'), vars.$MAJOR-HALF),
     -0.017em,
@@ -106,9 +105,7 @@ text-wrap: pretty;
 /* Heading elements */
 %u_heading {
   @extend %text-wrap--balance;
-
   @extend %font-family--primary;
-
   @include type-scale(
     vars.size('md') * vars.$MAJOR-QUARTER,
     -0.014em,
@@ -116,10 +113,10 @@ text-wrap: pretty;
     600
   );
 }
+
 %u_heading--bold {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
   @extend %u_heading;
   font-weight: 700;
 }
@@ -127,7 +124,6 @@ text-wrap: pretty;
 %u_subheading {
   @extend %font-family--primary;
   @extend %text-wrap--balance;
-
   @include type-scale(
     math.div(vars.size('md'), vars.$MAJOR-QUARTER),
     -0.007em,
@@ -139,7 +135,6 @@ text-wrap: pretty;
 %u_paragraph {
   @extend %font-family--secondary;
   @extend %text-wrap--pretty;
-
   @include type-scale(
     vars.size('md'),
     -0.011em,
@@ -150,7 +145,6 @@ text-wrap: pretty;
 %u_callout {
   @extend %font-family--secondary;
   @extend %text-wrap--pretty;
-
   @include type-scale(
     math.div(vars.size('md'), vars.$MAJOR-EIGHT),
     -0.009em,
@@ -162,7 +156,6 @@ text-wrap: pretty;
 %u_label {
   @extend %font-family--secondary;
   @extend %text-wrap--pretty;
-
   @include type-scale(
     math.div(
       math.div(vars.size('md'), vars.$MAJOR-QUARTER),
@@ -173,16 +166,15 @@ text-wrap: pretty;
     600
   );
 }
+
 %u_label--bold {
   @extend %font-family--secondary;
-
   @extend %u_label;
   font-weight: 700;
 }
 
 %u_caption {
   @extend %font-family--secondary;
-
   @include type-scale(
     math.div(vars.size('md'), vars.$MAJOR-HALF),
     -0.007em,
@@ -192,7 +184,6 @@ text-wrap: pretty;
 
 %u_overline {
   @extend %font-family--secondary;
-
   @include type-scale(
     math.div(
       math.div(vars.size('md'), vars.$MAJOR-QUARTER),
@@ -211,12 +202,12 @@ text-wrap: pretty;
   /* Base font setup with golden ratio line-height */
   font:
     #{vars.round-to(vars.size('md'))} /
-    #{vars.round-to(vars.$MAJOR-HALF)}
-
+    #{vars.round-to(vars.$MAJOR-HALF)};
 }
 
 /* ----------------- 4. UTILITY CLASSES ----------------- */
 $typography-list: display-1, display-1--bold, display-2, display-2--bold, title-a, title-a--bold, title-b, title-c, heading, heading--bold, subheading, paragraph, callout, label, label--bold, caption, overline;
+
 @each $name in $typography-list {
   .u_#{$name} {
     @extend %u_#{$name};
@@ -253,4 +244,60 @@ $typography-list: display-1, display-1--bold, display-2, display-2--bold, title-
       vars.$MAJOR-QUARTER
     );
   }
+}
+
+// Typography color utilities (from tokens/_colors.scss)
+%typography--primary {
+  color: $text-primary;
+}
+
+%typography--secondary {
+  color: $text-secondary;
+}
+
+%typography--tertiary {
+  color: $text-tertiary;
+}
+
+%typography--primary-rev {
+  color: $text-primary-rev;
+}
+
+%typography--secondary-rev {
+  color: $text-secondary-rev;
+}
+
+%typography--tertiary-rev {
+  color: $text-tertiary-rev;
+}
+
+.typography--primary {
+  color: $text-primary;
+}
+
+.typography--secondary {
+  color: $text-secondary;
+}
+
+.typography--tertiary {
+  color: $text-tertiary;
+}
+
+.typography--primary-rev {
+  color: $text-primary-rev;
+}
+
+.typography--secondary-rev {
+  color: $text-secondary-rev;
+}
+
+.typography--tertiary-rev {
+  color: $text-tertiary-rev;
+}
+
+%a-link {
+  color: var(--brute-secondary);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  text-decoration-thickness: 0.125rem;
 }

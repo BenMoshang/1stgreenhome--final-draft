@@ -2,8 +2,6 @@
    1. Imports
    ========================================================================== */
 
-@use '../appearance/colors';
-
 /* ==========================================================================
    2. Global Resets & Base Styles
    ========================================================================== */
@@ -17,10 +15,10 @@ html {
   /* fill the viewport */
 
   inline-size: 100%;
-  block-size: 100svh;        /* full dynamic viewport height */
-  margin: 0;                  /* reset any default */
+  block-size: 100svh; /* full dynamic viewport height */
+  margin: 0; /* reset any default */
   scroll-behavior: smooth;
-  
+
   /* Enable keyword animations for those who allow motion */
   @media (prefers-reduced-motion: no-preference) {
     interpolate-size: allow-keywords;
@@ -30,9 +28,9 @@ html {
 body {
   /* make body fill html’s height */
   inline-size: 100%;
-  block-size: 100%;           /* 100% of html’s 100svh */
-  margin: 0;                  /* remove default margins */
-background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
+  block-size: 100%; /* 100% of html's 100svh */
+  margin: 0; /* remove default margins */
+  background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
   scroll-behavior: smooth;
 
   /* font / smoothness tweaks */
@@ -53,24 +51,27 @@ background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
   margin: 0;
   font: inherit;
 }
-/* Reset margins and font inheritance for common elements */
+
 :where(h1, h2, h3, h4, h5, h6) {
-text-wrap: balance;
+  text-wrap: balance;
 }
-:where(p){
-  text-wrap:pretty;
+
+:where(p) {
+  text-wrap: pretty;
   @supports not (text-wrap: pretty) {
-    text-wrap:balance;
+    text-wrap: balance;
   }
 }
+
 /* Reset lists */
 :where(ul, ol, dl) {
   padding: 0;
   margin: 0;
   list-style: none;
 }
-:where(span, div){
-  text-wrap:balance !important;
+
+:where(span, div) {
+  text-wrap: balance;
 }
 /* Basic table reset */
 table {
@@ -107,27 +108,10 @@ address {
   font-style: italic; /* Indicate missing images */
   max-inline-size: 100%; /* Responsive width */
   shape-margin: 1rem;
-  vertical-align: middle; /* Align nicely if inline */
 }
 
 /* ==========================================================================
-   4. Typography Enhancements
-   ========================================================================== */
-
-/* Improve text wrapping for headings and paragraphs */
-// p,
-// h1,
-// h2,
-// h3,
-// h4,
-// h5,
-// h6 {
-//   overflow-wrap: break-word; 
-// }
-
-
-/* ==========================================================================
-   5. Link Styling
+   4. Link Styling
    ========================================================================== */
 
 :where(a) {
@@ -136,24 +120,17 @@ address {
 }
 
 :where(a:active, a:hover, a:focus-visible) {
-
-  // @include colors.fg__primary;
-
   /* Apply primary foreground color on interaction */
+  /* Placeholder for future link interaction styles */
+  outline-offset: 0; /* Prevent empty ruleset */
 }
 
 /* ==========================================================================
-   6. Global UI Styling
+   5. Interactive Elements
    ========================================================================== */
-
-/* Text selection style */
-
-
-/* Interactive Elements */
 button,
 [role='button'],
 select {
   cursor: pointer;
   touch-action: manipulation;
 }
-

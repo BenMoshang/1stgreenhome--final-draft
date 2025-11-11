@@ -126,7 +126,7 @@
           <path fill="currentColor" d={logoPathSecondary} />
         </svg>
         <div
-        
+
         use:wipeDown
         class="header__nav-footer-content-container">
           <a
@@ -412,7 +412,6 @@ scale: 1.1;
     align-self: flex-start;
     max-inline-size: 20ch;
     overflow-wrap: break-word;
-    text-wrap: balance;
     @extend %u_callout;
     @extend %typography--tertiary;
     line-height: 1.5;

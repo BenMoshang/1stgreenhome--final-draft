@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '../base/scale' as scale;
+@use '../base/variables' as vars;
 /**
  * ===========================================================================
  * primitive
@@ -12,7 +12,7 @@ $padding-sizes: ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl');
 $padding-map: (
   'top': 'padding-block-start',
   'right': 'padding-inline-end',
-  'bottom': 'padding-block-end',  
+  'bottom': 'padding-block-end',
   'left': 'padding-inline-start',
   'block': 'padding-block',
   'inline': 'padding-inline'
@@ -21,7 +21,7 @@ $padding-map: (
 
 // Generate utility classes for each direction and size
 @each $direction, $property in $padding-map {
-  
+
   @each $size in $padding-sizes {
     .u_p-#{$direction}__#{$size} {
       #{$property}: var(--size-#{$size});
@@ -34,23 +34,23 @@ $padding-map: (
   .u_p-top__#{$size} {
     padding-block-start: var(--size-#{$size});
   }
-  
+
   .u_p-right__#{$size} {
     padding-inline-end: var(--size-#{$size});
   }
-  
+
   .u_p-bottom__#{$size} {
     padding-block-end: var(--size-#{$size});
   }
-  
+
   .u_p-left__#{$size} {
     padding-inline-start: var(--size-#{$size});
   }
-  
+
   .u_p-block__#{$size} {
     padding-block: var(--size-#{$size});
   }
-  
+
   .u_p-inline__#{$size} {
     padding-inline: var(--size-#{$size});
   }
@@ -62,53 +62,53 @@ $padding-map: (
  * Padding size tokens
  */
 .u_section__xs {
-  padding-block: scale.size('lg');
-  padding-inline: scale.size('lg');
+  padding-block: vars.size('lg');
+  padding-inline: vars.size('lg');
 }
 
 .u_section__sm {
-  padding-block: scale.size('xl');
-  padding-inline: scale.size('lg');
+  padding-block: vars.size('xl');
+  padding-inline: vars.size('lg');
 }
 
 .u_section__md {
-  padding-block: scale.size('2xl');
-  padding-inline: scale.size('2xl');
+  padding-block: vars.size('2xl');
+  padding-inline: vars.size('2xl');
 }
 
 .u_section__lg {
-  padding-block: scale.size('2xl');
-  padding-inline: scale.size('lg');
+  padding-block: vars.size('2xl');
+  padding-inline: vars.size('lg');
 }
 
 .u_section__xl {
-  padding-block: scale.size('3xl');
-  padding-inline: scale.size('lg');
+  padding-block: vars.size('3xl');
+  padding-inline: vars.size('lg');
 }
 
 @media screen and (min-width: 62rem) {
   .u_section__xs {
-    padding-block: scale.size('lg');
-    padding-inline: scale.size('2xl');
-  } 
+    padding-block: vars.size('lg');
+    padding-inline: vars.size('2xl');
+  }
 
   .u_section__sm {
-    padding-block: scale.size('xl');
-    padding-inline: scale.size('2xl');
+    padding-block: vars.size('xl');
+    padding-inline: vars.size('2xl');
   }
 
   .u_section__md {
-    padding-block: scale.size('2xl');
-    padding-inline: scale.size('2xl');
+    padding-block: vars.size('2xl');
+    padding-inline: vars.size('2xl');
   }
 
   .u_section__lg {
-    padding-block: scale.size('3xl');
-    padding-inline: scale.size('2xl');
+    padding-block: vars.size('3xl');
+    padding-inline: vars.size('2xl');
   }
 
   .u_section__xl {
-    padding-block: scale.size('4xl');
-    padding-inline: scale.size('2xl');
+    padding-block: vars.size('4xl');
+    padding-inline: vars.size('2xl');
   }
 }

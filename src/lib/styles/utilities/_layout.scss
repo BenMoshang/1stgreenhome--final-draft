@@ -1,0 +1,138 @@
+// ===========================================================================
+// styles/utilities/_layout.scss
+// Layout utility classes (flex, containers, stacks)
+// ===========================================================================
+
+@use 'sass:math';
+@use 'sass:map';
+@use '../base/variables' as vars;
+@use '../utilities/spacing' as spacing;
+
+// Container utilities
+$_WIDTH: vars.$PAGE_MAX_INLINE;
+
+$container-scales: (
+  'xs': round(math.div($_WIDTH, vars.$MAJOR-HALF)),
+  'sm': round(math.div($_WIDTH, vars.$MAJOR-QUARTER)),
+  'md': 1,
+  'lg': round($_WIDTH * vars.$MAJOR-QUARTER),
+  'xl': round($_WIDTH * vars.$MAJOR-HALF),
+);
+
+// Generate CSS variables for container sizes
+:root {
+  @each $key, $scale in $container-scales {
+    --container-#{$key}: #{$scale};
+  }
+}
+
+// Shared margin-inline placeholder
+%_margin-inline {
+  margin-inline: auto;
+}
+
+// Container size retrieval function
+@function container($key) {
+  @return map.get($container-scales, $key);
+}
+
+// Generate container utility classes
+@each $key, $scale in $container-scales {
+  .u_container__#{$key} {
+    @extend %_margin-inline;
+    max-inline-size: var(--container-#{$key});
+  }
+}
+
+// Flex utilities
+// Core Flex Container Mixin (Internal Helper)
+@mixin _flex-container($direction: row, $display: flex) {
+  display: $display;
+  flex-direction: $direction;
+}
+
+/**
+ * Applies flex display with direction and optional gap.
+ * @param {String} $direction [row] - Flex direction (row or column).
+ * @param {String | Null} $gap-size [null] - Optional gap size key (xs, sm, md, lg, xl, 2xl). Accepts quoted or unquoted.
+ * @param {Boolean} $inline [false] - Whether to use inline-level flex.
+ */
+@mixin apply-flex($direction: row, $gap-size: null, $inline: false) {
+  @if $inline {
+    @include _flex-container($direction, inline-flex);
+  } @else {
+    @include _flex-container($direction, flex);
+  }
+
+  @include spacing.gap($gap-size);
+}
+
+// Stack utilities
+.stack {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.stack__layer {
+  grid-area: 1 / 1;
+
+  &--float {
+    position: absolute;
+    inset: 0;
+  }
+
+  &--above {
+    z-index: 1;
+  }
+
+  &--below {
+    z-index: -1;
+  }
+}
+
+// Additional layout utilities from main.scss
+%flex-col-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+%image-hover {
+  box-shadow: var(--shadow-elevation-medium);
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  will-change: transform box-shadow;
+
+  &:hover {
+    transform: scale(1.05) translateY(-0.25rem);
+    box-shadow: var(--shadow-elevation-high);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+}
+
+%glass {
+  backdrop-filter: blur(1.5rem);
+  background-color: oklch(100% 0 0 / 0.25);
+  border: 1px solid oklch(85% 0 0 / 0.1);
+}
+
+%inset-shadow {
+  box-shadow: inset 0 2px 2px hsl(0deg 0% 0% / 20%);
+}
+
+// Heading width utilities
+.max-ch-20 {
+  max-inline-size: 25ch;
+}
+
+.max-ch-65 {
+  max-inline-size: 65ch;
+}
+
+.max-ch-45 {
+  max-inline-size: 45ch;
+}

@@ -1,9 +1,8 @@
 // ===========================================================================
 // styles/base/_index.scss
-// Central index forwarding base utilities.
+// Central index forwarding base utilities
 // ===========================================================================
-@forward 'global-variables';
+
+@forward 'variables';
 @forward 'reset';
-@forward 'scale';
 @forward 'breakpoints';
-@use 'sass:map';

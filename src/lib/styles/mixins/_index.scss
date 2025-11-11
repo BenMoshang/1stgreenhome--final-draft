@@ -1,7 +1,7 @@
 // ===========================================================================
-// styles/appearance/_index.scss
-// Central index forwarding appearance utilities
+// styles/mixins/_index.scss
+// Central index forwarding all mixins
 // ===========================================================================
 
-@forward 'shadows';
-@forward '../mixins/focus-ring';
+@forward 'gradient-text';
+@forward 'focus-ring';

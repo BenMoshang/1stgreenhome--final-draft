@@ -1,7 +1,6 @@
 // ===========================================================================
-// styles/appearance/_index.scss
-// Central index forwarding appearance utilities
+// styles/components/_index.scss
+// Central index forwarding all component styles
 // ===========================================================================
 
-@forward 'shadows';
-@forward '../mixins/focus-ring';
+@forward 'brute';

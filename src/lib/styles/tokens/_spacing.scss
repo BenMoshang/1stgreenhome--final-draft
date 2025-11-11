@@ -1,0 +1,24 @@
+// ===========================================================================
+// styles/tokens/_spacing.scss
+// Spacing design tokens - consolidated from base/_global-variables.scss
+// ===========================================================================
+
+@use '../base/variables' as vars;
+
+:root {
+  // Small spacing (using minor proportions of line-height)
+  --spacing-3xs: #{vars.round-to(1em * vars.$MAJOR-HALF * vars.$MINOR-EIGHT)};
+  --spacing-2xs: #{vars.round-to(1em * vars.$MAJOR-HALF * vars.$MINOR-QUARTER)};
+  --spacing-xs: #{vars.round-to(1em * vars.$MAJOR-HALF * vars.$MINOR-HALF)};
+  --spacing-sm: #{vars.round-to(1em * vars.$MAJOR-HALF * vars.$MINOR)};
+
+  // Medium spacing (directly related to base line-height or base font size)
+  --spacing-md: #{vars.round-to(1em * vars.$MAJOR-HALF)};
+
+  // Large spacing (using major proportions of line-height and size scale)
+  --spacing-lg: #{vars.round-to(vars.$MAJOR-HALF * vars.size('lg'))};
+  --spacing-xl: #{vars.round-to(vars.$MAJOR-HALF * vars.size('xl'))};
+  --spacing-2xl: #{vars.round-to(vars.$MAJOR-HALF * vars.size('2xl'))};
+  --spacing-3xl: #{vars.round-to(vars.$MAJOR-HALF * vars.size('3xl'))};
+  --spacing-4xl: #{vars.round-to(vars.$MAJOR-HALF * vars.size('4xl'))};
+}

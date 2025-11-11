@@ -1,5 +1,5 @@
+import type { AnimationOptions, DOMKeyframesDefinition } from 'motion';
 import { animate, inView, stagger } from 'motion';
-import type { DOMKeyframesDefinition, AnimationOptions } from 'motion';
 import SplitType from 'split-type';
 
 export interface WipeDownOptions {
@@ -45,25 +45,44 @@ export function wipeDown(
 
   // Will hold our revert function from SplitType
   let cleanupSplit: (() => void) | null = null;
+  let animationControls: ReturnType<typeof animate> | undefined;
+  let hasAnimated = false;
+  let lines: HTMLElement[] = [];
+  let parentElements: HTMLElement[] = [];
 
   // Set up inView observer
   const stopObserver = inView(
     node,
     () => {
+      // Prevent multiple executions
+      if (hasAnimated) return;
+      hasAnimated = true;
+
       // Element is in view: reveal it
       node.style.opacity = '1';
 
-      // Split the text into lines
-      const split = new SplitType(node, { types: 'lines' });
-      const { lines } = split;
+      try {
+        // Split the text into lines
+        const split = new SplitType(node, { types: 'lines' });
+        const splitLines = split.lines;
 
-      // When leaving view or destroying, revert the split
-      cleanupSplit = () => split.revert();
+        // When leaving view or destroying, revert the split
+        cleanupSplit = () => split.revert();
 
-      if (lines) {
+        if (!splitLines || splitLines.length === 0) {
+          // No lines found, just show the content
+          return;
+        }
+
+        lines = Array.from(splitLines);
+        parentElements = [];
+
         lines.forEach((line) => {
           const parent = line.parentElement as HTMLElement;
-          parent.style.overflow = 'hidden';
+          if (parent) {
+            parent.style.overflow = 'hidden';
+            parentElements.push(parent);
+          }
           line.style.display = 'inline-block';
           line.style.opacity = '0';
           line.style.transform = `translateY(${yFrom})`;
@@ -74,14 +93,24 @@ export function wipeDown(
 
         if (prefersReducedMotion) {
           // Minimal motion for reduced-motion users
-          animate(
+          animationControls = animate(
             lines,
             {
-              clipPath: ['inset(0 0 0 0)'], 
-              y: 0, 
-              opacity: 1 
+              clipPath: ['inset(0 0 0 0)'],
+              y: 0,
+              opacity: 1
             } as DOMKeyframesDefinition,
-            { duration: 0.01 } as AnimationOptions
+            {
+              duration: 0.01,
+              onfinish: () => {
+                // Clean up willChange after animation completes
+                if (willChange) {
+                  lines.forEach((line) => {
+                    line.style.willChange = '';
+                  });
+                }
+              }
+            } as AnimationOptions
           );
         } else {
           // Staggered wipe-down animation
@@ -90,16 +119,28 @@ export function wipeDown(
             opacity: [0, 1],
             y: [yFrom, '0px'],
           };
-          animate(
+          animationControls = animate(
             lines,
             keyframes,
             {
               delay: stagger(staggerDelay, { startDelay: delay }),
               duration,
               easing,
+              onfinish: () => {
+                // Clean up willChange after animation completes
+                if (willChange) {
+                  lines.forEach((line) => {
+                    line.style.willChange = '';
+                  });
+                }
+              }
             } as AnimationOptions
           );
         }
+      } catch (error) {
+        // Error handling for SplitType failures
+        console.warn('wipeDown: SplitType failed, showing content without animation', error);
+        node.style.opacity = '1';
       }
     },
     { amount }
@@ -107,13 +148,35 @@ export function wipeDown(
 
   return {
     destroy() {
+      // Cancel animation if running
+      animationControls?.cancel();
+
       // Stop watching with IntersectionObserver
       stopObserver();
 
-      // Revert the SplitType modifications if applied
-      if (cleanupSplit) cleanupSplit();
+      // Clean up all inline styles from lines
+      lines.forEach((line) => {
+        line.style.display = '';
+        line.style.opacity = '';
+        line.style.transform = '';
+        line.style.willChange = '';
+      });
 
-      // (Optional) reset inline opacity if you need to reuse the node
+      // Clean up parent overflow styles
+      parentElements.forEach((parent) => {
+        parent.style.overflow = '';
+      });
+
+      // Revert the SplitType modifications if applied
+      if (cleanupSplit) {
+        try {
+          cleanupSplit();
+        } catch (error) {
+          console.warn('wipeDown: Error during SplitType cleanup', error);
+        }
+      }
+
+      // Reset inline opacity if you need to reuse the node
       node.style.opacity = '';
     },
   };

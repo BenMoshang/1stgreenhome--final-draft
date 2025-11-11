@@ -1,7 +1,8 @@
 // ===========================================================================
-// styles/appearance/_index.scss
-// Central index forwarding appearance utilities
+// styles/tokens/_borders.scss
+// Border design tokens
 // ===========================================================================
 
-@forward 'shadows';
-@forward '../mixins/focus-ring';
+:root {
+  --brute-border-radius: 1rem;
+}

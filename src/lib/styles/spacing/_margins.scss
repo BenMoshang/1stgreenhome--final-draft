@@ -1,25 +1,25 @@
-@use '../base' as globals;
+@use '../base/variables' as vars;
 
 // Define line height from typography system
-$line-height: globals.$MAJOR-HALF;
+$line-height: vars.$MAJOR-HALF;
 
 // Mixin: compute CSS vars for margins based on a given line-height
 @mixin adjust-to($line-height) {
   @if not unitless($line-height) {
     @error '#{$line-height} is not dimensionless';
   }
-  --margin-2xs: #{globals.round-to(1em * $line-height * globals.$MINOR-QUARTER)};
-  --margin-xs: #{globals.round-to(1em * $line-height * globals.$MINOR-HALF)};
-  --margin-sm: #{globals.round-to(1em * $line-height * globals.$MINOR)};
-  --margin-md: #{globals.round-to($line-height * globals.size('md'))};
-  --margin-lg: #{globals.round-to($line-height * globals.size('lg'))};
-  --margin-xl: #{globals.round-to($line-height * globals.size('xl'))};
-  --margin-2xl: #{globals.round-to($line-height * globals.size('2xl'))};
+  --margin-2xs: #{vars.round-to(1em * $line-height * vars.$MINOR-QUARTER)};
+  --margin-xs: #{vars.round-to(1em * $line-height * vars.$MINOR-HALF)};
+  --margin-sm: #{vars.round-to(1em * $line-height * vars.$MINOR)};
+  --margin-md: #{vars.round-to($line-height * vars.size('md'))};
+  --margin-lg: #{vars.round-to($line-height * vars.size('lg'))};
+  --margin-xl: #{vars.round-to($line-height * vars.size('xl'))};
+  --margin-2xl: #{vars.round-to($line-height * vars.size('2xl'))};
 }
 
 // Base: compute CSS vars at root using default typography line-height
 :root {
-  @include adjust-to(globals.$MAJOR-HALF);
+  @include adjust-to(vars.$MAJOR-HALF);
 }
 
 // Margin utilities
@@ -27,23 +27,23 @@ $line-height: globals.$MAJOR-HALF;
   .u_m-top__#{$size} {
     margin-block-start: var(--margin-#{$size});
   }
-  
+
   .u_m-right__#{$size} {
     margin-inline-end: var(--margin-#{$size});
   }
-  
+
   .u_m-bottom__#{$size} {
     margin-block-end: var(--margin-#{$size});
   }
-  
+
   .u_m-left__#{$size} {
     margin-inline-start: var(--margin-#{$size});
   }
-  
+
   .u_m-block__#{$size} {
     margin-block: var(--margin-#{$size});
   }
-  
+
   .u_m-inline__#{$size} {
     margin-inline: var(--margin-#{$size});
   }

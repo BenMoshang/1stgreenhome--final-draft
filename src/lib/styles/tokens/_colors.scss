@@ -1,0 +1,37 @@
+// ===========================================================================
+// styles/tokens/_colors.scss
+// Color design tokens - single source of truth for all color values
+// ===========================================================================
+
+:root {
+  // Brand colors (brute theme)
+  --brute-primary: oklch(72.3% 0.219 149.579);
+  --brute-secondary: oklch(52.7% 0.154 150.069);
+  --brute-tertiary: oklch(39.3% 0.095 152.535);
+
+  // Brand colors with opacity
+  --brute-tertiary--opacity: oklch(39.3% 0.095 152.535 / 0.35);
+  --brute-secondary--opacity: oklch(52.7% 0.154 150.069 / 0.35);
+
+  // Brand gradients
+  --brute-primary--neu: linear-gradient(145deg in oklch, #55d466, #47b256);
+  --brute-secondary--neu: linear-gradient(145deg in oklch, #378943, #2e7339);
+
+  // Typography colors
+  --typography--primary: light-dark(oklch(20% 0 0), oklch(90% 0 0));
+  --typography--secondary: light-dark(oklch(35% 0 0), oklch(75% 0 0));
+  --typography--tertiary: light-dark(oklch(50% 0 0), oklch(60% 0 0));
+
+  // Color scheme
+  color-scheme: light;
+}
+
+// Sass variables for typography (used in placeholders and utilities)
+$text-primary: light-dark(oklch(20% 0 0), oklch(95% 0 0));
+$text-secondary: light-dark(oklch(35% 0 0), oklch(90% 0 0));
+$text-tertiary: light-dark(oklch(50% 0 0), oklch(80% 0 0));
+
+// Text colors for dark mode (light text on dark surfaces)
+$text-primary-rev: oklch(95% 0 0);
+$text-secondary-rev: oklch(90% 0 0);
+$text-tertiary-rev: oklch(80% 0 0);

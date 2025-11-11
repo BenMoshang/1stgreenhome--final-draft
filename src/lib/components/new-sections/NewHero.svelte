@@ -91,7 +91,7 @@
         {heroData.button}
         <img
         loading="eager"
-        
+
         src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
       </button>
     </header>
@@ -140,7 +140,7 @@
   .hero__section {
     position: relative;
     inline-size: 100%;
-    
+
   }
 
   // Inner container with flex layout
@@ -166,7 +166,10 @@
   .hero__header {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     text-align: left;
+    margin-inline: auto;
+    width: fit-content;
   }
 
   /* ---------------------------------------------

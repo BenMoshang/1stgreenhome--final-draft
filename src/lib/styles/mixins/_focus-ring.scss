@@ -1,0 +1,26 @@
+// ===========================================================================
+// styles/mixins/_focus-ring.scss
+// Focus ring mixin and utility classes
+// ===========================================================================
+
+@mixin focus-ring($clr: var(--secondary), $w: 2px) {
+  outline: $w solid $clr;
+  outline-offset: 2px;
+}
+
+// Focus ring utility classes
+.focus-ring:focus-visible {
+  @include focus-ring;
+}
+
+.focus-ring--primary:focus-visible {
+  @include focus-ring(var(--primary));
+}
+
+.focus-ring--secondary:focus-visible {
+  @include focus-ring(var(--secondary));
+}
+
+.focus-ring--tertiary:focus-visible {
+  @include focus-ring(var(--tertiary));
+}

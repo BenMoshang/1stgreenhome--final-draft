@@ -1,11 +1,11 @@
 // styles/layout/_flex.scss
 
 // Import necessary modules using the modern @use rule
-@use '../base/global-variables';
+@use '../base/variables' as vars;
 @use 'sass:map';
 @use 'sass:string'; // Import string module for potential manipulation if needed
 @use 'sass:meta'; // Import meta module for type checking
-@use '../spacing/gaps' as gaps; // Import gap mixin from spacing
+@use '../utilities/spacing' as spacing; // Import gap mixin from utilities
 
 // 2. Core Flex Container Mixin (Internal Helper - Unchanged)
 @mixin _flex-container($direction: row, $display: flex) {
@@ -28,5 +28,5 @@
     @include _flex-container($direction, flex);
   }
 
-  @include gaps.gap($gap-size);
+  @include spacing.gap($gap-size);
 }

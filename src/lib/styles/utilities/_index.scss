@@ -1,0 +1,9 @@
+// ===========================================================================
+// styles/utilities/_index.scss
+// Central index forwarding all utility classes
+// ===========================================================================
+
+@forward 'typography';
+@forward 'spacing';
+@forward 'layout';
+@forward 'sizing';

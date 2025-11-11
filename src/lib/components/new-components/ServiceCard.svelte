@@ -92,8 +92,8 @@ z-index:5 !important;
         z-index: 1;
         background: linear-gradient(
           to top,
-          rgba(0, 0, 0, 0.5) 0%,
-          rgba(0, 0, 0, 0) 40%
+          rgba(0, 0, 0, .9) 0%,
+          rgba(0, 0, 0, 0) 80%
         );
         pointer-events: none;
       }

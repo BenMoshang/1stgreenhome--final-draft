@@ -1,0 +1,41 @@
+// ===========================================================================
+// styles/mixins/_gradient-text.scss
+// Gradient text animation mixin
+// ===========================================================================
+
+// Improved gradient text with seamless animation
+@mixin gradient-text-animated($duration: 8s, $size: 200%) {
+  --gradient-text: linear-gradient(
+    145deg,
+    var(--brute-secondary) 20%,
+    var(--brute-primary) 40%,
+    var(--brute-primary) 60%,
+    var(--brute-primary) 80%,
+    var(--brute-secondary) 100%
+  );
+  background-image: var(--gradient-text);
+  background-size: $size $size;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-loop $duration ease-in-out infinite;
+  will-change: background-position;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+// Gradient Animation Keyframes - Improved for seamless looping
+@keyframes gradient-loop {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -1,7 +1,10 @@
 // ===========================================================================
-// styles/appearance/_index.scss
-// Central index forwarding appearance utilities
+// styles/tokens/_index.scss
+// Central index forwarding all design tokens
 // ===========================================================================
 
+@forward 'colors';
+@forward 'borders';
 @forward 'shadows';
-@forward '../mixins/focus-ring';
+@forward 'spacing';
+@forward 'typography';
