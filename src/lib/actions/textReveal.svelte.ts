@@ -5,7 +5,7 @@ import SplitType from 'split-type';
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
-export interface WipeDownOptions {
+export interface TextRevealOptions {
   /** initial upward offset for text float step */
   yFrom?: number | string;
   /** animation duration in seconds */
@@ -24,9 +24,14 @@ export interface WipeDownOptions {
   force3D?: boolean;
 }
 
-export function wipeDown(
+/**
+ * Svelte action that reveals text with a smooth clip-path wipe-down animation.
+ * Uses GSAP for optimal performance with GPU acceleration.
+ * Each line is revealed from top to bottom with staggered timing.
+ */
+export function textReveal(
   node: HTMLElement,
-  opts: WipeDownOptions = {}
+  opts: TextRevealOptions = {}
 ) {
   const {
     yFrom = '0.5em',
@@ -46,13 +51,13 @@ export function wipeDown(
   // Hide the node until it comes into view
   node.style.opacity = '0';
 
-  // Will hold our revert function from SplitType
+  // Animation state management
   let cleanupSplit: (() => void) | null = null;
   let animationTimeline: gsap.core.Timeline | null = null;
   let scrollTriggerInstance: ScrollTrigger | null = null;
   let hasAnimated = false;
   let lines: HTMLElement[] = [];
-  let parentElements: HTMLElement[] = [];
+  let lineWrappers: HTMLElement[] = [];
 
   function runAnimation() {
     // Prevent multiple executions
@@ -67,7 +72,7 @@ export function wipeDown(
       const split = new SplitType(node, { types: 'lines' });
       const splitLines = split.lines;
 
-      // When leaving view or destroying, revert the split
+      // Store cleanup function
       cleanupSplit = () => split.revert();
 
       if (!splitLines || splitLines.length === 0) {
@@ -76,43 +81,39 @@ export function wipeDown(
       }
 
       lines = Array.from(splitLines);
-      parentElements = [];
+      lineWrappers = [];
 
-      // Set initial state with GPU acceleration and clip-path
+      // Wrap each line in a container for clip-path reveal
       lines.forEach((line) => {
-        const parent = line.parentElement as HTMLElement;
-        if (parent) {
-          parent.style.overflow = 'hidden';
-          parentElements.push(parent);
-        }
+        // Ensure line is inline-block for proper wrapping
         line.style.display = 'inline-block';
-      });
 
-      // Use GSAP set for initial state with GPU acceleration
-      // Wrap each line for clip-path reveal effect
-      lines.forEach((line) => {
-        // Ensure parent has overflow hidden for clip-path to work
+        // Get or create wrapper for clip-path effect
         const parent = line.parentElement as HTMLElement;
         if (parent) {
+          // Set parent as wrapper with overflow hidden
           parent.style.overflow = 'hidden';
+          parent.style.display = 'inline-block';
+          lineWrappers.push(parent);
         }
       });
 
-      // Set initial state - clip-path starts fully clipped from bottom
+      // Set initial state with GPU acceleration
+      // Clip-path starts fully clipped from bottom (100% bottom inset)
       gsap.set(lines, {
         opacity: 0,
         y: yFrom,
-        clipPath: 'inset(0% 0% 100% 0%)', // Start with bottom fully clipped
+        clipPath: 'inset(0% 0% 100% 0%)', // Fully clipped from bottom
         force3D: force3D,
         willChange: 'transform, opacity, clip-path'
       });
 
       if (prefersReducedMotion) {
-        // Minimal motion for reduced-motion users
+        // Minimal motion for reduced-motion users - instant reveal
         gsap.set(lines, {
           opacity: 1,
           y: 0,
-          clipPath: 'inset(0% 0% 0% 0%)',
+          clipPath: 'inset(0% 0% 0% 0%)', // Fully revealed
           clearProps: 'all'
         });
       } else {
@@ -120,18 +121,18 @@ export function wipeDown(
         animationTimeline = gsap.timeline({
           delay: delay,
           onComplete: () => {
-            // Clean up willChange and clear transform properties for better performance
+            // Clean up willChange after animation completes for better performance
             if (lines.length > 0) {
               gsap.set(lines, {
                 willChange: 'auto',
-                clearProps: 'transform' // Keep clip-path and opacity as they're final state
+                clearProps: 'transform' // Clear transform, keep clip-path and opacity
               });
             }
           }
         });
 
-        // Animate clip-path reveal from bottom to top (wipe down effect)
-        // Using percentage values for smoother animation
+        // Animate clip-path reveal from bottom to top (wipe-down effect)
+        // Stagger creates the cascading reveal effect
         animationTimeline.to(lines, {
           clipPath: 'inset(0% 0% 0% 0%)', // Fully revealed
           opacity: 1,
@@ -140,16 +141,16 @@ export function wipeDown(
           ease: easing,
           stagger: staggerDelay,
           force3D: force3D
-        }, 0); // Start all animations at the same time, stagger handles the delay
+        });
       }
     } catch (error) {
       // Error handling for SplitType failures
-      console.warn('wipeDown: SplitType failed, showing content without animation', error);
+      console.warn('textReveal: SplitType failed, showing content without animation', error);
       node.style.opacity = '1';
     }
   }
 
-  // Create ScrollTrigger for viewport detection (consistent with textAnimate)
+  // Create ScrollTrigger for viewport detection
   scrollTriggerInstance = ScrollTrigger.create({
     trigger: node,
     start: `top ${(1 - amount) * 100}%`,
@@ -168,7 +169,7 @@ export function wipeDown(
   });
 
   return {
-    update(newOpts: WipeDownOptions) {
+    update(newOpts: TextRevealOptions) {
       // Merge options
       Object.assign(opts, newOpts);
 
@@ -206,9 +207,10 @@ export function wipeDown(
         });
       }
 
-      // Clean up parent overflow styles
-      parentElements.forEach((parent) => {
-        parent.style.overflow = '';
+      // Clean up wrapper styles
+      lineWrappers.forEach((wrapper) => {
+        wrapper.style.overflow = '';
+        wrapper.style.display = '';
       });
 
       // Revert the SplitType modifications if applied
@@ -216,7 +218,7 @@ export function wipeDown(
         try {
           cleanupSplit();
         } catch (error) {
-          console.warn('wipeDown: Error during SplitType cleanup', error);
+          console.warn('textReveal: Error during SplitType cleanup', error);
         }
       }
 

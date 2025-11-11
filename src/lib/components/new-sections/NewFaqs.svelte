@@ -1,6 +1,6 @@
 <script lang="ts">
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
-  import { wipeDown } from '$lib/actions/wipeDown.svelte';
+  import { textReveal } from '$lib/actions/textReveal.svelte';
   import { base } from '$app/paths';
   // Define interfaces for type safety
   interface HeaderData {
@@ -64,7 +64,7 @@
       {/if}
       {#if header.title}
         <h2
-        use:wipeDown
+        use:textReveal
         class="faq__title u_display-2--bold typography--primary-rev">
           {header.title}
         </h2>

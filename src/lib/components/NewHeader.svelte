@@ -1,6 +1,6 @@
 <script lang="ts">
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
-  import { wipeDown } from '$lib/actions/wipeDown.svelte';
+  import { textReveal } from '$lib/actions/textReveal.svelte';
   import { base } from '$app/paths';
   // Define interface for navigation links
   interface NavLink {
@@ -128,7 +128,7 @@
         </svg>
         <div
 
-        use:wipeDown
+        use:textReveal
         class="header__nav-footer-content-container">
           <a
             class="header__nav-footer-email"

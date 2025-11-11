@@ -68,6 +68,7 @@
 		"svelte"
 	],
 	"dependencies": {
+		"gsap": "^3.13.0",
 		"lenis": "^1.2.3",
 		"motion": "^12.9.2",
 		"split-type": "^0.3.4"

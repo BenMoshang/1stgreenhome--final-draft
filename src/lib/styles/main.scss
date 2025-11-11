@@ -221,7 +221,6 @@ $shadow-drop: drop-shadow(0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.08))
 }
 .line {
   /* Prevent accidental line breaks inside .line spans */
-  white-space: pre;
 }
 // ===========================================================================
 // 4. Base Styles

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { textAnimate } from '$lib/actions/textAnimate.svelte';
-	import { wipeDown } from '$lib/actions/wipeDown.svelte';
+	import { textReveal } from '$lib/actions/textReveal.svelte';
 	import ServiceCard from '$lib/components/new-components/ServiceCard.svelte';
 	import { base } from '$app/paths';
 
@@ -75,13 +75,13 @@
         use:textAnimate>{injectableStaticText.label}</small
       >
       <h2
-        use:wipeDown
+        use:textReveal
         class="services__header-heading u_display-2--bold typography--primary-rev"
       >
         {injectableStaticText.heading}
       </h2>
       <p
-        use:wipeDown
+        use:textReveal
         class="services__header-body u_paragraph typography--secondary-rev"
       >
         {injectableStaticText.body}

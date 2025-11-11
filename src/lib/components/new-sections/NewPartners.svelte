@@ -1,7 +1,7 @@
 <script lang="ts">
 import { scaleOnView } from '$lib/actions/scaleOnView.svelte';
 import { textAnimate } from '$lib/actions/textAnimate.svelte';
-import { wipeDown } from '$lib/actions/wipeDown.svelte';
+import { textReveal } from '$lib/actions/textReveal.svelte';
 import { base } from '$app/paths';
 
   const header = {
@@ -44,14 +44,14 @@ import { base } from '$app/paths';
         {header.label}
       </small>
       <h2
-        use:wipeDown
+        use:textReveal
 
         class=" partners__header-heading max-ch-20 u_display-2--bold typography--primary-rev u_m-bottom__sm"
       >
         {header.title}
       </h2>
       <p
-        use:wipeDown
+        use:textReveal
 
         class="partners__header-body  u_paragraph typography--secondary-rev"
       >

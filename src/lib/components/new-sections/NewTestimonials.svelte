@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { wipeDown } from '$lib/actions/wipeDown.svelte';
-  import TestimonialCard from '../new-components/TestimonialCard.svelte';
   import { base } from '$app/paths';
+  import { textReveal } from '$lib/actions/textReveal.svelte';
+  import TestimonialCard from '../new-components/TestimonialCard.svelte';
 
   // Header data
   const header = $state({
@@ -79,7 +79,7 @@
     onfocusout={resumeMarquee}
   >
     <h2
-    use:wipeDown
+    use:textReveal
       class="testimonials-section__title"
     >
      <span >{header.title0}

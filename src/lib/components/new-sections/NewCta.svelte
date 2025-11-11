@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { wipeDown } from '$lib/actions/wipeDown.svelte';
+  import { textReveal } from '$lib/actions/textReveal.svelte';
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
   import { base } from '$app/paths';
   // CTA section data using Svelte 5 Runes
@@ -56,7 +56,7 @@
         {cta.label}
       </small>
       <h2
-      use:wipeDown
+      use:textReveal
         class=" cta-section__header-heading max-ch-20 u_display-2--bold typography--primary u_m-bottom__sm"
       >
         {cta.title1}
@@ -65,7 +65,7 @@
         >
       </h2>
       <p
-      use:wipeDown
+      use:textReveal
         class=" u_m-bottom__lg cta-section__header-body m u_paragraph typography--tertiary"
       >
         {cta.description}

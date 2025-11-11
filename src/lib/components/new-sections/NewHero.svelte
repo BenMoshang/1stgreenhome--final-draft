@@ -1,7 +1,7 @@
 <script lang="ts">
   import { base } from '$app/paths';
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
-  import { wipeDown } from '$lib/actions/wipeDown.svelte';
+  import { textReveal } from '$lib/actions/textReveal.svelte';
     // Define hero data interface with only needed properties
   interface HeroData {
     label: string;
@@ -69,7 +69,7 @@
 
       <h1
         class="u_display-1--bold u_m-bottom__sm typography--secondary max-ch-20"
-          use:wipeDown
+          use:textReveal
 
 
       >
@@ -78,7 +78,7 @@
       </h1>
 
       <p
-        use:wipeDown
+        use:textReveal
         class="hero__body u_paragraph u_m-bottom__lg tert typography--tertiary max-ch-45"
       >
         {heroData.body + heroData.body2}

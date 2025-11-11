@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { textAnimate } from '$lib/actions/textAnimate.svelte';
-	import { wipeDown } from '$lib/actions/wipeDown.svelte';
+	import { textReveal } from '$lib/actions/textReveal.svelte';
 	import { base } from '$app/paths';
 
     // Svelte 5 runes state for header and project data
@@ -45,7 +45,7 @@
       </small>
 
       <h2
-        use:wipeDown
+        use:textReveal
         class="projects-section__header-title u_m-bottom__sm u_display-1--bold typography--primary max-ch-20"
       >
       <strong class="projects-section__header-title--gradient">
@@ -58,7 +58,7 @@
       </h2>
 
       <p
-        use:wipeDown
+        use:textReveal
         class="projects-section__header--description max-ch-45 u_paragraph typography--tertiary"
       >
         {header.description}
@@ -97,12 +97,12 @@
 
         <figcaption class="project-article__caption">
           <h3
-            use:wipeDown
+            use:textReveal
             class="project-article__caption--title">
             {section.title}
           </h3>
           <p
-            use:wipeDown
+            use:textReveal
             class="project-article__caption--description">
             {section.description}
           </p>
