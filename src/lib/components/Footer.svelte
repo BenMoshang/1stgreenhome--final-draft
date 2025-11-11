@@ -126,8 +126,5 @@
       </small>
 
   </div>
-        <small class="invisible">
-        Created by <a href="https://www.mymodernsite.com" target="_blank">mymodernsite</a> •
-        Developed by <a href="https://www.benmoshang.com" target="_blank">Ben Moshang</a>
-      </small>
+
 </footer>
