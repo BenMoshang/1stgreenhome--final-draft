@@ -1,6 +1,7 @@
 <script lang="ts">
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
   import { wipeDown } from '$lib/actions/wipeDown.svelte';
+  import { base } from '$app/paths';
   // Define interfaces for type safety
   interface HeaderData {
     label: string;
@@ -57,12 +58,12 @@
   <div class="faq__container u_container__sm ">
     <header class="faq__header u_m-bottom__xl">
       {#if header.label}
-        <small 
+        <small
         use:textAnimate
         class="faq__label brute__label-rev">{header.label}</small>
       {/if}
       {#if header.title}
-        <h2 
+        <h2
         use:wipeDown
         class="faq__title u_display-2--bold typography--primary-rev">
           {header.title}
@@ -113,7 +114,7 @@
             <div class="faq__answer-group" itemprop="text">
               <div class="faq__answer">
                 <img
-                  src="/assets/faqs/faq-icon--home.svg"
+                  src={base + '/assets/faqs/faq-icon--home.svg'}
                   alt="FAQ Icon"
                   class="faq__answer-icon"
                 />
@@ -128,7 +129,7 @@
 
               <div class="faq__answer">
                 <img
-                  src="/assets/faqs/faq-icon--buisness.svg"
+                  src={base + '/assets/faqs/faq-icon--buisness.svg'}
                   alt="FAQ Icon"
                   class="faq__answer-icon"
                 />
@@ -145,147 +146,3 @@
     </dl>
   </div>
 </section>
-
-<style lang="scss">
-  // ===========================================================
-  // Component: faq
-  // ===========================================================
-  .faq {
-    inline-size: 100%;
-
-    &__container {
-      @extend %flex-col-center;
-
-      & > *{
-        flex:1;
-      }
-      @include respond-to('tablet-end') {
-        flex-direction: row;
-        justify-content: space-evenly;
-
-        & .faq__header {
-          position: sticky;
-          top: size('2xl');
-max-inline-size: 40ch;
-          align-self: flex-start;
-          text-align: right;
-          order: 2;
-        }
-        & .faq__label{
-          text-align: right;
-margin-inline:0;
-          margin-left: auto;
-        }
-    
-      }
-    }
-
-    &__header {
-      @extend %flex-col-center;
-      text-align: center;
-    }
-&__label{
-  margin-inline: auto;
-}
-    &__list {
-      @extend %flex-col-center;
-      inline-size: 100%;
-      gap: size('lg');
-      overflow: visible; /* Changed from clip to visible to allow sticky elements to work */
-      @include respond-to('tablet-end') {
-        align-items: unset;
-        justify-content: unset;
-      }
-    }
-
-    &__entry {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      inline-size: 100%;
-      max-inline-size: 70ch;
-      border-radius: $border-radius;
-
-      &:nth-child(even) {
-        background-color: oklch(39.3% 0.095 152.535 / 0.85);
-      }
-    }
-
-    &__toggle {
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      opacity: 0;
-
-      &:checked + dt .faq__chevron {
-        transform: rotate(180deg);
-        margin-top: unset;
-        margin-bottom: -0.7em;
-      }
-      &:checked ~ .faq__panel {
-        max-height: fit-content;
-        padding: size('md') size('lg');
-        border-radius: $border-radius;
-        background-color: oklch(39.3% 0.095 152.535 / 0.85);
-      }
-    }
-
-    &__question {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      inline-size: 100%;
-      cursor: pointer;
-      padding: size('sm') size('md');
-      border-radius: $border-radius;
-
-      & > * {
-        display: block;
-      }
-    }
-
-    &__chevron {
-      margin-top: -0.7em;
-      font-weight: 900;
-      flex-shrink: 0;
-      transition: transform 0.2s ease-in-out;
-    }
-
-    &__panel {
-      max-height: 0;
-      overflow: hidden;
-      @extend %inset-shadow;
-      transition:
-        max-height 0.2s ease-in-out,
-        padding 0.2s ease-in-out;
-    }
-
-    &__answer-group {
-      display: flex;
-      flex-direction: column;
-      gap: size('md');
-    }
-
-    &__answer {
-      display: flex;
-      align-items: flex-start;
-      gap: size('md');
-
-      &-icon {
-        $size: size('lg');
-        object-fit: contain;
-        width: $size;
-        height: $size;
-      }
-    }
-
-    &__divider {
-      block-size: 0.0625rem;
-      inline-size: 100%;
-      margin-block: 0;
-      background: var(--brute-secondary);
-      opacity: 0.5;
-      border: none;
-    }
-  }
-</style>

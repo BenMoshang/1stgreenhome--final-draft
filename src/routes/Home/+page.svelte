@@ -24,7 +24,7 @@
 </script>
 
 <main class="home-content">
-  <div class="leaves-background" use:parallax={{ offset: 100 }} />
+  <div class="leaves-background" use:parallax={{ offset: 100 }}></div>
 
   <div class="content-layer">
     <NewHero />
@@ -52,66 +52,3 @@
     <NewCta />
   </div>
 </main>
-
-<style lang="scss">
-/* --- Page Container --- */
-.home-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: size('2xl');
-  width: 100%;
-  min-height: 100%;
-}
-
-/* --- Decorative Leaves Background --- */
-.leaves-background {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: url('/assets/landing-page/leaves.svg') center repeat;
-  opacity: 0.08;
-  // filter: brightness(1.4) saturate(0.2);
-  will-change: transform;
-
-  @media (prefers-color-scheme: dark) {
-    filter: brightness(0.4) saturate(0.5);
-  }
-}
-
-/* --- Generic Content Wrapper --- */
-.content-layer {
-  position: relative;
-  z-index: 3;
-  margin: 0 auto;
-  @extend %flex-col-center;
-  gap: size('2xl');
-  width: 100%;
-}
-
-/* --- Gradient Section with Shallower Curves --- */
-.gradient-section {
-  padding-block: size('2xl');
- 
-  background: radial-gradient(
-    circle at top center,
-    var(--brute-primary) 10%,
-    var(--brute-secondary) 60%,
-    var(--brute-tertiary) 100%
-  );
-  overflow: visible; /* Changed from hidden to visible to allow sticky positioning to work */
-$curve-radius: 5%;
-  /* Top curve (shallower) */
-  border-top-left-radius:  100% $curve-radius;
-  border-top-right-radius: 100% $curve-radius;
-
-  /* Bottom curve (shallower) */
-  border-bottom-left-radius:  100% $curve-radius;
-  border-bottom-right-radius: 100% $curve-radius;
-
-  .content-layer {
-    position: relative;
-    z-index: 3;
-  }
-}
-</style>

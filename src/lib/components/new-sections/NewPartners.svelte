@@ -2,6 +2,7 @@
 import { scaleOnView } from '$lib/actions/scaleOnView.svelte';
 import { textAnimate } from '$lib/actions/textAnimate.svelte';
 import { wipeDown } from '$lib/actions/wipeDown.svelte';
+import { base } from '$app/paths';
 
   const header = {
     label: 'POWERED BY OUR PARTNERS',
@@ -11,20 +12,20 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
   };
 
   const partners = [
-    { imageSrc: '/assets/landing-page/partners/logo-pepco.svg' },
-    { imageSrc: '/assets/landing-page/partners/logo-bge.svg' },
-    { imageSrc: '/assets/landing-page/partners/logo-delmarva.svg' },
-    { imageSrc: '/assets/landing-page/partners/logo-pmed.png' },
+    { imageSrc: base + '/assets/landing-page/partners/logo-pepco.svg' },
+    { imageSrc: base + '/assets/landing-page/partners/logo-bge.svg' },
+    { imageSrc: base + '/assets/landing-page/partners/logo-delmarva.svg' },
+    { imageSrc: base + '/assets/landing-page/partners/logo-pmed.png' },
   ];
 
   const partnersReverse = [
-    { imageSrc: '/assets/landing-page/partners/logo-empower.webp' },
-    { imageSrc: '/assets/landing-page/partners/logo-energy-star.svg' },
+    { imageSrc: base + '/assets/landing-page/partners/logo-empower.webp' },
+    { imageSrc: base + '/assets/landing-page/partners/logo-energy-star.svg' },
     {
       imageSrc:
-        '/assets/landing-page/partners/logo-SouthernMarylandElectricCooperative.svg',
+        base + '/assets/landing-page/partners/logo-SouthernMarylandElectricCooperative.svg',
     },
-    { imageSrc: '/assets/landing-page/partners/logo-bpi.webp' },
+    { imageSrc: base + '/assets/landing-page/partners/logo-bpi.webp' },
   ];
 
 
@@ -83,52 +84,3 @@ import { wipeDown } from '$lib/actions/wipeDown.svelte';
     </div>
   </div>
 </section>
-
-<style lang="scss">
-  .partners {
-    inline-size: 100%;
-    
-
-    &__container {
-    @extend %flex-col-center;
-      gap: size('2xl');
-    }
-    &__header {
-      @extend %flex-col-center;
-      text-align: center;
-      margin-inline: auto;
-
-      &-body {
-        max-inline-size: 50ch;
-      }
-    }
-    &__logos-container {
-      inline-size: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
-      gap: size('xl');
-      place-items: center;
-      max-inline-size: calc(4 * 10rem + 3 * var(--size-lg));
-      margin-inline: auto;
-
-      &-item {
-        box-shadow: var(--shadow-elevation-medium);
-        inline-size: size('xl');
-        block-size: size('xl');
-        padding: size('xs');
-        border-radius: $border-radius;
-        &:hover {
-          transform: scale(1.05);
-        }
-        &--image {
-          object-fit: contain;
-          aspect-ratio: 16 / 9;
-          inline-size: 100%;
-          block-size: 100%;
-        }
-      }
-    }
-  }
-
-
-</style>

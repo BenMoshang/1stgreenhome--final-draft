@@ -1,4 +1,4 @@
-<script lang="ts" runes>
+<script lang="ts">
   interface Service {
     title: string;
     description: string;
@@ -17,12 +17,3 @@
   <h3 class="u_title-b typography--primary u_m-block__sm">{service.title}</h3>
   <p class="u_paragraph typography--tertiary">{service.description}</p>
 </div>
-
-<style lang="scss">
-  .sticky-card {
-    position: sticky;
-    top: var(--size-lg);
-    border-radius: var(--brute-border-radius);
-    @include apply-shadow('md');
-  }
-</style>

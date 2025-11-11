@@ -1,7 +1,7 @@
 <script lang="ts">
   import { wipeDown } from '$lib/actions/wipeDown.svelte';
-
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
+  import { base } from '$app/paths';
   // CTA section data using Svelte 5 Runes
   const cta = $state({
     label: 'CONTACT US',
@@ -77,7 +77,7 @@
         aria-label="Send email to get started"
       >
         {cta.button}
-        <img src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
+        <img src={base + '/assets/icons/icon-lightbulb.svg'} alt="Lightbulb" />
       </button>
     </header>
     <div class="cta-section__map-container">
@@ -96,89 +96,3 @@
     </div>
   </div>
 </section>
-
-<style lang="scss">
-  .cta-section {
-    inline-size: 100%;
-
-    &__container {
-      @extend %flex-col-center;
-      gap: size('xl');
-      overflow: visible; /* Ensure parent container allows sticky positioning */
-      & > * {
-        flex: 1;
-      }
-      @include respond-to('tablet-end') {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
-
-    &__header {
-      text-align: center;
-
-      @extend %flex-col-center;
-      @include respond-to('tablet-end') {
-        margin-right: auto;
-        position: sticky;
-        top: size('2xl');
-        align-self: flex-start;
-        text-align: left;
-        z-index: 10; /* Add z-index to ensure header appears above other content */
-
-        align-items: flex-start;
-        justify-content: flex-start;
-      }
-
-      &-heading {
-        &--gradient {
-          @include gradient-text-animated(3s);
-        }
-
-        @include respond-to('tablet-end') {
-          margin-right: auto;
-        }
-      }
-
-      &-body {
-        max-inline-size: 45ch;
-      }
-    }
-
-    &__map-container {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-block: size('xl');
-      
-      @include respond-to('tablet-end') {
-        margin-block: 0;
-      }
-    }
-
-    &__map {
-      display: block;
-      margin-inline: auto;
-      inline-size: 100%;
-      max-inline-size: 40rem;
-      max-block-size: 40rem;
-      aspect-ratio: 16 / 9;
-      border-radius: $border-radius;
-      box-shadow: var(--shadow-elevation-medium);
-      margin-block: size('md');
-    }
-
-    &__address {
-      font-size: var(--font-size-body);
-      margin-top: size('sm');
-      color: var(--on-surface-container-high);
-      font-weight: 500;
-    }
-
-    &__button {
-      margin-inline: auto;
-    }
-  }
-</style>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
   import { wipeDown } from '$lib/actions/wipeDown.svelte';
     // Define hero data interface with only needed properties
@@ -92,14 +93,14 @@
         <img
         loading="eager"
 
-        src="/assets/icons/icon-lightbulb.svg" alt="Lightbulb" />
+        src={base + '/assets/icons/icon-lightbulb.svg'} alt="Lightbulb" />
       </button>
     </header>
 
     <div class="hero__image-container">
       <img
         class="hero__image"
-        src="/assets/landing-page/hero/herobulb.webp"
+        src={base + '/assets/landing-page/hero/herobulb.webp'}
         width="640"
         height="640"
         alt="Energy efficient light bulb illustration"
@@ -110,122 +111,3 @@
     </div>
   </div>
 </section>
-
-<style lang="scss">
-  /* ---------------------------------------------
-   * Base Styles and Animations
-   * --------------------------------------------- */
-
-  // Animated gradient text for hero titles
-  .gradient-text {
-    @include gradient-text-animated(3s);
-  }
-
-  // Animation for pulsing shadow effect
-  @keyframes pulse-shadow {
-    0%,
-    100% {
-      filter: drop-shadow(0 0 0.5rem var(--brute-secondary));
-    }
-    50% {
-      filter: drop-shadow(0 0 1rem var(--brute-secondary));
-    }
-  }
-
-  /* ---------------------------------------------
-   * Layout Structure
-   * --------------------------------------------- */
-
-  // Main hero section container
-  .hero__section {
-    position: relative;
-    inline-size: 100%;
-
-  }
-
-  // Inner container with flex layout
-  .hero__container {
-    inline-size: 100%;
-    @extend %flex-col-center;
-    gap: size('xl');
-
-    & > * {
-      flex: 1;
-    }
-
-    @include respond-to('tablet-end') {
-      flex-direction: row;
-    }
-  }
-
-  /* ---------------------------------------------
-   * Content Elements
-   * --------------------------------------------- */
-
-  // Text content container
-  .hero__header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-    margin-inline: auto;
-    width: fit-content;
-  }
-
-  /* ---------------------------------------------
-   * Visual Elements
-   * --------------------------------------------- */
-
-  // Hero image and decorative elements
-  .hero__image {
-    aspect-ratio: 1 / 1;
-    object-fit: contain;
-    filter: brightness(1.5) saturate(1.3);
-  }
-
-  // Container with decorative pseudo-elements
-  .hero__image-container {
-    // Positioning
-    position: relative;
-    z-index: 3;
-    aspect-ratio: 1 / 1;
-
-    // Visual effects
-    filter: drop-shadow(0 0 1rem var(--brute-secondary));
-    animation: pulse-shadow 3s infinite ease-in-out;
-
-    // Custom properties
-    --background-dimensions: 70%;
-    --background-abs-pos: 14%;
-
-    // Decorative pseudo-elements
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      border-radius: 0% 100% 0% 100% / 17% 77% 23% 83%;
-      block-size: var(--background-dimensions);
-      inline-size: var(--background-dimensions);
-      inset-block-start: var(--background-abs-pos);
-      inset-inline-start: var(--background-abs-pos);
-      transform: translateX(0.5rem) scaleX(-1);
-    }
-
-    &::before {
-      z-index: -1;
-      background-image: url('/assets/landing-page/hero/abstract.webp');
-      background-position: 0% 100%;
-      background-size: cover;
-      mix-blend-mode: screen;
-    }
-
-    &::after {
-      z-index: -2;
-      background: oklch(26.6% 0.065 152.934);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain;
-      filter: brightness(0.9) saturate(0.75);
-    }
-  }
-</style>
