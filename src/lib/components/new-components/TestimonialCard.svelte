@@ -10,7 +10,7 @@
 </script>
 
 <article class="card">
-  <p class="card__message">{@html statement}</p>
+  <p class="card__message max-ch-65">{@html statement}</p><!-- max-ch-65 applied to control text width -->
   <header class="card__header">
     <img class="card__pfp" src={pfp} alt={`${name} from ${company}`} />
     <h3 class="card__name">{name}</h3>
