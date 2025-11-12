@@ -39,6 +39,19 @@ const config = {
       // Base path is empty for Vercel deployment
       base: '',
     },
+    prerender: {
+      handleHttpError: ({ path, referrer, message }) => {
+        // Ignore 404 errors for missing assets during prerendering
+        // This allows the build to continue even if some assets are missing
+        const isAsset = path.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|eot)$/i);
+        if (isAsset) {
+          console.warn(`Skipping missing asset during prerender: ${path}${referrer ? ` (linked from ${referrer})` : ''}`);
+          return 'ignore'; // Ignore missing asset files
+        }
+        // For non-asset 404 errors, fail the build
+        return 'fail';
+      },
+    },
   },
 };
 
