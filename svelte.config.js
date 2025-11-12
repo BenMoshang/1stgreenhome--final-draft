@@ -1,4 +1,4 @@
-import vercelAdapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess';
 
@@ -20,10 +20,13 @@ const config = {
   },
 
   kit: {
-    adapter: vercelAdapter({
-      // Vercel adapter options
-      // See https://kit.svelte.dev/docs/adapter-vercel#options
-      runtime: 'nodejs20.x', // Explicitly specify Node.js 20 runtime
+    adapter: adapter({
+      // GitHub Pages specific configuration
+      pages: 'build',
+      assets: 'build',
+      fallback: 'index.html', // Enable SPA fallback for client-side routing
+      precompress: false,
+      strict: true
     }),
     csrf: {
       checkOrigin: true,
@@ -36,8 +39,9 @@ const config = {
       $components: 'src/lib/components',
     },
     paths: {
-      // Base path is empty for Vercel deployment
-      base: '',
+      // Base path for GitHub Pages deployment
+      // Will be set by GitHub Actions based on repository name
+      base: process.env.BASE_PATH || '',
     },
     prerender: {
       handleHttpError: ({ path, referrer, message }) => {
