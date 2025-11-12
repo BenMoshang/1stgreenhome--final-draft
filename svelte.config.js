@@ -24,7 +24,7 @@ const config = {
       // GitHub Pages specific configuration
       pages: 'build',
       assets: 'build',
-      fallback: 'index.html', // Enable SPA fallback for client-side routing
+      fallback: '404.html', // Enable SPA fallback for client-side routing on GitHub Pages
       precompress: false,
       strict: true
     }),
