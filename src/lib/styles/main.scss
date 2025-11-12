@@ -350,7 +350,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricprecision;
-  overflow: hidden;
 }
 
 :where(dt, dd, li, p, h1, h2, h3, h4, h5, h6) {
@@ -2831,6 +2830,7 @@ $z-index--footer: 100;
     @include respond-to('tablet-end') {
       grid-template-columns: repeat(2, 1fr);
       grid-template-areas: 'cards content';
+      place-items: start;
     }
   }
 
@@ -2843,8 +2843,11 @@ $z-index--footer: 100;
     flex-direction: column;
     inline-size: fit-content;
     margin-inline: auto;
+
     margin-bottom: var(--margin-xl);
     text-align: center;
+    align-self: start;
+    block-size: fit-content;
 
     &-label {
       justify-self: center;
@@ -2854,10 +2857,14 @@ $z-index--footer: 100;
 
     @include respond-to('mobile-end') {
       position: unset;
+
     }
 
     @include respond-to('tablet-end') {
       position: sticky;
+      top: 4rem;
+      align-self: start;
+      justify-self: start;
       place-self: start;
       text-align: right;
 
