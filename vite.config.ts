@@ -20,7 +20,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['@sveltejs/kit', 'motion'],
+          vendor: ['motion'],
         },
       },
     },
