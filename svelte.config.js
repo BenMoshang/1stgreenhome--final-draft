@@ -29,7 +29,7 @@ const config = {
       strict: true
     }),
     csrf: {
-      checkOrigin: true,
+      trustedOrigins: [],
     },
     serviceWorker: {
       register: true,
