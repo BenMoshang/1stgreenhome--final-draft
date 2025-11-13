@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "new-design" ]
+    branches: ["new-design"]
   workflow_dispatch:
 
 permissions:
@@ -28,7 +28,6 @@ jobs:
 
       - name: Setup Node.js
         run: |
-          # Install Node.js using nvm (Node Version Manager)
           NODE_VERSION=20
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
           export NVM_DIR="$HOME/.nvm"
@@ -37,9 +36,7 @@ jobs:
           nvm use $NODE_VERSION
           node --version
           npm --version
-          # Add Node.js to PATH for subsequent steps
           echo "$NVM_DIR/versions/node/v$NODE_VERSION/bin" >> $GITHUB_PATH
-          # Also export for current shell session
           export PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
 
       - name: Install dependencies
@@ -49,7 +46,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          BASE_PATH: /${{ github.event.repository.name }}/
+          BASE_PATH: /${{ github.event.repository.name }}
 
       - name: Add .nojekyll file
         run: echo > build/.nojekyll
