@@ -28,12 +28,19 @@ jobs:
 
       - name: Setup Node.js
         run: |
+          # Install Node.js using nvm (Node Version Manager)
           NODE_VERSION=20
-          curl -fsSL https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz -o node.tar.xz
-          sudo tar -xJf node.tar.xz -C /usr/local --strip-components=1
-          rm node.tar.xz
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install $NODE_VERSION
+          nvm use $NODE_VERSION
           node --version
           npm --version
+          # Add Node.js to PATH for subsequent steps
+          echo "$NVM_DIR/versions/node/v$NODE_VERSION/bin" >> $GITHUB_PATH
+          # Also export for current shell session
+          export PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
 
       - name: Install dependencies
         run: npm ci
