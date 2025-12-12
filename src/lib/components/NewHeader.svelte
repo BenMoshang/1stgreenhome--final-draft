@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { textAnimate } from '$lib/actions/textAnimate.svelte';
   import { textReveal } from '$lib/actions/textReveal.svelte';
-  import { base } from '$app/paths';
   // Define interface for navigation links
   interface NavLink {
     link: string;
@@ -13,10 +13,10 @@
 
   // Navigation link data
   const routes: NavLink[] = [
-    { link: base + '/Home/', fragment: 'services', text: 'Services' },
-    { link: base + '/Home/', fragment: 'projects', text: 'Projects' },
-    { link: base + '/Home/', fragment: 'faqs', text: 'FAQs' },
-    { link: base + '/Home/', fragment: 'cta', text: 'Contact', class: 'nav-link--cta' },
+    { link: base + '/', fragment: 'services', text: 'Services' },
+    { link: base + '/', fragment: 'projects', text: 'Projects' },
+    { link: base + '/', fragment: 'faqs', text: 'FAQs' },
+    { link: base + '/', fragment: 'cta', text: 'Contact', class: 'nav-link--cta' },
   ];
 
   // State
@@ -77,7 +77,7 @@
   class="header u_p-inline__sm u_p-block__xs u_container__sm "
   class:header--hidden={isHeaderHidden}
 >
-  <a class="header__logo" href={base + '/Home/'} aria-label="Homepage">
+  <a class="header__logo" href={base + '/'} aria-label="Homepage">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1024 1024"
