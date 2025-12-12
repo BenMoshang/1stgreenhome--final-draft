@@ -1604,6 +1604,7 @@ $z-index--footer: 100;
   overflow-wrap: break-word;
   @extend %u_callout;
   @extend %typography--tertiary;
+  color:black;
   line-height: 1.5;
 }
 
