@@ -1,0 +1,10 @@
+---
+# cPanel Git Deployment
+# IMPORTANT:
+# - This repo is a static SvelteKit site. You must deploy ONLY the built output in /build.
+# - Replace YOUR_USERNAME and (optionally) the folder path below.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/jipbizz1/public_html/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R build/* $DEPLOYPATH

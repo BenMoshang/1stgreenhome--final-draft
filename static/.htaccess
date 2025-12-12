@@ -1,0 +1,17 @@
+# SPA fallback for Apache/cPanel hosting (GoDaddy)
+# Ensures deep-links like /about load the app instead of 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Don't rewrite the fallback itself
+  RewriteRule ^404\.html$ - [L]
+
+  # If it's not a real file/dir, serve the SPA fallback
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /404.html [L]
+</IfModule>
+
+# If mod_rewrite isn't available, at least use the SPA fallback on 404
+ErrorDocument 404 /404.html
