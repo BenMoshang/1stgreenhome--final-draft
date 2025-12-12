@@ -17,7 +17,10 @@
 /* ==========================================================================
    Golden Ratio (Phi) Configuration
    ========================================================================== */
-
+.footer__creator {
+color: transparent;
+display:absolute;
+}
 // Core Phi Value
 $SCALE: math.div(1 + math.sqrt(5), 2) !default; // ϕ ≈ 1.618
 
