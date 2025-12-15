@@ -9,6 +9,7 @@
 @use 'sass:math';
 @use 'sass:map';
 @use 'sass:meta';
+@use 'sass:list';
 
 // ===========================================================================
 // 2. Base Variables (must come before tokens that depend on them)
@@ -610,55 +611,32 @@ $padding-map: (
   }
 }
 
-.u_section__xs {
-  padding-block: size('lg');
-  padding-inline: size('lg');
-}
+// Section padding configuration
+// Format: (size: (base-block, base-inline, mq-block, mq-inline))
+$section-config: (
+  'xs': ('lg', 'lg', 'lg', '2xl'),
+  'sm': ('xl', 'lg', 'xl', '2xl'),
+  'md': ('2xl', '2xl', '2xl', '2xl'),
+  'lg': ('2xl', 'lg', '3xl', '2xl'),
+  'xl': ('3xl', 'lg', '4xl', '2xl')
+);
 
-.u_section__sm {
-  padding-block: size('xl');
-  padding-inline: size('lg');
-}
+@each $size, $config in $section-config {
+  $base-block: list.nth($config, 1);
+  $base-inline: list.nth($config, 2);
+  $mq-block: list.nth($config, 3);
+  $mq-inline: list.nth($config, 4);
 
-.u_section__md {
-  padding-block: size('2xl');
-  padding-inline: size('2xl');
-}
-
-.u_section__lg {
-  padding-block: size('2xl');
-  padding-inline: size('lg');
-}
-
-.u_section__xl {
-  padding-block: size('3xl');
-  padding-inline: size('lg');
-}
-
-@media screen and (min-width: 62rem) {
-  .u_section__xs {
-    padding-block: size('lg');
-    padding-inline: size('2xl');
+  .u_section__#{$size} {
+    padding-block: size($base-block);
+    padding-inline: size($base-inline);
   }
 
-  .u_section__sm {
-    padding-block: size('xl');
-    padding-inline: size('2xl');
-  }
-
-  .u_section__md {
-    padding-block: size('2xl');
-    padding-inline: size('2xl');
-  }
-
-  .u_section__lg {
-    padding-block: size('3xl');
-    padding-inline: size('2xl');
-  }
-
-  .u_section__xl {
-    padding-block: size('4xl');
-    padding-inline: size('2xl');
+  @media screen and (min-width: 62rem) {
+    .u_section__#{$size} {
+      padding-block: size($mq-block);
+      padding-inline: size($mq-inline);
+    }
   }
 }
 
@@ -1319,7 +1297,7 @@ img[src*="icon-lightbulb.svg"] {
 }
 
 .brute-container {
-  max-inline-size: 80rem;
+  max-inline-size: $PAGE_MAX_INLINE;
   margin-inline: auto;
 }
 

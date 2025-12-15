@@ -1,8 +1,10 @@
-# SPA fallback for Apache/cPanel hosting (GoDaddy)
-# Ensures deep-links like /about load the app instead of 404.
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # Don't rewrite the fallback itself
   RewriteRule ^404\.html$ - [L]
