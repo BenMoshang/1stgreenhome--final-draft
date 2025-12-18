@@ -18,10 +18,6 @@
 /* ==========================================================================
    Golden Ratio (Phi) Configuration
    ========================================================================== */
-.footer__creator {
-color: transparent;
-display:absolute;
-}
 // Core Phi Value
 $SCALE: math.div(1 + math.sqrt(5), 2) !default; // ϕ ≈ 1.618
 
@@ -325,8 +321,7 @@ $breakpoints: (
 }
 
 html {
-  inline-size: 100%;
-  min-block-size: 100svh;
+
   margin: 0;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -346,7 +341,7 @@ html {
 
 body {
   inline-size: 100%;
-  block-size: 100%;
+  min-block-size: 100svh;
   margin: 0;
   background: light-dark(hsl(0, 0%, 98%), hsl(0, 0%, 7%));
   scroll-behavior: smooth;
@@ -355,7 +350,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricprecision;
 }
-
+.footer__creator {
+color: transparent;
+display:absolute;
+}
 :where(dt, dd, li, p, h1, h2, h3, h4, h5, h6) {
   margin: 0;
   font: inherit;
@@ -489,73 +487,7 @@ select {
 // Common Component Patterns
 // ---------------------------------------------------------------------------
 
-/// Section header pattern with optional sticky positioning
-/// @param {String} $align - Text alignment ('left', 'center', 'right', default: 'center')
-/// @param {Boolean} $sticky - Enable sticky positioning on tablet+ (default: false)
-/// @param {Length} $sticky-top - Top offset for sticky positioning (default: size('2xl'))
-/// @example
-///   @include section-header(center, true, size('xl'));
-@mixin section-header($align: center, $sticky: false, $sticky-top: size('2xl')) {
-  @extend %flex-col-center;
-  text-align: $align;
 
-  @if $sticky {
-    @include respond-to('tablet-end') {
-      position: sticky;
-      top: $sticky-top;
-      align-self: flex-start;
-      text-align: if($align == center, left, $align);
-      align-items: flex-start;
-      justify-content: flex-start;
-    }
-  }
-}
-
-/// Applies sticky positioning at a specified breakpoint
-/// @param {Length} $top - Top offset for sticky positioning (default: size('2xl'))
-/// @param {String} $breakpoint - Breakpoint to apply sticky positioning (default: 'tablet-end')
-/// @example
-///   @include sticky-position(size('xl'), 'desktop-end');
-@mixin sticky-position($top: size('2xl'), $breakpoint: 'tablet-end') {
-  @include respond-to($breakpoint) {
-    position: sticky;
-    top: $top;
-    align-self: flex-start;
-  }
-}
-
-/// Creates a grid container with optional template areas
-/// @param {String|List} $columns - Grid template columns (default: '1fr')
-/// @param {Length} $gap - Grid gap size (default: size('xl'))
-/// @param {String|Null} $areas - Grid template areas (null uses columns, default: null)
-/// @example
-///   @include grid-container(repeat(3, 1fr), size('lg'), 'header header header');
-@mixin grid-container($columns: 1fr, $gap: size('xl'), $areas: null) {
-  display: grid;
-  gap: $gap;
-
-  @if $areas {
-    grid-template-areas: $areas;
-  } @else {
-    grid-template-columns: $columns;
-  }
-}
-
-.focus-ring:focus-visible {
-  @include focus-ring;
-}
-
-.focus-ring--primary:focus-visible {
-  @include focus-ring(var(--primary));
-}
-
-.focus-ring--secondary:focus-visible {
-  @include focus-ring(var(--secondary));
-}
-
-.focus-ring--tertiary:focus-visible {
-  @include focus-ring(var(--tertiary));
-}
 
 // ===========================================================================
 // 6. Utilities
@@ -564,41 +496,23 @@ select {
 // ---------------------------------------------------------------------------
 // Spacing Utilities
 // ---------------------------------------------------------------------------
-$line-height: $MAJOR-HALF;
-
 @each $size in ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl') {
   .u_m-top__#{$size} {
     margin-block-start: var(--margin-#{$size});
-  }
-
-  .u_m-right__#{$size} {
-    margin-inline-end: var(--margin-#{$size});
   }
 
   .u_m-bottom__#{$size} {
     margin-block-end: var(--margin-#{$size});
   }
 
-  .u_m-left__#{$size} {
-    margin-inline-start: var(--margin-#{$size});
-  }
-
   .u_m-block__#{$size} {
     margin-block: var(--margin-#{$size});
-  }
-
-  .u_m-inline__#{$size} {
-    margin-inline: var(--margin-#{$size});
   }
 }
 
 $padding-sizes: ('2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl');
 
 $padding-map: (
-  'top': 'padding-block-start',
-  'right': 'padding-inline-end',
-  'bottom': 'padding-block-end',
-  'left': 'padding-inline-start',
   'block': 'padding-block',
   'inline': 'padding-inline'
 );
@@ -611,59 +525,9 @@ $padding-map: (
   }
 }
 
-// Section padding configuration
-// Format: (size: (base-block, base-inline, mq-block, mq-inline))
-$section-config: (
-  'xs': ('lg', 'lg', 'lg', '2xl'),
-  'sm': ('xl', 'lg', 'xl', '2xl'),
-  'md': ('2xl', '2xl', '2xl', '2xl'),
-  'lg': ('2xl', 'lg', '3xl', '2xl'),
-  'xl': ('3xl', 'lg', '4xl', '2xl')
-);
-
-@each $size, $config in $section-config {
-  $base-block: list.nth($config, 1);
-  $base-inline: list.nth($config, 2);
-  $mq-block: list.nth($config, 3);
-  $mq-inline: list.nth($config, 4);
-
-  .u_section__#{$size} {
-    padding-block: size($base-block);
-    padding-inline: size($base-inline);
-  }
-
-  @media screen and (min-width: 62rem) {
-    .u_section__#{$size} {
-      padding-block: size($mq-block);
-      padding-inline: size($mq-inline);
-    }
-  }
-}
-
-/// Retrieves a gap size value (size * MAJOR-HALF)
-/// @param {String} $size-key - Gap size key ('xs', 'sm', 'md', 'lg', 'xl', '2xl')
-/// @return {Length} Gap size value
-/// @example
-///   gap('md') // => size('sm') * MAJOR-HALF
-@function gap($size-key) {
-  @if map.has-key($gap-sizes, $size-key) {
-    $base-gap: map.get($gap-sizes, $size-key);
-    @return $base-gap;
-  } @else {
-    @warn "Invalid gap key '#{$size-key}'. Valid keys: #{map.keys($gap-sizes)}";
-    @return null;
-  }
-}
-
 @each $name, $size in $gap-sizes {
   .u_gap__#{$name} {
     gap: $size;
-  }
-  .u_gap-column__#{$name} {
-    column-gap: $size;
-  }
-  .u_gap-row__#{$name} {
-    row-gap: $size;
   }
 }
 
@@ -743,15 +607,6 @@ $section-config: (
   @include type-scale(size('lg'), -0.02em, $MAJOR-HALF);
 }
 
-%u_title-c {
-  @extend %font-family--primary;
-  @extend %text-wrap--balance;
-  @include type-scale(
-    math.div(size('lg'), $MAJOR-HALF),
-    -0.017em,
-    $MAJOR-HALF
-  );
-}
 
 %u_heading {
   @extend %text-wrap--balance;
@@ -827,20 +682,8 @@ $section-config: (
   );
 }
 
-%u_overline {
-  @extend %font-family--secondary;
-  @include type-scale(
-    math.div(
-      math.div(size('md'), $MAJOR-QUARTER),
-      $MAJOR-EIGHT
-    ),
-    1em * math.div($MINOR, 10),
-    $MAJOR-HALF
-  );
-  text-transform: uppercase;
-}
 
-$typography-list: display-1, display-1--bold, display-2, display-2--bold, title-a, title-a--bold, title-b, title-c, heading, heading--bold, subheading, paragraph, callout, label, label--bold, caption, overline;
+$typography-list: display-1, display-1--bold, display-2, display-2--bold, title-a, title-a--bold, title-b, heading, heading--bold, subheading, paragraph, callout, label, label--bold, caption;
 
 @each $name in $typography-list {
   .u_#{$name} {
@@ -932,9 +775,6 @@ $typography-variants: (
 /// @example
 ///   container('md') // => 1 (base)
 ///   container('lg') // => PAGE_MAX_INLINE * MAJOR-QUARTER
-@function container($key) {
-  @return map.get($container-scales, $key);
-}
 
 @each $key, $scale in $container-scales {
   .u_container__#{$key} {
@@ -949,38 +789,7 @@ $typography-variants: (
 /// @param {Boolean} $inline - Use inline-flex instead of flex (default: false)
 /// @example
 ///   @include apply-flex(column, 'md', false);
-@mixin apply-flex($direction: row, $gap-size: null, $inline: false) {
-  display: if($inline, inline-flex, flex);
-  flex-direction: $direction;
 
-  @if $gap-size {
-    gap: gap($gap-size);
-  }
-}
-
-.stack {
-  position: relative;
-  display: grid;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.stack__layer {
-  grid-area: 1 / 1;
-
-  &--float {
-    position: absolute;
-    inset: 0;
-  }
-
-  &--above {
-    z-index: 1;
-  }
-
-  &--below {
-    z-index: -1;
-  }
-}
 
 %flex-col-center {
   display: flex;
@@ -1003,11 +812,6 @@ $typography-variants: (
   }
 }
 
-%glass {
-  backdrop-filter: blur(1.5rem);
-  background-color: oklch(100% 0 0 / 0.25);
-  border: 1px solid oklch(85% 0 0 / 0.1);
-}
 
 %inset-shadow {
   box-shadow: inset 0 2px 2px hsl(0deg 0% 0% / 20%);
@@ -1030,25 +834,6 @@ $max-ch-sizes: (
 // ---------------------------------------------------------------------------
 // Sizing Utilities
 // ---------------------------------------------------------------------------
-$inline-size-map: (
-  2xs: size('md'),
-  xs: size('md') * $MAJOR-QUARTER,
-  sm: size('md') * $MAJOR-HALF,
-  md: size('lg'),
-  lg: size('lg') * $MAJOR-HALF,
-  xl: size('xl'),
-  2xl: size('2xl'),
-  3xl: size('3xl'),
-);
-
-@each $key in map.keys($inline-size-map) {
-  .u_inline-size__#{$key} {
-    inline-size: round-to(map.get($inline-size-map, $key));
-  }
-  .u_block-size__#{$key} {
-    block-size: round-to(map.get($inline-size-map, $key));
-  }
-}
 
 // ---------------------------------------------------------------------------
 // Appearance Utilities
@@ -1074,44 +859,10 @@ $shadow-levels: (
   }
 }
 
-.shadow-sm {
-  @include apply-shadow('sm');
-}
-
-.shadow-md {
-  @include apply-shadow('md');
-}
-
-.shadow-lg {
-  @include apply-shadow('lg');
-}
 
 // ---------------------------------------------------------------------------
 // Component Styles
 // ---------------------------------------------------------------------------
-.brute__text--primary {
-  color: var(--brute-primary);
-}
-
-.brute__text--secondary {
-  color: var(--brute-secondary);
-}
-
-.brute__text--tertiary {
-  color: var(--brute-tertiary);
-}
-
-.brute__bg--primary {
-  background-color: var(--brute-primary);
-}
-
-.brute__bg--secondary {
-  background-color: var(--brute-secondary);
-}
-
-.brute__bg--tertiary {
-  background-color: var(--brute-tertiary);
-}
 
 .brute__label {
   @extend %u_label;
@@ -1296,10 +1047,6 @@ img[src*="icon-lightbulb.svg"] {
   opacity: 1;
 }
 
-.brute-container {
-  max-inline-size: $PAGE_MAX_INLINE;
-  margin-inline: auto;
-}
 
 // ---------------------------------------------------------------------------
 // Home Page Styles (from +page.svelte)
@@ -1913,10 +1660,6 @@ $z-index--footer: 100;
 /* ===============================================================
    service-card - Modern card with image background
    =============================================================== */
-.ben{
-  text-align: center;
-  margin-inline: auto;
-}
   .service-card {
     // ========================================================================
     // Configuration Variables
